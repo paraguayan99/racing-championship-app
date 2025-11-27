@@ -1,18 +1,56 @@
-/* CSS FILE (styles.css) */
-
-body {
+html, body {
+height: 100%;
 margin: 0;
+padding: 0;
 background: #000000;
 font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 color: #d4d7dd;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
 header, footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 20px 40px;
-background: #13131c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #15151E;
+
+    /* Valeur par défaut : dégradé vers le bas */
+    --fade-dir: to bottom;
+
+    background-image:
+        linear-gradient(var(--fade-dir),
+            transparent 40%,
+            #15151E 100%
+        ),
+        repeating-linear-gradient(
+            135deg,           
+            rgba(255,255,255,0.05) 0 40px,   
+            transparent 40px 45px,       
+            rgba(255,255,255,0.05) 45px 85px,
+            transparent 85px 200px,
+            rgba(255,255,255,0.05) 200px 230px,
+            transparent 230px 235px,       
+            rgba(255,255,255,0.05) 235px 265px,
+            transparent 265px 400px
+        );
+}
+
+/* Fondu vers le haut des bandes claires */
+footer {
+    --fade-dir: to top;
 }
 
 .nav-btn {
@@ -44,6 +82,15 @@ transition: background-color 0.3s; /* Animation douce */
 .section {
 display: flex;
 justify-content: space-around ;
+background: #15151E;
+margin: 40px;
+padding: 30px;
+border-radius: 20px;
+gap: 20px;
+}
+
+/* Visuel Dashboard */
+.section-dashboard {
 background: #15151E;
 margin: 40px;
 padding: 30px;
@@ -94,4 +141,65 @@ width: 55%;
 font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 color: white;
 margin-bottom: 12px;
+}
+
+/* Formulaire de connexion au DASHBOARD */
+.login-container {
+    background-color: #15151E;
+    max-width: 50%;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-top : 0;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    border:0;
+    font-size: 14px;
+    border-radius: 10px;
+    text-indent: 20px;
+}
+
+.btn {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: 10px;
+    background-color: #E10600;
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #fdbcba;
+    color: #000000;
+}
+
+.error-message {
+    background-color: rgb(248, 157, 54);
+    color: black;
+    font-weight: 600;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    text-align: center;
 }
