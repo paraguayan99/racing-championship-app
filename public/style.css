@@ -2,7 +2,7 @@
 
 body {
 margin: 0;
-background: #0d0d14;
+background: #000000;
 font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 color: #d4d7dd;
 }
@@ -18,23 +18,48 @@ background: #13131c;
 .nav-btn {
 padding: 10px 22px;
 border-radius: 20px;
-background: #1e1f29;
+background: #000000;
 color: white;
 text-decoration: none;
 margin-left: 10px;
 font-size: 14px;
+cursor: pointer;
+transition: background-color 0.3s; /* Animation douce */
 }
 
-.nav-btn.red { background: #d9363e; }
+.nav-btn:hover {
+  background-color: white;
+  color: #000000;
+}
+
+.nav-btn.red { 
+    background: #E10600; 
+}
+
+.nav-btn.red:hover {
+  background-color: #fdbcba;
+  color: #000000;
+}
+
 .section {
 display: flex;
 justify-content: space-around ;
-background: #1a1b24;
+background: #15151E;
 margin: 40px;
 padding: 30px;
 border-radius: 20px;
 gap: 20px;
 }
+
+/* .footer-links a {
+margin: 0 10px;
+text-decoration: none;
+background: #1e1f29;
+padding: 10px 20px;
+border-radius: 20px;
+font-size: 14px;
+color: white;
+} */
 
 .section img {
 display: flex;
@@ -44,24 +69,29 @@ border-radius: 15px;
 object-fit: cover;
 }
 
-.logo_team_eracing img {
-    max-width: 100px;
-    height: auto;
+.logo_and_name_header {
+display: flex;
+align-items: center;
+width: 40%;
 }
 
-.text-block { width: 55%; }
+.logo_header img, .logo_footer img {
+max-width: 100px;
+height: auto;
+}
+
+.name_header {
+font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+color: white;
+padding-left: 5%;
+}
+
+.text-block { 
+width: 55%; 
+}
+
 .text-block h2 {
 font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 color: white;
 margin-bottom: 12px;
-}
-
-.footer-links a {
-margin: 0 10px;
-text-decoration: none;
-background: #1e1f29;
-padding: 10px 20px;
-border-radius: 20px;
-font-size: 14px;
-color: white;
 }

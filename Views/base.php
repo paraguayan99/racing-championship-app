@@ -11,7 +11,12 @@
 
 <body>
 <header>
-<div class="logo_team_eracing"><a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a></div>
+<div class="logo_and_name_header">
+    <div class="logo_header">
+        <a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a>
+    </div>
+    <h2 class="name_header">Team-eRacing</h2>
+</div>
 <nav>
 <a class="nav-btn" href="index.php?controller=Classements">CLASSEMENTS</a>
 <a class="nav-btn red" href="index.php?controller=Join">NOUS REJOINDRE</a>
@@ -27,11 +32,11 @@
 
 
 <footer>
-<div class="footer-links">
-<a href="index.php?controller=Mentions">MENTIONS LÉGALES</a>
-<a href="index.php?controller=Dashboard">DASHBOARD</a>
+<div>
+<a class="nav-btn" href="index.php?controller=Mentions">MENTIONS LÉGALES</a>
+<a class="nav-btn" href="index.php?controller=Dashboard">DASHBOARD</a>
 </div>
-<div class="logo_team_eracing"><a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a></div>
+<div class="logo_footer"><a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a></div>
 </footer>
 </body>
 </html>
