@@ -1,0 +1,67 @@
+/* CSS FILE (styles.css) */
+
+body {
+margin: 0;
+background: #0d0d14;
+font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+color: #d4d7dd;
+}
+
+header, footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px 40px;
+background: #13131c;
+}
+
+.nav-btn {
+padding: 10px 22px;
+border-radius: 20px;
+background: #1e1f29;
+color: white;
+text-decoration: none;
+margin-left: 10px;
+font-size: 14px;
+}
+
+.nav-btn.red { background: #d9363e; }
+.section {
+display: flex;
+justify-content: space-around ;
+background: #1a1b24;
+margin: 40px;
+padding: 30px;
+border-radius: 20px;
+gap: 20px;
+}
+
+.section img {
+display: flex;
+max-width: 45%;
+max-height: 200px;
+border-radius: 15px;
+object-fit: cover;
+}
+
+.logo_team_eracing img {
+    max-width: 100px;
+    height: auto;
+}
+
+.text-block { width: 55%; }
+.text-block h2 {
+font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+color: white;
+margin-bottom: 12px;
+}
+
+.footer-links a {
+margin: 0 10px;
+text-decoration: none;
+background: #1e1f29;
+padding: 10px 20px;
+border-radius: 20px;
+font-size: 14px;
+color: white;
+}
