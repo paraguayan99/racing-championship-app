@@ -9,6 +9,7 @@ class Router
         // On teste si la superglobale $_GET['controller'] est déclarée et non vide, puis on ajoute le premier index de $_GET dans la variable
         //$controller, ou par défaut 'Home', ainsi que son namespace, plus le mot Controller
         //pour compléter le nom de la classe controller à instancier.
+
         $controller = (isset($_GET['controller']) ? ucfirst(array_shift($_GET)) : 'Home');
         $controller = '\\App\\Controllers\\' . $controller . 'Controller';
 
@@ -18,6 +19,11 @@ class Router
 
         // On instancie le contrôleur
         $controller = new $controller();
+
+        // print_r($controller);
+        // var_dump($controller);
+        // print_r($action);
+        // var_dump($action);
 
         if (method_exists($controller, $action)) {
             // Si $_GET contient des index, on exécute la méthode en passant comme argument les paramètres de $_GET ou alors

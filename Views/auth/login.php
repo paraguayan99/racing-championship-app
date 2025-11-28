@@ -1,7 +1,8 @@
 <?php
+$title = "Team-eRacing - Connexion au Dashboard";
+
 // $error peut être passé depuis le controller si identifiants invalides
 $errorMessage = $error ?? '';
-$title = "Team-eRacing - Connexion au Dashboard";
 ?>
 
 <div class="login-container">
@@ -13,7 +14,7 @@ $title = "Team-eRacing - Connexion au Dashboard";
         </div>
     <?php endif; ?>
 
-    <form action="index.php?controller=Auth&action=login" method="POST" class="login-form">
+    <form action="index.php?controller=auth&action=login" method="POST" class="login-form">
         <div class="form-group">
             <label for="email">Adresse email :</label>
             <input type="email" id="email" name="email" required placeholder="Votre email">
@@ -33,7 +34,7 @@ $title = "Team-eRacing - Connexion au Dashboard";
 <?php
 // SCRIPT POUR CREER MOT DE PASSE HASHE ET SECURISE DANS LA BDD
 
-// $motdepasse = 'marine'; // Le mot de passe en clair
+// $motdepasse = 'user'; // Le mot de passe en clair
 // $hash = password_hash($motdepasse, PASSWORD_DEFAULT);
 // echo $hash;
 ?>

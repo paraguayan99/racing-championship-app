@@ -34,5 +34,24 @@ abstract class Controller
         // On fabrique le "template"
         include dirname(__DIR__) . '/Views/base.php';
     }
+
+//     protected function auth($role_required = null) {
+//     session_start();
+//     if (!isset($_SESSION['user_id'])) {
+//         header('Location: index.php?controller=Auth&action=login');
+//         exit();
+//     }
+
+//     if ($role_required) {
+//         $role = $_SESSION['role'] ?? '';
+//         if ($role_required === 'admin' && $role !== 'Administrateur') {
+//             echo "Accès refusé";
+//             exit();
+//         } elseif ($role_required === 'moderator' && !in_array($role, ['Administrateur','Moderateur'])) {
+//             echo "Accès refusé";
+//             exit();
+//         }
+//     }
+// }
 }
 ?>

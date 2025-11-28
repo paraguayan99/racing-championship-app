@@ -1,10 +1,10 @@
 html, body {
-height: 100%;
-margin: 0;
-padding: 0;
-background: #000000;
-font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-color: #d4d7dd;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #d4d7dd;
 }
 
 body {
@@ -54,20 +54,20 @@ footer {
 }
 
 .nav-btn {
-padding: 10px 22px;
-border-radius: 20px;
-background: #000000;
-color: white;
-text-decoration: none;
-margin-left: 10px;
-font-size: 14px;
-cursor: pointer;
-transition: background-color 0.3s; /* Animation douce */
+    padding: 10px 22px;
+    border-radius: 20px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Animation douce */
 }
 
 .nav-btn:hover {
-  background-color: white;
-  color: #000000;
+    background-color: white;
+    color: #000000;
 }
 
 .nav-btn.red { 
@@ -75,72 +75,101 @@ transition: background-color 0.3s; /* Animation douce */
 }
 
 .nav-btn.red:hover {
-  background-color: #fdbcba;
-  color: #000000;
+    background-color: #fdbcba;
+    color: #000000;
 }
 
 .section {
-display: flex;
-justify-content: space-around ;
-background: #15151E;
-margin: 40px;
-padding: 30px;
-border-radius: 20px;
-gap: 20px;
+    display: flex;
+    justify-content: space-around ;
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    gap: 20px;
 }
 
 /* Visuel Dashboard */
 .section-dashboard {
-background: #15151E;
-margin: 40px;
-padding: 30px;
-border-radius: 20px;
-gap: 20px;
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    gap: 20px;
+}
+
+.section-btn-dashboard {
+    height: 35px;
+}
+
+.nav-btn-dashboard {
+    padding: 5px 5px;
+    border-radius: 10px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Animation douce */
+}
+
+.nav-btn-dashboard:hover {
+    background-color: white;
+    color: #000000;
+}
+
+.nav-btn-dashboard.red { 
+    background: #E10600; 
+}
+
+.nav-btn-dashboard.red:hover {
+    background-color: #fdbcba;
+    color: #000000;
 }
 
 /* .footer-links a {
-margin: 0 10px;
-text-decoration: none;
-background: #1e1f29;
-padding: 10px 20px;
-border-radius: 20px;
-font-size: 14px;
-color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    background: #1e1f29;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: white;
 } */
 
 .section img {
-display: flex;
-max-width: 45%;
-max-height: 200px;
-border-radius: 15px;
-object-fit: cover;
+    display: flex;
+    max-width: 45%;
+    max-height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
 }
 
 .logo_and_name_header {
-display: flex;
-align-items: center;
-width: 40%;
+    display: flex;
+    align-items: center;
+    width: 40%;
 }
 
 .logo_header img, .logo_footer img {
-max-width: 100px;
-height: auto;
+    max-width: 100px;
+    height: auto;
 }
 
 .name_header {
-font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-color: white;
-padding-left: 5%;
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+    padding-left: 5%;
 }
 
 .text-block { 
-width: 55%; 
+    width: 55%; 
 }
 
 .text-block h2 {
-font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-color: white;
-margin-bottom: 12px;
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+    margin-bottom: 12px;
 }
 
 /* Formulaire de connexion au DASHBOARD */

@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style-v1.2.css" />
 <title><?= $title ?></title>
 </head>
 
@@ -18,8 +18,8 @@
     <h2 class="name_header">Team-eRacing</h2>
 </div>
 <nav>
-<a class="nav-btn" href="index.php?controller=Classements">CLASSEMENTS</a>
-<a class="nav-btn red" href="index.php?controller=Join">NOUS REJOINDRE</a>
+<a class="nav-btn" href="index.php?controller=classements">CLASSEMENTS</a>
+<a class="nav-btn red" href="index.php?controller=join">NOUS REJOINDRE</a>
 </nav>
 </header>
 
@@ -33,8 +33,8 @@
 
 <footer>
 <div>
-<a class="nav-btn" href="index.php?controller=Mentions">MENTIONS LÉGALES</a>
-<a class="nav-btn" href="index.php?controller=Dashboard">DASHBOARD</a>
+<a class="nav-btn" href="index.php?controller=mentions">MENTIONS LÉGALES</a>
+<a class="nav-btn" href="index.php?controller=dashboard">DASHBOARD</a>
 </div>
 <div class="logo_footer"><a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a></div>
 </footer>

@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\UsersModel;
 
 class AuthController extends Controller
 {
@@ -16,12 +16,14 @@ class AuthController extends Controller
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $user = User::findByEmail($email);
+        $user = UsersModel::findByEmail($email);
         if ($user && password_verify($password, $user->password_hash)) {
             session_start();
             $_SESSION['user_id'] = $user->id;
-            $_SESSION['role'] = $user->role;
-            header('Location: index.php?controller=Dashboard&action=index');
+            // $_SESSION['role'] = $user->role;
+            $_SESSION['role_id'] = $user->role_id;
+            $_SESSION['role'] = UsersModel::getRoleName($user->role_id); // "Administrateur", "Moderateur", "Utilisateur"
+            header('Location: index.php?controller=dashboard&action=index');
             exit();
         } else {
             $error = "Identifiants invalides";
@@ -37,7 +39,7 @@ class AuthController extends Controller
     {
         session_start();
         session_destroy();
-        header('Location: index.php?controller=Auth&action=login');
+        header('Location: index.php?controller=auth&action=login');
         exit();
     }
 }
