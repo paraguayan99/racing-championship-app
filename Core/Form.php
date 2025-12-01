@@ -13,21 +13,36 @@ class Form
     }
 
     // Méthode permettant d'ajouter un ou des attributs
+    // private function addAttributes(array $attributes): string
+    // {
+    //     $att = "";
+    //     // Chaque attribut est parcouru
+    //     foreach ($attributes as $attribute => $value) {
+    //         $att .= " $attribute=\"$value\"";
+    //     }
+    //     return $att;
+    // }
+
+    // Méthode permettant d'ajouter un ou des attributs
     private function addAttributes(array $attributes): string
     {
         $att = "";
-        // Chaque attribut est parcouru
         foreach ($attributes as $attribute => $value) {
-            $att .= " $attribute=\"$value\"";
+            // Échapper nom/valeur d'attribut pour éviter injection
+            $attrName = htmlspecialchars($attribute, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $attrValue = htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $att .= " {$attrName}=\"{$attrValue}\"";
         }
         return $att;
     }
+
 
     // Méthode permettant de générer la balise ouvrante HTML du formulaire
     public function startForm(string $action = '#', string $method = "POST", array $attributes = []): self
     {
         // On commence la creation du formulaire avec l'ouverture de la balise form et ses attribututs action method
-        $this->formElements = "<form action='$action' method='$method'";
+        // AJOUT DE LA CLASSE CSS
+        $this->formElements = "<form action='$action' method='$method' class='login-form'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
         return $this;
     }
@@ -36,20 +51,41 @@ class Form
     public function addLabel(string $for, string $text, array $attributes = []): self
     {
         // On ajoute la balise label et l'attribut for
-        $this->formElements .= "<label for='$for'";
+        // DEBUT DE LA DIV DE LA CLASSE CSS
+        $this->formElements .= "<div class='form-group'><label for='$for'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
         $this->formElements .= "$text</label>";
         return $this;
     }
 
     // Méthode permettant d'ajouter un champ
+    // public function addInput(string $type, string $name, array $attributes = []): self
+    // {
+    //     // On ajoute la balise input et les attributs type name
+    //     $this->formElements .= "<input type='$type' name='$name'";
+    //     $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
+    //     return $this;
+    // }
+
+    // Méthode permettant d'ajouter un champ
     public function addInput(string $type, string $name, array $attributes = []): self
     {
-        // On ajoute la balise input et les attributs type name
-        $this->formElements .= "<input type='$type' name='$name'";
-        $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
+        $typeEsc = htmlspecialchars($type, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $nameEsc = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        // handle value attribute if provided
+        $value = '';
+        if (isset($attributes['value'])) {
+            $value = ' value="' . htmlspecialchars((string)$attributes['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '"';
+            unset($attributes['value']);
+        }
+
+        $this->formElements .= "<input type='{$typeEsc}' name='{$nameEsc}'{$value}";
+        $this->formElements .= !empty($attributes) ? $this->addAttributes($attributes) . "></div>" : "></div>";
+        // FIN DE LA DIV DE LA CLASSE CSS </div>
         return $this;
     }
+
 
     // Méthode permettant d'ajouter un champ textarea
     public function addTextarea(string $name, string $text = '', array $attributes = []): self
@@ -74,6 +110,7 @@ class Form
     //     return $this;
     // }
 
+    // Méthode permettant d'ajouter un champ select
     public function addSelect(string $name, array $options, array $attributes = []): self
     {
         // Extraire la valeur sélectionnée si elle existe
@@ -85,11 +122,29 @@ class Form
         $this->formElements .= !empty($attributes) ? $this->addAttributes($attributes) . ">" : ">";
 
         foreach ($options as $key => $value) {
+            $keyEsc = htmlspecialchars((string)$key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $valueEsc = htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $selected = ($key == $selectedValue) ? " selected" : "";
-            $this->formElements .= "<option value='$key'$selected>$value</option>";
+            $this->formElements .= "<option value='{$keyEsc}'{$selected}>{$valueEsc}</option>";
         }
 
-        $this->formElements .= "</select>";
+        // foreach ($options as $key => $value) {
+        //     $selected = ($key == $selectedValue) ? " selected" : "";
+        //     $this->formElements .= "<option value='$key'$selected>$value</option>";
+        // }
+
+        $this->formElements .= "</select></div>";
+        // FIN DE LA DIV DE LA CLASSE CSS </div>
+        return $this;
+    }
+
+    // Méthode permettant d'ajouter le bouton soummission avec le CSS associé
+    public function addSubmit($value = "Envoyer", $class = "btn")
+    {
+        $this->formElements .= '<div class="form-group">';
+        $this->formElements .= '<button type="submit" class="'.$class.'">'.$value.'</button>';
+        $this->formElements .= '</div>';
+
         return $this;
     }
 
@@ -129,11 +184,11 @@ class Form
 
     // Méthode qui ajoute un CSRF TOKEN dans les formulaires
     public function addCSRF(): self
-{
-    $token = \App\Core\Auth::csrfToken();
-    $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
-    return $this;
-}
+    {
+        $token = \App\Core\Auth::csrfToken();
+        $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
+        return $this;
+    }
 
     // puis dans chaque formulaire : 
     // $form->startForm(...)

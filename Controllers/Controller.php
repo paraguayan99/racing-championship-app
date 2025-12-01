@@ -29,7 +29,18 @@ abstract class Controller
 
             if (!$userHasRole) {
                 http_response_code(403);
-                die("Accès refusé");
+                // Titre de la page
+                $title = "Team-eRacing";
+
+                // Contenu affichant le message d'erreur
+                $content = "<div class='section-dashboard'>
+                                <h1>Accès refusé</h1>
+                                <p>Vous n'avez pas les autorisations nécessaires.</p>
+                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                            </div>";
+
+                include dirname(__DIR__) . '/Views/base.php';
+                exit;
             }
         }
 
@@ -37,7 +48,19 @@ abstract class Controller
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!isset($_POST['csrf_token']) 
                 || !\App\Core\Auth::validateCSRF($_POST['csrf_token'])) {
-                die("Token CSRF invalide !");
+                http_response_code(403);
+                // Titre de la page
+                $title = "Team-eRacing";
+
+                // Contenu affichant le message d'erreur
+                $content = "<div class='section-dashboard'>
+                                <h1>Token invalide !</h1>
+                                <p>Veuillez réessayer ou recharger la page.</p>
+                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                            </div>";
+
+                include dirname(__DIR__) . '/Views/base.php';
+                exit;
             }
         }
     }
@@ -59,24 +82,5 @@ abstract class Controller
         // On fabrique le "template"
         include dirname(__DIR__) . '/Views/base.php';
     }
-
-//     protected function auth($role_required = null) {
-//     session_start();
-//     if (!isset($_SESSION['user_id'])) {
-//         header('Location: index.php?controller=Auth&action=login');
-//         exit();
-//     }
-
-//     if ($role_required) {
-//         $role = $_SESSION['role'] ?? '';
-//         if ($role_required === 'admin' && $role !== 'Administrateur') {
-//             echo "Accès refusé";
-//             exit();
-//         } elseif ($role_required === 'moderator' && !in_array($role, ['Administrateur','Moderateur'])) {
-//             echo "Accès refusé";
-//             exit();
-//         }
-//     }
-// }
 }
 ?>

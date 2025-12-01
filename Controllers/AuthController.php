@@ -33,16 +33,35 @@ class AuthController extends Controller
                 if ($user && password_verify($password, $user->password_hash)) {
                     // Connexion sécurisée
                     session_start();
+
+                    // Anti session fixation
+                    session_regenerate_id(true);
+                    // Regeneration du token CSRF après connexion
+                    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
                     $_SESSION['user_id'] = $user->id;
                     $_SESSION['role_id'] = $user->role_id;
                     $_SESSION['role'] = UsersModel::getRoleName($user->role_id);
 
-                    // Redirection simple vers le dashboard
                     header('Location: index.php?controller=dashboard&action=index');
                     exit();
                 } else {
                     $error = "Identifiants invalides";
                 }
+
+                // if ($user && password_verify($password, $user->password_hash)) {
+                //     // Connexion sécurisée
+                //     session_start();
+                //     $_SESSION['user_id'] = $user->id;
+                //     $_SESSION['role_id'] = $user->role_id;
+                //     $_SESSION['role'] = UsersModel::getRoleName($user->role_id);
+
+                //     // Redirection simple vers le dashboard
+                //     header('Location: index.php?controller=dashboard&action=index');
+                //     exit();
+                // } else {
+                //     $error = "Identifiants invalides";
+                // }
             }
         }
 
@@ -55,6 +74,7 @@ class AuthController extends Controller
     {
         session_start();
         $_SESSION = [];
+        unset($_SESSION['csrf_token']);
         session_destroy();
         header('Location: index.php?controller=auth&action=login');
         exit();

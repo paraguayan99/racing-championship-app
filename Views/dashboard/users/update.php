@@ -1,14 +1,14 @@
-<?php $title = "Modifier l'utilisateur"; ?>
+<?php $title = "Team-eRacing - Utilisateurs"; ?>
 
 <div class="section-dashboard">
 
-    <h1>Modifier l'utilisateur</h1>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=users">Retour à la liste</a>
+        <h1>Modifier un utilisateur</h1>
+    </div>
 
-    <?php
-    echo $form->getFormElements();
-    ?>
-
-    <br>
-    <a href="index.php?controller=users">Retour à la liste</a>
+    <div class="form-wrapper">
+        <?= $form->getFormElements() ?>
+    </div>
 
 </div>

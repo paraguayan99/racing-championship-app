@@ -8,18 +8,40 @@ class Auth
     public static function start()
     {
         if (session_status() === PHP_SESSION_NONE) {
+            // Sécuriser la session : strict mode et cookies sûrs
+            ini_set('session.use_strict_mode', 1);
+            // Nom de session custom (optionnel)
+            session_name('team_eracing_sid');
+
+            // Paramètres cookies : à définir AVANT session_start()
+            $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+                    (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+
+            session_set_cookie_params([
+                'lifetime' => 0,
+                'path' => '/',
+                'domain' => $_SERVER['HTTP_HOST'],
+                'secure' => $secure,
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]);
+
             session_start();
+
+            // Deconnexion de l'utilisateur et destruction de la session après 5 minutes
+            $lifetime = 300 ; // durée en secondes 300 = 5 minutes
+
+            if (isset($_SESSION['time_activity']) && (time() - $_SESSION['time_activity'] > $lifetime)) {
+                session_unset();     // supprime les variables
+                session_destroy();   // détruit la session
+                header("Location: index.php?controller=auth&action=login");
+                exit();
+            }
+
+            $_SESSION['time_activity'] = time(); // mise à jour
         }
-
-        // OPTION POUR SECURISER LA SESSION UN PEU PLUS
-        // session_set_cookie_params([
-        //     'httponly' => true,
-        //     'secure' => isset($_SERVER['HTTPS']),
-        //     'samesite' => 'Strict'
-        // ]);
-        // session_start();
     }
-
+    
     // Vérifie si un user est connecté
     public static function check(): bool
     {

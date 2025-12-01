@@ -103,8 +103,8 @@ footer {
 }
 
 .nav-btn-dashboard {
-    padding: 5px 5px;
-    border-radius: 10px;
+    padding: 10px 22px;
+    border-radius: 20px;
     background: #000000;
     color: white;
     text-decoration: none;
@@ -231,4 +231,221 @@ footer {
     margin-bottom: 15px;
     border-radius: 10px;
     text-align: center;
+}
+
+/* TABLES REPONSIVES */
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f0f15;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dashboard-table th {
+    background: #E10600;
+    padding: 12px;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+}
+
+.dashboard-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dashboard-table tr:hover td {
+    background: rgba(255,255,255,0.03);
+}
+
+.actions-column {
+    text-align: center;
+}
+
+/* BOUTONS ACTIONS DE LA LISTE / UPDATE ET DELETE*/
+
+.action-btn {
+    padding: 8px;
+    border-radius: 50%;
+    margin: 0 4px;
+    text-decoration: none;
+    display: inline-flex;
+}
+
+.action-btn.edit {
+    background: #1e90ff;
+    color: white;
+}
+
+.action-btn.delete {
+    background: #E10600;
+    color: white;
+}
+
+.action-btn:hover {
+    opacity: .8;
+}
+
+/* MESSAGE SUCCES OU ECHEC */
+
+.msg-success {
+    text-align: center;
+    background: #66fd93;
+    color: #000000;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-weight: bold;
+}
+
+.msg-error {
+    text-align: center;
+    background: #E10600;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-weight: bold;
+}
+
+
+
+/* FORMULAIRES */
+
+.form-wrapper {
+    background: #0f0f15;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    /* padding: 12px; */
+    border-radius: 10px;
+    border: none;
+    background: #1c1c26;
+    color: white;
+    font-size: 15px;
+}
+
+.form-group select {
+    padding: 12px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 2px solid #E10600;
+}
+
+.btn, button {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #E10600;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #fdbcba;
+    color: #000;
+}
+
+.btn.danger {
+    background: #c00000;
+}
+
+.delete-actions {
+    width: 100%;
+}
+
+.delete-actions form {
+    margin: 0; /* supprime le margin du form */
+}
+
+.btn-danger,
+.btn-light {
+    width: 100%;
+    display: block;
+}
+
+.btn-light {
+    width: 100%;
+    padding: 12px 0px 12px 0px;
+    border-radius: 10px;
+    border: none;
+    background: #ffffff;
+    color: #000000;
+    /* font-weight: bold; */
+    cursor: pointer;
+    text-align: center;
+    display: block; /* clé pour occuper toute la largeur */
+    margin-top: 15px;
+    text-decoration: none; /* enlève le souligné */
+}
+
+.btn-light:hover {
+    background: #919090;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .section-dashboard {
+        margin: 15px;
+        padding: 20px;
+    }
+
+/* MESSAGE SUCCES OU ECHEC */
+
+    .msg-success {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .msg-error {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .dashboard-table th, .dashboard-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }

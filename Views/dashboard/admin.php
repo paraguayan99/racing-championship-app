@@ -1,4 +1,6 @@
-<?php $title="Team-eRacing - Dashboard Admin"; ?>
+<?php var_dump($_SESSION) ?>
+
+<?php $title="Team-eRacing - Dashboard"; ?>
 
 <div class="section-dashboard">
     <h1>Dashboard Administrateur</h1>

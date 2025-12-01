@@ -1,13 +1,18 @@
-<?php $title = 'Créer un utilisateur' ?>
+<?php $title = 'Team-eRacing - Utilisateurs' ?>
 
-<div class="section-dashboard">
+<div class="login-container">
 
-    <h1>Créer un nouvel utilisateur</h1>
+    <a class="nav-btn-dashboard" href="index.php?controller=users">Retour à la liste</a>
 
-    <?php
-    echo $form->getFormElements();
-    ?>
+    <h1>Créer un utilisateur</h1>
 
-    <br>
-    <a href="index.php?controller=users">Retour à la liste</a>
+    <?php if (!empty($message)): ?>
+        <div class="<?= htmlspecialchars($classMsg) ?>">
+            <?= htmlspecialchars($message) ?>
+        </div>
+    <?php endif; ?>
+
+        <?= $form->getFormElements(); ?>
+
 </div>
+
