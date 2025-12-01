@@ -62,17 +62,37 @@ class Form
     }
 
     // Méthode permettant d'ajouter un champ select
+    // public function addSelect(string $name, array $options, array $attributes = []): self
+    // {
+    //     // On ajoute la balise select et l'attribut name
+    //     $this->formElements .= "<select name='$name'";
+    //     $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
+    //     foreach ($options as $key => $value) {
+    //         $this->formElements .= "<option value='$key'>$value</option>";
+    //     }
+    //     $this->formElements .= "</select>";
+    //     return $this;
+    // }
+
     public function addSelect(string $name, array $options, array $attributes = []): self
     {
+        // Extraire la valeur sélectionnée si elle existe
+        $selectedValue = $attributes['value'] ?? null;
+        unset($attributes['value']); // on l'enlève pour ne pas mettre value dans <select>
+
         // On ajoute la balise select et l'attribut name
         $this->formElements .= "<select name='$name'";
-        $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
+        $this->formElements .= !empty($attributes) ? $this->addAttributes($attributes) . ">" : ">";
+
         foreach ($options as $key => $value) {
-            $this->formElements .= "<option value='$key'>$value</option>";
+            $selected = ($key == $selectedValue) ? " selected" : "";
+            $this->formElements .= "<option value='$key'$selected>$value</option>";
         }
+
         $this->formElements .= "</select>";
         return $this;
     }
+
 
     // Méthode permettant de fermer le formulaire
     public function endForm(): self
@@ -106,5 +126,18 @@ class Form
         }
         return false;
     }
+
+    // Méthode qui ajoute un CSRF TOKEN dans les formulaires
+    public function addCSRF(): self
+{
+    $token = \App\Core\Auth::csrfToken();
+    $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
+    return $this;
+}
+
+    // puis dans chaque formulaire : 
+    // $form->startForm(...)
+    //  ->addCSRF()
+    //  ->addLabel(...)
 }
 ?>

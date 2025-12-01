@@ -4,7 +4,7 @@
     <h1>Dashboard Administrateur</h1>
     <p>Accès total à la base de données</p>
 
-    <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=users&action=index">Gérer les utilisateurs</a></div>
+    <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=users&action=index">Gérer les Utilisateurs</a></div>
     <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=seasons&action=index">Gérer les Saisons</a></div>
     <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=circuits&action=index">Gérer les Circuits</a></div>
     <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=teams&action=index">Gérer les Teams</a></div>

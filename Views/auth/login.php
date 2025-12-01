@@ -1,8 +1,7 @@
 <?php
 $title = "Team-eRacing - Connexion au Dashboard";
-
-// $error peut être passé depuis le controller si identifiants invalides
 $errorMessage = $error ?? '';
+use App\Core\Auth;
 ?>
 
 <div class="login-container">
@@ -15,6 +14,8 @@ $errorMessage = $error ?? '';
     <?php endif; ?>
 
     <form action="index.php?controller=auth&action=login" method="POST" class="login-form">
+        <input type="hidden" name="csrf_token" value="<?= Auth::csrfToken() ?>">
+
         <div class="form-group">
             <label for="email">Adresse email :</label>
             <input type="email" id="email" name="email" required placeholder="Votre email">
@@ -30,6 +31,7 @@ $errorMessage = $error ?? '';
         </div>
     </form>
 </div>
+
 
 <?php
 // SCRIPT POUR CREER MOT DE PASSE HASHE ET SECURISE DANS LA BDD
