@@ -82,7 +82,7 @@ INSERT INTO categories (id, name) VALUES
 CREATE TABLE countries (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,   -- nom du pays
-    code CHAR(3) DEFAULT NULL,           -- code à 3 lettres (ex: FRA, ITA)
+    code CHAR(3) DEFAULT NULL UNIQUE,    -- code à 3 lettres (ex: FRA, ITA)
     flag VARCHAR(255) DEFAULT NULL       -- URL ou chemin vers le drapeau
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

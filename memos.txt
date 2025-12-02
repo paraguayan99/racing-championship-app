@@ -12,24 +12,24 @@ ______________________________________
 
 TABLES de la BDD championship_last 
 ______________________________________
-ADMIN :
-countries
-circuits	
-teams	 		
-drivers	
-manual_adjustments
+ADMIN :		 		
+manual_adjustments + INSERT AUTO updates_log
 ______________________________________
 ADMIN + MODO :
 teams_drivers
 gp	 		
-gp_points	 		
-gp_stats	 				
-penalties	 					
+gp_points + INSERT AUTO updates_log	
+gp_stats + INSERT AUTO updates_log
+penalties + INSERT AUTO updates_log					
 
 updates_log	 (pas de CRUD a effectuer mais un INSERT automatique lors de MAJ des tables : gp_points, gp_stats, penalties et manual_adjustments)
 ______________________________________
-FONCTIONNELS :
+FONCTIONNEL :
 roles		
 users	 
 categories
 seasons
+countries
+circuits
+teams
+drivers	
