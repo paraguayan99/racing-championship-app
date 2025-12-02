@@ -1,0 +1,35 @@
+GITHUB
+Pour commit sur main :
+
+cd C:\wamp64\www\dwwmprojetexamen
+git status
+git add . (Ajoutes tous les fichiers UNTRACKED)
+git status (pour vérifier que tout a bien été TRACKED)
+git commit -m "" (Ajouter nom du commit)
+git push origin main
+______________________________________
+
+
+TABLES de la BDD championship_last 
+______________________________________
+ADMIN :
+countries
+circuits	
+teams	 		
+drivers	
+manual_adjustments
+______________________________________
+ADMIN + MODO :
+teams_drivers
+gp	 		
+gp_points	 		
+gp_stats	 				
+penalties	 					
+
+updates_log	 (pas de CRUD a effectuer mais un INSERT automatique lors de MAJ des tables : gp_points, gp_stats, penalties et manual_adjustments)
+______________________________________
+FONCTIONNELS :
+roles		
+users	 
+categories
+seasons

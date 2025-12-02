@@ -7,13 +7,6 @@ use App\Models\UsersModel;
 
 class AuthController extends Controller
 {
-    // Affiche le formulaire de connexion
-    // public function showLoginForm()
-    // {
-    //     $error = '';
-    //     $this->render('auth/login', ['error' => $error]);
-    // }
-
     // Traitement du login
     public function login()
     {
