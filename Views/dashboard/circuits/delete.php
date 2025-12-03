@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer un circuit</h1>
+    <h1>Supprimer circuit : <?= $name ?></h1>
 
     <p>Voulez-vous vraiment supprimer ce circuit ?</p>
 

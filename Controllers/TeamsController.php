@@ -45,8 +45,10 @@ class TeamsController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'country_id'])) {
 
-                $name = $_POST['name'];
+                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                $name = trim($_POST['name']);
                 $logo = $_POST['logo'] ?? null;
+                $color = trim($_POST['color']) ?? null;
                 $country_id = $_POST['country_id'];
                 $status = $_POST['status'] ?? 'active';
 
@@ -55,11 +57,11 @@ class TeamsController extends Controller {
 
                 try {
                     $stmt = $pdo->prepare("
-                        INSERT INTO teams (name, logo, country_id, status)
-                        VALUES (?, ?, ?, ?)
+                        INSERT INTO teams (name, logo, color, country_id, status)
+                        VALUES (?, ?, ?, ?, ?)
                     ");
 
-                    if ($stmt->execute([$name, $logo, $country_id, $status])) {
+                    if ($stmt->execute([$name, $logo, $color, $country_id, $status])) {
                         $message = "Équipe créée avec succès";
                         $classMsg = "msg-success";
                     } else {
@@ -105,6 +107,8 @@ class TeamsController extends Controller {
             ->addInput("text", "name")
             ->addLabel("logo", "URL ou chemin du logo :")
             ->addInput("text", "logo")
+            ->addLabel("color", "Couleur :")
+            ->addInput("text", "color")
             ->addLabel("country_id", "Pays :")
             ->addSelect("country_id", $countriesOptions)
             ->addLabel("status", "Statut :")
@@ -152,13 +156,18 @@ class TeamsController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'country_id'])) {
                 try {
+
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']);
+
                     $stmt = $pdo->prepare("
-                        UPDATE teams SET name=?, logo=?, country_id=?, status=? WHERE id=?
+                        UPDATE teams SET name=?, logo=?, color=?, country_id=?, status=? WHERE id=?
                     ");
 
                     if ($stmt->execute([
-                        $_POST['name'],
+                        $name,
                         $_POST['logo'],
+                        trim($_POST['color']),
                         $_POST['country_id'],
                         $_POST['status'],
                         $id
@@ -171,7 +180,7 @@ class TeamsController extends Controller {
                     }
                 } catch (\PDOException $e) {
                     if ($e->getCode() == 23000) {
-                        $message = "Erreur : ce nom d’équipe existe déjà !";
+                        $message = "Erreur : ce nom d’équipe (ou cette couleur) existe déjà !";
                     } else {
                         $message = "Erreur lors de la mise à jour";
                     }
@@ -205,6 +214,8 @@ class TeamsController extends Controller {
             ->addInput("text", "name", ["value" => $team->name])
             ->addLabel("logo", "URL ou chemin du logo :")
             ->addInput("text", "logo", ["value" => $team->logo])
+            ->addLabel("color", "Couleur :")
+            ->addInput("text", "color", ["value" => $team->color])
             ->addLabel("country_id", "Pays :")
             ->addSelect("country_id", $countriesOptions, ["value" => $team->country_id])
             ->addLabel("status", "Statut :")
@@ -276,6 +287,7 @@ class TeamsController extends Controller {
 
         $this->render('dashboard/teams/delete', [
             'id' => $id,
+            'name' => $team->name,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

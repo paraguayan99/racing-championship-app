@@ -49,7 +49,9 @@ class UsersController extends Controller {
 
             if (Form::validatePost($_POST, ['email', 'password', 'role_id'])) {
 
-                $email = $_POST['email'];
+                // Supprime les espaces en début et fin de chaine de texte, et rend toutes les lettres en minuscules
+                $email = trim($_POST['email']);
+                $email = strtolower($email);
                 $password_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 $role_id = $_POST['role_id'];
 
@@ -104,13 +106,12 @@ class UsersController extends Controller {
 
         $form->startForm("index.php?controller=users&action=create", "POST")
             ->addCSRF()
+            ->addLabel("role_id", "Rôle :")
+            ->addSelect("role_id", $rolesOptions)
             ->addLabel("email", "Email :")
             ->addInput("email", "email")
             ->addLabel("password", "Mot de passe :")
             ->addInput("password", "password")
-            ->addLabel("role_id", "Rôle :")
-            ->addSelect("role_id", $rolesOptions)
-            // ->addInput("submit", "submit", ["value" => "Créer"])
             ->addSubmit("Créer")
             ->endForm();
 
@@ -157,8 +158,12 @@ class UsersController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (Form::validatePost($_POST, ['email', 'role_id'])) {
                 try {
+                    // Supprime les espaces en début et fin de chaine de texte, et rend toutes les lettres en minuscules
+                    $email = trim($_POST['email']);
+                    $email = strtolower($email);
+
                     $stmt = $pdo->prepare("UPDATE users SET email=?, role_id=? WHERE id=?");
-                    if ($stmt->execute([$_POST['email'], $_POST['role_id'], $id])) {
+                    if ($stmt->execute([$email, $_POST['role_id'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -199,11 +204,10 @@ class UsersController extends Controller {
 
         $form->startForm("index.php?controller=users&action=update&id=" . $user->id, "POST")
             ->addCSRF()
-            ->addLabel("email", "Email :")
-            ->addInput("email", "email", ["value" => $user->email])
             ->addLabel("role_id", "Rôle :")
             ->addSelect("role_id", $rolesOptions, ["value" => $user->role_id])
-            // ->addInput("submit", "submit", ["value" => "Mettre à jour"])
+            ->addLabel("email", "Email :")
+            ->addInput("email", "email", ["value" => $user->email])
             ->addSubmit("Mettre à jour")
             ->endForm();
 
@@ -278,6 +282,7 @@ class UsersController extends Controller {
         // GET ⇒ afficher page de confirmation
         $this->render('dashboard/users/delete', [
             'id' => $id,
+            'email' => $user->email,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

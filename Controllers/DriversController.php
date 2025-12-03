@@ -18,11 +18,11 @@ class DriversController extends Controller {
 
     public function index()
     {
-        $teams = DriversModel::all();
+        $drivers = DriversModel::all();
         $countries = CountriesModel::all();
 
         $this->render('dashboard/drivers/index', [
-            'list' => $teams,
+            'list' => $drivers,
             'countries' => $countries
         ]);
     }
@@ -39,7 +39,8 @@ class DriversController extends Controller {
 
             if (Form::validatePost($_POST, ['nickname', 'country_id', 'status'])) {
 
-                $nickname = $_POST['nickname'];
+                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                $nickname = trim($_POST['nickname']);
                 $country_id = $_POST['country_id'];
                 $status = $_POST['status'];
 
@@ -125,9 +126,9 @@ class DriversController extends Controller {
 
         $stmt = $pdo->prepare("SELECT * FROM drivers WHERE id=?");
         $stmt->execute([$id]);
-        $team = $stmt->fetch();
+        $driver = $stmt->fetch();
 
-        if (!$team) {
+        if (!$driver) {
             $message = "Pilote introuvable";
             $classMsg = "msg-error";
 
@@ -147,13 +148,17 @@ class DriversController extends Controller {
             if (Form::validatePost($_POST, ['nickname', 'country_id', 'status'])) {
 
                 try {
+
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['nickname']);
+
                     $stmt = $pdo->prepare("
                         UPDATE drivers 
                         SET nickname=?, country_id=?, status=?
                         WHERE id=?
                     ");
 
-                    if ($stmt->execute([$_POST['nickname'], $_POST['country_id'], $_POST['status'], $id])) {
+                    if ($stmt->execute([$name, $_POST['country_id'], $_POST['status'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -193,17 +198,17 @@ class DriversController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=drivers&action=update&id=" . $team->id, "POST")
+        $form->startForm("index.php?controller=drivers&action=update&id=" . $driver->id, "POST")
             ->addCSRF()
             ->addLabel("nickname", "Pseudo :")
-            ->addInput("text", "nickname", ["value" => $team->nickname])
+            ->addInput("text", "nickname", ["value" => $driver->nickname])
             ->addLabel("country_id", "Pays :")
-            ->addSelect("country_id", $countriesOptions, ["value" => $team->country_id])
+            ->addSelect("country_id", $countriesOptions, ["value" => $driver->country_id])
             ->addLabel("status", "Statut :")
             ->addSelect("status", [
                 'active' => 'Actif',
                 'desactive' => 'Désactivé'
-            ], ["value" => $team->status])
+            ], ["value" => $driver->status])
             ->addSubmit("Mettre à jour")
             ->endForm();
 
@@ -227,9 +232,9 @@ class DriversController extends Controller {
 
         $stmt = $pdo->prepare("SELECT * FROM drivers WHERE id=?");
         $stmt->execute([$id]);
-        $team = $stmt->fetch();
+        $driver = $stmt->fetch();
 
-        if (!$team) {
+        if (!$driver) {
             $message = "Erreur : le pilote demandé n’existe pas.";
             $classMsg = "msg-error";
 
@@ -271,6 +276,7 @@ class DriversController extends Controller {
 
         $this->render('dashboard/drivers/delete', [
             'id' => $id,
+            'nickname' => $driver->nickname,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

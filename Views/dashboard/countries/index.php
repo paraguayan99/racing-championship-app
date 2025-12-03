@@ -20,7 +20,6 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Code</th>
                     <th>Drapeau</th>
@@ -31,7 +30,6 @@
             <tbody>
                 <?php foreach ($list as $country): ?>
                 <tr>
-                    <td><?= htmlspecialchars($country->id) ?></td>
                     <td><?= htmlspecialchars($country->name) ?></td>
                     <td><?= htmlspecialchars($country->code ?? '') ?></td>
                     <td><?= htmlspecialchars($country->flag ?? '') ?></td>

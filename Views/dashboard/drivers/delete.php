@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer un pilote</h1>
+    <h1>Supprimer pilote : <?= $nickname ?></h1>
 
     <p>Voulez-vous vraiment supprimer ce pilote ?</p>
 

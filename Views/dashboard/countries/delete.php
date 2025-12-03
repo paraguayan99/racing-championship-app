@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer un pays</h1>
+    <h1>Supprimer pays : <?= $name ?></h1>
 
     <p>Voulez-vous vraiment supprimer ce pays ?</p>
 

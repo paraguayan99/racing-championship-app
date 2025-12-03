@@ -20,9 +20,9 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Logo</th>
+                    <th>Couleur</th>
                     <th>Pays</th>
                     <th>Statut</th>
                     <th class="actions-column">Actions</th>
@@ -32,13 +32,13 @@
             <tbody>
                 <?php foreach ($list as $team): ?>
                 <tr>
-                    <td><?= htmlspecialchars($team->id) ?></td>
                     <td><?= htmlspecialchars($team->name) ?></td>
                     <td>
-                        <?php if (!empty($team->logo)): ?>
+                        <?php if (!empty($team->logo ?? '')): ?>
                             <img src="<?= htmlspecialchars($team->logo) ?>" alt="logo" style="height:40px;">
                         <?php endif; ?>
                     </td>
+                    <td><?= htmlspecialchars($team->color ?? '')?></td>
                     <td><?= htmlspecialchars($team->country) ?></td>
                     <td><?= htmlspecialchars($team->status) ?></td>
                     <td class="actions">

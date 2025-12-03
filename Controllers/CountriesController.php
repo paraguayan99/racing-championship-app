@@ -37,9 +37,11 @@ class CountriesController extends Controller {
 
             if (Form::validatePost($_POST, ['name'])) {
 
-                $name = $_POST['name'];
+                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                $name = trim($_POST['name']); 
+
                 // Forcer le code si absent ou trop court (<3 lettres)
-                $code = (empty($_POST['code']) || strlen($_POST['code']) < 3) 
+                $code = (empty($name) || strlen($_POST['code']) < 3) 
                         ? strtoupper(substr($name, 0, 3)) 
                         : strtoupper($_POST['code']); // on met aussi en majuscule pour uniformité
                 $flag = $_POST['flag'] ?? null;
@@ -136,8 +138,11 @@ class CountriesController extends Controller {
                         : strtoupper($_POST['code']); // on met aussi en majuscule pour uniformité
 
                 try {
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']); 
+
                     $stmt = $pdo->prepare("UPDATE countries SET name=?, code=?, flag=? WHERE id=?");
-                    if ($stmt->execute([$_POST['name'], $code ?? null, $_POST['flag'] ?? null, $id])) {
+                    if ($stmt->execute([$name, $code ?? null, $_POST['flag'] ?? null, $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -238,6 +243,7 @@ class CountriesController extends Controller {
         // GET : page confirmation suppression
         $this->render('dashboard/countries/delete', [
             'id' => $id,
+            'name' => $country->name,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

@@ -207,7 +207,12 @@ class SeasonsController extends Controller {
         $db = new SeasonsModel();
         $pdo = $db->getConnection();
 
-        $stmt = $pdo->prepare("SELECT * FROM seasons WHERE id=?");
+        $stmt = $pdo->prepare("
+            SELECT seasons.*, categories.name AS category_name
+            FROM seasons
+            JOIN categories ON seasons.category_id = categories.id
+            WHERE seasons.id = ?
+        ");
         $stmt->execute([$id]);
         $season = $stmt->fetch();
 
@@ -250,6 +255,8 @@ class SeasonsController extends Controller {
 
         $this->render('dashboard/seasons/delete', [
             'id' => $id,
+            'season_number' => $season->season_number,
+            'category_name' => $season->category_name,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

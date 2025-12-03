@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer une catégorie</h1>
+    <h1>Supprimer catégorie : <?= $name ?></h1>
 
     <p>Voulez-vous vraiment supprimer cette catégorie ?</p>
 

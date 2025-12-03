@@ -2,9 +2,9 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer un utilisateur</h1>
+    <h1>Supprimer utilisateur :   <?= $email ?></h1>
 
-    <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
+    <p>Voulez-vous vraiment supprimer cet utilisateur : ?</p>
 
     <div class="delete-actions">
 

@@ -20,7 +20,6 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Pays</th>
                     <th>Statut</th>
@@ -31,7 +30,6 @@
             <tbody>
                 <?php foreach ($list as $circuit): ?>
                 <tr>
-                    <td><?= htmlspecialchars($circuit->id) ?></td>
                     <td><?= htmlspecialchars($circuit->name) ?></td>
                     <td><?= htmlspecialchars($circuit->country) ?></td>
                     <td><?= htmlspecialchars($circuit->status) ?></td>

@@ -36,7 +36,8 @@ class CategoriesController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'status'])) {
 
-                $name = $_POST['name'];
+                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                $name = trim($_POST['name']);
                 $status = $_POST['status'];
 
                 // Connexion DB
@@ -148,9 +149,11 @@ class CategoriesController extends Controller {
             if (Form::validatePost($_POST, ['name', 'status'])) {
 
                 try {
-                    // Vérifier existence nom (hors cette catégorie)
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']);
+                    // Vérifier existence nom
                     $stmt = $pdo->prepare("SELECT * FROM categories WHERE name=? AND id!=?");
-                    $stmt->execute([$_POST['name'], $id]);
+                    $stmt->execute([$name, $id]);
 
                     if ($stmt->fetch()) {
                         $message = "Erreur : ce nom existe déjà !";
@@ -165,9 +168,12 @@ class CategoriesController extends Controller {
                     }
 
                     // UPDATE
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']);
+
                     $stmt = $pdo->prepare("UPDATE categories SET name=?, status=? WHERE id=?");
 
-                    if ($stmt->execute([$_POST['name'], $_POST['status'], $id])) {
+                    if ($stmt->execute([$name, $_POST['status'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -272,6 +278,7 @@ class CategoriesController extends Controller {
         // GET => page de confirmation
         $this->render('dashboard/categories/delete', [
             'id' => $id,
+            'name' => $category->name,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

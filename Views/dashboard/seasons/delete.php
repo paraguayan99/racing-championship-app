@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer une saison</h1>
+    <h1>Supprimer saison : n°<?= $season_number ?> de <?= $category_name ?> </h1>
 
     <p>Voulez-vous vraiment supprimer cette saison ?</p>
 

@@ -132,6 +132,13 @@ CREATE TABLE teams (
   FOREIGN KEY (country_id) REFERENCES countries(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- AJOUT DUNE COLONNE COLOR POUR AMELIORER LE FRONT END
+ALTER TABLE teams
+ADD COLUMN color VARCHAR(50) AFTER logo;
+-- AJOUT DU PARAMETRE UNIQUE DE LA COULEUR
+ALTER TABLE teams
+ADD UNIQUE (color);
+
 -- --------------------------------------------------------
 -- drivers
 -- --------------------------------------------------------

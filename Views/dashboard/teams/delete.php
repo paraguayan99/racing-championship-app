@@ -2,7 +2,7 @@
 
 <div class="section-dashboard">
 
-    <h1>Supprimer une équipe</h1>
+    <h1>Supprimer équipe : <?= $name ?></h1>
 
     <p>Voulez-vous vraiment supprimer cette équipe ?</p>
 

@@ -39,13 +39,14 @@ class CircuitsController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'country_id'])) {
 
-                $name = $_POST['name'];
-                $country_id = $_POST['country_id'];
-
                 $db = new CircuitsModel();
                 $pdo = $db->getConnection();
 
                 try {
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']);
+                    $country_id = $_POST['country_id'];
+
                     $stmt = $pdo->prepare("
                         INSERT INTO circuits (name, country_id) 
                         VALUES (?, ?)
@@ -148,7 +149,10 @@ class CircuitsController extends Controller {
                         WHERE id=?
                     ");
 
-                    if ($stmt->execute([$_POST['name'], $_POST['country_id'], $_POST['status'], $id])) {
+                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    $name = trim($_POST['name']);
+
+                    if ($stmt->execute([$name, $_POST['country_id'], $_POST['status'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -266,6 +270,7 @@ class CircuitsController extends Controller {
         // GET ⇒ page confirmation
         $this->render('dashboard/circuits/delete', [
             'id' => $id,
+            'name' => $circuit->name,
             'message' => $message,
             'classMsg' => $classMsg
         ]);

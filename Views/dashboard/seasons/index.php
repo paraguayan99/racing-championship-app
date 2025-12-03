@@ -20,7 +20,6 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Numéro de saison</th>
                     <th>Catégorie</th>
                     <th>Jeu vidéo</th>
@@ -33,7 +32,6 @@
             <tbody>
                 <?php foreach ($list as $season): ?>
                 <tr>
-                    <td><?= htmlspecialchars($season->id) ?></td>
                     <td><?= htmlspecialchars($season->season_number) ?></td>
                     <td><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
                     <td><?= htmlspecialchars($season->videogame) ?></td>

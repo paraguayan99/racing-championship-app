@@ -20,7 +20,6 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Pseudo</th>
                     <th>Pays</th>
                     <th>Statut</th>
@@ -31,7 +30,6 @@
             <tbody>
                 <?php foreach ($list as $driver): ?>
                 <tr>
-                    <td><?= htmlspecialchars($driver->id) ?></td>
                     <td><?= htmlspecialchars($driver->nickname) ?></td>
                     <td><?= htmlspecialchars($driver->country) ?></td>
                     <td><?= htmlspecialchars($driver->status) ?></td>

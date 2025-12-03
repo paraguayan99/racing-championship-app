@@ -20,7 +20,6 @@
         <table class="dashboard-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Status</th>
                     <th class="actions-column">Actions</th>
@@ -30,7 +29,6 @@
             <tbody>
                 <?php foreach ($list as $cat): ?>
                 <tr>
-                    <td><?= htmlspecialchars($cat->id) ?></td>
                     <td><?= htmlspecialchars($cat->name) ?></td>
                     <td><?= htmlspecialchars($cat->status) ?></td>
                     <td class="actions">

@@ -8,6 +8,7 @@ class TeamsModel extends DbConnect {
     public $id;
     public $name;
     public $logo;
+    public $color;
     public $country_id;
     public $status;
 
@@ -32,7 +33,7 @@ class TeamsModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT teams.id, teams.name, teams.logo, teams.status,
+            SELECT teams.id, teams.name, teams.logo, teams.color, teams.status,
                    countries.name AS country
             FROM teams
             JOIN countries ON teams.country_id = countries.id
