@@ -29,5 +29,19 @@ class CircuitsModel extends DbConnect {
             ORDER BY name ASC
         ")->fetchAll();
     }
+
+    // Pour afficher uniquement les ACTIFS dans les formulaires
+    public static function getActive()
+    {
+        $db = new DbConnect();
+        $sql = "
+            SELECT * 
+            FROM circuits 
+            WHERE status = 'active'
+            ORDER BY name ASC
+        ";
+        return $db->getConnection()->query($sql)->fetchAll();
+    }
+
 }
 ?>

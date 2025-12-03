@@ -33,5 +33,14 @@ class DriversModel extends DbConnect {
             JOIN countries ON drivers.country_id = countries.id
         ")->fetchAll();
     }
+
+    // Pour afficher uniquement les ACTIFS dans les formulaires
+    public static function getActive()
+    {
+        $db = new DbConnect();
+        $sql = "SELECT * FROM drivers WHERE status = 'active' ORDER BY nickname ASC";
+        return $db->getConnection()->query($sql)->fetchAll();
+    }
+
 }
 ?>

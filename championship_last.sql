@@ -138,6 +138,9 @@ ADD COLUMN color VARCHAR(50) AFTER logo;
 -- AJOUT DU PARAMETRE UNIQUE DE LA COULEUR
 ALTER TABLE teams
 ADD UNIQUE (color);
+-- FINALEMENT ON LE SUPPRIME CAR CA COMPLIQUE LA CREATION ET CREE DES ERREURS
+-- Supprimer l'index UNIQUE sur color
+ALTER TABLE teams DROP INDEX color;
 
 -- --------------------------------------------------------
 -- drivers
@@ -194,6 +197,9 @@ CREATE TABLE gp_points (
   FOREIGN KEY (driver_id) REFERENCES drivers(id),
   FOREIGN KEY (team_id) REFERENCES teams(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- DANS LE FORMULAIRE CREATE, LE TEAM_ID PEUT ETRE REMPLI AUTOMATIQUEMENT 
+-- LORSQUON A SELECTIONNE LE DRIVER VIA LA TABLE TEAMS_DRIVERS ET SA TEAM ASSOCIEE
 
 -- --------------------------------------------------------
 -- gp_stats (résultats des GP)

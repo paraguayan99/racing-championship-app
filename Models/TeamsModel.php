@@ -39,5 +39,19 @@ class TeamsModel extends DbConnect {
             JOIN countries ON teams.country_id = countries.id
         ")->fetchAll();
     }
+
+    // Pour afficher uniquement les ACTIFS dans les formulaires
+    public static function getActive()
+    {
+        $db = new DbConnect();
+        $sql = "
+            SELECT * 
+            FROM teams 
+            WHERE status = 'active'
+            ORDER BY name ASC
+        ";
+        return $db->getConnection()->query($sql)->fetchAll();
+    }
+
 }
 ?>

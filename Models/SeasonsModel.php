@@ -35,5 +35,25 @@ class SeasonsModel extends DbConnect {
         $stmt->execute([$id]);
         return $stmt->fetch();
     }
+
+    // Pour afficher uniquement les ACTIFS dans les formulaires et aussi le nom de la categorie, numero de la saison, video game et platform.
+    public static function getActive()
+    {
+        $db = new DbConnect();
+        return $db->getConnection()->query("
+            SELECT 
+                seasons.id,
+                seasons.season_number,
+                categories.name AS category,
+                seasons.videogame,
+                seasons.platform,
+                seasons.status
+            FROM seasons
+            JOIN categories ON seasons.category_id = categories.id
+            WHERE seasons.status = 'active'
+            ORDER BY seasons.season_number DESC
+        ")->fetchAll();
+    }
+
 }
 ?>

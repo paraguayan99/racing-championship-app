@@ -8,21 +8,17 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-
 CRUD A FAIRE :
 
 ADMIN + MODO :
-teams_drivers
-gp	 		
-gp_points + INSERT AUTO updates_log	
-gp_stats + INSERT AUTO updates_log
-penalties + INSERT AUTO updates_log					
+gp	(affichage et CRUD saisons actives avec public static function getActive()) + Suppression d'un GP impossible si points / stats / penalités ajoutées
+gp_points + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())	
+gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())	
+penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())			
 
-updates_log	 (pas de CRUD a effectuer mais un INSERT automatique lors de MAJ des tables : gp_points, gp_stats, penalties et manual_adjustments)
+updates_log	 (INSERT into table au CREATE UPDATE ET DELETE des controllers : gp_points, gp_stats, penalties et manual_adjustments)
 ______________________________________
 FONCTIONNEL :
-
-ADMIN :	
 roles		
 users	 
 categories
@@ -30,5 +26,12 @@ seasons
 countries
 circuits
 teams
-drivers	
+drivers
 manual_adjustments + INSERT AUTO updates_log
+teams_drivers (affichage et CRUD autorisé pour les saisons actives uniquement)
+
+______________________________________
+// Pour afficher uniquement les ACTIFS dans les formulaires
+    public static function getActive()
+fonction crée pour les 5 tables qui ont l'option active / desactive : categories, circuits, seasons, teams, drivers
+______________________________________

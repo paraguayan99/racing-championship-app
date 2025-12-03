@@ -15,6 +15,9 @@ class ManualAdjustmentsController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
+
+        // Pour élargir les accès aux autres rôles en array
+        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
     public function index()
@@ -267,7 +270,6 @@ class ManualAdjustmentsController extends Controller {
         $classMsg = '';
 
         // On instancie ces Models pour préparer les variables à afficher sur la page delete
-
         $seasons = SeasonsModel::all();
         $drivers = DriversModel::all();
         $teams   = TeamsModel::all();

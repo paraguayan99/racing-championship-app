@@ -24,6 +24,15 @@ class CategoriesModel extends DbConnect {
             ORDER BY id ASC
         ")->fetchAll();
     }
+
+    // Pour afficher uniquement les ACTIFS dans les formulaires
+    public static function getActive()
+    {
+        $db = new DbConnect();
+        $sql = "SELECT * FROM categories WHERE status = 'active' ORDER BY name ASC";
+        return $db->getConnection()->query($sql)->fetchAll();
+    }
+
 }
 ?>
 
