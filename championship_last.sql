@@ -239,6 +239,14 @@ CREATE TABLE manual_adjustments (
   FOREIGN KEY (team_id) REFERENCES teams(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- AJOUT D'UNE CONTRAINTE : Driver ou Team doit être renseigné, les 2 ne peuvent être NULL.
+
+ALTER TABLE manual_adjustments
+ADD CONSTRAINT chk_driver_or_team
+CHECK (
+    driver_id IS NOT NULL OR team_id IS NOT NULL
+);
+
 -- --------------------------------------------------------
 -- updates_log
 -- Enregistre l'historique des mises à jour
@@ -259,6 +267,9 @@ CREATE TABLE updates_log (
     CHECK (season_id IS NOT NULL OR gp_id IS NOT NULL) -- au moins une des deux doit être renseignée
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- AJOUT DUNE COLONNE ACTION pour savoir si l'utilisateur a CREATE, UPDATE ou DELETE sur une des 4 tables
+ALTER TABLE updates_log
+ADD COLUMN action VARCHAR(50) NOT NULL DEFAULT '';
 
 -- --------------------------------------------------------
 -- Indexes optimisés pour toutes les tables

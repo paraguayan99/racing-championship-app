@@ -9,12 +9,8 @@ git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
 
+CRUD A FAIRE :
 
-TABLES de la BDD championship_last 
-______________________________________
-ADMIN :		 		
-manual_adjustments + INSERT AUTO updates_log
-______________________________________
 ADMIN + MODO :
 teams_drivers
 gp	 		
@@ -25,6 +21,8 @@ penalties + INSERT AUTO updates_log
 updates_log	 (pas de CRUD a effectuer mais un INSERT automatique lors de MAJ des tables : gp_points, gp_stats, penalties et manual_adjustments)
 ______________________________________
 FONCTIONNEL :
+
+ADMIN :	
 roles		
 users	 
 categories
@@ -33,3 +31,4 @@ countries
 circuits
 teams
 drivers	
+manual_adjustments + INSERT AUTO updates_log

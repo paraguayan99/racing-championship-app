@@ -1,0 +1,52 @@
+<?php $title = 'Team-eRacing - Ajustements manuels'; ?>
+
+<?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
+    <div class="<?= htmlspecialchars($classMsg ?? '') ?>">
+        <?= htmlspecialchars($message ?? '') ?>
+    </div>
+<?php endif; ?>
+
+<div class="section-dashboard">
+
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
+        <h1>Ajustements manuels</h1>
+        <a class="nav-btn-dashboard" href="index.php?controller=manualadjustments&action=create">Ajouter un ajustement</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Saison</th>
+                    <th>Pilote</th>
+                    <th>Équipe</th>
+                    <th>Points</th>
+                    <th>Commentaires</th>
+                    <th class="actions-column">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($list as $adj): ?>
+                <tr>
+                    <td><?= htmlspecialchars($adj->category_name ?? '') ?> - Saison <?= htmlspecialchars($adj->season_number ?? '') ?></td>
+                    <td><?= htmlspecialchars($adj->driver_nickname ?? '') ?></td>
+                    <td><?= htmlspecialchars($adj->team_name ?? '') ?></td>
+                    <td><?= htmlspecialchars($adj->points) ?></td>
+                    <td><?= htmlspecialchars($adj->comment ?? '') ?></td>
+                    <td class="actions">
+                        <a class="action-btn edit" href="index.php?controller=manualadjustments&action=update&id=<?= $adj->id ?>">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a class="action-btn delete" href="index.php?controller=manualadjustments&action=delete&id=<?= $adj->id ?>">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+</div>
