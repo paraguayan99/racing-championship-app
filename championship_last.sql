@@ -260,22 +260,51 @@ CHECK (
 -- possibilité d'afficher tout l'historique des mises à jour
 -- possibilité d'afficher la dernière mise à jour
 -- --------------------------------------------------------
+
+-- SUPPRESSION ET CREATION DE LA NOUVELLE TABLE UPDATES LOG 
+-- POUR EVITER TOUTE SUPPRESSION EN CASCADE MEME SI SAISON SUPPRIMEE OU GP SUPPRIME
+
+-- Suppression de la table si elle existe
+DROP TABLE IF EXISTS updates_log;
+
+-- Création de la table avec ON DELETE SET NULL sur les clés étrangères
 CREATE TABLE updates_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    season_id INT DEFAULT NULL, -- Si la modification concerne toute la saison
-    gp_id INT DEFAULT NULL,     -- Si la modification concerne un GP spécifique
-    table_name VARCHAR(50) NOT NULL, -- 'gp_points', 'gp_stats', 'penalties', 'manual_adjustments'
-    updated_at DATETIME NOT NULL,
-    updated_by INT NOT NULL,    -- utilisateur qui a effectué la modification
-    FOREIGN KEY (season_id) REFERENCES seasons(id) ON DELETE CASCADE,
-    FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
-    FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE CASCADE,
-    CHECK (season_id IS NOT NULL OR gp_id IS NOT NULL) -- au moins une des deux doit être renseignée
+id INT AUTO_INCREMENT PRIMARY KEY,
+season_id INT DEFAULT NULL,
+gp_id INT DEFAULT NULL,
+table_name VARCHAR(50) NOT NULL,
+updated_at DATETIME NOT NULL,
+updated_by INT DEFAULT NULL,
+action VARCHAR(50) NOT NULL DEFAULT '',
+CONSTRAINT fk_updates_season FOREIGN KEY (season_id) REFERENCES seasons(id) ON DELETE SET NULL,
+CONSTRAINT fk_updates_gp FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE SET NULL,
+CONSTRAINT fk_updates_user FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- AJOUT DUNE COLONNE ACTION pour savoir si l'utilisateur a CREATE, UPDATE ou DELETE sur une des 4 tables
-ALTER TABLE updates_log
-ADD COLUMN action VARCHAR(50) NOT NULL DEFAULT '';
+-- Trigger pour simuler le CHECK constraint
+DELIMITER $$
+
+CREATE TRIGGER trg_updates_log_check
+BEFORE INSERT ON updates_log
+FOR EACH ROW
+BEGIN
+IF NEW.season_id IS NULL AND NEW.gp_id IS NULL THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Saison ou GP doit être renseigné.';
+END IF;
+END$$
+
+CREATE TRIGGER trg_updates_log_check_update
+BEFORE UPDATE ON updates_log
+FOR EACH ROW
+BEGIN
+IF NEW.season_id IS NULL AND NEW.gp_id IS NULL THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Saison ou GP doit être renseigné.';
+END IF;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 -- Indexes optimisés pour toutes les tables
@@ -580,3 +609,187 @@ SELECT
     SUM(CASE WHEN rank_season = 3 THEN 1 ELSE 0 END) AS third_place
 FROM season_ranking
 GROUP BY team_id, team_name, category;
+
+
+-- trigger MySQL pour vérifier plusieurs tables avant suppression
+-- CONTRAINTES AJOUTEES POUR LES SUPPRESSIONS 
+-- DES SAISONS (si gp, teams_drivers ou manual_ajustment existent)
+-- DES GP (si gp_points, gp_stats ou penalties existent)
+
+-- --------------------------------------------------------
+-- EXEMPLE POUR SUPPRIMER TRIGGER AVANT DE LE REMETTRE
+DROP TRIGGER IF EXISTS trg_teams_before_delete;
+DROP TRIGGER IF EXISTS trg_countries_before_delete;
+-- --------------------------------------------------------
+-- --------------------------------------------------------
+-- season impossible à supprimer si rattaché à une season, manual_adjustments ou teams_drivers
+-- --------------------------------------------------------
+DELIMITER $$
+
+CREATE TRIGGER before_delete_season
+BEFORE DELETE ON seasons
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM gp WHERE season_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des GP existent pour cette Saison.';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM manual_adjustments WHERE season_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des ajustements manuels existent pour cette Saison.';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM teams_drivers WHERE season_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des associations Teams/Drivers existent pour cette Saison.';
+    END IF;
+END$$
+
+
+-- --------------------------------------------------------
+-- gp impossible à supprimer si rattaché à gp_points, gp_stats ou penalties
+-- --------------------------------------------------------
+
+CREATE TRIGGER before_delete_gp
+BEFORE DELETE ON gp
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM gp_points WHERE gp_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des points existent pour ce GP.';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM gp_stats WHERE gp_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des stats existent pour ce GP.';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM penalties WHERE gp_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des pénalités existent pour ce GP.';
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- trigger MySQL pour vérifier plusieurs tables avant suppression
+-- CONTRAINTES AJOUTEES POUR LES SUPPRESSIONS 
+-- SYSTEME ADOPTE ET ELARGI CAR PERMET DE RECUPERER MESSAGE PERSONNALISE PDO via TRY CATCH
+
+-- --------------------------------------------------------
+-- categories impossible à supprimer si des seasons sont rattachées
+-- --------------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER trg_categories_before_delete
+BEFORE DELETE ON categories
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM seasons WHERE category_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : des saisons sont rattachées à cette catégorie.';
+    END IF;
+END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+-- circuits impossible à supprimer si rattaché à un GP
+-- --------------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER trg_circuits_before_delete
+BEFORE DELETE ON circuits
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM gp WHERE circuit_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce circuit est rattaché à un Grand Prix.';
+    END IF;
+END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+-- countries impossible à supprimer si rattaché à circuits, teams, drivers ou gp
+-- --------------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER trg_countries_before_delete
+BEFORE DELETE ON countries
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM circuits WHERE country_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pays est rattaché à un circuit.';
+    ELSEIF EXISTS (SELECT 1 FROM teams WHERE country_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pays est rattaché à une équipe.';
+    ELSEIF EXISTS (SELECT 1 FROM drivers WHERE country_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pays est rattaché à un pilote.';
+    ELSEIF EXISTS (SELECT 1 FROM gp 
+                   JOIN seasons ON gp.season_id = seasons.id 
+                   JOIN categories ON seasons.category_id = categories.id
+                   WHERE gp.circuit_id IN (SELECT id FROM circuits WHERE country_id = OLD.id)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pays est rattaché à un GP.';
+    END IF;
+END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+-- teams impossible à supprimer si rattaché à teams_drivers, gp_points, gp_stats, penalties ou manual_adjustments
+-- --------------------------------------------------------
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS trg_teams_before_delete$$
+
+CREATE TRIGGER trg_teams_before_delete
+BEFORE DELETE ON teams
+FOR EACH ROW
+BEGIN
+    -- Vérifier teams_drivers
+    IF EXISTS (SELECT 1 FROM teams_drivers WHERE team_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Impossible de supprimer : cette équipe est rattachée à un pilote pour une saison.';
+
+    -- Vérifier gp_points
+    ELSEIF EXISTS (SELECT 1 FROM gp_points WHERE team_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Impossible de supprimer : cette équipe est rattachée à des résultats de GP.';
+
+    -- Vérifier gp_stats via teams_drivers
+    ELSEIF EXISTS (
+        SELECT 1
+        FROM gp_stats gs
+        JOIN teams_drivers td ON td.driver_id = gs.pole_position_driver OR td.driver_id = gs.fastest_lap_driver
+        WHERE td.team_id = OLD.id
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Impossible de supprimer : cette équipe est rattachée à des statistiques de GP.';
+
+    -- Vérifier penalties via teams_drivers
+    ELSEIF EXISTS (
+        SELECT 1
+        FROM penalties p
+        JOIN teams_drivers td ON td.driver_id = p.driver_id
+        WHERE td.team_id = OLD.id
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Impossible de supprimer : cette équipe est rattachée à des pénalités.';
+
+    -- Vérifier manual_adjustments
+    ELSEIF EXISTS (SELECT 1 FROM manual_adjustments WHERE team_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Impossible de supprimer : cette équipe est rattachée à des ajustements manuels.';
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+-- drivers impossible à supprimer si rattaché à teams_drivers, gp_points, gp_stats, penalties ou manual_adjustments
+-- --------------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER trg_drivers_before_delete
+BEFORE DELETE ON drivers
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM teams_drivers WHERE driver_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pilote est rattaché à une équipe pour une saison.';
+    ELSEIF EXISTS (SELECT 1 FROM gp_points WHERE driver_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pilote est rattaché à des résultats de GP.';
+    ELSEIF EXISTS (SELECT 1 FROM gp_stats WHERE pole_position_driver = OLD.id OR fastest_lap_driver = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pilote est rattaché à des statistiques de GP.';
+    ELSEIF EXISTS (SELECT 1 FROM penalties WHERE driver_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pilote est rattaché à des pénalités.';
+    ELSEIF EXISTS (SELECT 1 FROM manual_adjustments WHERE driver_id = OLD.id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible de supprimer : ce pilote est rattaché à des ajustements manuels.';
+    END IF;
+END$$
+DELIMITER ;

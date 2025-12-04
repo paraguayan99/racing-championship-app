@@ -10,7 +10,7 @@
 
     <div class="section-header">
         <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Ajustements manuels</h1>
+        <h1>Ajustements manuels des Saisons Actives</h1>
         <a class="nav-btn-dashboard" href="index.php?controller=manualadjustments&action=create">Ajouter un ajustement</a>
     </div>
 

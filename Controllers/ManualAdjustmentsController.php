@@ -22,7 +22,7 @@ class ManualAdjustmentsController extends Controller {
 
     public function index()
     {
-        $manuals = ManualAdjustmentsModel::all();
+        $manuals = ManualAdjustmentsModel::allWithSeasonActive();
 
         $this->render('dashboard/manual_adjustments/index', [
             'list' => $manuals
@@ -35,9 +35,9 @@ class ManualAdjustmentsController extends Controller {
         $message = '';
         $classMsg = '';
 
-        $seasons = SeasonsModel::all();
-        $drivers = DriversModel::all();
-        $teams   = TeamsModel::all();
+        $seasons = SeasonsModel::getActive();
+        $drivers = DriversModel::getActive();
+        $teams   = TeamsModel::getActive();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -83,7 +83,7 @@ class ManualAdjustmentsController extends Controller {
             }
 
             $this->render('dashboard/manual_adjustments/index', [
-                'list' => ManualAdjustmentsModel::all(),
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
                 'classMsg' => $classMsg
             ]);
@@ -154,16 +154,30 @@ class ManualAdjustmentsController extends Controller {
             $classMsg = "msg-error";
 
             $this->render('dashboard/manual_adjustments/index', [
-                'list' => ManualAdjustmentsModel::all(),
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
                 'classMsg' => $classMsg
             ]);
             return;
         }
 
-        $seasons = SeasonsModel::all();
-        $drivers = DriversModel::all();
-        $teams   = TeamsModel::all();
+        // Vérifier saison active
+        $season = SeasonsModel::findById($manual->season_id);
+        if (!$season || $season->status !== 'active') {
+            $message = "Impossible de modifier : la saison est désactivée.";
+            $classMsg = "msg-error";
+            $this->render('dashboard/manual_adjustments/index', [
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
+                'message' => $message,
+                'classMsg' => $classMsg
+            ]);
+            return;
+        }
+
+        // Elements actifs seulement
+        $seasons = SeasonsModel::getActive();
+        $drivers = DriversModel::getActive();
+        $teams   = TeamsModel::getActive();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -210,7 +224,7 @@ class ManualAdjustmentsController extends Controller {
             }
 
             $this->render('dashboard/manual_adjustments/index', [
-                'list' => ManualAdjustmentsModel::all(),
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
                 'classMsg' => $classMsg
             ]);
@@ -296,14 +310,27 @@ class ManualAdjustmentsController extends Controller {
 
         $stmt = $pdo->prepare("SELECT * FROM manual_adjustments WHERE id=?");
         $stmt->execute([$id]);
-        $manual = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $manual = $stmt->fetch();
 
         if (!$manual) {
             $message = "Erreur : cet ajustement n’existe pas.";
             $classMsg = "msg-error";
 
             $this->render('dashboard/manual_adjustments/index', [
-                'list' => ManualAdjustmentsModel::all(),
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
+                'message' => $message,
+                'classMsg' => $classMsg
+            ]);
+            return;
+        }
+
+        // Vérifier saison active
+        $season = SeasonsModel::findById($manual->season_id);
+        if (!$season || $season->status !== 'active') {
+            $message = "Impossible de supprimer : la saison est désactivée.";
+            $classMsg = "msg-error";
+            $this->render('dashboard/manual_adjustments/index', [
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
                 'classMsg' => $classMsg
             ]);
@@ -321,7 +348,7 @@ class ManualAdjustmentsController extends Controller {
 
                     // AJOUT DANS LA TABLE UPDATES_LOG POUR AVOIR UN HISTORIQUE DES MAJ 
                     $gp_id = null; // manual_adjustments affecte les saisons, pas les gp
-                    $season_id = $manual['season_id'];
+                    $season_id = $manual->season_id;
                     UpdatesLogModel::logUpdate('manual_adjustments', $season_id, $gp_id, $_SESSION['user_id'], 'delete');
                 } else {
                     $message = "Erreur lors de la suppression";
@@ -334,7 +361,7 @@ class ManualAdjustmentsController extends Controller {
             }
 
             $this->render('dashboard/manual_adjustments/index', [
-                'list' => ManualAdjustmentsModel::all(),
+                'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
                 'classMsg' => $classMsg
             ]);
@@ -342,9 +369,9 @@ class ManualAdjustmentsController extends Controller {
         }
 
         // Récupération des infos sinon un champ vide
-        $seasonName = $seasonOptions[$manual['season_id']] ?? '';
-        $driverName = $driverOptions[$manual['driver_id']] ?? '';
-        $teamName   = $teamOptions[$manual['team_id']] ?? '';
+        $seasonName = $seasonOptions[$manual->season_id] ?? '';
+        $driverName = $driverOptions[$manual->driver_id] ?? '';
+        $teamName   = $teamOptions[$manual->team_id] ?? '';
 
         $this->render('dashboard/manual_adjustments/delete', [
             'id' => $id,

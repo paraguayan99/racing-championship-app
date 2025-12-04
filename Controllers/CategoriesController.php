@@ -263,8 +263,12 @@ class CategoriesController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                $message = "Erreur lors de la suppression";
+                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
+                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
+                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+                // $message = "Erreur lors de la suppression";
+                // $classMsg = "msg-error";
             }
 
             $this->render('dashboard/categories/index', [
