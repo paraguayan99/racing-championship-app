@@ -198,6 +198,24 @@ CREATE TABLE gp_points (
   FOREIGN KEY (team_id) REFERENCES teams(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- POUR PERMETTRE LA GESTION DES DEMI POINTS
+    ALTER TABLE gp_points 
+    MODIFY points_numeric DECIMAL(4,1) NOT NULL DEFAULT 0;
+
+-- REFUSE D'INSERER DES PENALITES OU POINTS NEGATIFS
+    ALTER TABLE gp_points
+    ADD CONSTRAINT chk_points_numeric_non_negative
+    CHECK (points_numeric >= 0);
+
+-- L'ASOCIATION GP - DRIVER doit être unique (pas possible d'insérer plusieurs fois un pilote dans le même GP)
+    ALTER TABLE gp_points
+    ADD CONSTRAINT uq_gp_driver UNIQUE (gp_id, driver_id);
+
+-- 3 LETTRES MAXIMUM POUR points_text
+    ALTER TABLE gp_points
+    MODIFY points_text VARCHAR(3);
+
 -- DANS LE FORMULAIRE CREATE, LE TEAM_ID PEUT ETRE REMPLI AUTOMATIQUEMENT 
 -- LORSQUON A SELECTIONNE LE DRIVER VIA LA TABLE TEAMS_DRIVERS ET SA TEAM ASSOCIEE
 

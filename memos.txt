@@ -8,18 +8,14 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-CRUD A FAIRE :
-
-ADMIN + MODO :
-
-gp_points + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())	
-gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())	
-penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive())			
-
+CRUD A FAIRE : ADMIN + MODO :
+gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
+penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées			
 updates_log	 (INSERT into table au CREATE UPDATE ET DELETE des controllers : gp_points, gp_stats, penalties et manual_adjustments)
 
+FAIRE TITRES AVEC BORDURES STYLE F1
 
-
+TABLE manual_adjustments : PERMETTRE LES DEMIS POINTS COMME gp_points (Controller et SQL à modifier)
 ______________________________________
 FONCTIONNEL :
 roles		
@@ -33,6 +29,7 @@ drivers
 manual_adjustments + INSERT AUTO updates_log + (affichage et CRUD saisons actives avec public static function getActive())
 teams_drivers (affichage et CRUD autorisé pour les saisons actives uniquement)
 gp	(affichage et CRUD saisons actives avec public static function getActive()) + Suppression d'un GP impossible si points / stats / penalités ajoutées
+gp_points + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
 
 ______________________________________
 // Pour afficher uniquement les ACTIFS dans les formulaires
