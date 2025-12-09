@@ -46,7 +46,9 @@ class ManualAdjustmentsController extends Controller {
                 $season_id = $_POST['season_id'];
                 $driver_id = !empty($_POST['driver_id']) ? $_POST['driver_id'] : null;
                 $team_id   = !empty($_POST['team_id']) ? $_POST['team_id'] : null;
-                $points    = $_POST['points'];
+                $points = !empty($_POST['points']) 
+                            ? floatval(str_replace(',', '.', $_POST['points'])) 
+                            : 0;
                 // Supprime les espaces au début et à la fin de la chaine de texte (laisse des espaces entre les mots intacts)
                 $comment = !empty(trim($_POST['comment'])) ? trim($_POST['comment']) : null;
 
@@ -123,7 +125,7 @@ class ManualAdjustmentsController extends Controller {
             ->addLabel("team_id", "Team | Ajustements Classement Constructeurs")
             ->addSelect("team_id", $teamOptions)
             ->addLabel("points", "Points :")
-            ->addInput("number", "points")
+            ->addInput("number", "points", ["step" => "0.5"])
             ->addLabel("comment", "Commentaire :")
             ->addInput("text", "comment")
             ->addSubmit("Créer")
@@ -192,12 +194,15 @@ class ManualAdjustmentsController extends Controller {
 
                     $driver_id = !empty($_POST['driver_id']) ? $_POST['driver_id'] : null;
                     $team_id   = !empty($_POST['team_id']) ? $_POST['team_id'] : null;
+                    $points = !empty($_POST['points']) 
+                            ? floatval(str_replace(',', '.', $_POST['points'])) 
+                            : 0;
 
                     if ($stmt->execute([
                         $_POST['season_id'],
                         $driver_id,
                         $team_id,
-                        $_POST['points'],
+                        $points,
                         // Supprime les espaces au début et à la fin de la chaine de texte (laisse des espaces entre les mots intacts)
                         trim($_POST['comment']),
                         $id
@@ -264,7 +269,7 @@ class ManualAdjustmentsController extends Controller {
             ->addLabel("team_id", "Team | Ajustements Classement Constructeurs")
             ->addSelect("team_id", $teamOptions, ["value" => $manual->team_id])
             ->addLabel("points", "Points :")
-            ->addInput("number", "points", ["value" => $manual->points])
+            ->addInput("number", "points", ["step" => "0.5", "value" => $manual->points])
             ->addLabel("comment", "Commentaire :")
             ->addInput("text", "comment", ["value" => $manual->comment])
             ->addSubmit("Mettre à jour")

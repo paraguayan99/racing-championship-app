@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 04 déc. 2025 à 16:39
+-- Généré le : mar. 09 déc. 2025 à 13:17
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -37,14 +37,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `status`) VALUES
-(13, 'F1', 'active'),
-(14, 'Project CARS', 'active');
-
---
 -- Déclencheurs `categories`
 --
 DROP TRIGGER IF EXISTS `trg_categories_before_delete`;
@@ -76,14 +68,6 @@ CREATE TABLE IF NOT EXISTS `circuits` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `circuits`
---
-
-INSERT INTO `circuits` (`id`, `name`, `country_id`, `status`) VALUES
-(1, 'Paul Ricard', 1, 'active'),
-(6, 'Monza', 4, 'active');
-
---
 -- Déclencheurs `circuits`
 --
 DROP TRIGGER IF EXISTS `trg_circuits_before_delete`;
@@ -111,17 +95,14 @@ CREATE TABLE IF NOT EXISTS `countries` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `unique_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `countries`
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `flag`) VALUES
-(1, 'France', 'FRA', ''),
-(4, 'Italie', 'ITA', ''),
-(10, 'Paraguay', 'PAR', ''),
-(17, 'Espagne', 'ESP', '');
+(18, 'France', 'FRA', '');
 
 --
 -- Déclencheurs `countries`
@@ -164,14 +145,6 @@ CREATE TABLE IF NOT EXISTS `drivers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `drivers`
---
-
-INSERT INTO `drivers` (`id`, `nickname`, `country_id`, `status`) VALUES
-(10, 'paraguayan99', 10, 'active'),
-(11, 'ClousCoco', 4, 'active');
-
---
 -- Déclencheurs `drivers`
 --
 DROP TRIGGER IF EXISTS `trg_drivers_before_delete`;
@@ -206,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `drivers_standings` (
 ,`podiums` decimal(23,0)
 ,`season_id` int
 ,`season_number` int
-,`total_points` decimal(34,0)
+,`total_points` decimal(34,1)
 ,`wins` decimal(23,0)
 );
 
@@ -249,7 +222,7 @@ DROP VIEW IF EXISTS `driver_points_all_seasons`;
 CREATE TABLE IF NOT EXISTS `driver_points_all_seasons` (
 `driver_id` int
 ,`nickname` varchar(100)
-,`total_points` decimal(34,0)
+,`total_points` decimal(34,1)
 );
 
 -- --------------------------------------------------------
@@ -268,15 +241,7 @@ CREATE TABLE IF NOT EXISTS `gp` (
   KEY `idx_gp_season` (`season_id`),
   KEY `idx_gp_circuit` (`circuit_id`),
   KEY `idx_gp_season_ordre` (`season_id`,`gp_ordre`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `gp`
---
-
-INSERT INTO `gp` (`id`, `season_id`, `circuit_id`, `gp_ordre`) VALUES
-(22, 13, 6, 1),
-(23, 19, 1, 1);
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déclencheurs `gp`
@@ -312,15 +277,17 @@ CREATE TABLE IF NOT EXISTS `gp_points` (
   `driver_id` int NOT NULL,
   `team_id` int NOT NULL,
   `position` int DEFAULT NULL,
-  `points_numeric` int DEFAULT '0',
-  `points_text` varchar(50) DEFAULT NULL,
+  `points_numeric` decimal(4,1) NOT NULL DEFAULT '0.0',
+  `points_text` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_gp_driver` (`gp_id`,`driver_id`),
+  UNIQUE KEY `uq_gp_position` (`gp_id`,`position`),
   KEY `idx_points_gp` (`gp_id`),
   KEY `idx_points_driver` (`driver_id`),
   KEY `idx_points_team` (`team_id`),
   KEY `idx_points_gp_driver` (`gp_id`,`driver_id`),
   KEY `idx_points_driver_team` (`driver_id`,`team_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 
 -- --------------------------------------------------------
 
@@ -338,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `gp_stats` (
   PRIMARY KEY (`gp_id`),
   KEY `idx_stats_pole_driver` (`pole_position_driver`),
   KEY `idx_stats_fastest_driver` (`fastest_lap_driver`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 
 -- --------------------------------------------------------
 
@@ -373,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `manual_adjustments` (
   `season_id` int NOT NULL,
   `driver_id` int DEFAULT NULL,
   `team_id` int DEFAULT NULL,
-  `points` int NOT NULL,
+  `points` decimal(4,1) NOT NULL,
   `comment` text,
   PRIMARY KEY (`id`),
   KEY `idx_ma_season` (`season_id`),
@@ -381,14 +348,6 @@ CREATE TABLE IF NOT EXISTS `manual_adjustments` (
   KEY `idx_ma_team` (`team_id`),
   KEY `idx_ma_driver_team` (`driver_id`,`team_id`)
 ) ;
-
---
--- Déchargement des données de la table `manual_adjustments`
---
-
-INSERT INTO `manual_adjustments` (`id`, `season_id`, `driver_id`, `team_id`, `points`, `comment`) VALUES
-(26, 19, 10, 27, 11, ''),
-(27, 13, 11, 27, 10, '');
 
 -- --------------------------------------------------------
 
@@ -400,14 +359,15 @@ DROP TABLE IF EXISTS `penalties`;
 CREATE TABLE IF NOT EXISTS `penalties` (
   `id` int NOT NULL AUTO_INCREMENT,
   `gp_id` int NOT NULL,
-  `driver_id` int NOT NULL,
+  `driver_id` int DEFAULT NULL,
+  `team_id` int DEFAULT NULL,
   `points_removed` int NOT NULL,
   `comment` text,
   PRIMARY KEY (`id`),
-  KEY `idx_pen_gp` (`gp_id`),
-  KEY `idx_pen_driver` (`driver_id`),
-  KEY `idx_pen_gp_driver` (`gp_id`,`driver_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `gp_id` (`gp_id`),
+  KEY `driver_id` (`driver_id`),
+  KEY `team_id` (`team_id`)
+) ;
 
 -- --------------------------------------------------------
 
@@ -452,14 +412,6 @@ CREATE TABLE IF NOT EXISTS `seasons` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `seasons`
---
-
-INSERT INTO `seasons` (`id`, `season_number`, `category_id`, `videogame`, `platform`, `status`) VALUES
-(13, 1, 13, 'F1 Championship Edition', 'PS3', 'active'),
-(19, 1, 14, 'PC', 'PS3', 'active');
-
---
 -- Déclencheurs `seasons`
 --
 DROP TRIGGER IF EXISTS `before_delete_season`;
@@ -499,14 +451,6 @@ CREATE TABLE IF NOT EXISTS `teams` (
   KEY `idx_team_status` (`status`),
   KEY `idx_team_country` (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `teams`
---
-
-INSERT INTO `teams` (`id`, `name`, `logo`, `color`, `country_id`, `status`) VALUES
-(27, 'ALPINE', '', '', 1, 'active'),
-(28, 'FERRARI', '', '', 4, 'active');
 
 --
 -- Déclencheurs `teams`
@@ -572,14 +516,6 @@ CREATE TABLE IF NOT EXISTS `teams_drivers` (
   KEY `idx_td_team` (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `teams_drivers`
---
-
-INSERT INTO `teams_drivers` (`id`, `season_id`, `driver_id`, `team_id`) VALUES
-(11, 13, 11, 28),
-(12, 19, 10, 27);
-
 -- --------------------------------------------------------
 
 --
@@ -594,7 +530,7 @@ CREATE TABLE IF NOT EXISTS `teams_standings` (
 ,`season_number` int
 ,`team_id` int
 ,`team_name` varchar(100)
-,`total_points` decimal(34,0)
+,`total_points` decimal(34,1)
 ,`wins` decimal(23,0)
 );
 
@@ -624,7 +560,7 @@ DROP VIEW IF EXISTS `team_points_all_seasons`;
 CREATE TABLE IF NOT EXISTS `team_points_all_seasons` (
 `team_id` int
 ,`team_name` varchar(100)
-,`total_points` decimal(34,0)
+,`total_points` decimal(34,1)
 );
 
 -- --------------------------------------------------------
@@ -646,20 +582,20 @@ CREATE TABLE IF NOT EXISTS `updates_log` (
   KEY `fk_updates_season` (`season_id`),
   KEY `fk_updates_gp` (`gp_id`),
   KEY `fk_updates_user` (`updated_by`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `updates_log`
 --
 
 INSERT INTO `updates_log` (`id`, `season_id`, `gp_id`, `table_name`, `updated_at`, `updated_by`, `action`) VALUES
-(11, NULL, NULL, 'manual_adjustments', '2025-12-04 17:12:43', 1, 'create'),
-(12, NULL, NULL, 'manual_adjustments', '2025-12-04 17:12:54', 1, 'update'),
-(13, NULL, NULL, 'manual_adjustments', '2025-12-04 17:12:57', 1, 'delete'),
-(14, 19, NULL, 'manual_adjustments', '2025-12-04 17:18:53', 1, 'update'),
-(15, 19, NULL, 'manual_adjustments', '2025-12-04 17:22:55', 1, 'update'),
-(16, 19, NULL, 'manual_adjustments', '2025-12-04 17:23:06', 1, 'create'),
-(17, 19, NULL, 'manual_adjustments', '2025-12-04 17:23:10', 1, 'delete');
+(135, NULL, NULL, 'manual_adjustments', '2025-12-09 14:07:17', 1, 'create'),
+(136, NULL, NULL, 'manual_adjustments', '2025-12-09 14:07:35', 1, 'update'),
+(137, NULL, NULL, 'manual_adjustments', '2025-12-09 14:07:41', 1, 'update'),
+(138, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:00', 1, 'delete'),
+(139, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:12', 1, 'create'),
+(140, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:34', 1, 'delete'),
+(141, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:37', 1, 'delete');
 
 --
 -- Déclencheurs `updates_log`
@@ -843,7 +779,8 @@ ALTER TABLE `manual_adjustments`
 --
 ALTER TABLE `penalties`
   ADD CONSTRAINT `penalties_ibfk_1` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `penalties_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`);
+  ADD CONSTRAINT `penalties_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`),
+  ADD CONSTRAINT `penalties_ibfk_3` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
 
 --
 -- Contraintes pour la table `seasons`

@@ -10,11 +10,9 @@ git push origin main
 ______________________________________
 FAIRE TITRES AVEC BORDURES STYLE F1
 
-TABLE manual_adjustments : PERMETTRE LES DEMIS POINTS COMME gp_points (Controller et SQL à modifier)
-
 AJOUTER PRECISION DANS LE FORMULAIRE PENALITE SI PENALITE APPLIQUEE DEUX FOIS SI AFFECTE A PILOTE + TEAM 
 ______________________________________
-FONCTIONNEL :
+AVANCEMENT DEVELOPPEMENT ET VERIF FONCTIONNALITE :
 roles		
 users	 
 categories
@@ -30,6 +28,8 @@ gp_points + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et 
 gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
 penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées			
 updates_log	 (INSERT into table au CREATE UPDATE ET DELETE des controllers : gp_points, gp_stats, penalties et manual_adjustments)
+
+TABLE manual_adjustments : PERMETTRE LES DEMIS POINTS COMME gp_points (Controller et SQL à modifier)
 ______________________________________
 
 La colonne active / desactive des catégories n'ont pas d'incidence sur les autres CRUD

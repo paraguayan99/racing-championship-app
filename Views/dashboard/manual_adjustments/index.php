@@ -33,7 +33,14 @@
                     <td><?= htmlspecialchars($adj->category_name ?? '') ?> - Saison <?= htmlspecialchars($adj->season_number ?? '') ?></td>
                     <td><?= htmlspecialchars($adj->driver_nickname ?? '') ?></td>
                     <td><?= htmlspecialchars($adj->team_name ?? '') ?></td>
-                    <td><?= htmlspecialchars($adj->points) ?></td>
+                    <td>
+                        <?= htmlspecialchars(
+                            rtrim(
+                                rtrim(number_format($adj->points, 1, '.', ''), '0'),
+                                '.'
+                            )
+                        ) ?>
+                    </td>
                     <td><?= htmlspecialchars($adj->comment ?? '') ?></td>
                     <td class="actions">
                         <a class="action-btn edit" href="index.php?controller=manualadjustments&action=update&id=<?= $adj->id ?>">

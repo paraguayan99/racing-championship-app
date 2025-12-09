@@ -263,43 +263,6 @@ CHECK (
 );
 
 -- --------------------------------------------------------
--- penalties
--- --------------------------------------------------------
-CREATE TABLE penalties (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  gp_id INT NOT NULL,
-  driver_id INT NOT NULL,
-  points_removed INT NOT NULL,
-  comment TEXT,
-  FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
-  FOREIGN KEY (driver_id) REFERENCES drivers(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- -- Ajouter la colonne team_id
--- ALTER TABLE penalties
--- ADD COLUMN team_id INT AFTER driver_id;
-
--- -- Ajouter la clé étrangère vers teams
--- ALTER TABLE penalties
--- ADD CONSTRAINT fk_penalties_team
--- FOREIGN KEY (team_id) REFERENCES teams(id);
-
--- -- Rendre driver_id nullable
--- ALTER TABLE penalties
--- MODIFY driver_id INT NULL;
-
--- -- Ajouter la contrainte pour obliger au moins un driver ou un team
--- ALTER TABLE penalties
--- ADD CONSTRAINT chk_penalties_driver_or_team
--- CHECK (driver_id IS NOT NULL OR team_id IS NOT NULL);
-
--- -- Ajouter la contrainte pour que points_removed soit positif
--- ALTER TABLE penalties
--- ADD CONSTRAINT chk_penalties_points_positive
--- CHECK (points_removed > 0);
-
-
--- --------------------------------------------------------
 -- Table penalties
 -- driver ou team doit être renseigné
 -- gp_id obligatoire
@@ -343,6 +306,11 @@ ADD CONSTRAINT chk_driver_or_team
 CHECK (
     driver_id IS NOT NULL OR team_id IS NOT NULL
 );
+
+-- PERMET LA GESTION DES DEMI POINTS
+
+ALTER TABLE manual_adjustments
+MODIFY points DECIMAL(4,1) NOT NULL;
 
 -- --------------------------------------------------------
 -- updates_log
