@@ -56,12 +56,12 @@ class TeamsDriversController extends Controller {
                         $message = "Association faite avec succès";
                         $classMsg = "msg-success";
                     } else {
-                        $message = "Erreur lors de la création.";
+                        $message = "Erreur : Ce pilote est déjà associé à un team dans cette saison.";
                         $classMsg = "msg-error";
                     }
 
                 } catch (\PDOException $e) {
-                    $message = "Erreur lors de la création.";
+                    $message = "Erreur : Ce pilote est déjà associé à un team dans cette saison.";
                     $classMsg = "msg-error";
                 }
 

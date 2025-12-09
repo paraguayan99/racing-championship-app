@@ -181,52 +181,98 @@ CREATE TABLE teams_drivers (
   FOREIGN KEY (team_id) REFERENCES teams(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- POUR QU'UN DRIVER NE SOIT DECLAREE QU'UNE FOIS DANS UNE SEASON_ID (CATEGORIE + NUMERO DE SAISON)
+
+ALTER TABLE `teams_drivers`
+ADD CONSTRAINT `uniq_driver_per_season` UNIQUE (`season_id`, `driver_id`);
+
+-- -- --------------------------------------------------------
+-- -- gp_points (résultats des GP)
+-- -- Un insert par pilotes (et illimité)
+-- -- --------------------------------------------------------
+-- CREATE TABLE gp_points (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   gp_id INT NOT NULL,
+--   driver_id INT NOT NULL,
+--   team_id INT NOT NULL,
+--   position INT,
+--   points_numeric INT DEFAULT 0,
+--   points_text VARCHAR(50),   -- si DNF, DNS, DSQ et donc pas de position
+--   FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
+--   FOREIGN KEY (driver_id) REFERENCES drivers(id),
+--   FOREIGN KEY (team_id) REFERENCES teams(id)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- -- POUR PERMETTRE LA GESTION DES DEMI POINTS
+--     ALTER TABLE gp_points 
+--     MODIFY points_numeric DECIMAL(4,1) NOT NULL DEFAULT 0;
+
+-- -- REFUSE D'INSERER DES PENALITES OU POINTS NEGATIFS
+--     ALTER TABLE gp_points
+--     ADD CONSTRAINT chk_points_numeric_non_negative
+--     CHECK (points_numeric >= 0);
+
+-- -- L'ASOCIATION GP - DRIVER doit être unique (pas possible d'insérer plusieurs fois un pilote dans le même GP)
+--     ALTER TABLE gp_points
+--     ADD CONSTRAINT uq_gp_driver UNIQUE (gp_id, driver_id);
+
+-- -- 3 LETTRES MAXIMUM POUR points_text
+--     ALTER TABLE gp_points
+--     MODIFY points_text VARCHAR(3);
+
+-- -- Position doit être un entier positif (ou NULL si DNF/DNS/DSQ)
+--     ALTER TABLE gp_points
+--     ADD CONSTRAINT chk_position_positive2
+--     CHECK (position IS NULL OR position > 0);
+
+-- -- Pas deux pilotes avec la même position dans le même GP
+--     ALTER TABLE gp_points
+--     ADD CONSTRAINT uq_gp_position UNIQUE (gp_id, position);
+
+
+
+-- 
+-- Structure PROPRE de la table `gp_points`
+--
 -- gp_points (résultats des GP)
--- Un insert par pilotes (et illimité)
--- --------------------------------------------------------
-CREATE TABLE gp_points (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  gp_id INT NOT NULL,
-  driver_id INT NOT NULL,
-  team_id INT NOT NULL,
-  position INT,
-  points_numeric INT DEFAULT 0,
-  points_text VARCHAR(50),   -- si DNF, DNS, DSQ et donc pas de position
-  FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
-  FOREIGN KEY (driver_id) REFERENCES drivers(id),
-  FOREIGN KEY (team_id) REFERENCES teams(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
--- POUR PERMETTRE LA GESTION DES DEMI POINTS
-    ALTER TABLE gp_points 
-    MODIFY points_numeric DECIMAL(4,1) NOT NULL DEFAULT 0;
-
--- REFUSE D'INSERER DES PENALITES OU POINTS NEGATIFS
-    ALTER TABLE gp_points
-    ADD CONSTRAINT chk_points_numeric_non_negative
-    CHECK (points_numeric >= 0);
-
+-- Un insert par driver sauf driver_id = 1 [Driver removed] (et teams illimité)
+-- Pas deux pilotes avec la même position dans le même gp
 -- L'ASOCIATION GP - DRIVER doit être unique (pas possible d'insérer plusieurs fois un pilote dans le même GP)
-    ALTER TABLE gp_points
-    ADD CONSTRAINT uq_gp_driver UNIQUE (gp_id, driver_id);
-
--- 3 LETTRES MAXIMUM POUR points_text
-    ALTER TABLE gp_points
-    MODIFY points_text VARCHAR(3);
-
 -- Position doit être un entier positif (ou NULL si DNF/DNS/DSQ)
-    ALTER TABLE gp_points
-    ADD CONSTRAINT chk_position_positive2
-    CHECK (position IS NULL OR position > 0);
+-- 3 LETTRES MAXIMUM POUR points_text
+-- REFUSE D'INSERER DES PENALITES OU POINTS NEGATIFS
+-- PERMET LA GESTION DES DEMI POINTS
+--
 
--- Pas deux pilotes avec la même position dans le même GP
-    ALTER TABLE gp_points
-    ADD CONSTRAINT uq_gp_position UNIQUE (gp_id, position);
+DROP TABLE IF EXISTS `gp_points`;
+CREATE TABLE IF NOT EXISTS `gp_points` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `gp_id` int NOT NULL,
+  `driver_id` int NOT NULL,
+  `team_id` int NOT NULL,
+  `position` int DEFAULT NULL,
+  `points_numeric` decimal(4,1) NOT NULL DEFAULT '0.0',
+  `points_text` varchar(3) DEFAULT NULL,
+  `driver_unique_id` int GENERATED ALWAYS AS ((case when (`driver_id` = 1) then NULL else `driver_id` end)) STORED,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_gp_position` (`gp_id`,`position`),
+  UNIQUE KEY `uq_gp_driver` (`gp_id`,`driver_unique_id`),
+  KEY `idx_points_gp` (`gp_id`),
+  KEY `idx_points_driver` (`driver_id`),
+  KEY `idx_points_team` (`team_id`),
+  KEY `idx_points_gp_driver` (`gp_id`,`driver_id`),
+  KEY `idx_points_driver_team` (`driver_id`,`team_id`)
+) ;
 
--- DANS LE FORMULAIRE CREATE, LE TEAM_ID PEUT ETRE REMPLI AUTOMATIQUEMENT 
--- LORSQUON A SELECTIONNE LE DRIVER VIA LA TABLE TEAMS_DRIVERS ET SA TEAM ASSOCIEE
+--
+-- Contraintes pour la table `gp_points`
+--
+ALTER TABLE `gp_points`
+  ADD CONSTRAINT `gp_points_ibfk_1` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `gp_points_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`),
+  ADD CONSTRAINT `gp_points_ibfk_3` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
+COMMIT;
 
 -- --------------------------------------------------------
 -- gp_stats (résultats des GP)

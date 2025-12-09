@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 09 déc. 2025 à 13:17
+-- Généré le : mar. 09 déc. 2025 à 15:25
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -34,7 +34,16 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `status` enum('active','desactive') DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `status`) VALUES
+(15, 'F1', 'active'),
+(16, 'F2', 'active'),
+(17, 'F3', 'active');
 
 --
 -- Déclencheurs `categories`
@@ -65,7 +74,31 @@ CREATE TABLE IF NOT EXISTS `circuits` (
   UNIQUE KEY `name` (`name`),
   KEY `idx_circuit_status` (`status`),
   KEY `idx_circuit_country` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `circuits`
+--
+
+INSERT INTO `circuits` (`id`, `name`, `country_id`, `status`) VALUES
+(24, 'Sakhir', 19, 'active'),
+(25, 'Sepang', 20, 'active'),
+(26, 'Melbourne', 21, 'active'),
+(27, 'Imola', 22, 'active'),
+(28, 'Nurburgring', 23, 'active'),
+(29, 'Barcelone', 24, 'active'),
+(30, 'Monte-Carlo', 25, 'active'),
+(31, 'Silverstone', 26, 'active'),
+(32, 'Montreal', 27, 'active'),
+(33, 'Indianapolis', 28, 'active'),
+(34, 'Nevers Magny-Cours', 1, 'active'),
+(35, 'Hockenheim', 23, 'active'),
+(36, 'Hungaroring', 29, 'active'),
+(37, 'Istanbul', 30, 'active'),
+(38, 'Monza', 22, 'active'),
+(39, 'Shanghai', 31, 'active'),
+(40, 'Suzuka', 32, 'active'),
+(41, 'Interlagos', 33, 'active');
 
 --
 -- Déclencheurs `circuits`
@@ -95,14 +128,32 @@ CREATE TABLE IF NOT EXISTS `countries` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `unique_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `countries`
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `flag`) VALUES
-(18, 'France', 'FRA', '');
+(1, 'France', 'FRA', ''),
+(19, 'Bahreïn', 'BAH', ''),
+(20, 'Malaisie', 'MAL', ''),
+(21, 'Australie', 'AUS', ''),
+(22, 'Italie', 'ITA', ''),
+(23, 'Allemagne', 'ALL', ''),
+(24, 'Espagne', 'ESP', ''),
+(25, 'Monaco', 'MON', ''),
+(26, 'Grande-Bretagne', 'GBR', ''),
+(27, 'Canada', 'CAN', ''),
+(28, 'États-Unis', 'USA', ''),
+(29, 'Hongrie', 'HON', ''),
+(30, 'Turquie', 'TUR', ''),
+(31, 'Chine', 'CHI', ''),
+(32, 'Japon', 'JAP', ''),
+(33, 'Brésil', 'BRE', ''),
+(34, 'Suisse', 'SUI', ''),
+(35, 'Autriche', 'AUT', ''),
+(36, 'Pays-Bas', 'P-B', '');
 
 --
 -- Déclencheurs `countries`
@@ -142,7 +193,25 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   UNIQUE KEY `nickname` (`nickname`),
   KEY `idx_driver_status` (`status`),
   KEY `idx_driver_country` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `drivers`
+--
+
+INSERT INTO `drivers` (`id`, `nickname`, `country_id`, `status`) VALUES
+(1, '[Driver removed]', 1, 'active'),
+(14, 'Jujubiker', 1, 'active'),
+(15, 'Martlio', 1, 'active'),
+(16, 'Guignol81', 1, 'active'),
+(17, 'Jimboparisgo', 1, 'active'),
+(18, 'Chapi-chapo', 1, 'active'),
+(19, 'Didi511', 1, 'active'),
+(20, 'Senna76', 1, 'active'),
+(21, 'Fox', 1, 'active'),
+(22, 'Nordschleife', 1, 'active'),
+(23, 'Ludovico6', 1, 'active'),
+(24, 'Gafit', 1, 'active');
 
 --
 -- Déclencheurs `drivers`
@@ -241,7 +310,31 @@ CREATE TABLE IF NOT EXISTS `gp` (
   KEY `idx_gp_season` (`season_id`),
   KEY `idx_gp_circuit` (`circuit_id`),
   KEY `idx_gp_season_ordre` (`season_id`,`gp_ordre`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `gp`
+--
+
+INSERT INTO `gp` (`id`, `season_id`, `circuit_id`, `gp_ordre`) VALUES
+(26, 20, 24, 1),
+(27, 20, 25, 2),
+(28, 20, 26, 3),
+(29, 20, 27, 4),
+(30, 20, 28, 5),
+(31, 20, 29, 6),
+(32, 20, 30, 7),
+(33, 20, 31, 8),
+(34, 20, 32, 9),
+(35, 20, 33, 10),
+(36, 20, 34, 11),
+(37, 20, 35, 12),
+(38, 20, 36, 13),
+(39, 20, 37, 14),
+(40, 20, 38, 15),
+(41, 20, 39, 16),
+(42, 20, 40, 17),
+(43, 20, 41, 18);
 
 --
 -- Déclencheurs `gp`
@@ -279,15 +372,28 @@ CREATE TABLE IF NOT EXISTS `gp_points` (
   `position` int DEFAULT NULL,
   `points_numeric` decimal(4,1) NOT NULL DEFAULT '0.0',
   `points_text` varchar(3) DEFAULT NULL,
+  `driver_unique_id` int GENERATED ALWAYS AS ((case when (`driver_id` = 1) then NULL else `driver_id` end)) STORED,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_gp_driver` (`gp_id`,`driver_id`),
   UNIQUE KEY `uq_gp_position` (`gp_id`,`position`),
+  UNIQUE KEY `uq_gp_driver` (`gp_id`,`driver_unique_id`),
   KEY `idx_points_gp` (`gp_id`),
   KEY `idx_points_driver` (`driver_id`),
   KEY `idx_points_team` (`team_id`),
   KEY `idx_points_gp_driver` (`gp_id`,`driver_id`),
   KEY `idx_points_driver_team` (`driver_id`,`team_id`)
 ) ;
+
+--
+-- Déchargement des données de la table `gp_points`
+--
+
+INSERT INTO `gp_points` (`id`, `gp_id`, `driver_id`, `team_id`, `position`, `points_numeric`, `points_text`) VALUES
+(36, 26, 16, 31, 3, 0.0, NULL),
+(37, 26, 19, 34, 4, 0.0, NULL),
+(38, 26, 24, 39, 5, 0.0, NULL),
+(39, 26, 17, 32, 6, 0.0, NULL),
+(43, 26, 1, 1, 1, 0.0, NULL),
+(45, 26, 1, 1, 2, 0.0, NULL);
 
 -- --------------------------------------------------------
 
@@ -409,7 +515,16 @@ CREATE TABLE IF NOT EXISTS `seasons` (
   UNIQUE KEY `unique_season_category` (`season_number`,`category_id`),
   KEY `idx_fk_category` (`category_id`),
   KEY `idx_season_status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `seasons`
+--
+
+INSERT INTO `seasons` (`id`, `season_number`, `category_id`, `videogame`, `platform`, `status`) VALUES
+(20, 1, 15, 'F1 Championship Edition', 'PS3', 'active'),
+(22, 1, 16, 'F1 Championship Edition', 'PS3', 'active'),
+(23, 1, 17, 'F1 Championship Edition', 'PS3', 'active');
 
 --
 -- Déclencheurs `seasons`
@@ -450,7 +565,25 @@ CREATE TABLE IF NOT EXISTS `teams` (
   UNIQUE KEY `name` (`name`),
   KEY `idx_team_status` (`status`),
   KEY `idx_team_country` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `teams`
+--
+
+INSERT INTO `teams` (`id`, `name`, `logo`, `color`, `country_id`, `status`) VALUES
+(1, '[Team removed]', '', '', 1, 'active'),
+(29, 'Toyota', '', '', 32, 'active'),
+(30, 'Williams', '', '', 26, 'active'),
+(31, 'Ferrari', '', '', 22, 'active'),
+(32, 'Renault', '', '', 1, 'active'),
+(33, 'Super Aguri', '', '', 32, 'active'),
+(34, 'Honda', '', '', 32, 'active'),
+(35, 'BMW Sauber', '', '', 34, 'active'),
+(36, 'McLaren', '', '', 26, 'active'),
+(37, 'Red Bull', '', '', 35, 'active'),
+(38, 'Toro Rosso', '', '', 22, 'active'),
+(39, 'Spyker', '', '', 36, 'active');
 
 --
 -- Déclencheurs `teams`
@@ -511,10 +644,28 @@ CREATE TABLE IF NOT EXISTS `teams_drivers` (
   `team_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_td_unique` (`season_id`,`driver_id`,`team_id`),
+  UNIQUE KEY `uniq_driver_per_season` (`season_id`,`driver_id`),
   KEY `idx_td_season` (`season_id`),
   KEY `idx_td_driver` (`driver_id`),
   KEY `idx_td_team` (`team_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `teams_drivers`
+--
+
+INSERT INTO `teams_drivers` (`id`, `season_id`, `driver_id`, `team_id`) VALUES
+(17, 20, 14, 29),
+(18, 20, 15, 30),
+(19, 20, 16, 31),
+(20, 20, 17, 32),
+(22, 20, 18, 33),
+(23, 20, 19, 34),
+(24, 20, 20, 35),
+(25, 20, 21, 36),
+(26, 20, 22, 37),
+(27, 20, 23, 38),
+(28, 20, 24, 39);
 
 -- --------------------------------------------------------
 
@@ -582,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `updates_log` (
   KEY `fk_updates_season` (`season_id`),
   KEY `fk_updates_gp` (`gp_id`),
   KEY `fk_updates_user` (`updated_by`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `updates_log`
@@ -595,7 +746,17 @@ INSERT INTO `updates_log` (`id`, `season_id`, `gp_id`, `table_name`, `updated_at
 (138, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:00', 1, 'delete'),
 (139, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:12', 1, 'create'),
 (140, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:34', 1, 'delete'),
-(141, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:37', 1, 'delete');
+(141, NULL, NULL, 'manual_adjustments', '2025-12-09 14:10:37', 1, 'delete'),
+(142, NULL, 26, 'gp_points', '2025-12-09 15:11:20', 1, 'create'),
+(143, NULL, 26, 'gp_points', '2025-12-09 15:11:34', 1, 'create'),
+(144, NULL, 26, 'gp_points', '2025-12-09 15:11:49', 1, 'create'),
+(145, NULL, 26, 'gp_points', '2025-12-09 15:13:47', 1, 'create'),
+(146, NULL, 26, 'gp_points', '2025-12-09 15:17:02', 1, 'create'),
+(147, NULL, 26, 'gp_points', '2025-12-09 15:32:21', 1, 'delete'),
+(148, NULL, 26, 'gp_points', '2025-12-09 15:36:23', 1, 'create'),
+(149, NULL, 26, 'gp_points', '2025-12-09 15:39:31', 1, 'create'),
+(150, NULL, 26, 'gp_points', '2025-12-09 15:58:54', 1, 'create'),
+(151, NULL, 26, 'gp_points', '2025-12-09 15:59:05', 1, 'delete');
 
 --
 -- Déclencheurs `updates_log`

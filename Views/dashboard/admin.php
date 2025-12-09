@@ -1,5 +1,3 @@
-<?php var_dump($_SESSION) ?>
-
 <?php $title="Team-eRacing - Dashboard"; ?>
 
 <div class="section-dashboard">

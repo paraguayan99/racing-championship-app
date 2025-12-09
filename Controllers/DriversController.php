@@ -98,7 +98,7 @@ class DriversController extends Controller {
             ->addLabel("nickname", "Pseudo :")
             ->addInput("text", "nickname")
             ->addLabel("country_id", "Pays :")
-            ->addSelect("country_id", $countriesOptions)
+            ->addSelect("country_id", $countriesOptions, ["value" => 1])
             ->addLabel("status", "Statut :")
             ->addSelect("status", [
                 'active' => 'Actif',
