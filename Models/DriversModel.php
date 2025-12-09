@@ -10,6 +10,14 @@ class DriversModel extends DbConnect {
     public $country_id;
     public $status;
 
+    // Récupérer un pilote par son ID
+    public static function find($id){
+        $db = new DbConnect();
+        $stmt = $db->getConnection()->prepare("SELECT * FROM drivers WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
     public static function findByNickname($nickname){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM drivers WHERE nickname = ?");

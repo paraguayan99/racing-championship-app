@@ -93,7 +93,7 @@ class GpPointsController extends Controller {
                     }
 
                 } catch (\PDOException $e) {
-                    $message = "Erreur : Pilote déjà ajouté à ce GP ou 'Points numériques' doit être un chiffre positif (0.5pt autorisé)";
+                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points numériques doivent être un chiffre positif (0.5pt autorisé)";
                     $classMsg = "msg-error";
                 }
 
@@ -223,7 +223,7 @@ class GpPointsController extends Controller {
                         $classMsg = "msg-error";
                     }
                 } catch (\PDOException $e) {
-                    $message = "Erreur : données invalides";
+                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points numériques doivent être un chiffre positif (0.5pt autorisé)";
                     $classMsg = "msg-error";
                 }
 

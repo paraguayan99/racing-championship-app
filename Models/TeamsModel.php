@@ -12,6 +12,14 @@ class TeamsModel extends DbConnect {
     public $country_id;
     public $status;
 
+    // Récupérer une équipe par son ID
+    public static function findById($id){
+        $db = new DbConnect();
+        $stmt = $db->getConnection()->prepare("SELECT * FROM teams WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
     // Récupérer une équipe par son nom
     public static function findByName($name){
         $db = new DbConnect();

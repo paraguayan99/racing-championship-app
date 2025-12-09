@@ -216,12 +216,21 @@ CREATE TABLE gp_points (
     ALTER TABLE gp_points
     MODIFY points_text VARCHAR(3);
 
+-- Position doit être un entier positif (ou NULL si DNF/DNS/DSQ)
+    ALTER TABLE gp_points
+    ADD CONSTRAINT chk_position_positive2
+    CHECK (position IS NULL OR position > 0);
+
+-- Pas deux pilotes avec la même position dans le même GP
+    ALTER TABLE gp_points
+    ADD CONSTRAINT uq_gp_position UNIQUE (gp_id, position);
+
 -- DANS LE FORMULAIRE CREATE, LE TEAM_ID PEUT ETRE REMPLI AUTOMATIQUEMENT 
 -- LORSQUON A SELECTIONNE LE DRIVER VIA LA TABLE TEAMS_DRIVERS ET SA TEAM ASSOCIEE
 
 -- --------------------------------------------------------
 -- gp_stats (résultats des GP)
--- Un insert par GP pour les poles et fastest lap
+-- Un insert par GP pour les poles et fastest lap grâce à gp_id PRIMARY KEY (qui est unique)
 -- --------------------------------------------------------
 
 CREATE TABLE gp_stats (
@@ -235,6 +244,24 @@ CREATE TABLE gp_stats (
   FOREIGN KEY (fastest_lap_driver) REFERENCES drivers(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Contraintes pour renseigner un driver si un time est renseigné
+
+ALTER TABLE gp_stats
+ADD CONSTRAINT chk_pole_driver_required
+CHECK (
+    pole_position_time IS NULL 
+    OR pole_position_time = '' 
+    OR pole_position_driver IS NOT NULL
+);
+
+ALTER TABLE gp_stats
+ADD CONSTRAINT chk_fastest_driver_required
+CHECK (
+    fastest_lap_time IS NULL 
+    OR fastest_lap_time = '' 
+    OR fastest_lap_driver IS NOT NULL
+);
+
 -- --------------------------------------------------------
 -- penalties
 -- --------------------------------------------------------
@@ -246,6 +273,52 @@ CREATE TABLE penalties (
   comment TEXT,
   FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
   FOREIGN KEY (driver_id) REFERENCES drivers(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -- Ajouter la colonne team_id
+-- ALTER TABLE penalties
+-- ADD COLUMN team_id INT AFTER driver_id;
+
+-- -- Ajouter la clé étrangère vers teams
+-- ALTER TABLE penalties
+-- ADD CONSTRAINT fk_penalties_team
+-- FOREIGN KEY (team_id) REFERENCES teams(id);
+
+-- -- Rendre driver_id nullable
+-- ALTER TABLE penalties
+-- MODIFY driver_id INT NULL;
+
+-- -- Ajouter la contrainte pour obliger au moins un driver ou un team
+-- ALTER TABLE penalties
+-- ADD CONSTRAINT chk_penalties_driver_or_team
+-- CHECK (driver_id IS NOT NULL OR team_id IS NOT NULL);
+
+-- -- Ajouter la contrainte pour que points_removed soit positif
+-- ALTER TABLE penalties
+-- ADD CONSTRAINT chk_penalties_points_positive
+-- CHECK (points_removed > 0);
+
+
+-- --------------------------------------------------------
+-- Table penalties
+-- driver ou team doit être renseigné
+-- gp_id obligatoire
+-- points_removed peut être 0 pour avoir un historique des décisions des commissaires
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS penalties;
+
+CREATE TABLE penalties (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  gp_id INT NOT NULL,
+  driver_id INT NULL,
+  team_id INT NULL,
+  points_removed INT NOT NULL,
+  comment TEXT,
+  FOREIGN KEY (gp_id) REFERENCES gp(id) ON DELETE CASCADE,
+  FOREIGN KEY (driver_id) REFERENCES drivers(id),
+  FOREIGN KEY (team_id) REFERENCES teams(id),
+  CONSTRAINT chk_penalties_driver_or_team CHECK (driver_id IS NOT NULL OR team_id IS NOT NULL),
+  CONSTRAINT chk_penalties_points_nonnegative CHECK (points_removed >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

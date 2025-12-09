@@ -8,14 +8,11 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-CRUD A FAIRE : ADMIN + MODO :
-gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
-penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées			
-updates_log	 (INSERT into table au CREATE UPDATE ET DELETE des controllers : gp_points, gp_stats, penalties et manual_adjustments)
-
 FAIRE TITRES AVEC BORDURES STYLE F1
 
 TABLE manual_adjustments : PERMETTRE LES DEMIS POINTS COMME gp_points (Controller et SQL à modifier)
+
+AJOUTER PRECISION DANS LE FORMULAIRE PENALITE SI PENALITE APPLIQUEE DEUX FOIS SI AFFECTE A PILOTE + TEAM 
 ______________________________________
 FONCTIONNEL :
 roles		
@@ -30,12 +27,9 @@ manual_adjustments + INSERT AUTO updates_log + (affichage et CRUD saisons active
 teams_drivers (affichage et CRUD autorisé pour les saisons actives uniquement)
 gp	(affichage et CRUD saisons actives avec public static function getActive()) + Suppression d'un GP impossible si points / stats / penalités ajoutées
 gp_points + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
-
-______________________________________
-// Pour afficher uniquement les ACTIFS dans les formulaires
-    public static function getActive()
-fonction crée pour les 5 tables qui ont l'option active / desactive : categories, circuits, seasons, teams, drivers
-et aussi manual_adjustments finalement
+gp_stats + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées	
+penalties + UpdatesLogModel::logUpdate (CREATE + UPDATE + DELETE) (affichage et CRUD saisons actives avec public static function getActive()) + vérifier Suppression d'un GP impossible si points / stats / penalités ajoutées			
+updates_log	 (INSERT into table au CREATE UPDATE ET DELETE des controllers : gp_points, gp_stats, penalties et manual_adjustments)
 ______________________________________
 
 La colonne active / desactive des catégories n'ont pas d'incidence sur les autres CRUD
