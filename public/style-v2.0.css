@@ -450,3 +450,127 @@ footer {
     }
 }
 
+
+
+/* DRIVERS STANDINGS ... */
+
+/* form class */
+.season-selector {
+    margin-top: 10px;
+}
+
+/* -------- BADGES -------- */
+.badge {
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 26px;
+    text-align: center;
+}
+
+/* Podiums */
+.badge-gold { background: #ffd700; color: #000; }
+.badge-silver { background: #c0c0c0; color: #000; }
+.badge-bronze { background: #cd7f32; color: #fff; }
+
+/* Positions 4+ */
+.badge-normal { background: #15151E; color: #fff; }
+
+/* -------- PILOTE -------- */
+
+.driver-cell {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dégradé : la couleur sera définie inline via la variable CSS de la table teams.color */
+.driver-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--team-color) 100%, transparent) 0%,
+        color-mix(in srgb, var(--team-color) 0%, transparent) 70%
+    );
+    z-index: 1;
+}
+
+.driver-content {
+    position: relative;
+    z-index: 2;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.driver-flag {
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* -------- TEAM -------- */
+
+.team-cell {
+    position: relative;
+    color: #fff;
+    
+}
+
+.team-name {
+    position: relative;
+    z-index: 2;
+    padding-right: 60px;
+}
+
+.team-logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    object-fit: contain;
+    z-index: 3;
+}
+
+
+/* AJUSTEMENTS DES TABLEAUX POUR LES RENDRE PLUS COMPACTS */ 
+
+.dashboard-table td {
+    padding: 4px 8px;
+}
+
+.dashboard-table th {
+    padding: 6px 8px;
+}
+
+.badge {
+    padding: 2px 6px;
+    min-width: 20px;
+}
+
+.driver-flag {
+    height: 12px;
+}
+
+.driver-content {
+    padding-left: 4px;
+}
+
+/* Permet aux largeurs fixées d'être respectées */
+.dashboard-table {
+    table-layout: fixed;
+}
+
+/* Colonne Pilote : ~20% */
+.dashboard-table td.driver-cell,
+.dashboard-table th:nth-child(2) {
+    width: 20%;
+}
+
+/* Colonne Team : ~20% */
+.dashboard-table td.team-cell,
+.dashboard-table th:nth-child(3) {
+    width: 20%;
+}
+
