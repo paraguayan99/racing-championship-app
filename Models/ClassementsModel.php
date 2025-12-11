@@ -20,23 +20,6 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll();
     }
 
-
-    // public static function getDriversStandingsActive()
-    // {
-    //     $db = new DbConnect();
-    //     $sql = "
-    //         SELECT ds.*, s.season_number, s.status, c.name AS category, t.name AS team_name
-    //         FROM drivers_standings ds
-    //         JOIN seasons s ON ds.season_id = s.id
-    //         JOIN categories c ON c.id = s.category_id
-    //         LEFT JOIN teams_drivers td ON td.driver_id = ds.driver_id AND td.season_id = s.id
-    //         LEFT JOIN teams t ON t.id = td.team_id
-    //         WHERE s.status = 'active'
-    //         ORDER BY ds.season_number DESC, ds.total_points DESC
-    //     ";
-    //     return $db->getConnection()->query($sql)->fetchAll();
-    // }
-
     public static function getDriversStandingsActive()
     {
         $db = new DbConnect();
@@ -72,26 +55,6 @@ class ClassementsModel extends DbConnect
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
-
-
-
-    // public static function getDriversStandingsBySeason($seasonId)
-    // {
-    //     $db = new DbConnect();
-    //     $sql = "
-    //         SELECT ds.*, s.season_number, s.status, c.name AS category, t.name AS team_name
-    //         FROM drivers_standings ds
-    //         JOIN seasons s ON ds.season_id = s.id
-    //         JOIN categories c ON c.id = s.category_id
-    //         LEFT JOIN teams_drivers td ON td.driver_id = ds.driver_id AND td.season_id = s.id
-    //         LEFT JOIN teams t ON t.id = td.team_id
-    //         WHERE s.id = :season_id AND s.status = 'desactive'
-    //         ORDER BY ds.total_points DESC
-    //     ";
-    //     $stmt = $db->getConnection()->prepare($sql);
-    //     $stmt->execute(['season_id' => $seasonId]);
-    //     return $stmt->fetchAll();
-    // }
 
     public static function getDriversStandingsBySeason($seasonId)
     {
@@ -132,20 +95,6 @@ class ClassementsModel extends DbConnect
         $stmt->execute(['season_id' => $seasonId]);
         return $stmt->fetchAll();
     }
-
-
-    // public static function getInactiveSeasons()
-    // {
-    //     $db = new DbConnect();
-    //     $sql = "
-    //         SELECT s.id AS season_id, s.season_number, c.name AS category
-    //         FROM seasons s
-    //         JOIN categories c ON c.id = s.category_id
-    //         WHERE s.status = 'desactive'
-    //         ORDER BY s.season_number DESC
-    //     ";
-    //     return $db->getConnection()->query($sql)->fetchAll();
-    // }
 
     // ----- TITRES PILOTES -----
     public static function getDriverAwards()
