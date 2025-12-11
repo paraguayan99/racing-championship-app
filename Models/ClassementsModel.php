@@ -26,32 +26,46 @@ class ClassementsModel extends DbConnect
         $sql = "
             SELECT 
                 ds.*,
-                s.season_number,
-                s.status,
-                c.name AS category,
 
-                d.nickname,
+                -- Flag du pilote
                 country.flag AS driver_flag,
 
-                t.name AS team_name,
+                -- Infos manquantes sur l'équipe
                 t.logo AS team_logo,
-                t.color AS team_color
+                t.color AS team_color,
+
+                -- Statistiques ajoutées
+                COUNT(DISTINCT gpp.gp_id) AS gp_count,
+                COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
 
             FROM drivers_standings ds
-            JOIN seasons s ON ds.season_id = s.id
-            JOIN categories c ON c.id = s.category_id
 
-            JOIN drivers d ON d.id = ds.driver_id
+            -- Récupérer le flag du pilote
+            LEFT JOIN drivers d ON d.id = ds.driver_id
             LEFT JOIN countries country ON country.id = d.country_id
 
+            -- Équipe de la saison (pour récupérer logo + couleur)
             LEFT JOIN teams_drivers td 
                 ON td.driver_id = ds.driver_id 
-                AND td.season_id = s.id
+                AND td.season_id = ds.season_id
+            LEFT JOIN teams t 
+                ON t.id = td.team_id
 
-            LEFT JOIN teams t ON t.id = td.team_id
+            -- GP & stats
+            JOIN gp g ON g.season_id = ds.season_id
 
-            WHERE s.status = 'active'
-            ORDER BY ds.total_points DESC
+            LEFT JOIN gp_points gpp
+                ON gpp.gp_id = g.id
+                AND gpp.driver_id = ds.driver_id
+
+            LEFT JOIN gp_stats gs
+                ON gs.gp_id = g.id
+
+            WHERE ds.season_status = 'active'
+
+            GROUP BY ds.season_id, ds.driver_id
+            ORDER BY ds.category ASC, ds.total_points DESC
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
@@ -62,33 +76,98 @@ class ClassementsModel extends DbConnect
         $sql = "
             SELECT 
                 ds.*,
-                s.season_number,
-                s.status,
-                c.name AS category,
 
-                d.nickname,
                 country.flag AS driver_flag,
-
-                t.name AS team_name,
                 t.logo AS team_logo,
-                t.color AS team_color
+                t.color AS team_color,
+
+                COUNT(DISTINCT gpp.gp_id) AS gp_count,
+                COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
 
             FROM drivers_standings ds
-            JOIN seasons s ON ds.season_id = s.id
-            JOIN categories c ON c.id = s.category_id
 
-            JOIN drivers d ON d.id = ds.driver_id
+            LEFT JOIN drivers d ON d.id = ds.driver_id
             LEFT JOIN countries country ON country.id = d.country_id
 
             LEFT JOIN teams_drivers td 
                 ON td.driver_id = ds.driver_id 
-                AND td.season_id = s.id
+                AND td.season_id = ds.season_id
 
-            LEFT JOIN teams t ON t.id = td.team_id
+            LEFT JOIN teams t 
+                ON t.id = td.team_id
 
-            WHERE s.id = :season_id 
-                AND s.status = 'desactive'
-            ORDER BY ds.total_points DESC
+            JOIN gp g ON g.season_id = ds.season_id
+
+            LEFT JOIN gp_points gpp
+                ON gpp.gp_id = g.id
+                AND gpp.driver_id = ds.driver_id
+
+            LEFT JOIN gp_stats gs
+                ON gs.gp_id = g.id
+
+            WHERE ds.season_id = :season_id
+            AND ds.season_status = 'desactive'
+
+            GROUP BY ds.season_id, ds.driver_id
+            ORDER BY ds.category ASC, ds.total_points DESC
+        ";
+
+        $stmt = $db->getConnection()->prepare($sql);
+        $stmt->execute(['season_id' => $seasonId]);
+        return $stmt->fetchAll();
+    }
+
+    // POUR LES CLASSEMENTS TEAMS
+
+    // ----- TEAMS -----
+
+    public static function getTeamsStandingsActive()
+    {
+        $db = new DbConnect();
+        $sql = "
+            SELECT 
+                ts.*,
+                t.logo AS team_logo,
+                t.color AS team_color,
+
+                COUNT(DISTINCT g.id) AS gp_count
+            FROM teams_standings ts
+
+            LEFT JOIN teams t ON t.id = ts.team_id
+            JOIN gp g ON g.season_id = ts.season_id
+
+            WHERE ts.season_id IN (
+                SELECT id FROM seasons WHERE status = 'active'
+            )
+
+            GROUP BY ts.season_id, ts.team_id
+            ORDER BY ts.category ASC, ts.total_points DESC
+        ";
+
+        return $db->getConnection()->query($sql)->fetchAll();
+    }
+
+
+    public static function getTeamsStandingsBySeason($seasonId)
+    {
+        $db = new DbConnect();
+        $sql = "
+            SELECT 
+                ts.*,
+                t.logo AS team_logo,
+                t.color AS team_color,
+
+                COUNT(DISTINCT g.id) AS gp_count
+            FROM teams_standings ts
+
+            LEFT JOIN teams t ON t.id = ts.team_id
+            JOIN gp g ON g.season_id = ts.season_id
+
+            WHERE ts.season_id = :season_id
+
+            GROUP BY ts.season_id, ts.team_id
+            ORDER BY ts.category ASC, ts.total_points DESC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);

@@ -1179,3 +1179,206 @@ LEFT JOIN (
 ) AS ma_sum ON ma_sum.season_id = s.id AND ma_sum.driver_id = d.id
 LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
 GROUP BY s.id, s.season_number, s.status, c.name, d.id, d.nickname, t.name;
+
+
+-- TEAMS STANDINGS MIS A JOUR POUR QUE LE CALCUL SOIT BON :
+
+DROP VIEW IF EXISTS `teams_standings`;
+
+CREATE ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `teams_standings` AS
+
+SELECT 
+    s.id AS season_id,
+    s.season_number,
+    c.name AS category,
+    t.id AS team_id,
+    t.name AS team_name,
+
+    -- Total points = points gp + manual_adjustments - penalties
+    (
+        COALESCE((
+            SELECT SUM(gp_pts.points_numeric)
+            FROM gp g
+            JOIN gp_points gp_pts 
+              ON gp_pts.gp_id = g.id
+             AND gp_pts.team_id = t.id
+            JOIN teams_drivers td ON td.driver_id = gp_pts.driver_id AND td.team_id = t.id AND td.season_id = s.id
+            WHERE g.season_id = s.id
+        ),0)
+        +
+        COALESCE((
+            SELECT SUM(ma.points)
+            FROM manual_adjustments ma
+            WHERE ma.season_id = s.id
+              AND ma.team_id = t.id
+        ),0)
+        -
+        COALESCE((
+            SELECT SUM(p.points_removed)
+            FROM penalties p
+            JOIN gp g ON g.id = p.gp_id
+            JOIN drivers d ON d.id = p.driver_id
+            JOIN teams_drivers td ON td.driver_id = d.id AND td.team_id = t.id AND td.season_id = s.id
+            WHERE g.season_id = s.id
+        ),0)
+    ) AS total_points
+
+FROM seasons s
+JOIN categories c ON c.id = s.category_id
+JOIN teams t
+JOIN teams_drivers td ON td.team_id = t.id AND td.season_id = s.id
+
+GROUP BY s.id, s.season_number, c.name, t.id, t.name;
+
+-- TEAMS STANDINGS REFAIT CAR PRENAIT EN COMPTE L'ASSOCIATION TEAMSDRIVERS POUR DEDUIRE LES PENALITES DES PILOTES A LEUR TEAM ASSOCIEE
+
+DROP VIEW IF EXISTS `teams_standings`;
+
+CREATE ALGORITHM=UNDEFINED
+DEFINER=`root`@`localhost`
+SQL SECURITY DEFINER
+VIEW `teams_standings` AS
+SELECT 
+    s.id AS season_id,
+    s.season_number,
+    c.name AS category,
+    t.id AS team_id,
+    t.name AS team_name,
+
+    -- Total points pour l'équipe
+    (
+        COALESCE(SUM(gp_pts.points_numeric), 0)
+        + COALESCE(SUM(ma.points), 0)
+        - COALESCE(SUM(p.points_removed), 0)
+    ) AS total_points
+
+FROM seasons s
+JOIN categories c ON c.id = s.category_id
+JOIN teams t
+
+-- Tous les GP de la saison
+LEFT JOIN gp g ON g.season_id = s.id
+
+-- GP points liés directement à l'équipe
+LEFT JOIN gp_points gp_pts 
+    ON gp_pts.gp_id = g.id 
+   AND gp_pts.team_id = t.id
+
+-- Manual adjustments liés à l'équipe
+LEFT JOIN manual_adjustments ma
+    ON ma.season_id = s.id 
+   AND ma.team_id = t.id
+
+-- Pénalités liés à l'équipe (via GP)
+LEFT JOIN penalties p
+    ON p.gp_id = g.id
+   AND p.team_id = t.id
+
+GROUP BY s.id, s.season_number, c.name, t.id, t.name;
+
+
+-- NOUVEAU TEAMS_STANDINGS CAR APPLIQUAIT MANUAL_ADJUSTMENTS POUR CHAQUE GP, DONC SUR UNE SAISON A 18GP IL FAISAIT LES POINTS x 18
+-- CELUI LA FONCTIONNE BIEN POUR LES CALCULS !
+
+DROP VIEW IF EXISTS `teams_standings`;
+
+CREATE ALGORITHM=UNDEFINED
+DEFINER=`root`@`localhost`
+SQL SECURITY DEFINER
+VIEW `teams_standings` AS
+SELECT 
+    s.id AS season_id,
+    s.season_number,
+    c.name AS category,
+    t.id AS team_id,
+    t.name AS team_name,
+
+    -- Total points pour l'équipe
+    (
+        COALESCE(SUM(gp_pts.points_numeric), 0)
+        + COALESCE(ma.total_points, 0)
+        - COALESCE(SUM(p.points_removed), 0)
+    ) AS total_points
+
+FROM seasons s
+JOIN categories c ON c.id = s.category_id
+JOIN teams t
+
+-- Tous les GP de la saison
+LEFT JOIN gp g ON g.season_id = s.id
+
+-- GP points liés directement à l'équipe
+LEFT JOIN gp_points gp_pts 
+    ON gp_pts.gp_id = g.id 
+   AND gp_pts.team_id = t.id
+
+-- Manual adjustments liés à l'équipe (agrégés une seule fois)
+LEFT JOIN (
+    SELECT season_id, team_id, SUM(points) AS total_points
+    FROM manual_adjustments
+    GROUP BY season_id, team_id
+) ma
+    ON ma.season_id = s.id 
+   AND ma.team_id = t.id
+
+-- Pénalités liées à l'équipe (via GP)
+LEFT JOIN penalties p
+    ON p.gp_id = g.id
+   AND p.team_id = t.id
+
+GROUP BY s.id, s.season_number, c.name, t.id, t.name;
+
+
+-- DRIVERS STANDINGS PREND EN COMPTE LES PENALITES DES DRIVERS (CE NETAIT PAS LE CAS)
+
+DROP VIEW IF EXISTS `drivers_standings`;
+
+CREATE ALGORITHM=UNDEFINED
+DEFINER=`root`@`localhost`
+SQL SECURITY DEFINER
+VIEW `drivers_standings` AS
+SELECT
+    s.id AS season_id,
+    s.season_number AS season_number,
+    s.status AS season_status,
+    c.name AS category,
+    d.id AS driver_id,
+    d.nickname AS nickname,
+    t.name AS team_name,
+
+    -- Total points pour le pilote
+    (
+        COALESCE(SUM(gp_pts.points_numeric), 0)
+        + COALESCE(ma.total_points, 0)
+        - COALESCE(SUM(p.points_removed), 0)
+    ) AS total_points,
+
+    SUM(CASE WHEN gp_pts.position = 1 THEN 1 ELSE 0 END) AS wins,
+    SUM(CASE WHEN gp_pts.position IN (1,2,3) THEN 1 ELSE 0 END) AS podiums
+
+FROM seasons s
+JOIN categories c ON c.id = s.category_id
+JOIN gp g ON g.season_id = s.id
+JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
+JOIN drivers d ON d.id = gp_pts.driver_id
+
+-- Récupérer l'équipe actuelle (optionnelle)
+LEFT JOIN teams_drivers td ON td.driver_id = d.id AND td.season_id = s.id
+LEFT JOIN teams t ON t.id = td.team_id
+
+-- Manual adjustments par pilote (une seule fois par saison)
+LEFT JOIN (
+    SELECT season_id, driver_id, SUM(points) AS total_points
+    FROM manual_adjustments
+    GROUP BY season_id, driver_id
+) ma ON ma.season_id = s.id AND ma.driver_id = d.id
+
+-- Pénalités liées au pilote pour chaque GP
+LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
+
+GROUP BY s.id, s.season_number, s.status, c.name, d.id, d.nickname, t.name;
+
+

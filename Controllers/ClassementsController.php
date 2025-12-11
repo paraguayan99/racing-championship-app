@@ -11,23 +11,59 @@ class ClassementsController extends Controller
         $this->render('classements/index');
     }
 
-    // ----- PILOTES -----
+    // public function driversStandings(...$args)
+    // {
+    //     $seasonFilter = $args['season_id'] ?? $_GET['season_id'] ?? 'active';
+
+    //     if ($seasonFilter === 'active') {
+    //         $drivers = ClassementsModel::getDriversStandingsActive();
+    //     } else {
+    //         $drivers = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
+    //     }
+
+    //     // Regrouper par catégorie
+    //     $listByCategory = [];
+    //     foreach ($drivers as $driver) {
+    //         $listByCategory[$driver->category][] = $driver;
+    //     }
+
+    //     // Pour le select détaillé
+    //     $seasons = ClassementsModel::getAllSeasonsForSelect();
+
+    //     $this->render('classements/drivers_standings', compact('listByCategory', 'seasons', 'seasonFilter'));
+    // }
+
     public function driversStandings(...$args)
     {
-        // Récupère season_id depuis $args ou $_GET
         $seasonFilter = $args['season_id'] ?? $_GET['season_id'] ?? 'active';
 
         if ($seasonFilter === 'active') {
-            $list = ClassementsModel::getDriversStandingsActive();
+            $drivers = ClassementsModel::getDriversStandingsActive();
+            $teams = ClassementsModel::getTeamsStandingsActive();
         } else {
-            $list = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
+            $drivers = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
+            $teams = ClassementsModel::getTeamsStandingsBySeason($seasonFilter);
         }
 
-        // Pour le select détaillé
+        // Regrouper par catégorie pour les pilotes
+        $listByCategory = [];
+        foreach ($drivers as $driver) {
+            $listByCategory[$driver->category][] = $driver;
+        }
+
+        // Regrouper par catégorie pour les équipes
+        $teamsByCategory = [];
+        foreach ($teams as $team) {
+            $teamsByCategory[$team->category][] = $team;
+        }
+
         $seasons = ClassementsModel::getAllSeasonsForSelect();
 
-        $this->render('classements/drivers_standings', compact('list', 'seasons', 'seasonFilter'));
+        $this->render('classements/drivers_standings', compact('listByCategory', 'teamsByCategory', 'seasons', 'seasonFilter'));
     }
+
+
+
 
     public function driverAwards()
     {
