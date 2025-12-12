@@ -12,13 +12,30 @@ function podiumBadge($pos) {
 
 <?php if ($gp): ?>
     <h3>
-        GP <?= htmlspecialchars($gp->gp_ordre) ?> – <?= htmlspecialchars($gp->circuit_name ?? '-') ?> (<?= htmlspecialchars($gp->country_name ?? '-') ?>)
-        / Saison <?= htmlspecialchars($gp->season_number) ?> – <?= htmlspecialchars($gp->category) ?>
+
+        <!-- Ajout du drapeau du pays du GP -->
+        <?php if (!empty($gp->country_flag)): ?>
+            <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="driver-flag" alt="flag">
+        <?php endif; ?>
+
+        GP <?= htmlspecialchars($gp->gp_ordre) ?>
+        - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
+        (<?= htmlspecialchars($gp->country_name ?? '') ?>)
+        / Saison <?= htmlspecialchars($gp->season_number) ?> - <?= htmlspecialchars($gp->category) ?>
     </h3>
-    <p><strong>Pole :</strong> <?= htmlspecialchars($gp->pole_driver ?? '-') ?> <?= $gp->pole_time ? "($gp->pole_time)" : "" ?></p>
-    <p><strong>Fastest Lap :</strong> <?= htmlspecialchars($gp->fastest_lap_driver ?? '-') ?> <?= $gp->fastest_lap_time ? "($gp->fastest_lap_time)" : "" ?></p>
+
+    <p><strong>Pole :</strong>
+        <?= htmlspecialchars($gp->pole_driver ?? '') ?>
+        <?= $gp->pole_time ? "($gp->pole_time)" : "" ?>
+    </p>
+
+    <p><strong>Fastest Lap :</strong>
+        <?= htmlspecialchars($gp->fastest_lap_driver ?? '') ?>
+        <?= $gp->fastest_lap_time ? "($gp->fastest_lap_time)" : "" ?>
+    </p>
 
     <h4>Classement GP</h4>
+
     <div class="table-responsive">
         <table class="dashboard-table">
             <thead>
@@ -27,28 +44,29 @@ function podiumBadge($pos) {
                     <th>Pilote</th>
                     <th>Équipe</th>
                     <th>Points</th>
-                    <th>Points texte</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <?php $position = 1; ?>
                 <?php foreach ($gp->points as $point): ?>
                     <tr>
-                        <!-- Badge position -->
-                        <td><?= podiumBadge($position++) ?></td>
 
-                        <!-- Pilote avec dégradé couleur et drapeau -->
+                        <!-- Badge position -->
+                        <td><?= podiumBadge($point->position ?? $position++) ?></td>
+
+                        <!-- Pilote (drapeau + dégradé équipe) -->
                         <td class="driver-cell" style="--team-color: <?= htmlspecialchars($point->team_color ?? '') ?>">
                             <div class="driver-gradient"></div>
                             <span class="driver-content">
-                                <?php if (!empty($point->driver_flag ?? null)): ?>
+                                <?php if (!empty($point->driver_flag)): ?>
                                     <img src="<?= htmlspecialchars($point->driver_flag) ?>" class="driver-flag" alt="flag">
                                 <?php endif; ?>
                                 <?= htmlspecialchars($point->nickname) ?>
                             </span>
                         </td>
 
-                        <!-- Équipe avec logo et couleur -->
+                        <!-- Équipe (logo + couleur) -->
                         <td class="team-cell" style="background: <?= htmlspecialchars($point->team_color ?? '') ?>">
                             <?php if (!empty($point->team_logo)): ?>
                                 <img src="<?= htmlspecialchars($point->team_logo) ?>" class="team-logo" alt="logo">
@@ -59,19 +77,21 @@ function podiumBadge($pos) {
                         <!-- Points numériques formatés -->
                         <td>
                             <?= htmlspecialchars(
-                                isset($point->points_numeric) 
-                                    ? rtrim(rtrim(number_format($point->points_numeric, 1, '.', ''), '0'), '.') 
+                                isset($point->points_numeric)
+                                    ? rtrim(rtrim(number_format($point->points_numeric, 1, '.', ''), '0'), '.')
                                     : ''
                             ) ?>
                         </td>
 
                         <!-- Points texte -->
                         <td><?= htmlspecialchars($point->points_text ?? '') ?></td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+
 <?php else: ?>
     <p>GP non trouvé.</p>
 <?php endif; ?>

@@ -20,11 +20,13 @@ class ClassementsController extends Controller
             $drivers = ClassementsModel::getDriversStandingsActive();
             $teams = ClassementsModel::getTeamsStandingsActive();
             $gpList = ClassementsModel::getSeasonGPResultsActive();
+            $penalties = ClassementsModel::getPenaltiesActive();
         } else {
             // Pilotes et Teams pour une saison spécifique
             $drivers = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
             $teams = ClassementsModel::getTeamsStandingsBySeason($seasonFilter);
             $gpList = ClassementsModel::getSeasonGPResultsBySeason($seasonFilter);
+            $penalties = ClassementsModel::getPenaltiesBySeason($seasonFilter);
         }
 
         // Grouper pilotes par catégorie
@@ -45,12 +47,30 @@ class ClassementsController extends Controller
             $gpByCategory[$gp->category][] = $gp;
         }
 
+        // Grouper Pénalités par catégorie
+        $penaltiesByCategory = [];
+        foreach ($penalties as $p) {
+            $penaltiesByCategory[$p->category_name][] = $p;
+        }
+
         // Toutes les saisons pour le select
         $seasons = ClassementsModel::getAllSeasonsForSelect();
 
+        // Récupérer la dernière mise à jour GP (sans filtrer par saison)
+        $lastGPUpdate = ClassementsModel::getLastGPUpdate();
+
+        // Passer toutes les variables à la vue
         $this->render(
             'classements/standings',
-            compact('listByCategory', 'teamsByCategory', 'gpByCategory', 'seasons', 'seasonFilter')
+            compact(
+                'listByCategory',
+                'teamsByCategory',
+                'gpByCategory',
+                'seasons',
+                'seasonFilter',
+                'penaltiesByCategory',
+                'lastGPUpdate'
+            )
         );
     }
 
