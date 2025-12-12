@@ -18,7 +18,7 @@
         <h1>Classements & Statistiques</h1>
     </div>
 
-            <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=classements&action=driversStandings">Classement Pilotes</a></div>
+            <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=classements&action=standings">Classement Pilotes</a></div>
             <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=classements&action=driverAwards">Titres Pilotes</a></div>
             <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=classements&action=driverStatsAllSeasons">Stats Pilotes - Toutes Saisons</a></div>
             <div class="section-btn-dashboard"><a class="nav-btn-dashboard" href="index.php?controller=classements&action=gpStatsSummary">Stats GP (Pole / Hotlap)</a></div>

@@ -11,56 +11,78 @@ class ClassementsController extends Controller
         $this->render('classements/index');
     }
 
-    // public function driversStandings(...$args)
-    // {
-    //     $seasonFilter = $args['season_id'] ?? $_GET['season_id'] ?? 'active';
-
-    //     if ($seasonFilter === 'active') {
-    //         $drivers = ClassementsModel::getDriversStandingsActive();
-    //     } else {
-    //         $drivers = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
-    //     }
-
-    //     // Regrouper par catégorie
-    //     $listByCategory = [];
-    //     foreach ($drivers as $driver) {
-    //         $listByCategory[$driver->category][] = $driver;
-    //     }
-
-    //     // Pour le select détaillé
-    //     $seasons = ClassementsModel::getAllSeasonsForSelect();
-
-    //     $this->render('classements/drivers_standings', compact('listByCategory', 'seasons', 'seasonFilter'));
-    // }
-
-    public function driversStandings(...$args)
+    public function standings(...$args)
     {
         $seasonFilter = $args['season_id'] ?? $_GET['season_id'] ?? 'active';
 
         if ($seasonFilter === 'active') {
+            // Pilotes et Teams pour toutes les saisons actives
             $drivers = ClassementsModel::getDriversStandingsActive();
             $teams = ClassementsModel::getTeamsStandingsActive();
+            $gpList = ClassementsModel::getSeasonGPResultsActive();
         } else {
+            // Pilotes et Teams pour une saison spécifique
             $drivers = ClassementsModel::getDriversStandingsBySeason($seasonFilter);
             $teams = ClassementsModel::getTeamsStandingsBySeason($seasonFilter);
+            $gpList = ClassementsModel::getSeasonGPResultsBySeason($seasonFilter);
         }
 
-        // Regrouper par catégorie pour les pilotes
+        // Grouper pilotes par catégorie
         $listByCategory = [];
-        foreach ($drivers as $driver) {
-            $listByCategory[$driver->category][] = $driver;
+        foreach ($drivers as $d) {
+            $listByCategory[$d->category][] = $d;
         }
 
-        // Regrouper par catégorie pour les équipes
+        // Grouper teams par catégorie
         $teamsByCategory = [];
-        foreach ($teams as $team) {
-            $teamsByCategory[$team->category][] = $team;
+        foreach ($teams as $t) {
+            $teamsByCategory[$t->category][] = $t;
         }
 
+        // Grouper GP par catégorie
+        $gpByCategory = [];
+        foreach ($gpList as $gp) {
+            $gpByCategory[$gp->category][] = $gp;
+        }
+
+        // Toutes les saisons pour le select
         $seasons = ClassementsModel::getAllSeasonsForSelect();
 
-        $this->render('classements/drivers_standings', compact('listByCategory', 'teamsByCategory', 'seasons', 'seasonFilter'));
+        $this->render(
+            'classements/standings',
+            compact('listByCategory', 'teamsByCategory', 'gpByCategory', 'seasons', 'seasonFilter')
+        );
     }
+
+    public function gpDetails($gp_id)
+    {
+        // Vérifie que l'ID du GP est fourni
+        if (!$gp_id) {
+            echo "<p>GP non trouvé.</p>";
+            return;
+        }
+
+        // Récupère les détails complets du GP depuis le modèle
+        $gp = ClassementsModel::getGPDetails($gp_id);
+
+        // Vérifie que le GP existe réellement
+        if (!$gp) {
+            echo "<p>GP non trouvé.</p>";
+            return;
+        }
+
+        // Inclut la vue pour afficher le modal
+        include __DIR__ . '/../Views/classements/_gp_details.php';
+    }
+
+
+
+
+
+
+
+
+
 
 
 
