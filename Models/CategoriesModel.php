@@ -7,6 +7,7 @@ class CategoriesModel extends DbConnect {
 
     public $id;
     public $name;
+    public $color;
     public $status;
 
     public static function findByName($name){
@@ -19,7 +20,7 @@ class CategoriesModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT id, name, status
+            SELECT id, name, color, status
             FROM categories
             ORDER BY id ASC
         ")->fetchAll();

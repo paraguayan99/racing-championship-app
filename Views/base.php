@@ -7,7 +7,7 @@
 <!-- Google Fonts pour les polices -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- CSS personnel, pas de Framework -->
-<link rel="stylesheet" href="style-v2.2.css" />
+<link rel="stylesheet" href="style-v2.6.css" />
 <!-- Icones Vectorielles avec FontAwesome -->
 <script src="https://kit.fontawesome.com/ff03dfd379.js" crossorigin="anonymous"></script>
 <title><?= $title ?></title>
@@ -22,7 +22,7 @@
     <h2 class="name_header">Team-eRacing</h2>
 </div>
 <nav>
-<a class="nav-btn" href="index.php?controller=classements">CLASSEMENTS</a>
+<a class="nav-btn" href="index.php?controller=classements&action=standings">CLASSEMENTS</a>
 <a class="nav-btn red" href="index.php?controller=join">NOUS REJOINDRE</a>
 </nav>
 </header>

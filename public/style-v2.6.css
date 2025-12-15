@@ -249,8 +249,12 @@ footer {
     overflow: hidden;
 }
 
+.dashboard-table thead th {
+    background-color: var(--category-color);
+}
+
 .dashboard-table th {
-    background: #E10600;
+    background: var(--category-color);
     padding: 12px;
     text-align: left;
     color: white;
@@ -596,20 +600,20 @@ footer {
 }
 
 .gp-toggle-btn-category {
-    background-color: #E10600;
+    background-color: var(--category-color);
     color: white;
     border: none;
     border-radius: 10px;
     padding: 8px 16px;
     cursor: pointer;
     margin-bottom: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .gp-toggle-btn-category:hover {
-    background-color: #fdbcba;
+    background-color: color-mix(in srgb, var(--category-color) 30%, white);
     color: #000;
 }
-
 
 /* --- Modal affichage dynamique AJAX des résultats complets des GP --- */
 .gp-modal {

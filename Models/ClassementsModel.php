@@ -69,6 +69,9 @@ class ClassementsModel extends DbConnect
                 s.videogame,
                 s.platform,
 
+                -- Couleur de la catégorie
+                cat.color AS category_color,
+
                 -- Flag du pilote
                 country.flag AS driver_flag,
 
@@ -85,6 +88,9 @@ class ClassementsModel extends DbConnect
 
             -- Saison (pour videogame + platform)
             JOIN seasons s ON s.id = ds.season_id
+
+            -- Categories (pour color)
+            JOIN categories cat ON cat.id = s.category_id
 
             -- Pilote + flag
             LEFT JOIN drivers d ON d.id = ds.driver_id
@@ -124,6 +130,9 @@ class ClassementsModel extends DbConnect
                 s.videogame,
                 s.platform,
 
+                -- Couleur de la catégorie
+                cat.color AS category_color,
+
                 -- Flag pilote
                 country.flag AS driver_flag,
 
@@ -140,6 +149,9 @@ class ClassementsModel extends DbConnect
 
             -- Saison
             JOIN seasons s ON s.id = ds.season_id
+
+            -- Categories (pour color)
+            JOIN categories cat ON cat.id = s.category_id
 
             -- Pilote + flag
             LEFT JOIN drivers d ON d.id = ds.driver_id
@@ -335,6 +347,7 @@ class ClassementsModel extends DbConnect
         // Infos GP + stats + circuit + pays
         $sql = "
             SELECT g.*, s.season_number, c.name AS category,
+                c.color AS category_color,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.flag AS country_flag,
@@ -380,6 +393,7 @@ class ClassementsModel extends DbConnect
 
         return $gp;
     }
+
 
     // ----------------------------
     // PENALITES
@@ -468,75 +482,8 @@ class ClassementsModel extends DbConnect
 
 
 
-    // ----- TITRES PILOTES -----
-    public static function getDriverAwards()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM driver_awards
-            ORDER BY titles DESC, vice_titles DESC, third_place DESC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
 
-    // ----- STATS PILOTES TOUTES SAISONS -----
-    public static function getDriverStatsAllSeasons()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM driver_stats_all_seasons
-            ORDER BY total_points DESC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
-
-    // ----- GP STATS -----
-    public static function getGpStatsSummary()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM gp_stats_summary
-            ORDER BY season_number DESC, gp_id ASC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
-
-    // ----- TEAMS -----
-    public static function getTeamsStandings()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM teams_standings
-            ORDER BY season_number DESC, total_points DESC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
-
-    public static function getTeamAwards()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM team_awards
-            ORDER BY titles DESC, vice_titles DESC, third_place DESC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
-
-    public static function getTeamPointsAllSeasons()
-    {
-        $db = new DbConnect();
-        $sql = "
-            SELECT *
-            FROM team_points_all_seasons
-            ORDER BY total_points DESC
-        ";
-        return $db->getConnection()->query($sql)->fetchAll();
-    }
+    
 }
 ?>
 

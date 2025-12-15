@@ -5,12 +5,6 @@ use App\Models\ClassementsModel;
 
 class ClassementsController extends Controller
 {
-    // Page d'accueil des classements
-    public function index()
-    {
-        $this->render('classements/index');
-    }
-
     public function standings(...$args)
     {
         $seasonFilter = $args['season_id'] ?? $_GET['season_id'] ?? 'active';
@@ -27,6 +21,15 @@ class ClassementsController extends Controller
             $teams = ClassementsModel::getTeamsStandingsBySeason($seasonFilter);
             $gpList = ClassementsModel::getSeasonGPResultsBySeason($seasonFilter);
             $penalties = ClassementsModel::getPenaltiesBySeason($seasonFilter);
+        }
+
+        // Récupérer couleur de la catégorie
+        $categoryColors = [];
+        // Drivers
+        foreach ($drivers as $d) {
+            if (!isset($categoryColors[$d->category])) {
+                $categoryColors[$d->category] = $d->category_color;
+            }
         }
 
         // Grouper pilotes par catégorie
@@ -69,7 +72,8 @@ class ClassementsController extends Controller
                 'seasons',
                 'seasonFilter',
                 'penaltiesByCategory',
-                'lastGPUpdate'
+                'lastGPUpdate',
+                'categoryColors'
             )
         );
     }
@@ -92,57 +96,9 @@ class ClassementsController extends Controller
         }
 
         // Inclut la vue pour afficher le modal
-        include __DIR__ . '/../Views/classements/_gp_details.php';
+        include __DIR__ . '/../Views/classements/standings_gp_details.php';
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    public function driverAwards()
-    {
-        $list = ClassementsModel::getDriverAwards();
-        $this->render('classements/driver_awards', compact('list'));
-    }
-
-    public function driverStatsAllSeasons()
-    {
-        $list = ClassementsModel::getDriverStatsAllSeasons();
-        $this->render('classements/driver_stats_all_seasons', compact('list'));
-    }
-
-    // ----- GP STATS -----
-    public function gpStatsSummary()
-    {
-        $list = ClassementsModel::getGpStatsSummary();
-        $this->render('classements/gp_stats_summary', compact('list'));
-    }
-
-    // ----- CONSTRUCTEURS / TEAMS -----
-    public function teamsStandings()
-    {
-        $list = ClassementsModel::getTeamsStandings();
-        $this->render('classements/teams_standings', compact('list'));
-    }
-
-    public function teamAwards()
-    {
-        $list = ClassementsModel::getTeamAwards();
-        $this->render('classements/team_awards', compact('list'));
-    }
-
-    public function teamPointsAllSeasons()
-    {
-        $list = ClassementsModel::getTeamPointsAllSeasons();
-        $this->render('classements/team_points_all_seasons', compact('list'));
-    }
 }
 ?>

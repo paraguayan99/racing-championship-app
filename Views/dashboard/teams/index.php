@@ -38,7 +38,15 @@
                             <img src="<?= htmlspecialchars($team->logo) ?>" alt="logo" style="height:40px;">
                         <?php endif; ?>
                     </td>
-                    <td><?= htmlspecialchars($team->color ?? '')?></td>
+                    <td>
+                        <span style="display:inline-block;
+                                    width:20px;
+                                    height:20px;
+                                    background-color:<?= htmlspecialchars($team->color ?? '') ?>;
+                                    border-radius:4px;">
+                        </span>
+                        <?= htmlspecialchars($team->color ?? '') ?>
+                    </td>
                     <td><?= htmlspecialchars($team->country) ?></td>
                     <td><?= htmlspecialchars($team->status) ?></td>
                     <td class="actions">

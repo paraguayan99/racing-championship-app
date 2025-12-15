@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Couleur</th>
                     <th>Status</th>
                     <th class="actions-column">Actions</th>
                 </tr>
@@ -30,6 +31,15 @@
                 <?php foreach ($list as $cat): ?>
                 <tr>
                     <td><?= htmlspecialchars($cat->name) ?></td>
+                    <td>
+                        <span style="display:inline-block;
+                                    width:20px;
+                                    height:20px;
+                                    background-color:<?= htmlspecialchars($cat->color) ?>;
+                                    border-radius:4px;">
+                        </span>
+                        <?= htmlspecialchars($cat->color) ?>
+                    </td>
                     <td><?= htmlspecialchars($cat->status) ?></td>
                     <td class="actions">
                         <a class="action-btn edit" href="index.php?controller=categories&action=update&id=<?= $cat->id ?>">

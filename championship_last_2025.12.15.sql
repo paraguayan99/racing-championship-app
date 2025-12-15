@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 09 déc. 2025 à 15:25
+-- Généré le : lun. 15 déc. 2025 à 11:51
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -31,19 +31,20 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `color` varchar(7) NOT NULL DEFAULT '#E10600',
   `status` enum('active','desactive') DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `status`) VALUES
-(15, 'F1', 'active'),
-(16, 'F2', 'active'),
-(17, 'F3', 'active');
+INSERT INTO `categories` (`id`, `name`, `color`, `status`) VALUES
+(15, 'F1', '#E10600', 'active'),
+(16, 'F2', '#366092', 'active'),
+(17, 'F3', '#a22a98', 'active');
 
 --
 -- Déclencheurs `categories`
@@ -135,25 +136,25 @@ CREATE TABLE IF NOT EXISTS `countries` (
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `flag`) VALUES
-(1, 'France', 'FRA', ''),
-(19, 'Bahreïn', 'BAH', ''),
-(20, 'Malaisie', 'MAL', ''),
-(21, 'Australie', 'AUS', ''),
-(22, 'Italie', 'ITA', ''),
-(23, 'Allemagne', 'ALL', ''),
-(24, 'Espagne', 'ESP', ''),
-(25, 'Monaco', 'MON', ''),
-(26, 'Grande-Bretagne', 'GBR', ''),
-(27, 'Canada', 'CAN', ''),
-(28, 'États-Unis', 'USA', ''),
-(29, 'Hongrie', 'HON', ''),
+(1, 'France', 'FRA', 'img/flags/france.png'),
+(19, 'Bahreïn', 'BAH', 'img/flags/bahrein.png'),
+(20, 'Malaisie', 'MAL', 'img/flags/malaisie.png'),
+(21, 'Australie', 'AUS', 'img/flags/australie.png'),
+(22, 'Italie', 'ITA', 'img/flags/italie.png'),
+(23, 'Allemagne', 'ALL', 'img/flags/allemagne.png'),
+(24, 'Espagne', 'ESP', 'img/flags/espagne.png'),
+(25, 'Monaco', 'MON', 'img/flags/monaco.png'),
+(26, 'Grande-Bretagne', 'GBR', 'img/flags/grandebretagne.png'),
+(27, 'Canada', 'CAN', 'img/flags/canada.png'),
+(28, 'États-Unis', 'USA', 'img/flags/etatsunis.png'),
+(29, 'Hongrie', 'HON', 'img/flags/hongrie.png'),
 (30, 'Turquie', 'TUR', ''),
-(31, 'Chine', 'CHI', ''),
-(32, 'Japon', 'JAP', ''),
-(33, 'Brésil', 'BRE', ''),
-(34, 'Suisse', 'SUI', ''),
-(35, 'Autriche', 'AUT', ''),
-(36, 'Pays-Bas', 'P-B', '');
+(31, 'Chine', 'CHI', 'img/flags/chine.png'),
+(32, 'Japon', 'JAP', 'img/flags/japon.png'),
+(33, 'Brésil', 'BRE', 'img/flags/bresil.png'),
+(34, 'Suisse', 'SUI', 'img/flags/suisse.png'),
+(35, 'Autriche', 'AUT', 'img/flags/autriche.png'),
+(36, 'Pays-Bas', 'P-B', 'img/flags/paysbas.png');
 
 --
 -- Déclencheurs `countries`
@@ -193,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   UNIQUE KEY `nickname` (`nickname`),
   KEY `idx_driver_status` (`status`),
   KEY `idx_driver_country` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `drivers`
@@ -211,7 +212,9 @@ INSERT INTO `drivers` (`id`, `nickname`, `country_id`, `status`) VALUES
 (21, 'Fox', 1, 'active'),
 (22, 'Nordschleife', 1, 'active'),
 (23, 'Ludovico6', 1, 'active'),
-(24, 'Gafit', 1, 'active');
+(24, 'Gafit', 1, 'active'),
+(26, 'Pilote F2', 1, 'active'),
+(27, 'Pilote F2 bis', 1, 'active');
 
 --
 -- Déclencheurs `drivers`
@@ -248,50 +251,10 @@ CREATE TABLE IF NOT EXISTS `drivers_standings` (
 ,`podiums` decimal(23,0)
 ,`season_id` int
 ,`season_number` int
+,`season_status` enum('active','desactive')
+,`team_name` varchar(100)
 ,`total_points` decimal(34,1)
 ,`wins` decimal(23,0)
-);
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `driver_awards`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `driver_awards`;
-CREATE TABLE IF NOT EXISTS `driver_awards` (
-`category` varchar(50)
-,`driver_id` int
-,`nickname` varchar(100)
-,`third_place` decimal(23,0)
-,`titles` decimal(23,0)
-,`vice_titles` decimal(23,0)
-);
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `driver_gp_counts`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `driver_gp_counts`;
-CREATE TABLE IF NOT EXISTS `driver_gp_counts` (
-`driver_id` int
-,`nickname` varchar(100)
-,`total_gp` bigint
-);
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `driver_points_all_seasons`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `driver_points_all_seasons`;
-CREATE TABLE IF NOT EXISTS `driver_points_all_seasons` (
-`driver_id` int
-,`nickname` varchar(100)
-,`total_points` decimal(34,1)
 );
 
 -- --------------------------------------------------------
@@ -310,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `gp` (
   KEY `idx_gp_season` (`season_id`),
   KEY `idx_gp_circuit` (`circuit_id`),
   KEY `idx_gp_season_ordre` (`season_id`,`gp_ordre`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `gp`
@@ -334,7 +297,10 @@ INSERT INTO `gp` (`id`, `season_id`, `circuit_id`, `gp_ordre`) VALUES
 (40, 20, 38, 15),
 (41, 20, 39, 16),
 (42, 20, 40, 17),
-(43, 20, 41, 18);
+(43, 20, 41, 18),
+(44, 22, 35, 1),
+(45, 23, 33, 1),
+(46, 22, 29, 2);
 
 --
 -- Déclencheurs `gp`
@@ -393,7 +359,126 @@ INSERT INTO `gp_points` (`id`, `gp_id`, `driver_id`, `team_id`, `position`, `poi
 (38, 26, 24, 39, 5, 0.0, NULL),
 (39, 26, 17, 32, 6, 0.0, NULL),
 (43, 26, 1, 1, 1, 0.0, NULL),
-(45, 26, 1, 1, 2, 0.0, NULL);
+(45, 26, 1, 1, 2, 0.0, NULL),
+(49, 27, 19, 34, 2, 0.0, NULL),
+(50, 27, 16, 31, 3, 0.0, NULL),
+(52, 27, 17, 32, 5, 0.0, NULL),
+(53, 27, 1, 1, 1, 0.0, NULL),
+(54, 28, 14, 29, 2, 0.0, NULL),
+(55, 28, 16, 31, 5, 0.0, NULL),
+(56, 28, 20, 35, 7, 0.0, NULL),
+(57, 28, 24, 39, 11, 0.0, NULL),
+(58, 28, 1, 1, 1, 0.0, NULL),
+(59, 28, 1, 1, 3, 0.0, NULL),
+(60, 29, 14, 29, 2, 0.0, NULL),
+(61, 29, 20, 35, 3, 0.0, NULL),
+(62, 29, 1, 1, 1, 0.0, NULL),
+(63, 29, 16, 31, 6, 0.0, NULL),
+(64, 30, 14, 29, 1, 0.0, NULL),
+(65, 30, 1, 1, 2, 0.0, NULL),
+(66, 30, 1, 1, 3, 0.0, NULL),
+(67, 30, 19, 34, 5, 0.0, NULL),
+(68, 30, 16, 31, 7, 0.0, NULL),
+(69, 30, 17, 32, 10, 0.0, NULL),
+(70, 31, 14, 29, 1, 0.0, NULL),
+(71, 31, 1, 1, 2, 0.0, NULL),
+(72, 31, 17, 32, 3, 0.0, NULL),
+(73, 31, 19, 34, 5, 0.0, NULL),
+(74, 31, 16, 31, 8, 0.0, NULL),
+(75, 31, 24, 39, 11, 0.0, NULL),
+(76, 32, 14, 29, 1, 0.0, NULL),
+(77, 32, 1, 1, 2, 0.0, NULL),
+(78, 32, 1, 1, 3, 0.0, NULL),
+(79, 32, 17, 32, 8, 0.0, NULL),
+(80, 32, 24, 39, 10, 0.0, NULL),
+(81, 32, 16, 31, 11, 0.0, NULL),
+(82, 33, 15, 30, 1, 0.0, NULL),
+(83, 33, 14, 29, 2, 0.0, NULL),
+(84, 33, 18, 33, 3, 0.0, NULL),
+(85, 34, 14, 29, 1, 0.0, NULL),
+(86, 34, 1, 1, 2, 0.0, NULL),
+(87, 34, 17, 32, 3, 0.0, NULL),
+(88, 34, 16, 31, 6, 0.0, NULL),
+(89, 34, 20, 35, 8, 0.0, NULL),
+(90, 35, 14, 29, 1, 0.0, NULL),
+(91, 35, 1, 1, 2, 0.0, NULL),
+(92, 35, 16, 31, 3, 0.0, NULL),
+(93, 35, 17, 32, 8, 0.0, NULL),
+(94, 35, 18, 33, 6, 0.0, NULL),
+(95, 35, 19, 34, 5, 0.0, NULL),
+(96, 35, 24, 39, 11, 0.0, NULL),
+(97, 36, 15, 30, 1, 0.0, NULL),
+(98, 36, 14, 29, 2, 0.0, NULL),
+(99, 36, 16, 31, 3, 0.0, NULL),
+(100, 36, 17, 32, 5, 0.0, NULL),
+(101, 36, 18, 33, 8, 0.0, NULL),
+(102, 36, 19, 34, 9, 0.0, NULL),
+(103, 36, 20, 35, 4, 0.0, NULL),
+(104, 36, 21, 36, 7, 0.0, NULL),
+(105, 36, 23, 38, 6, 0.0, NULL),
+(106, 36, 24, 39, 10, 0.0, NULL),
+(107, 37, 14, 29, 1, 0.0, NULL),
+(108, 37, 15, 30, 2, 0.0, NULL),
+(109, 37, 1, 1, 3, 0.0, NULL),
+(110, 37, 16, 31, 4, 0.0, NULL),
+(111, 37, 17, 32, 6, 0.0, NULL),
+(112, 37, 23, 38, 8, 0.0, NULL),
+(113, 38, 15, 30, 1, 0.0, NULL),
+(114, 38, 14, 29, 2, 0.0, NULL),
+(115, 38, 21, 36, 3, 0.0, NULL),
+(116, 38, 22, 37, 4, 0.0, NULL),
+(117, 38, 17, 32, 5, 0.0, NULL),
+(118, 38, 18, 33, 6, 0.0, NULL),
+(119, 38, 23, 38, 8, 0.0, NULL),
+(120, 38, 16, 31, 9, 0.0, NULL),
+(121, 38, 24, 39, 11, 0.0, NULL),
+(122, 39, 14, 29, 4, 0.0, NULL),
+(123, 39, 15, 30, 1, 0.0, NULL),
+(124, 39, 16, 31, 2, 0.0, NULL),
+(125, 39, 17, 32, 7, 0.0, NULL),
+(128, 39, 18, 33, 5, 0.0, NULL),
+(129, 39, 22, 37, 3, 0.0, NULL),
+(130, 39, 23, 38, 9, 0.0, NULL),
+(131, 39, 24, 39, 11, 0.0, NULL),
+(132, 40, 14, 29, 2, 0.0, NULL),
+(133, 40, 15, 30, 1, 0.0, NULL),
+(134, 40, 16, 31, 10, 0.0, NULL),
+(135, 40, 17, 32, 3, 0.0, NULL),
+(136, 40, 18, 33, 4, 0.0, NULL),
+(137, 40, 19, 34, 8, 0.0, NULL),
+(138, 40, 20, 35, 7, 0.0, NULL),
+(139, 40, 22, 37, 9, 0.0, NULL),
+(140, 40, 24, 39, 11, 0.0, NULL),
+(141, 41, 15, 30, 1, 0.0, NULL),
+(142, 41, 14, 29, 2, 0.0, NULL),
+(143, 41, 16, 31, 5, 0.0, NULL),
+(144, 41, 18, 33, 3, 0.0, NULL),
+(145, 41, 21, 36, 4, 0.0, NULL),
+(146, 42, 14, 29, 1, 0.0, NULL),
+(147, 42, 1, 1, 2, 0.0, NULL),
+(148, 42, 1, 1, 3, 0.0, NULL),
+(149, 42, 17, 32, 4, 0.0, NULL),
+(150, 42, 18, 33, 5, 0.0, NULL),
+(151, 42, 20, 35, 6, 0.0, NULL),
+(152, 42, 16, 31, 7, 0.0, NULL),
+(153, 42, 19, 34, 8, 0.0, NULL),
+(154, 42, 22, 37, 9, 0.0, NULL),
+(155, 43, 14, 29, 1, 0.0, NULL),
+(156, 43, 1, 1, 2, 0.0, NULL),
+(157, 43, 16, 31, 8, 0.0, NULL),
+(158, 43, 17, 32, 3, 0.0, NULL),
+(159, 43, 18, 33, 4, 0.0, NULL),
+(160, 43, 19, 34, 7, 0.0, NULL),
+(161, 43, 20, 35, 5, 0.0, NULL),
+(162, 43, 21, 36, 10, 0.0, NULL),
+(163, 43, 22, 37, 9, 0.0, NULL),
+(164, 44, 26, 31, 3, 0.0, NULL),
+(165, 44, 27, 1, 2, 0.0, NULL),
+(167, 45, 1, 37, 1, 900.0, NULL),
+(168, 44, 21, 34, 1, 25.0, NULL),
+(169, 44, 22, 1, 11, 0.0, 'DNF'),
+(170, 44, 1, 1, 12, 0.0, 'DNF'),
+(171, 46, 21, 37, 1, 25.0, NULL);
 
 -- --------------------------------------------------------
 
@@ -413,26 +498,13 @@ CREATE TABLE IF NOT EXISTS `gp_stats` (
   KEY `idx_stats_fastest_driver` (`fastest_lap_driver`)
 ) ;
 
--- --------------------------------------------------------
+--
+-- Déchargement des données de la table `gp_stats`
+--
 
---
--- Doublure de structure pour la vue `gp_stats_summary`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `gp_stats_summary`;
-CREATE TABLE IF NOT EXISTS `gp_stats_summary` (
-`category` varchar(50)
-,`circuit_name` varchar(100)
-,`fastest_driver_name` varchar(100)
-,`fastest_lap_driver` int
-,`fastest_lap_time` varchar(50)
-,`gp_id` int
-,`pole_driver_name` varchar(100)
-,`pole_position_driver` int
-,`pole_position_time` varchar(50)
-,`season_id` int
-,`season_number` int
-);
+INSERT INTO `gp_stats` (`gp_id`, `pole_position_driver`, `pole_position_time`, `fastest_lap_driver`, `fastest_lap_time`) VALUES
+(31, 14, '1:10.556', 22, '1:14.668'),
+(44, 27, '1:14.145', 21, '1:25.652');
 
 -- --------------------------------------------------------
 
@@ -455,6 +527,25 @@ CREATE TABLE IF NOT EXISTS `manual_adjustments` (
   KEY `idx_ma_driver_team` (`driver_id`,`team_id`)
 ) ;
 
+--
+-- Déchargement des données de la table `manual_adjustments`
+--
+
+INSERT INTO `manual_adjustments` (`id`, `season_id`, `driver_id`, `team_id`, `points`, `comment`) VALUES
+(45, 20, 14, NULL, 141.0, NULL),
+(46, 20, 15, NULL, 68.0, NULL),
+(47, 20, 16, NULL, 57.0, NULL),
+(48, 20, 17, NULL, 51.0, NULL),
+(49, 20, 18, NULL, 38.0, NULL),
+(50, 20, 19, NULL, 29.0, NULL),
+(51, 20, 20, NULL, 23.0, NULL),
+(52, 20, 21, NULL, 13.0, ''),
+(53, 20, 22, NULL, 11.0, NULL),
+(54, 20, 23, NULL, 5.0, NULL),
+(55, 20, 24, NULL, 4.0, NULL),
+(56, 22, 26, NULL, 25.0, NULL),
+(57, 22, 27, NULL, 18.0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -474,6 +565,14 @@ CREATE TABLE IF NOT EXISTS `penalties` (
   KEY `driver_id` (`driver_id`),
   KEY `team_id` (`team_id`)
 ) ;
+
+--
+-- Déchargement des données de la table `penalties`
+--
+
+INSERT INTO `penalties` (`id`, `gp_id`, `driver_id`, `team_id`, `points_removed`, `comment`) VALUES
+(15, 45, 1, 37, 4, NULL),
+(17, 44, 21, 34, 35, NULL);
 
 -- --------------------------------------------------------
 
@@ -524,7 +623,7 @@ CREATE TABLE IF NOT EXISTS `seasons` (
 INSERT INTO `seasons` (`id`, `season_number`, `category_id`, `videogame`, `platform`, `status`) VALUES
 (20, 1, 15, 'F1 Championship Edition', 'PS3', 'active'),
 (22, 1, 16, 'F1 Championship Edition', 'PS3', 'active'),
-(23, 1, 17, 'F1 Championship Edition', 'PS3', 'active');
+(23, 1, 17, 'F1 Championship Edition', 'PS3', 'desactive');
 
 --
 -- Déclencheurs `seasons`
@@ -574,14 +673,14 @@ CREATE TABLE IF NOT EXISTS `teams` (
 INSERT INTO `teams` (`id`, `name`, `logo`, `color`, `country_id`, `status`) VALUES
 (1, '[Team removed]', '', '', 1, 'active'),
 (29, 'Toyota', '', '', 32, 'active'),
-(30, 'Williams', '', '', 26, 'active'),
-(31, 'Ferrari', '', '', 22, 'active'),
+(30, 'Williams', 'img/teams/williams.png', '#03A8EA', 26, 'active'),
+(31, 'Ferrari', 'img/teams/ferrari.png', '#FE0000', 22, 'active'),
 (32, 'Renault', '', '', 1, 'active'),
 (33, 'Super Aguri', '', '', 32, 'active'),
 (34, 'Honda', '', '', 32, 'active'),
 (35, 'BMW Sauber', '', '', 34, 'active'),
-(36, 'McLaren', '', '', 26, 'active'),
-(37, 'Red Bull', '', '', 35, 'active'),
+(36, 'McLaren', 'img/teams/mclaren.png', '#FF8500', 26, 'active'),
+(37, 'Red Bull', 'img/teams/redbull.png', '#15185E', 35, 'active'),
 (38, 'Toro Rosso', '', '', 22, 'active'),
 (39, 'Spyker', '', '', 36, 'active');
 
@@ -648,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `teams_drivers` (
   KEY `idx_td_season` (`season_id`),
   KEY `idx_td_driver` (`driver_id`),
   KEY `idx_td_team` (`team_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `teams_drivers`
@@ -665,7 +764,9 @@ INSERT INTO `teams_drivers` (`id`, `season_id`, `driver_id`, `team_id`) VALUES
 (25, 20, 21, 36),
 (26, 20, 22, 37),
 (27, 20, 23, 38),
-(28, 20, 24, 39);
+(28, 20, 24, 39),
+(37, 22, 21, 37),
+(36, 23, 1, 37);
 
 -- --------------------------------------------------------
 
@@ -676,40 +777,9 @@ INSERT INTO `teams_drivers` (`id`, `season_id`, `driver_id`, `team_id`) VALUES
 DROP VIEW IF EXISTS `teams_standings`;
 CREATE TABLE IF NOT EXISTS `teams_standings` (
 `category` varchar(50)
-,`podiums` decimal(23,0)
 ,`season_id` int
 ,`season_number` int
 ,`team_id` int
-,`team_name` varchar(100)
-,`total_points` decimal(34,1)
-,`wins` decimal(23,0)
-);
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `team_awards`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `team_awards`;
-CREATE TABLE IF NOT EXISTS `team_awards` (
-`category` varchar(50)
-,`team_id` int
-,`team_name` varchar(100)
-,`third_place` decimal(23,0)
-,`titles` decimal(23,0)
-,`vice_titles` decimal(23,0)
-);
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `team_points_all_seasons`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `team_points_all_seasons`;
-CREATE TABLE IF NOT EXISTS `team_points_all_seasons` (
-`team_id` int
 ,`team_name` varchar(100)
 ,`total_points` decimal(34,1)
 );
@@ -733,7 +803,7 @@ CREATE TABLE IF NOT EXISTS `updates_log` (
   KEY `fk_updates_season` (`season_id`),
   KEY `fk_updates_gp` (`gp_id`),
   KEY `fk_updates_user` (`updated_by`)
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `updates_log`
@@ -756,7 +826,225 @@ INSERT INTO `updates_log` (`id`, `season_id`, `gp_id`, `table_name`, `updated_at
 (148, NULL, 26, 'gp_points', '2025-12-09 15:36:23', 1, 'create'),
 (149, NULL, 26, 'gp_points', '2025-12-09 15:39:31', 1, 'create'),
 (150, NULL, 26, 'gp_points', '2025-12-09 15:58:54', 1, 'create'),
-(151, NULL, 26, 'gp_points', '2025-12-09 15:59:05', 1, 'delete');
+(151, NULL, 26, 'gp_points', '2025-12-09 15:59:05', 1, 'delete'),
+(152, NULL, 27, 'gp_points', '2025-12-10 09:25:36', 1, 'create'),
+(153, NULL, 27, 'gp_points', '2025-12-10 09:25:53', 1, 'create'),
+(154, NULL, 27, 'gp_points', '2025-12-10 09:26:34', 1, 'create'),
+(155, NULL, 27, 'gp_points', '2025-12-10 09:26:47', 1, 'create'),
+(156, NULL, 28, 'gp_points', '2025-12-10 09:27:39', 1, 'create'),
+(157, NULL, 28, 'gp_points', '2025-12-10 09:28:05', 1, 'create'),
+(158, NULL, 28, 'gp_points', '2025-12-10 09:28:24', 1, 'create'),
+(159, NULL, 28, 'gp_points', '2025-12-10 09:29:08', 1, 'create'),
+(160, NULL, 28, 'gp_points', '2025-12-10 09:29:17', 1, 'create'),
+(161, NULL, 28, 'gp_points', '2025-12-10 09:29:23', 1, 'create'),
+(162, NULL, 29, 'gp_points', '2025-12-10 09:31:32', 1, 'create'),
+(163, NULL, 29, 'gp_points', '2025-12-10 09:31:53', 1, 'create'),
+(164, NULL, 29, 'gp_points', '2025-12-10 09:32:00', 1, 'create'),
+(165, NULL, 29, 'gp_points', '2025-12-10 09:32:57', 1, 'create'),
+(166, NULL, 30, 'gp_points', '2025-12-10 09:33:59', 1, 'create'),
+(167, NULL, 30, 'gp_points', '2025-12-10 09:35:23', 1, 'create'),
+(168, NULL, 30, 'gp_points', '2025-12-10 09:35:31', 1, 'create'),
+(169, NULL, 30, 'gp_points', '2025-12-10 09:36:06', 1, 'create'),
+(170, NULL, 30, 'gp_points', '2025-12-10 09:36:19', 1, 'create'),
+(171, NULL, 30, 'gp_points', '2025-12-10 09:36:36', 1, 'create'),
+(172, NULL, 31, 'gp_points', '2025-12-10 09:37:40', 1, 'create'),
+(173, NULL, 30, 'gp_points', '2025-12-10 09:37:46', 1, 'update'),
+(174, NULL, 31, 'gp_points', '2025-12-10 09:42:15', 1, 'create'),
+(175, NULL, 31, 'gp_points', '2025-12-10 09:42:31', 1, 'create'),
+(176, NULL, 31, 'gp_points', '2025-12-10 09:42:45', 1, 'create'),
+(177, NULL, 31, 'gp_points', '2025-12-10 09:42:56', 1, 'create'),
+(178, NULL, 31, 'gp_points', '2025-12-10 09:43:12', 1, 'create'),
+(179, NULL, 32, 'gp_points', '2025-12-10 09:44:34', 1, 'create'),
+(180, NULL, 32, 'gp_points', '2025-12-10 09:44:44', 1, 'create'),
+(181, NULL, 32, 'gp_points', '2025-12-10 09:44:49', 1, 'create'),
+(182, NULL, 32, 'gp_points', '2025-12-10 09:45:07', 1, 'create'),
+(183, NULL, 32, 'gp_points', '2025-12-10 09:45:27', 1, 'create'),
+(184, NULL, 32, 'gp_points', '2025-12-10 09:45:35', 1, 'create'),
+(185, NULL, 33, 'gp_points', '2025-12-10 09:46:38', 1, 'create'),
+(186, NULL, 33, 'gp_points', '2025-12-10 09:46:49', 1, 'create'),
+(187, NULL, 33, 'gp_points', '2025-12-10 09:47:01', 1, 'create'),
+(188, NULL, 34, 'gp_points', '2025-12-10 09:48:28', 1, 'create'),
+(189, NULL, 34, 'gp_points', '2025-12-10 09:48:39', 1, 'create'),
+(190, NULL, 34, 'gp_points', '2025-12-10 09:49:24', 1, 'create'),
+(191, NULL, 34, 'gp_points', '2025-12-10 09:49:41', 1, 'create'),
+(192, NULL, 34, 'gp_points', '2025-12-10 09:49:53', 1, 'create'),
+(193, NULL, 35, 'gp_points', '2025-12-10 09:50:57', 1, 'create'),
+(194, NULL, 35, 'gp_points', '2025-12-10 09:51:03', 1, 'create'),
+(195, NULL, 35, 'gp_points', '2025-12-10 09:51:15', 1, 'create'),
+(196, NULL, 35, 'gp_points', '2025-12-10 09:51:28', 1, 'create'),
+(197, NULL, 35, 'gp_points', '2025-12-10 09:51:43', 1, 'create'),
+(198, NULL, 35, 'gp_points', '2025-12-10 09:51:55', 1, 'create'),
+(199, NULL, 35, 'gp_points', '2025-12-10 09:52:09', 1, 'create'),
+(200, NULL, 36, 'gp_points', '2025-12-10 09:52:55', 1, 'create'),
+(201, NULL, 36, 'gp_points', '2025-12-10 09:53:10', 1, 'create'),
+(202, NULL, 36, 'gp_points', '2025-12-10 09:53:19', 1, 'create'),
+(203, NULL, 36, 'gp_points', '2025-12-10 09:53:35', 1, 'create'),
+(204, NULL, 36, 'gp_points', '2025-12-10 09:53:50', 1, 'create'),
+(205, NULL, 36, 'gp_points', '2025-12-10 09:54:25', 1, 'create'),
+(206, NULL, 36, 'gp_points', '2025-12-10 09:54:37', 1, 'create'),
+(207, NULL, 36, 'gp_points', '2025-12-10 09:54:59', 1, 'create'),
+(208, NULL, 36, 'gp_points', '2025-12-10 09:55:12', 1, 'create'),
+(209, NULL, 36, 'gp_points', '2025-12-10 09:55:46', 1, 'create'),
+(210, NULL, 37, 'gp_points', '2025-12-10 09:56:57', 1, 'create'),
+(211, NULL, 37, 'gp_points', '2025-12-10 09:57:15', 1, 'create'),
+(212, NULL, 37, 'gp_points', '2025-12-10 09:57:26', 1, 'create'),
+(213, NULL, 37, 'gp_points', '2025-12-10 09:57:49', 1, 'create'),
+(214, NULL, 37, 'gp_points', '2025-12-10 09:58:16', 1, 'create'),
+(215, NULL, 37, 'gp_points', '2025-12-10 09:58:30', 1, 'create'),
+(216, NULL, 38, 'gp_points', '2025-12-10 09:59:25', 1, 'create'),
+(217, NULL, 38, 'gp_points', '2025-12-10 09:59:35', 1, 'create'),
+(218, NULL, 38, 'gp_points', '2025-12-10 09:59:56', 1, 'create'),
+(219, NULL, 38, 'gp_points', '2025-12-10 10:00:15', 1, 'create'),
+(220, NULL, 38, 'gp_points', '2025-12-10 10:00:28', 1, 'create'),
+(221, NULL, 38, 'gp_points', '2025-12-10 10:00:40', 1, 'create'),
+(222, NULL, 38, 'gp_points', '2025-12-10 10:01:36', 1, 'create'),
+(223, NULL, 38, 'gp_points', '2025-12-10 10:01:56', 1, 'create'),
+(224, NULL, 38, 'gp_points', '2025-12-10 10:02:11', 1, 'create'),
+(225, NULL, 39, 'gp_points', '2025-12-10 10:03:42', 1, 'create'),
+(226, NULL, 39, 'gp_points', '2025-12-10 10:03:53', 1, 'create'),
+(227, NULL, 39, 'gp_points', '2025-12-10 10:04:06', 1, 'create'),
+(228, NULL, 39, 'gp_points', '2025-12-10 10:04:17', 1, 'create'),
+(229, NULL, 39, 'gp_points', '2025-12-10 10:07:37', 1, 'create'),
+(230, NULL, 39, 'gp_points', '2025-12-10 10:08:02', 1, 'create'),
+(231, NULL, 39, 'gp_points', '2025-12-10 10:08:17', 1, 'create'),
+(232, NULL, 39, 'gp_points', '2025-12-10 10:08:36', 1, 'create'),
+(233, NULL, 40, 'gp_points', '2025-12-10 10:10:43', 1, 'create'),
+(234, NULL, 40, 'gp_points', '2025-12-10 10:10:52', 1, 'create'),
+(235, NULL, 40, 'gp_points', '2025-12-10 10:11:05', 1, 'create'),
+(236, NULL, 40, 'gp_points', '2025-12-10 10:11:17', 1, 'create'),
+(237, NULL, 40, 'gp_points', '2025-12-10 10:11:34', 1, 'create'),
+(238, NULL, 40, 'gp_points', '2025-12-10 10:12:08', 1, 'create'),
+(239, NULL, 40, 'gp_points', '2025-12-10 10:12:21', 1, 'create'),
+(240, NULL, 40, 'gp_points', '2025-12-10 10:12:34', 1, 'create'),
+(241, NULL, 40, 'gp_points', '2025-12-10 10:12:49', 1, 'create'),
+(242, NULL, 41, 'gp_points', '2025-12-10 10:15:11', 1, 'create'),
+(243, NULL, 41, 'gp_points', '2025-12-10 10:15:25', 1, 'create'),
+(244, NULL, 41, 'gp_points', '2025-12-10 10:15:36', 1, 'create'),
+(245, NULL, 41, 'gp_points', '2025-12-10 10:15:48', 1, 'create'),
+(246, NULL, 41, 'gp_points', '2025-12-10 10:16:18', 1, 'create'),
+(247, NULL, 42, 'gp_points', '2025-12-10 10:16:58', 1, 'create'),
+(248, NULL, 42, 'gp_points', '2025-12-10 10:17:09', 1, 'create'),
+(249, NULL, 42, 'gp_points', '2025-12-10 10:17:12', 1, 'create'),
+(250, NULL, 42, 'gp_points', '2025-12-10 10:17:24', 1, 'create'),
+(251, NULL, 42, 'gp_points', '2025-12-10 10:17:36', 1, 'create'),
+(252, NULL, 42, 'gp_points', '2025-12-10 10:17:55', 1, 'create'),
+(253, NULL, 42, 'gp_points', '2025-12-10 10:18:19', 1, 'create'),
+(254, NULL, 42, 'gp_points', '2025-12-10 10:18:36', 1, 'create'),
+(255, NULL, 42, 'gp_points', '2025-12-10 10:19:25', 1, 'create'),
+(256, NULL, 43, 'gp_points', '2025-12-10 10:20:10', 1, 'create'),
+(257, NULL, 43, 'gp_points', '2025-12-10 10:20:22', 1, 'create'),
+(258, NULL, 43, 'gp_points', '2025-12-10 10:20:52', 1, 'create'),
+(259, NULL, 43, 'gp_points', '2025-12-10 10:21:03', 1, 'create'),
+(260, NULL, 43, 'gp_points', '2025-12-10 10:21:13', 1, 'create'),
+(261, NULL, 43, 'gp_points', '2025-12-10 10:21:28', 1, 'create'),
+(262, NULL, 43, 'gp_points', '2025-12-10 10:21:43', 1, 'create'),
+(263, NULL, 43, 'gp_points', '2025-12-10 10:22:02', 1, 'create'),
+(264, NULL, 43, 'gp_points', '2025-12-10 10:22:30', 1, 'create'),
+(265, 20, NULL, 'manual_adjustments', '2025-12-10 10:23:24', 1, 'create'),
+(266, 20, NULL, 'manual_adjustments', '2025-12-10 10:23:35', 1, 'create'),
+(267, 20, NULL, 'manual_adjustments', '2025-12-10 10:23:48', 1, 'create'),
+(268, 20, NULL, 'manual_adjustments', '2025-12-10 10:24:01', 1, 'create'),
+(269, 20, NULL, 'manual_adjustments', '2025-12-10 10:24:14', 1, 'create'),
+(270, 20, NULL, 'manual_adjustments', '2025-12-10 10:24:25', 1, 'create'),
+(271, 20, NULL, 'manual_adjustments', '2025-12-10 10:24:39', 1, 'create'),
+(272, 20, NULL, 'manual_adjustments', '2025-12-10 10:24:53', 1, 'create'),
+(273, 20, NULL, 'manual_adjustments', '2025-12-10 10:25:07', 1, 'update'),
+(274, 20, NULL, 'manual_adjustments', '2025-12-10 10:25:16', 1, 'create'),
+(275, 20, NULL, 'manual_adjustments', '2025-12-10 10:25:24', 1, 'create'),
+(276, 20, NULL, 'manual_adjustments', '2025-12-10 10:25:31', 1, 'create'),
+(277, NULL, 44, 'gp_points', '2025-12-10 13:50:57', 1, 'create'),
+(278, NULL, 44, 'gp_points', '2025-12-10 13:51:05', 1, 'create'),
+(279, NULL, 44, 'gp_points', '2025-12-10 13:51:11', 1, 'create'),
+(280, 22, NULL, 'manual_adjustments', '2025-12-10 13:51:29', 1, 'create'),
+(281, 22, NULL, 'manual_adjustments', '2025-12-10 13:51:37', 1, 'create'),
+(282, NULL, 44, 'penalties', '2025-12-10 16:06:44', 1, 'create'),
+(283, NULL, 45, 'gp_points', '2025-12-11 11:18:23', 1, 'create'),
+(284, NULL, 45, 'gp_points', '2025-12-11 11:20:52', 1, 'update'),
+(285, NULL, 45, 'gp_points', '2025-12-11 11:21:08', 1, 'update'),
+(286, NULL, 31, 'gp_stats', '2025-12-11 15:30:52', 1, 'create'),
+(287, NULL, 44, 'gp_stats', '2025-12-11 15:49:23', 1, 'create'),
+(288, NULL, 44, 'gp_stats', '2025-12-11 15:49:41', 1, 'update'),
+(289, NULL, 44, 'gp_points', '2025-12-11 15:53:11', 1, 'create'),
+(290, NULL, 44, 'gp_points', '2025-12-11 15:53:54', 1, 'create'),
+(291, NULL, 44, 'gp_points', '2025-12-11 15:54:17', 1, 'update'),
+(292, NULL, 44, 'gp_points', '2025-12-11 15:54:25', 1, 'update'),
+(293, NULL, 44, 'gp_points', '2025-12-11 15:54:40', 1, 'create'),
+(294, NULL, 44, 'gp_stats', '2025-12-11 15:55:35', 1, 'update'),
+(295, 22, NULL, 'manual_adjustments', '2025-12-11 15:59:33', 1, 'create'),
+(296, 23, NULL, 'manual_adjustments', '2025-12-11 15:59:55', 1, 'create'),
+(297, NULL, 45, 'penalties', '2025-12-11 16:00:21', 1, 'create'),
+(298, 20, NULL, 'manual_adjustments', '2025-12-11 16:14:10', 1, 'create'),
+(299, 20, NULL, 'manual_adjustments', '2025-12-11 16:31:30', 1, 'delete'),
+(300, 20, NULL, 'manual_adjustments', '2025-12-11 16:31:59', 1, 'create'),
+(301, 20, NULL, 'manual_adjustments', '2025-12-11 16:32:07', 1, 'delete'),
+(302, 20, NULL, 'manual_adjustments', '2025-12-11 16:32:17', 1, 'create'),
+(303, 22, NULL, 'manual_adjustments', '2025-12-11 16:33:18', 1, 'create'),
+(304, NULL, 44, 'gp_points', '2025-12-11 16:34:24', 1, 'update'),
+(305, NULL, 43, 'penalties', '2025-12-11 18:39:09', 1, 'create'),
+(306, NULL, 43, 'penalties', '2025-12-11 18:40:07', 1, 'delete'),
+(307, NULL, 26, 'penalties', '2025-12-11 18:40:54', 1, 'create'),
+(308, NULL, 44, 'penalties', '2025-12-11 18:41:38', 1, 'delete'),
+(309, NULL, 45, 'gp_points', '2025-12-11 18:44:03', 1, 'update'),
+(310, 20, NULL, 'manual_adjustments', '2025-12-11 18:44:58', 1, 'delete'),
+(311, NULL, 26, 'penalties', '2025-12-11 18:45:42', 1, 'update'),
+(312, 22, NULL, 'manual_adjustments', '2025-12-11 18:47:12', 1, 'delete'),
+(313, 22, NULL, 'manual_adjustments', '2025-12-11 18:47:15', 1, 'delete'),
+(314, 23, NULL, 'manual_adjustments', '2025-12-11 18:47:18', 1, 'delete'),
+(315, NULL, 26, 'penalties', '2025-12-11 18:48:05', 1, 'delete'),
+(316, NULL, 45, 'penalties', '2025-12-11 18:48:07', 1, 'delete'),
+(317, 20, NULL, 'manual_adjustments', '2025-12-11 18:48:38', 1, 'create'),
+(318, 20, NULL, 'manual_adjustments', '2025-12-11 18:48:51', 1, 'update'),
+(319, 20, NULL, 'manual_adjustments', '2025-12-11 18:49:10', 1, 'create'),
+(320, 20, NULL, 'manual_adjustments', '2025-12-11 18:49:23', 1, 'delete'),
+(321, 20, NULL, 'manual_adjustments', '2025-12-11 18:50:01', 1, 'create'),
+(322, NULL, 43, 'gp_points', '2025-12-11 18:50:40', 1, 'update'),
+(323, NULL, 43, 'penalties', '2025-12-11 18:51:20', 1, 'create'),
+(324, NULL, 43, 'penalties', '2025-12-11 18:51:50', 1, 'update'),
+(325, NULL, 44, 'gp_points', '2025-12-11 19:07:18', 1, 'update'),
+(326, NULL, 43, 'penalties', '2025-12-11 19:10:45', 1, 'delete'),
+(327, 20, NULL, 'manual_adjustments', '2025-12-11 19:12:08', 1, 'update'),
+(328, 20, NULL, 'manual_adjustments', '2025-12-11 19:12:24', 1, 'delete'),
+(329, 20, NULL, 'manual_adjustments', '2025-12-11 19:12:42', 1, 'create'),
+(330, 20, NULL, 'manual_adjustments', '2025-12-11 19:13:36', 1, 'create'),
+(331, NULL, 26, 'penalties', '2025-12-11 19:20:22', 1, 'create'),
+(332, NULL, 26, 'penalties', '2025-12-11 19:20:49', 1, 'create'),
+(333, 20, NULL, 'manual_adjustments', '2025-12-11 19:21:03', 1, 'delete'),
+(334, NULL, 43, 'gp_points', '2025-12-11 19:21:29', 1, 'update'),
+(335, 20, NULL, 'manual_adjustments', '2025-12-11 19:21:41', 1, 'delete'),
+(336, 20, NULL, 'manual_adjustments', '2025-12-11 19:21:49', 1, 'delete'),
+(337, NULL, 26, 'penalties', '2025-12-11 19:22:42', 1, 'create'),
+(338, NULL, 44, 'penalties', '2025-12-11 19:31:55', 1, 'create'),
+(339, NULL, 43, 'penalties', '2025-12-11 19:33:15', 1, 'update'),
+(340, NULL, 26, 'penalties', '2025-12-11 19:33:37', 1, 'delete'),
+(341, NULL, 26, 'penalties', '2025-12-11 19:35:28', 1, 'delete'),
+(342, NULL, 43, 'penalties', '2025-12-11 19:39:28', 1, 'delete'),
+(343, NULL, 44, 'penalties', '2025-12-11 19:39:58', 1, 'delete'),
+(344, NULL, 26, 'penalties', '2025-12-12 15:07:13', 1, 'create'),
+(345, NULL, 43, 'penalties', '2025-12-12 15:08:25', 1, 'update'),
+(346, NULL, 43, 'penalties', '2025-12-12 15:11:54', 1, 'delete'),
+(347, NULL, 43, 'penalties', '2025-12-12 15:12:34', 1, 'create'),
+(348, NULL, 42, 'penalties', '2025-12-12 15:12:44', 1, 'update'),
+(349, NULL, 41, 'penalties', '2025-12-12 15:12:57', 1, 'update'),
+(350, NULL, 41, 'penalties', '2025-12-12 15:26:50', 1, 'update'),
+(351, NULL, 41, 'penalties', '2025-12-12 15:28:21', 1, 'delete'),
+(352, NULL, 45, 'penalties', '2025-12-12 15:29:01', 1, 'create'),
+(353, NULL, 45, 'penalties', '2025-12-12 15:36:48', 1, 'update'),
+(354, NULL, 26, 'penalties', '2025-12-12 15:52:49', 1, 'create'),
+(355, NULL, 45, 'penalties', '2025-12-12 16:07:33', 1, 'update'),
+(356, NULL, 45, 'gp_points', '2025-12-12 16:08:33', 1, 'update'),
+(357, NULL, 26, 'penalties', '2025-12-12 16:11:16', 1, 'delete'),
+(358, NULL, 44, 'gp_points', '2025-12-12 16:12:43', 1, 'update'),
+(359, NULL, 44, 'penalties', '2025-12-12 16:13:40', 1, 'create'),
+(360, NULL, 44, 'penalties', '2025-12-12 16:13:53', 1, 'update'),
+(361, NULL, 44, 'penalties', '2025-12-12 16:14:20', 1, 'update'),
+(362, NULL, 44, 'penalties', '2025-12-12 16:17:24', 1, 'update'),
+(363, NULL, 46, 'gp_points', '2025-12-12 16:18:08', 1, 'create'),
+(364, NULL, 44, 'gp_points', '2025-12-12 16:18:57', 1, 'delete'),
+(365, NULL, 44, 'gp_points', '2025-12-12 16:19:03', 1, 'update'),
+(366, NULL, 44, 'gp_points', '2025-12-12 16:19:12', 1, 'update'),
+(367, NULL, 44, 'gp_points', '2025-12-12 16:20:18', 1, 'update'),
+(368, NULL, 44, 'penalties', '2025-12-12 16:31:32', 1, 'update'),
+(369, NULL, 44, 'gp_points', '2025-12-12 17:07:31', 1, 'update');
 
 --
 -- Déclencheurs `updates_log`
@@ -816,47 +1104,7 @@ INSERT INTO `users` (`id`, `email`, `password_hash`, `role_id`) VALUES
 DROP TABLE IF EXISTS `drivers_standings`;
 
 DROP VIEW IF EXISTS `drivers_standings`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `drivers_standings`  AS SELECT `s`.`id` AS `season_id`, `s`.`season_number` AS `season_number`, `c`.`name` AS `category`, `d`.`id` AS `driver_id`, `d`.`nickname` AS `nickname`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(sum(`ma`.`points`),0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points`, sum((case when (`gp_pts`.`position` = 1) then 1 else 0 end)) AS `wins`, sum((case when (`gp_pts`.`position` in (1,2,3)) then 1 else 0 end)) AS `podiums` FROM ((((((`seasons` `s` join `categories` `c` on((`s`.`category_id` = `c`.`id`))) join `gp` `g` on((`g`.`season_id` = `s`.`id`))) join `gp_points` `gp_pts` on((`gp_pts`.`gp_id` = `g`.`id`))) join `drivers` `d` on((`d`.`id` = `gp_pts`.`driver_id`))) left join `manual_adjustments` `ma` on(((`ma`.`season_id` = `s`.`id`) and (`ma`.`driver_id` = `d`.`id`)))) left join `penalties` `p` on(((`p`.`driver_id` = `d`.`id`) and (`p`.`gp_id` = `g`.`id`)))) GROUP BY `s`.`id`, `s`.`season_number`, `c`.`name`, `d`.`id`, `d`.`nickname` ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `driver_awards`
---
-DROP TABLE IF EXISTS `driver_awards`;
-
-DROP VIEW IF EXISTS `driver_awards`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_awards`  AS WITH     `season_ranking` as (select `ds`.`season_id` AS `season_id`,`ds`.`category` AS `category`,`ds`.`driver_id` AS `driver_id`,`ds`.`nickname` AS `nickname`,`ds`.`total_points` AS `total_points`,rank() OVER (PARTITION BY `ds`.`season_id` ORDER BY `ds`.`total_points` desc )  AS `rank_season` from `drivers_standings` `ds`) select `season_ranking`.`driver_id` AS `driver_id`,`season_ranking`.`nickname` AS `nickname`,`season_ranking`.`category` AS `category`,sum((case when (`season_ranking`.`rank_season` = 1) then 1 else 0 end)) AS `titles`,sum((case when (`season_ranking`.`rank_season` = 2) then 1 else 0 end)) AS `vice_titles`,sum((case when (`season_ranking`.`rank_season` = 3) then 1 else 0 end)) AS `third_place` from `season_ranking` group by `season_ranking`.`driver_id`,`season_ranking`.`nickname`,`season_ranking`.`category`  ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `driver_gp_counts`
---
-DROP TABLE IF EXISTS `driver_gp_counts`;
-
-DROP VIEW IF EXISTS `driver_gp_counts`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_gp_counts`  AS SELECT `d`.`id` AS `driver_id`, `d`.`nickname` AS `nickname`, count(distinct `gp_pts`.`gp_id`) AS `total_gp` FROM (`drivers` `d` left join `gp_points` `gp_pts` on((`gp_pts`.`driver_id` = `d`.`id`))) GROUP BY `d`.`id`, `d`.`nickname` ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `driver_points_all_seasons`
---
-DROP TABLE IF EXISTS `driver_points_all_seasons`;
-
-DROP VIEW IF EXISTS `driver_points_all_seasons`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_points_all_seasons`  AS SELECT `d`.`id` AS `driver_id`, `d`.`nickname` AS `nickname`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(sum(`ma`.`points`),0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points` FROM ((((`drivers` `d` left join `gp_points` `gp_pts` on((`gp_pts`.`driver_id` = `d`.`id`))) left join `gp` `g` on((`g`.`id` = `gp_pts`.`gp_id`))) left join `manual_adjustments` `ma` on(((`ma`.`driver_id` = `d`.`id`) and (`ma`.`season_id` = `g`.`season_id`)))) left join `penalties` `p` on(((`p`.`driver_id` = `d`.`id`) and (`p`.`gp_id` = `g`.`id`)))) GROUP BY `d`.`id`, `d`.`nickname` ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `gp_stats_summary`
---
-DROP TABLE IF EXISTS `gp_stats_summary`;
-
-DROP VIEW IF EXISTS `gp_stats_summary`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `gp_stats_summary`  AS SELECT `g`.`id` AS `gp_id`, `g`.`season_id` AS `season_id`, `s`.`season_number` AS `season_number`, `c`.`name` AS `category`, `ci`.`name` AS `circuit_name`, `gs`.`pole_position_driver` AS `pole_position_driver`, `dp`.`nickname` AS `pole_driver_name`, `gs`.`pole_position_time` AS `pole_position_time`, `gs`.`fastest_lap_driver` AS `fastest_lap_driver`, `df`.`nickname` AS `fastest_driver_name`, `gs`.`fastest_lap_time` AS `fastest_lap_time` FROM ((((((`gp` `g` join `seasons` `s` on((`s`.`id` = `g`.`season_id`))) join `categories` `c` on((`c`.`id` = `s`.`category_id`))) join `circuits` `ci` on((`ci`.`id` = `g`.`circuit_id`))) left join `gp_stats` `gs` on((`gs`.`gp_id` = `g`.`id`))) left join `drivers` `dp` on((`dp`.`id` = `gs`.`pole_position_driver`))) left join `drivers` `df` on((`df`.`id` = `gs`.`fastest_lap_driver`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `drivers_standings`  AS SELECT `s`.`id` AS `season_id`, `s`.`season_number` AS `season_number`, `s`.`status` AS `season_status`, `c`.`name` AS `category`, `d`.`id` AS `driver_id`, `d`.`nickname` AS `nickname`, `t`.`name` AS `team_name`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(`ma`.`total_points`,0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points`, sum((case when (`gp_pts`.`position` = 1) then 1 else 0 end)) AS `wins`, sum((case when (`gp_pts`.`position` in (1,2,3)) then 1 else 0 end)) AS `podiums` FROM ((((((((`seasons` `s` join `categories` `c` on((`c`.`id` = `s`.`category_id`))) join `gp` `g` on((`g`.`season_id` = `s`.`id`))) join `gp_points` `gp_pts` on((`gp_pts`.`gp_id` = `g`.`id`))) join `drivers` `d` on((`d`.`id` = `gp_pts`.`driver_id`))) left join `teams_drivers` `td` on(((`td`.`driver_id` = `d`.`id`) and (`td`.`season_id` = `s`.`id`)))) left join `teams` `t` on((`t`.`id` = `td`.`team_id`))) left join (select `manual_adjustments`.`season_id` AS `season_id`,`manual_adjustments`.`driver_id` AS `driver_id`,sum(`manual_adjustments`.`points`) AS `total_points` from `manual_adjustments` group by `manual_adjustments`.`season_id`,`manual_adjustments`.`driver_id`) `ma` on(((`ma`.`season_id` = `s`.`id`) and (`ma`.`driver_id` = `d`.`id`)))) left join `penalties` `p` on(((`p`.`driver_id` = `d`.`id`) and (`p`.`gp_id` = `g`.`id`)))) GROUP BY `s`.`id`, `s`.`season_number`, `s`.`status`, `c`.`name`, `d`.`id`, `d`.`nickname`, `t`.`name` ;
 
 -- --------------------------------------------------------
 
@@ -866,27 +1114,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `teams_standings`;
 
 DROP VIEW IF EXISTS `teams_standings`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `teams_standings`  AS SELECT `s`.`id` AS `season_id`, `s`.`season_number` AS `season_number`, `c`.`name` AS `category`, `t`.`id` AS `team_id`, `t`.`name` AS `team_name`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(sum(`ma`.`points`),0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points`, sum((case when (`gp_pts`.`position` = 1) then 1 else 0 end)) AS `wins`, sum((case when (`gp_pts`.`position` in (1,2,3)) then 1 else 0 end)) AS `podiums` FROM ((((((((`seasons` `s` join `categories` `c` on((`s`.`category_id` = `c`.`id`))) join `teams` `t`) join `teams_drivers` `td` on(((`td`.`team_id` = `t`.`id`) and (`td`.`season_id` = `s`.`id`)))) join `drivers` `d` on((`d`.`id` = `td`.`driver_id`))) join `gp` `g` on((`g`.`season_id` = `s`.`id`))) join `gp_points` `gp_pts` on(((`gp_pts`.`driver_id` = `d`.`id`) and (`gp_pts`.`gp_id` = `g`.`id`) and (`gp_pts`.`team_id` = `t`.`id`)))) left join `manual_adjustments` `ma` on(((`ma`.`season_id` = `s`.`id`) and (`ma`.`driver_id` = `d`.`id`) and (`ma`.`team_id` = `t`.`id`)))) left join `penalties` `p` on(((`p`.`driver_id` = `d`.`id`) and (`p`.`gp_id` = `g`.`id`)))) GROUP BY `s`.`id`, `s`.`season_number`, `c`.`name`, `t`.`id`, `t`.`name` ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `team_awards`
---
-DROP TABLE IF EXISTS `team_awards`;
-
-DROP VIEW IF EXISTS `team_awards`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `team_awards`  AS WITH     `season_ranking` as (select `ts`.`season_id` AS `season_id`,`ts`.`category` AS `category`,`ts`.`team_id` AS `team_id`,`ts`.`team_name` AS `team_name`,`ts`.`total_points` AS `total_points`,rank() OVER (PARTITION BY `ts`.`season_id` ORDER BY `ts`.`total_points` desc )  AS `rank_season` from `teams_standings` `ts`) select `season_ranking`.`team_id` AS `team_id`,`season_ranking`.`team_name` AS `team_name`,`season_ranking`.`category` AS `category`,sum((case when (`season_ranking`.`rank_season` = 1) then 1 else 0 end)) AS `titles`,sum((case when (`season_ranking`.`rank_season` = 2) then 1 else 0 end)) AS `vice_titles`,sum((case when (`season_ranking`.`rank_season` = 3) then 1 else 0 end)) AS `third_place` from `season_ranking` group by `season_ranking`.`team_id`,`season_ranking`.`team_name`,`season_ranking`.`category`  ;
-
--- --------------------------------------------------------
-
---
--- Structure de la vue `team_points_all_seasons`
---
-DROP TABLE IF EXISTS `team_points_all_seasons`;
-
-DROP VIEW IF EXISTS `team_points_all_seasons`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `team_points_all_seasons`  AS SELECT `t`.`id` AS `team_id`, `t`.`name` AS `team_name`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(sum(`ma`.`points`),0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points` FROM ((((((`teams` `t` join `teams_drivers` `td` on((`td`.`team_id` = `t`.`id`))) join `drivers` `d` on((`d`.`id` = `td`.`driver_id`))) join `gp_points` `gp_pts` on(((`gp_pts`.`driver_id` = `d`.`id`) and (`gp_pts`.`team_id` = `t`.`id`)))) join `gp` `g` on(((`g`.`id` = `gp_pts`.`gp_id`) and (`g`.`season_id` = `td`.`season_id`)))) left join `manual_adjustments` `ma` on(((`ma`.`team_id` = `t`.`id`) and (`ma`.`driver_id` = `d`.`id`) and (`ma`.`season_id` = `g`.`season_id`)))) left join `penalties` `p` on(((`p`.`driver_id` = `d`.`id`) and (`p`.`gp_id` = `g`.`id`)))) GROUP BY `t`.`id`, `t`.`name` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `teams_standings`  AS SELECT `s`.`id` AS `season_id`, `s`.`season_number` AS `season_number`, `c`.`name` AS `category`, `t`.`id` AS `team_id`, `t`.`name` AS `team_name`, ((coalesce(sum(`gp_pts`.`points_numeric`),0) + coalesce(`ma`.`total_points`,0)) - coalesce(sum(`p`.`points_removed`),0)) AS `total_points` FROM ((((((`seasons` `s` join `categories` `c` on((`c`.`id` = `s`.`category_id`))) join `teams` `t`) left join `gp` `g` on((`g`.`season_id` = `s`.`id`))) join `gp_points` `gp_pts` on(((`gp_pts`.`gp_id` = `g`.`id`) and (`gp_pts`.`team_id` = `t`.`id`)))) left join (select `manual_adjustments`.`season_id` AS `season_id`,`manual_adjustments`.`team_id` AS `team_id`,sum(`manual_adjustments`.`points`) AS `total_points` from `manual_adjustments` group by `manual_adjustments`.`season_id`,`manual_adjustments`.`team_id`) `ma` on(((`ma`.`season_id` = `s`.`id`) and (`ma`.`team_id` = `t`.`id`)))) left join `penalties` `p` on(((`p`.`gp_id` = `g`.`id`) and (`p`.`team_id` = `t`.`id`)))) GROUP BY `s`.`id`, `s`.`season_number`, `c`.`name`, `t`.`id`, `t`.`name` ;
 
 --
 -- Contraintes pour les tables déchargées
@@ -981,404 +1209,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- MODIFICATIONS FAITES :
-
--- les points manual_adjustments étaient multipliés par le nombre de GP de chaque pilote
--- voici le rectificatif
-
-DROP VIEW IF EXISTS `drivers_standings`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `drivers_standings` AS
-SELECT
-  s.id AS season_id,
-  s.season_number AS season_number,
-  c.name AS category,
-  d.id AS driver_id,
-  d.nickname AS nickname,
-  (
-    COALESCE(SUM(gp_pts.points_numeric), 0)
-    + COALESCE(ma_sum.ma_points, 0)
-    - COALESCE(SUM(p.points_removed), 0)
-  ) AS total_points,
-  SUM(CASE WHEN gp_pts.position = 1 THEN 1 ELSE 0 END) AS wins,
-  SUM(CASE WHEN gp_pts.position IN (1,2,3) THEN 1 ELSE 0 END) AS podiums
-FROM seasons s
-JOIN categories c ON (s.category_id = c.id)
-JOIN gp g ON (g.season_id = s.id)
-JOIN gp_points gp_pts ON (gp_pts.gp_id = g.id)
-JOIN drivers d ON (d.id = gp_pts.driver_id)
--- derived table that pre-aggregates manual adjustments per season/driver
-LEFT JOIN (
-    SELECT season_id, driver_id, SUM(points) AS ma_points
-    FROM manual_adjustments
-    GROUP BY season_id, driver_id
-) AS ma_sum ON (ma_sum.season_id = s.id AND ma_sum.driver_id = d.id)
-LEFT JOIN penalties p ON (p.driver_id = d.id AND p.gp_id = g.id)
-GROUP BY s.id, s.season_number, c.name, d.id, d.nickname;
-
-
--- MODIF DRIVER AWARDS POUR NE RENVOYER QUE LES PILOTES AVEC TITRES
-
-DROP VIEW IF EXISTS `driver_awards`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_awards` AS
-WITH season_ranking AS (
-    SELECT
-        ds.season_id AS season_id,
-        ds.category AS category,
-        ds.driver_id AS driver_id,
-        ds.nickname AS nickname,
-        ds.total_points AS total_points,
-        RANK() OVER (PARTITION BY ds.season_id ORDER BY ds.total_points DESC) AS rank_season
-    FROM drivers_standings ds
-)
-SELECT
-    sr.driver_id AS driver_id,
-    sr.nickname AS nickname,
-    sr.category AS category,
-    SUM(CASE WHEN sr.rank_season = 1 THEN 1 ELSE 0 END) AS titles,
-    SUM(CASE WHEN sr.rank_season = 2 THEN 1 ELSE 0 END) AS vice_titles,
-    SUM(CASE WHEN sr.rank_season = 3 THEN 1 ELSE 0 END) AS third_place
-FROM season_ranking sr
-GROUP BY sr.driver_id, sr.nickname, sr.category
-HAVING SUM(CASE WHEN sr.rank_season = 1 THEN 1 ELSE 0 END)
-    + SUM(CASE WHEN sr.rank_season = 2 THEN 1 ELSE 0 END)
-    + SUM(CASE WHEN sr.rank_season = 3 THEN 1 ELSE 0 END) > 0;
-
--- MODIF GP COUNT POUR QUE LE CALCUL DES GP SOIT FAIT PAR CATEGORIE
-
-DROP VIEW IF EXISTS `driver_gp_counts`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_gp_counts` AS
-SELECT 
-    d.id AS driver_id,
-    d.nickname AS nickname,
-    c.name AS category,
-    COUNT(DISTINCT gp_pts.gp_id) AS total_gp
-FROM drivers d
-LEFT JOIN gp_points gp_pts ON gp_pts.driver_id = d.id
-LEFT JOIN gp g ON g.id = gp_pts.gp_id
-LEFT JOIN seasons s ON s.id = g.season_id
-LEFT JOIN categories c ON c.id = s.category_id
-GROUP BY d.id, d.nickname, c.name
-ORDER BY c.name, d.nickname;
-
-
--- MODIF DRIVER STANDINGS POUR QUE LA TEAM DE LA TABLE TEAMS_DRIVERS S'AFFICHE :
-
-DROP VIEW IF EXISTS `drivers_standings`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `drivers_standings` AS
-SELECT
-    s.id AS season_id,
-    s.season_number AS season_number,
-    c.name AS category,
-    d.id AS driver_id,
-    d.nickname AS nickname,
-    t.name AS team_name,
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(ma_sum.ma_points, 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points,
-    SUM(CASE WHEN gp_pts.position = 1 THEN 1 ELSE 0 END) AS wins,
-    SUM(CASE WHEN gp_pts.position IN (1,2,3) THEN 1 ELSE 0 END) AS podiums
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN gp g ON g.season_id = s.id
-JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
-JOIN drivers d ON d.id = gp_pts.driver_id
--- jointure avec teams_drivers et teams pour récupérer la team
-LEFT JOIN teams_drivers td ON td.driver_id = d.id AND td.season_id = s.id
-LEFT JOIN teams t ON t.id = td.team_id
--- pré-agrégation des manual_adjustments
-LEFT JOIN (
-    SELECT season_id, driver_id, SUM(points) AS ma_points
-    FROM manual_adjustments
-    GROUP BY season_id, driver_id
-) AS ma_sum ON ma_sum.season_id = s.id AND ma_sum.driver_id = d.id
-LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
-GROUP BY s.id, s.season_number, c.name, d.id, d.nickname, t.name;
-
-
--- SUPPRESSION DES 2 VUES SQL drivergpcounts et driverpointsallseasons
--- POUR EN CREER UNE SEULE QUI REUNIT LES DEUX :
-
-DROP VIEW IF EXISTS `driver_gp_counts`;
-DROP VIEW IF EXISTS `driver_points_all_seasons`;
-
-
-DROP VIEW IF EXISTS `driver_stats_all_seasons`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `driver_stats_all_seasons` AS
-SELECT
-    d.id AS driver_id,
-    d.nickname AS nickname,
-    c.name AS category,
-    COUNT(DISTINCT gp_pts.gp_id) AS total_gp,
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(ma_sum.ma_points, 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points
-FROM drivers d
-LEFT JOIN gp_points gp_pts ON gp_pts.driver_id = d.id
-LEFT JOIN gp g ON g.id = gp_pts.gp_id
-LEFT JOIN seasons s ON s.id = g.season_id
-LEFT JOIN categories c ON c.id = s.category_id
-LEFT JOIN (
-    SELECT season_id, driver_id, SUM(points) AS ma_points
-    FROM manual_adjustments
-    GROUP BY season_id, driver_id
-) AS ma_sum ON ma_sum.driver_id = d.id AND ma_sum.season_id = s.id
-LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
-GROUP BY d.id, d.nickname, c.name;
-
-
--- MODIF DRIVERS STANDINGS POUR QUE LE PARAMETRE SEASON ACTIVE OU DESACTIVE SOIT PRIS EN COMPTE
--- LE BUT ETANT D'AFFICHER SEULEMENT LES STANDINGS DES SEASONS ACTIVE ET D 'AJOUTER EN LISTE DEROULANTE L'ACCES AUX SEASONS DESACTIVE
-
-DROP VIEW IF EXISTS `drivers_standings`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `drivers_standings` AS
-SELECT
-    s.id AS season_id,
-    s.season_number AS season_number,
-    s.status AS season_status,
-    c.name AS category,
-    d.id AS driver_id,
-    d.nickname AS nickname,
-    t.name AS team_name,
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(ma_sum.ma_points, 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points,
-    SUM(CASE WHEN gp_pts.position = 1 THEN 1 ELSE 0 END) AS wins,
-    SUM(CASE WHEN gp_pts.position IN (1,2,3) THEN 1 ELSE 0 END) AS podiums
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN gp g ON g.season_id = s.id
-JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
-JOIN drivers d ON d.id = gp_pts.driver_id
-LEFT JOIN teams_drivers td ON td.driver_id = d.id AND td.season_id = s.id
-LEFT JOIN teams t ON t.id = td.team_id
-LEFT JOIN (
-    SELECT season_id, driver_id, SUM(points) AS ma_points
-    FROM manual_adjustments
-    GROUP BY season_id, driver_id
-) AS ma_sum ON ma_sum.season_id = s.id AND ma_sum.driver_id = d.id
-LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
-GROUP BY s.id, s.season_number, s.status, c.name, d.id, d.nickname, t.name;
-
-
--- TEAMS STANDINGS MIS A JOUR POUR QUE LE CALCUL SOIT BON :
-
-DROP VIEW IF EXISTS `teams_standings`;
-
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` 
-SQL SECURITY DEFINER 
-VIEW `teams_standings` AS
-
-SELECT 
-    s.id AS season_id,
-    s.season_number,
-    c.name AS category,
-    t.id AS team_id,
-    t.name AS team_name,
-
-    -- Total points = points gp + manual_adjustments - penalties
-    (
-        COALESCE((
-            SELECT SUM(gp_pts.points_numeric)
-            FROM gp g
-            JOIN gp_points gp_pts 
-              ON gp_pts.gp_id = g.id
-             AND gp_pts.team_id = t.id
-            JOIN teams_drivers td ON td.driver_id = gp_pts.driver_id AND td.team_id = t.id AND td.season_id = s.id
-            WHERE g.season_id = s.id
-        ),0)
-        +
-        COALESCE((
-            SELECT SUM(ma.points)
-            FROM manual_adjustments ma
-            WHERE ma.season_id = s.id
-              AND ma.team_id = t.id
-        ),0)
-        -
-        COALESCE((
-            SELECT SUM(p.points_removed)
-            FROM penalties p
-            JOIN gp g ON g.id = p.gp_id
-            JOIN drivers d ON d.id = p.driver_id
-            JOIN teams_drivers td ON td.driver_id = d.id AND td.team_id = t.id AND td.season_id = s.id
-            WHERE g.season_id = s.id
-        ),0)
-    ) AS total_points
-
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN teams t
-JOIN teams_drivers td ON td.team_id = t.id AND td.season_id = s.id
-
-GROUP BY s.id, s.season_number, c.name, t.id, t.name;
-
--- TEAMS STANDINGS REFAIT CAR PRENAIT EN COMPTE L'ASSOCIATION TEAMSDRIVERS POUR DEDUIRE LES PENALITES DES PILOTES A LEUR TEAM ASSOCIEE
-
-DROP VIEW IF EXISTS `teams_standings`;
-
-CREATE ALGORITHM=UNDEFINED
-DEFINER=`root`@`localhost`
-SQL SECURITY DEFINER
-VIEW `teams_standings` AS
-SELECT 
-    s.id AS season_id,
-    s.season_number,
-    c.name AS category,
-    t.id AS team_id,
-    t.name AS team_name,
-
-    -- Total points pour l'équipe
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(SUM(ma.points), 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points
-
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN teams t
-
--- Tous les GP de la saison
-LEFT JOIN gp g ON g.season_id = s.id
-
--- GP points liés directement à l'équipe
-LEFT JOIN gp_points gp_pts 
-    ON gp_pts.gp_id = g.id 
-   AND gp_pts.team_id = t.id
-
--- Manual adjustments liés à l'équipe
-LEFT JOIN manual_adjustments ma
-    ON ma.season_id = s.id 
-   AND ma.team_id = t.id
-
--- Pénalités liés à l'équipe (via GP)
-LEFT JOIN penalties p
-    ON p.gp_id = g.id
-   AND p.team_id = t.id
-
-GROUP BY s.id, s.season_number, c.name, t.id, t.name;
-
-
--- NOUVEAU TEAMS_STANDINGS CAR APPLIQUAIT MANUAL_ADJUSTMENTS POUR CHAQUE GP, DONC SUR UNE SAISON A 18GP IL FAISAIT LES POINTS x 18
--- CELUI LA FONCTIONNE BIEN POUR LES CALCULS !
-
-DROP VIEW IF EXISTS `teams_standings`;
-
-CREATE ALGORITHM=UNDEFINED
-DEFINER=`root`@`localhost`
-SQL SECURITY DEFINER
-VIEW `teams_standings` AS
-SELECT 
-    s.id AS season_id,
-    s.season_number,
-    c.name AS category,
-    t.id AS team_id,
-    t.name AS team_name,
-
-    -- Total points pour l'équipe
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(ma.total_points, 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points
-
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN teams t
-
--- Tous les GP de la saison
-LEFT JOIN gp g ON g.season_id = s.id
-
--- GP points liés directement à l'équipe
-LEFT JOIN gp_points gp_pts 
-    ON gp_pts.gp_id = g.id 
-   AND gp_pts.team_id = t.id
-
--- Manual adjustments liés à l'équipe (agrégés une seule fois)
-LEFT JOIN (
-    SELECT season_id, team_id, SUM(points) AS total_points
-    FROM manual_adjustments
-    GROUP BY season_id, team_id
-) ma
-    ON ma.season_id = s.id 
-   AND ma.team_id = t.id
-
--- Pénalités liées à l'équipe (via GP)
-LEFT JOIN penalties p
-    ON p.gp_id = g.id
-   AND p.team_id = t.id
-
-GROUP BY s.id, s.season_number, c.name, t.id, t.name;
-
-
--- DRIVERS STANDINGS PREND EN COMPTE LES PENALITES DES DRIVERS (CE NETAIT PAS LE CAS)
-
-DROP VIEW IF EXISTS `drivers_standings`;
-
-CREATE ALGORITHM=UNDEFINED
-DEFINER=`root`@`localhost`
-SQL SECURITY DEFINER
-VIEW `drivers_standings` AS
-SELECT
-    s.id AS season_id,
-    s.season_number AS season_number,
-    s.status AS season_status,
-    c.name AS category,
-    d.id AS driver_id,
-    d.nickname AS nickname,
-    t.name AS team_name,
-
-    -- Total points pour le pilote
-    (
-        COALESCE(SUM(gp_pts.points_numeric), 0)
-        + COALESCE(ma.total_points, 0)
-        - COALESCE(SUM(p.points_removed), 0)
-    ) AS total_points,
-
-    SUM(CASE WHEN gp_pts.position = 1 THEN 1 ELSE 0 END) AS wins,
-    SUM(CASE WHEN gp_pts.position IN (1,2,3) THEN 1 ELSE 0 END) AS podiums
-
-FROM seasons s
-JOIN categories c ON c.id = s.category_id
-JOIN gp g ON g.season_id = s.id
-JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
-JOIN drivers d ON d.id = gp_pts.driver_id
-
--- Récupérer l'équipe actuelle (optionnelle)
-LEFT JOIN teams_drivers td ON td.driver_id = d.id AND td.season_id = s.id
-LEFT JOIN teams t ON t.id = td.team_id
-
--- Manual adjustments par pilote (une seule fois par saison)
-LEFT JOIN (
-    SELECT season_id, driver_id, SUM(points) AS total_points
-    FROM manual_adjustments
-    GROUP BY season_id, driver_id
-) ma ON ma.season_id = s.id AND ma.driver_id = d.id
-
--- Pénalités liées au pilote pour chaque GP
-LEFT JOIN penalties p ON p.driver_id = d.id AND p.gp_id = g.id
-
-GROUP BY s.id, s.season_number, s.status, c.name, d.id, d.nickname, t.name;
-
-

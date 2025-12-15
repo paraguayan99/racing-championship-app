@@ -37,7 +37,8 @@ function podiumBadge($pos) {
     <h4>Classement GP</h4>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table"
+                style="--category-color: <?= htmlspecialchars($gp->category_color ?? '#E10600') ?>;">
             <thead>
                 <tr>
                     <th>Pos</th>
