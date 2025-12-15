@@ -1209,3 +1209,329 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--------------------------------------------------------------------------------
+--------------- AJOUTS OU MODIFICATIONS DE CETTE BASE DE DONNEE ----------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--------------- DRIVERS PALMARES
+--------------------------------------------------------------------------------
+DROP VIEW IF EXISTS drivers_palmares;
+CREATE VIEW drivers_palmares AS
+SELECT
+    ds.category,
+    d.id AS driver_id,
+    d.nickname,
+
+    -- Titres (saisons désactivées uniquement)
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.total_points < (
+              SELECT MAX(ds3.total_points)
+              FROM drivers_standings ds3
+              WHERE ds3.season_id = ds.season_id
+          )
+    ) THEN 1 ELSE 0 END) AS vice_titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT DISTINCT ds2.total_points
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+        ORDER BY ds2.total_points DESC
+        LIMIT 1 OFFSET 2
+    ) THEN 1 ELSE 0 END) AS third_places,
+
+    -- Stats globales (toutes saisons)
+    SUM(ds.total_points) AS total_points,
+    SUM(ds.wins) AS wins,
+    SUM(ds.podiums) AS podiums,
+    COUNT(DISTINCT ds.season_id) AS seasons_count
+
+FROM drivers_standings ds
+JOIN drivers d ON d.id = ds.driver_id
+GROUP BY ds.category, d.id, d.nickname;
+
+--------------------------------------------------------------------------------
+--------------- TEAMS PALMARES
+--------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS teams_palmares;
+CREATE VIEW teams_palmares AS
+SELECT
+    ts.category,
+    t.id AS team_id,
+    t.name AS team_name,
+
+    -- Titres constructeurs (saisons désactivées)
+    SUM(CASE WHEN s.status = 'desactive' AND ts.total_points = (
+        SELECT MAX(ts2.total_points)
+        FROM teams_standings ts2
+        WHERE ts2.season_id = ts.season_id
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    -- Points toutes saisons
+    SUM(ts.total_points) AS total_points
+
+FROM teams_standings ts
+JOIN teams t ON t.id = ts.team_id
+JOIN seasons s ON s.id = ts.season_id
+GROUP BY ts.category, t.id, t.name;
+
+
+--------------------------------------------------------------------------------
+--------------- DRIVERS PALMARES : V2 QUI COMPTABILISE LE NOMBRE DE GP (même si position ou points_numeric = null ou 0)
+--------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS drivers_palmares;
+CREATE VIEW drivers_palmares AS
+SELECT
+    ds.category,
+    d.id AS driver_id,
+    d.nickname,
+
+    -- Titres (saisons désactivées uniquement)
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.total_points < (
+              SELECT MAX(ds3.total_points)
+              FROM drivers_standings ds3
+              WHERE ds3.season_id = ds.season_id
+          )
+    ) THEN 1 ELSE 0 END) AS vice_titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT DISTINCT ds2.total_points
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+        ORDER BY ds2.total_points DESC
+        LIMIT 1 OFFSET 2
+    ) THEN 1 ELSE 0 END) AS third_places,
+
+    -- Stats globales
+    SUM(ds.total_points) AS total_points,
+    SUM(ds.wins) AS wins,
+    SUM(ds.podiums) AS podiums,
+
+    -- TOTAL GP = présence du pilote dans gp_points
+    COUNT(DISTINCT gp_pts.gp_id) AS total_gp
+
+FROM drivers_standings ds
+JOIN drivers d ON d.id = ds.driver_id
+
+-- source de vérité pour la participation GP
+JOIN gp_points gp_pts 
+    ON gp_pts.driver_id = d.id
+
+JOIN gp g 
+    ON g.id = gp_pts.gp_id
+   AND g.season_id = ds.season_id
+
+GROUP BY ds.category, d.id, d.nickname;
+
+--------------------------------------------------------------------------------
+--------------- DRIVERS PALMARES : V3 QUI NE MULTIPLIE PLUS LES PTS / VICTOIRES / PODIUMS PAR LE NOMBRE DE GP
+--------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS drivers_palmares;
+CREATE VIEW drivers_palmares AS
+SELECT
+    ds.category,
+    d.id AS driver_id,
+    d.nickname,
+
+    -- Titres (saisons désactivées uniquement)
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.total_points < (
+              SELECT MAX(ds3.total_points)
+              FROM drivers_standings ds3
+              WHERE ds3.season_id = ds.season_id
+          )
+    ) THEN 1 ELSE 0 END) AS vice_titles,
+
+    SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = (
+        SELECT DISTINCT ds2.total_points
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+        ORDER BY ds2.total_points DESC
+        LIMIT 1 OFFSET 2
+    ) THEN 1 ELSE 0 END) AS third_places,
+
+    -- Stats globales (déjà agrégées → PAS TOUCHER)
+    SUM(ds.total_points) AS total_points,
+    SUM(ds.wins) AS wins,
+    SUM(ds.podiums) AS podiums,
+
+    -- TOTAL GP calculé séparément (DNF / DNS inclus)
+    (
+        SELECT COUNT(DISTINCT gp_pts.gp_id)
+        FROM gp_points gp_pts
+        JOIN gp g ON g.id = gp_pts.gp_id
+        WHERE gp_pts.driver_id = d.id
+    ) AS total_gp
+
+FROM drivers_standings ds
+JOIN drivers d ON d.id = ds.driver_id
+
+GROUP BY ds.category, d.id, d.nickname;
+
+
+--------------------------------------------------------------------------------
+--------------- DRIVERS PALMARES : V4 QUI NE TRIAIT PAS LES CATEGORIES
+--------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS drivers_palmares;
+CREATE VIEW drivers_palmares AS
+SELECT
+    ds.category,
+    d.id AS driver_id,
+    d.nickname,
+
+    -- TITRES (par saison + catégorie)
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    -- VICE-CHAMPIONS
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+          AND ds2.total_points < (
+            SELECT MAX(ds3.total_points)
+            FROM drivers_standings ds3
+            WHERE ds3.season_id = ds.season_id
+              AND ds3.category = ds.category
+          )
+    ) THEN 1 ELSE 0 END) AS vice_titles,
+
+    -- TROISIÈMES
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT DISTINCT ds2.total_points
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+        ORDER BY ds2.total_points DESC
+        LIMIT 1 OFFSET 2
+    ) THEN 1 ELSE 0 END) AS third_places,
+
+    -- Stats globales
+    SUM(ds.total_points) AS total_points,
+    SUM(ds.wins) AS wins,
+    SUM(ds.podiums) AS podiums,
+
+    -- TOTAL GP (DNF/DNS inclus)
+    (
+        SELECT COUNT(DISTINCT gp_pts.gp_id)
+        FROM gp_points gp_pts
+        JOIN gp g ON g.id = gp_pts.gp_id
+        WHERE gp_pts.driver_id = d.id
+    ) AS total_gp
+
+FROM drivers_standings ds
+JOIN drivers d ON d.id = ds.driver_id
+
+GROUP BY ds.category, d.id, d.nickname;
+
+
+--------------------------------------------------------------------------------
+--------------- DRIVERS PALMARES : V5 QUI NE TRIAIT PAS LES CATEGORIES POUR GP ET POINTS
+--------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS drivers_palmares;
+CREATE VIEW drivers_palmares AS
+SELECT
+    ds.category,
+    d.id AS driver_id,
+    d.nickname,
+
+    -- Titres (par saison + catégorie)
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+    ) THEN 1 ELSE 0 END) AS titles,
+
+    -- Vice-titres
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT MAX(ds2.total_points)
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+          AND ds2.total_points < (
+            SELECT MAX(ds3.total_points)
+            FROM drivers_standings ds3
+            WHERE ds3.season_id = ds.season_id
+              AND ds3.category = ds.category
+          )
+    ) THEN 1 ELSE 0 END) AS vice_titles,
+
+    -- Troisièmes places
+    SUM(CASE WHEN ds.season_status = 'desactive'
+      AND ds.total_points = (
+        SELECT DISTINCT ds2.total_points
+        FROM drivers_standings ds2
+        WHERE ds2.season_id = ds.season_id
+          AND ds2.category = ds.category
+        ORDER BY ds2.total_points DESC
+        LIMIT 1 OFFSET 2
+    ) THEN 1 ELSE 0 END) AS third_places,
+
+    -- Stats par catégorie (via standings)
+    SUM(ds.total_points) AS total_points,
+    SUM(ds.wins) AS wins,
+    SUM(ds.podiums) AS podiums,
+
+    -- TOTAL GP PAR CATÉGORIE
+    (
+        SELECT COUNT(DISTINCT gp_pts.gp_id)
+        FROM gp_points gp_pts
+        JOIN gp g ON g.id = gp_pts.gp_id
+        JOIN drivers_standings dsx
+            ON dsx.driver_id = gp_pts.driver_id
+           AND dsx.season_id = g.season_id
+           AND dsx.category = ds.category
+        WHERE gp_pts.driver_id = d.id
+    ) AS total_gp
+
+FROM drivers_standings ds
+JOIN drivers d ON d.id = ds.driver_id
+
+GROUP BY ds.category, d.id, d.nickname;
+

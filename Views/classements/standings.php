@@ -18,6 +18,7 @@ function podiumBadge($pos) {
 ?>
 
 <div class="section-dashboard">
+    <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
     <div class="section-header">
         <h1>Classements – <?= htmlspecialchars($seasonTitle) ?></h1>
 

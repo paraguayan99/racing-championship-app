@@ -701,3 +701,30 @@ footer {
         padding: 6px 8px;
     }
 }
+
+
+/* TRI POUR LA PAGE PALMARES */
+
+table.sortable th {
+    cursor: pointer;
+    position: relative;
+    padding-right: 22px;
+}
+
+table.sortable th::after {
+    content: "⇅";
+    position: absolute;
+    right: 6px;
+    opacity: 0.4;
+}
+
+table.sortable th.asc::after {
+    content: "▲";
+    opacity: 1;
+}
+
+table.sortable th.desc::after {
+    content: "▼";
+    opacity: 1;
+}
+

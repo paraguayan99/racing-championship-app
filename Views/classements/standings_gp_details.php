@@ -1,6 +1,11 @@
 <?php
 // Fonction pour les badges podium
 function podiumBadge($pos) {
+
+    if ($pos === null || $pos === 0) {
+        return '<span class="badge badge-normal badge-empty">-</span>';
+    }
+
     return match($pos) {
         1 => '<span class="badge badge-gold">1</span>',
         2 => '<span class="badge badge-silver">2</span>',
@@ -54,7 +59,7 @@ function podiumBadge($pos) {
                     <tr>
 
                         <!-- Badge position -->
-                        <td><?= podiumBadge($point->position ?? $position++) ?></td>
+                        <td><?= podiumBadge($point->position) ?></td>
 
                         <!-- Pilote (drapeau + dégradé équipe) -->
                         <td class="driver-cell" style="--team-color: <?= htmlspecialchars($point->team_color ?? '') ?>">

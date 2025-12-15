@@ -385,7 +385,9 @@ class ClassementsModel extends DbConnect
             LEFT JOIN teams t ON t.id = gp_points.team_id
             LEFT JOIN countries t_country ON t_country.id = t.country_id
             WHERE gp_points.gp_id = :gp_id
-            ORDER BY gp_points.position ASC
+            ORDER BY 
+            (gp_points.position IS NULL OR gp_points.position = 0) ASC,
+            gp_points.position ASC
         ";
         $stmt2 = $db->getConnection()->prepare($sqlPoints);
         $stmt2->execute(['gp_id' => $gpId]);
