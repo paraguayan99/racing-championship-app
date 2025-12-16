@@ -18,7 +18,10 @@ function podiumBadge($pos) {
 ?>
 
 <div class="section-dashboard">
+
     <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
+    <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
+
     <div class="section-header">
         <h1>Classements – <?= htmlspecialchars($seasonTitle) ?></h1>
 
@@ -99,7 +102,7 @@ function podiumBadge($pos) {
                             <thead>
                                 <tr>
                                     <th>Pos</th><th>Pilote</th><th>Équipe</th><th>Points</th><th>GP</th>
-                                    <th>Victoires</th><th>Podiums</th><th>Pole</th><th>FastestLap</th>
+                                    <th>Victoires</th><th>Podiums</th><th>Pole</th><th>Fastest Lap</th>
                                 </tr>
                             </thead>
                             <tbody>

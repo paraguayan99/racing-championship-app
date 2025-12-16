@@ -250,11 +250,11 @@ footer {
 }
 
 .dashboard-table thead th {
-    background-color: var(--category-color);
+    background-color: var(--category-color, #E10600);
 }
 
 .dashboard-table th {
-    background: var(--category-color);
+    background: var(--category-color, #E10600);
     padding: 12px;
     text-align: left;
     color: white;
@@ -727,4 +727,36 @@ table.sortable th.desc::after {
     content: "▼";
     opacity: 1;
 }
+
+table.sortable th.no-sort::after {
+    content: none;      /* supprime les flèches */
+}
+
+/* FLAG POUR LA PAGE CIRCUITS STATS */
+
+.selected-circuit {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.selected-circuit img.circuit-flag {
+    width: 32px;
+    height: auto;
+}
+
+/* BADGE VIOLETS POUR LES CHRONOS */
+
+.badge-purple {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background-color: #8e44ad; /* violet */
+    color: white;
+    font-weight: 600;
+    font-size: 0.9em;
+    text-align: center;
+}
+
 
