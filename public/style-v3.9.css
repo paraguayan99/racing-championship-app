@@ -759,4 +759,328 @@ table.sortable th.no-sort::after {
     text-align: center;
 }
 
+/* =========================
+   PAGE ACCUEIL - TEAM-ERACING
+   ========================= */
+
+.community-tag {
+    display: block;               /* Force la ligne suivante */
+    font-size: 0.6em;             /* Plus petit que le h1 principal */
+    font-weight: 400;             /* Moins lourd que le h1 */
+    color: #E10600;               /* Rouge eRacing pour rester dans la charte */
+    margin-top: 6px;              /* Petit espace au-dessus */
+    letter-spacing: 1px;          /* Comme pour ton motto, subtil */
+    text-transform: uppercase;    /* Uniforme avec ton style de communauté */
+}
+
+/* -------- HERO F1 - VOITURES ANIMÉES -------- */
+.hero {
+    position: relative;
+    padding: 50px 20px 40px;
+    background: #15151E;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Voitures animées */
+.hero-car {
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    border-radius: 4px;
+    filter: blur(2px);
+    transform: translateX(-100%);
+    animation: heroCarMove 4s linear infinite;
+}
+
+/* Voitures rouges */
+.hero-car.red {
+    background: rgba(225,6,0,0.2);
+}
+
+/* Voitures blanches */
+.hero-car:not(.red) {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Animation voiture gauche->droite */
+@keyframes heroCarMove {
+    0% { transform: translateX(-100%) translateY(0); }
+    100% { transform: translateX(120vw) translateY(0); }
+}
+
+/* Animation voiture droite->gauche */
+.hero-car.rev {
+    animation: heroCarMoveRev 6s linear infinite;
+}
+
+@keyframes heroCarMoveRev {
+    0% { transform: translateX(120vw) translateY(0); }
+    100% { transform: translateX(-120vw) translateY(0); }
+}
+
+/* Différentes lignes et vitesses */
+.hero-bg .hero-car:nth-child(1) { top: 15%; animation-duration: 4s; }
+.hero-bg .hero-car:nth-child(2) { top: 30%; animation-duration: 6s; }
+.hero-bg .hero-car:nth-child(3) { top: 45%; animation-duration: 5s; }
+.hero-bg .hero-car:nth-child(4) { top: 60%; animation-duration: 7s; }
+.hero-bg .hero-car:nth-child(5) { top: 75%; animation-duration: 6.5s; }
+
+/* -------- HERO CONTENT -------- */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.hero-subtitle {
+    font-size: 16px;
+    color: #d4d7dd;
+    margin-bottom: 22px;
+}
+
+/* Community motto */
+.hero-motto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* -------- CTA HERO -------- */
+.hero-cta {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* -------- CONTENT SECTIONS -------- */
+.hero-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+}
+
+/* Text block */
+.hero-text-block {
+    max-width: 600px;
+}
+
+.hero-text-block h2 {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin-bottom: 12px;
+}
+
+/* Images */
+.hero-section img {
+    max-width: 45%;
+    max-height: 250px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+/* -------- DISCORD BOX -------- */
+.hero-discord {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.discord-btn {
+    background: #5865F2;
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discord-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(88,101,242,0.5);
+}
+
+/* -------- HERO SECTION ANIMATION ON SCROLL -------- */
+.hero-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+@media (max-width: 700px) {
+    .hero-section {
+        flex-direction: column;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .hero-section img,
+    .hero-text-block {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero {
+        padding: 45px 15px 40px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+    .hero-motto {
+        font-size: 16px;
+    }
+
+    .hero-section img {
+        max-height: 200px;
+    }
+}
+
+/* -------- STREAMING BUTTONS (TWITCH / YOUTUBE) -------- */
+
+.hero-streams .stream-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.stream-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stream-btn i {
+    font-size: 22px;
+}
+
+/* Twitch */
+.stream-btn.twitch {
+    background: #9146FF;
+}
+
+.stream-btn.twitch:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(145,70,255,0.5);
+}
+
+/* YouTube */
+.stream-btn.youtube {
+    background: #FF0000;
+}
+
+.stream-btn.youtube:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .hero-streams .stream-buttons {
+        flex-direction: column;
+    }
+
+    .stream-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+
+/* Bouton retour en haut */
+#scrollToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+/* Apparition */
+#scrollToTop.show {
+    opacity: 0.6;
+    visibility: visible;
+}
+
+/* Hover desktop */
+#scrollToTop:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+}
+
+/* Mobile : plus petit et mieux placé */
+@media (max-width: 768px) {
+    #scrollToTop {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 16px;
+    }
+}
 
