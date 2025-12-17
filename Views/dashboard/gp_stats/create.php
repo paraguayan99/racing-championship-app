@@ -1,6 +1,6 @@
 <?php $title = "Team-eRacing - Ajouter Statistiques d'un GP"; ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=gpstats">Retour à la liste</a>
 

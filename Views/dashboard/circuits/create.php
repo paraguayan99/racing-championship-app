@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Circuits' ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=circuits">Retour à la liste</a>
 

@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Pilotes' ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=drivers">Retour à la liste</a>
 

@@ -1,6 +1,6 @@
 <?php $title = "Team-eRacing - Ajouter Résultats d'un GP"; ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=gppoints">Retour à la liste</a>
 

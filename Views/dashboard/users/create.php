@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Utilisateurs' ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=users">Retour à la liste</a>
 

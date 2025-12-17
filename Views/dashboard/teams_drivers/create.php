@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Affectations Pilotes - Écuries'; ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers">Retour à la liste</a>
 

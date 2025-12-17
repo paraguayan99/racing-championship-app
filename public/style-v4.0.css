@@ -127,16 +127,6 @@ footer {
     color: #000000;
 }
 
-/* .footer-links a {
-    margin: 0 10px;
-    text-decoration: none;
-    background: #1e1f29;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 14px;
-    color: white;
-} */
-
 .section img {
     display: flex;
     max-width: 45%;
@@ -160,6 +150,8 @@ footer {
     font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     color: white;
     padding-left: 5%;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .text-block { 

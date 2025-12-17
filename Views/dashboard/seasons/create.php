@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Saisons' ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=seasons">Retour à la liste</a>
 

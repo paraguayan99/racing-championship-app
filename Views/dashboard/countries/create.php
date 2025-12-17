@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Pays' ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=countries">Retour à la liste</a>
 

@@ -1,6 +1,6 @@
 <?php $title = 'Team-eRacing - Gestion des Grand Prix'; ?>
 
-<div class="login-container">
+<div class="section-dashboard">
 
     <a class="nav-btn-dashboard" href="index.php?controller=gp">Retour à la liste</a>
 
