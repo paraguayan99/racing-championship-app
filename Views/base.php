@@ -11,7 +11,10 @@
 <!-- Google Fonts pour les polices -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- CSS personnel, pas de Framework -->
-<link rel="stylesheet" href="style-vtest1.css" />
+<link rel="stylesheet" href="stylev1.2.css" />
+<link rel="stylesheet" href="style700px-mobilev1.3.css" media="screen and (max-width: 700px)" />
+<link rel="stylesheet" href="style900px-tablettev1.2.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
+<link rel="stylesheet" href="style1400px-desktopv1.1.css" media="screen and (min-width: 901px)" />
 <!-- Icones Vectorielles avec FontAwesome -->
 <script src="https://kit.fontawesome.com/ff03dfd379.js" crossorigin="anonymous"></script>
 </head>
@@ -22,11 +25,13 @@
     <div class="logo_header">
         <a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a>
     </div>
-    <span class="name_header">Team-eRacing</span>
+    <span class="name_header">
+        Team-eRacing
+    </span>
 </div>
 <nav>
-<a class="nav-btn" href="index.php?controller=classements&action=standings">CLASSEMENTS</a>
-<a class="nav-btn red" href="index.php#discord">NOUS REJOINDRE</a>
+    <a class="nav-btn" href="index.php?controller=classements&action=standings">CLASSEMENTS</a>
+    <a class="nav-btn red" href="index.php#discord">NOUS REJOINDRE</a>
 </nav>
 </header>
 
@@ -39,12 +44,19 @@
 
 
 <footer>
-<div>
-<a class="nav-btn" href="index.php?controller=mentions">MENTIONS LÉGALES</a>
-<a class="nav-btn" href="index.php?controller=dashboard">DASHBOARD</a>
-</div>
-<div class="logo_footer"><a href="index.php"><img src="img/logo_team_eracing.png" alt="Logo Communauté Team-eRacing"></a></div>
+    <nav aria-label="Liens de pied de page">
+        <a class="nav-btn" href="index.php?controller=mentions">Mentions légales</a>
+        <a class="nav-btn" href="index.php?controller=dashboard">Dashboard</a>
+    </nav>
+
+    <div class="logo_footer">
+        <p>© 2025 Team-eRacing</p>
+        <a href="index.php">
+            <img src="img/logo_team_eracing.png" alt="Logo Team-eRacing">
+        </a>
+    </div>
 </footer>
+
 <button id="scrollToTop" aria-label="Retour en haut de page">
     <i class="fas fa-chevron-up"></i>
 </button>

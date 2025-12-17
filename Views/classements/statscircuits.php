@@ -2,7 +2,8 @@
 
 <div class="section-dashboard">
 
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour</a>
+    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
 
     <h1>Statistiques par circuit</h1>
 

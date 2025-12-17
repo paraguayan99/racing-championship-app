@@ -1,7 +1,8 @@
 <?php $title = "Palmarès"; ?>
 
 <div class="section-dashboard">
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour</a>
+    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
 
     <h1>Palmarès</h1>
 

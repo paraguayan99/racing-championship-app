@@ -1,0 +1,24 @@
+/* Desktop large */
+
+html, body {
+        max-width: 1400px;
+        margin: auto;
+    }
+
+
+main {
+        max-width: 1400px;
+    }
+
+.hero-section {
+    flex-wrap: nowrap;
+}
+
+
+/* Styles pour écrans < 1060px */
+@media screen and (max-width: 1060px) {
+    .stream-btn {
+        display: flex;
+        width: 70%;
+    }
+}

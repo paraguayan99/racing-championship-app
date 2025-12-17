@@ -1,0 +1,1023 @@
+
+/* RACCOURCIS VS CODE (shift = maj):
+Décaler à droite : Tab
+Décaler à gauche : Shift + Tab
+Reformater un bloc ou tout le fichier : Shift + Alt + F
+Sélectionner un mot entier : Ctrl + D
+Sélectionner toutes les occurrences du mot : Ctrl + Shift + L
+Sélection colonne / multi-lignes verticales : Alt + Click + Drag (cliques)
+Aller à une ligne spécifique : Ctrl + G
+Retour à la position précédente : Alt + ←
+Plier tous les blocs : Ctrl + K Ctrl + 0
+Déplier tous les blocs : Ctrl + K Ctrl + J 
+
+font-size
+px	rem
+12px	0.75rem
+14px	0.875rem
+16px	1rem
+18px	1.125rem
+20px	1.25rem
+22px    1.375rem
+24px	1.5rem
+32px	2rem
+*/
+
+/* CSS commun */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #d4d7dd;
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.logo_and_name_header {
+    display: flex;
+    align-items: center;
+}
+
+.logo_header img, .logo_footer img {
+    max-width: 100px;
+    height: auto;
+}
+
+.name_header {
+    display: block;
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+    padding-left: 5%;
+    font-weight: bold;
+    font-size: 1.5rem;
+    white-space: nowrap; 
+}
+
+nav {
+    display: flex;
+}
+
+.logo_footer {
+    display: flex;
+    align-items: center;
+}
+
+.logo_footer p {
+    padding-right: 20px;
+}
+
+
+/* Background avec bandes du header et footer */
+header {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+footer {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+header, footer {
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #15151E;
+
+    /* Valeur par défaut : dégradé vers le bas */
+    --fade-dir: to bottom;
+
+    background-image:
+        linear-gradient(var(--fade-dir),
+            transparent 40%,
+            #15151E 100%
+        ),
+        repeating-linear-gradient(
+            135deg,           
+            rgba(255,255,255,0.05) 0 40px,   
+            transparent 40px 45px,       
+            rgba(255,255,255,0.05) 45px 85px,
+            transparent 85px 200px,
+            rgba(255,255,255,0.05) 200px 230px,
+            transparent 230px 235px,       
+            rgba(255,255,255,0.05) 235px 265px,
+            transparent 265px 400px
+        );
+}
+
+/* Fondu vers le haut des bandes claires */
+footer {
+    --fade-dir: to top;
+}
+
+/* Boutons */
+.nav-btn {
+    padding: 10px 22px;
+    border-radius: 20px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Animation douce */
+}
+
+.nav-btn:hover {
+    background-color: white;
+    color: #000000;
+}
+
+.nav-btn.red { 
+    background: #E10600; 
+}
+
+.nav-btn.red:hover {
+    background-color: #fdbcba;
+    color: #000000;
+}
+
+/* sections des pages */
+
+.section {
+    display: flex;
+    justify-content: space-around ;
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    gap: 20px;
+}
+
+/* Visuel Dashboard */
+.section-dashboard {
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    gap: 20px;
+}
+
+.section-btn-dashboard {
+    height: 35px;
+}
+
+.nav-btn-dashboard {
+    padding: 10px 22px;
+    border-radius: 20px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Animation douce */
+}
+
+.nav-btn-dashboard:hover {
+    background-color: white;
+    color: #000000;
+}
+
+.nav-btn-dashboard.red { 
+    background: #E10600; 
+}
+
+.nav-btn-dashboard.red:hover {
+    background-color: #fdbcba;
+    color: #000000;
+}
+
+.section img {
+    display: flex;
+    max-width: 45%;
+    max-height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.text-block { 
+    width: 55%; 
+}
+
+.text-block h2 {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+    margin-bottom: 12px;
+}
+
+/* Page Accueil / Index */
+/* Section en haut de page avec l'animation des voitures en background */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    margin: 10px 0px;
+    color: #fff;
+}
+
+/* Texte secondaire mais dans le h1 pour le SEO */
+.community-tag {
+    display: block;               /* Force la ligne suivante */
+    font-size: 1.5rem;             /* Plus petit que le h1 principal */
+    font-weight: 400;
+    color: #E10600;
+    margin: 5px 0px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Devise : Fair-play & Courtoisie */
+.hero-motto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Texte sous la devise */
+.hero-subtitle {
+    font-size: 1rem;
+    color: #d4d7dd;
+    margin-bottom: 22px;
+}
+
+/* Boutons avec ancres qui redirige sur les sections */
+.hero-cta {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* Animation voitures rouges et blanc */
+.hero {
+    position: relative;
+    padding: 20px 20px 20px;
+    margin-top: -20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: #15151E;
+    overflow: hidden;
+}
+
+/* div qui contient toutes les voitures */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Voitures animées */
+.hero-car {
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    border-radius: 4px;
+    filter: blur(2px);
+    transform: translateX(-100%);
+    animation: heroCarMove 4s linear infinite;
+}
+
+/* Voitures rouges */
+.hero-car.red {
+    background: rgba(225,6,0,0.2);
+}
+
+/* Voitures blanches */
+.hero-car:not(.red) {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Animation voiture gauche->droite */
+@keyframes heroCarMove {
+    0% { transform: translateX(-100%) translateY(0); }
+    100% { transform: translateX(120vw) translateY(0); }
+}
+
+/* Animation voiture droite->gauche */
+.hero-car.rev {
+    animation: heroCarMoveRev 6s linear infinite;
+}
+
+@keyframes heroCarMoveRev {
+    0% { transform: translateX(120vw) translateY(0); }
+    100% { transform: translateX(-120vw) translateY(0); }
+}
+
+/* Différentes lignes et vitesses */
+.hero-bg .hero-car:nth-child(1) { top: 15%; animation-duration: 4s; }
+.hero-bg .hero-car:nth-child(2) { top: 30%; animation-duration: 6s; }
+.hero-bg .hero-car:nth-child(3) { top: 45%; animation-duration: 5s; }
+.hero-bg .hero-car:nth-child(4) { top: 60%; animation-duration: 7s; }
+.hero-bg .hero-car:nth-child(5) { top: 75%; animation-duration: 6.5s; }
+
+/* Sections Communauté, Championnats, Lives et Discord */
+.hero-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    background: #15151E;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-text-block {
+    max-width: 600px;
+}
+
+.hero-text-block h2 {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin-bottom: 12px;
+}
+
+/* Images */
+.hero-section img {
+    max-width: 45%;
+    max-height: 250px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+/* Boutons Twitch et Youtube */
+.hero-streams .stream-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stream-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stream-btn i {
+    font-size: 1.375rem;
+}
+
+/* Twitch */
+.stream-btn.twitch {
+    background: #9146FF;
+}
+
+.stream-btn.twitch:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(145,70,255,0.5);
+}
+
+/* YouTube */
+.stream-btn.youtube {
+    background: #FF0000;
+}
+
+.stream-btn.youtube:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+}
+
+/* Section Discord */
+.hero-discord {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.discord-btn {
+    white-space: nowrap;
+    background: #5865F2;
+    color: #fff;
+    padding: 22px 22px;
+    border-radius: 18px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discord-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(88,101,242,0.5);
+}
+
+/* Animation au scroll pour chaque section de la page d'accueil */
+.hero-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+/* Formulaire de connexion au DASHBOARD */
+.login-container {
+    background-color: #15151E;
+    max-width: 50%;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-top : 0;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    border:0;
+    font-size: 0.875rem;
+    border-radius: 10px;
+    text-indent: 20px;
+}
+
+.btn {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: 10px;
+    background-color: #E10600;
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #fdbcba;
+    color: #000000;
+}
+
+.error-message {
+    background-color: rgb(248, 157, 54);
+    color: black;
+    font-weight: 600;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* TABLEAUX de toutes les pages Classements et Dashboard */
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f0f15;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Permet aux largeurs fixées d'être respectées */
+.dashboard-table {
+    table-layout: fixed;
+}
+
+.dashboard-table thead th {
+    background-color: var(--category-color, #E10600);
+}
+
+.dashboard-table th {
+    background: var(--category-color, #E10600);
+    padding: 6px 8px;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+}
+
+.dashboard-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dashboard-table tr:hover td {
+    background: rgba(255,255,255,0.03);
+}
+
+.actions-column {
+    text-align: center;
+}
+
+/* Icones Modifier et Supprimer dans les Index des tables de la BDD */
+
+.action-btn {
+    padding: 8px;
+    border-radius: 50%;
+    margin: 0 4px;
+    text-decoration: none;
+    display: inline-flex;
+}
+
+.action-btn.edit {
+    background: #1e90ff;
+    color: white;
+}
+
+.action-btn.delete {
+    background: #E10600;
+    color: white;
+}
+
+.action-btn:hover {
+    opacity: .8;
+}
+
+/* Message succès ou échec après une requete du CRUD */
+
+.msg-success {
+    text-align: center;
+    background: #66fd93;
+    color: #000000;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-weight: bold;
+}
+
+.msg-error {
+    text-align: center;
+    background: #E10600;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-weight: bold;
+}
+
+/* Formulaires Create & Update */
+
+.form-wrapper {
+    background: #0f0f15;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    /* padding: 12px; */
+    border-radius: 10px;
+    border: none;
+    background: #1c1c26;
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group select {
+    padding: 12px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 2px solid #E10600;
+}
+
+/* Forme des boutons et catégories inutiles car tous les boutons sont des nav-btn ??? */
+ .btn, button {
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #E10600;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* .btn:hover {
+    background: #fdbcba;
+    color: #000;
+}
+
+.btn.danger {
+    background: #c00000;
+}
+
+.delete-actions {
+    width: 100%;
+}
+
+.delete-actions form {
+    margin: 0;
+}
+
+.btn-danger,
+.btn-light {
+    width: 100%;
+    display: block;
+}
+
+.btn-light {
+    width: 100%;
+    padding: 12px 0px 12px 0px;
+    border-radius: 10px;
+    border: none;
+    background: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    display: block; 
+    margin-top: 15px;
+    text-decoration: none; 
+}
+
+.btn-light:hover {
+    background: #919090;
+} */
+
+
+/* Page Classements ... */
+
+/* Select des saisons */
+.season-selector {
+    margin-top: 10px;
+}
+
+/* Badges 1 / 2 / 3 ... */
+.badge {
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Podiums */
+.badge-gold { background: #ffd700; color: #000; }
+.badge-silver { background: #c0c0c0; color: #000; }
+.badge-bronze { background: #cd7f32; color: #fff; }
+
+/* Positions 4+ */
+.badge-normal { background: #15151E; color: #fff; }
+
+/* Colonne Pilote */
+
+.driver-cell {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Colonne Pilote : ~20% */
+.dashboard-table td.driver-cell,
+.dashboard-table th:nth-child(2) {
+    width: 20%;
+}
+
+/* Dégradé : couleur définie via la variable CSS de la table teams.color */
+.driver-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--team-color) 100%, transparent) 0%,
+        color-mix(in srgb, var(--team-color) 0%, transparent) 70%
+    );
+    z-index: 1;
+}
+
+.driver-content {
+    position: relative;
+    z-index: 2;
+    padding-left: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.driver-flag {
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* colonne Equipe */
+
+.team-cell {
+    position: relative;
+}
+
+.team-name {
+    position: relative;
+    z-index: 2;
+    padding-right: 60px;
+}
+
+.team-logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    object-fit: contain;
+    z-index: 3;
+}
+
+/* Colonne Equipe : ~20% */
+.dashboard-table td.team-cell,
+.dashboard-table th:nth-child(3) {
+    width: 20%;
+}
+
+
+/* Liste des GP avec TOP 3 + PP + FL */
+
+/* Logo GP : plus petit et inline */
+.team-logo-gp {
+    position: static; /* Pas de absolute */
+    height: 20px;     /* Taille adaptée */
+    width: auto;
+    object-fit: contain;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* Afficher / Cacher Liste des GP */
+
+.gp-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin 0.4s ease;
+    margin-bottom: 0; /* au départ pas de marge */
+}
+
+.gp-toggle-btn-category {
+    background-color: var(--category-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.gp-toggle-btn-category:hover {
+    background-color: color-mix(in srgb, var(--category-color) 30%, white);
+    color: #000;
+}
+
+/* --- Modal dynamique AJAX pour Afficher les résultats complets --- */
+.gp-modal {
+    display: none; /* caché par défaut */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.5); /* fond semi-transparent */
+    padding-top: 60px;
+}
+
+.gp-modal-content {
+    background-color: #15151E;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+}
+
+.gp-modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 1.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.gp-modal-close:hover {
+    color: #000;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* --- Table inside modal --- */
+.gp-details-container .dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.gp-details-container .dashboard-table th,
+.gp-details-container .dashboard-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.gp-details-container .dashboard-table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+}
+
+.gp-details-container .dashboard-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.gp-details-container h2, 
+.gp-details-container h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.gp-details-container p {
+    margin: 5px 0;
+}
+
+/* Page Palmarès pour effectuer le tri par colonne en Javascript */
+
+table.sortable th {
+    cursor: pointer;
+    position: relative;
+    padding-right: 22px;
+}
+
+table.sortable th::after {
+    content: "⇅";
+    position: absolute;
+    right: 6px;
+    opacity: 0.4;
+}
+
+table.sortable th.asc::after {
+    content: "▲";
+    opacity: 1;
+}
+
+table.sortable th.desc::after {
+    content: "▼";
+    opacity: 1;
+}
+
+table.sortable th.no-sort::after {
+    content: none;      /* supprime les flèches */
+}
+
+/* Page Circuits */
+
+.selected-circuit {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.selected-circuit img.circuit-flag {
+    width: 32px;
+    height: auto;
+}
+
+/* Chronos avec Badge violet */
+
+.badge-purple {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background-color: #8e44ad; /* violet */
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+
+
+/* Bouton retour en haut */
+#scrollToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 1.125rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+/* Apparition */
+#scrollToTop.show {
+    opacity: 0.6;
+    visibility: visible;
+}
+
+/* Hover desktop */
+#scrollToTop:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

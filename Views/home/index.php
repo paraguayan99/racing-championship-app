@@ -34,7 +34,7 @@
 </section>
 
 
-<section class="hero-section" id="presentation">
+<section class="hero-section flex-reverse" id="presentation">
     <div class="hero-text-block">
         <h2>Team-eRacing, communauté F1 depuis 2008</h2>
         <p>
@@ -54,13 +54,15 @@
     </div>
     <img src="img/communaute.jpg"
          alt="Championnat F1 en ligne Team-eRacing"
-         loading="lazy">
+         loading="lazy"
+         class="img-object-position-top">
 </section>
 
 <section class="hero-section" id="championnats">
     <img src="img/f1_f2.jpg"
          alt="Course F1 eSport en ligne PS5"
-         loading="lazy">
+         loading="lazy"
+         class="img-object-position-bottom">
     <div class="hero-text-block">
         <h2>Championnats F1 et F2 sur PS5 – F1 25</h2>
         <p>
@@ -78,7 +80,7 @@
     </div>
 </section>
 
-<section class="hero-section hero-streams" id="lives-replays">
+<section class="hero-section hero-streams flex-reverse" id="lives-replays">
     <div class="hero-text-block">
         <h2>Diffusion des courses F1 en direct et en replay</h2>
 
@@ -114,7 +116,8 @@
 
     <img src="img/twitch_youtube.jpg"
          alt="Diffusion Twitch et YouTube des championnats F1 en ligne Team-eRacing"
-         loading="lazy">
+         loading="lazy"
+         class="img-object-position-top">
 </section>
 
 <section class="hero-section hero-discord" id="discord">

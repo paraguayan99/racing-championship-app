@@ -1,0 +1,167 @@
+/* Mobile */
+
+html, body {
+    min-width: 400px;
+}
+
+header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0px;
+}
+
+.logo_header img, .logo_footer img {
+    max-width: 60px;
+    height: auto;
+}
+
+nav {
+    padding-top: 10px;
+}
+
+.nav-btn {
+    padding: 10px 10px;
+}
+
+footer {
+    padding: 5px 0px;
+}
+
+footer nav {
+    padding: 0;
+}
+
+.logo_footer {
+    flex-direction: column-reverse;
+}
+
+.logo_footer p {
+    padding-right: 10px;
+    margin: 0;
+}
+
+/* Page Accueil / Index */
+.hero h1 {
+    font-size: 1.5rem;
+}
+
+.community-tag {
+    font-size: 1.25rem;
+}
+
+/* Styles pour écrans < 450px */
+@media screen and (max-width: 450px) {
+    .hero h1 {
+        font-size: 1.3rem; /* encore plus petit pour mobile */
+    }
+
+    .community-tag {
+        font-size: 1.1rem;
+    }
+}
+
+.hero-motto {
+    font-size: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 0.875rem;
+}
+
+.hero {
+    padding: 40px 10px 20px;
+}
+
+.hero-section {
+    flex-direction: column;
+    margin: 20px;
+    padding: 20px;
+}
+
+.hero-section.flex-reverse {
+    flex-direction: column-reverse;
+}
+
+.hero-section img,
+.hero-text-block {
+    width: 100%;
+    max-width: 100%;
+}
+
+.hero-section img {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.img-object-position-top {
+    object-position: top;
+}
+
+.img-object-position-bottom {
+    object-position: bottom;
+}
+
+.hero-streams .stream-buttons {
+    flex-direction: column;
+}
+
+.stream-buttons {
+    align-items: center;
+}
+
+.stream-btn {
+    justify-content: center;
+    width: 80%;
+    padding: 14px 0px
+}
+
+.discord-btn {
+    padding: 14px 22px;
+}
+
+/* dashboard */
+.section-dashboard {
+    margin: 15px;
+    padding: 20px;
+}
+
+.msg-success {
+    margin: 15px;
+    padding: 20px;
+}
+
+.msg-error {
+    margin: 15px;
+    padding: 20px;
+}
+
+.section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.dashboard-table th, .dashboard-table td {
+    font-size: 0.875rem;
+    padding: 8px;
+}
+
+/* Modal Afficher les résultats complets */
+.gp-modal-content {
+    padding: 15px;
+}
+.gp-details-container .dashboard-table th,
+.gp-details-container .dashboard-table td {
+    padding: 6px 8px;
+}
+
+/* Bouton retour en haut */
+/* Responsive : plus petit et mieux placé */
+#scrollToTop {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1rem;
+}
