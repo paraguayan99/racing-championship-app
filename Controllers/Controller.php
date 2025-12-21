@@ -3,7 +3,8 @@ namespace App\Controllers;
 
 abstract class Controller 
 {
-    // Verification à chaque appel des Controllers : LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
+    // Verification à chaque appel des Controllers : 
+    // LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
     protected function authMiddleware(string|array $requiredRoles = null)
     {
         \App\Core\Auth::start();

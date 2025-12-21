@@ -4,7 +4,9 @@
     <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
     <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
 
-    <h1>Palmarès</h1>
+    <div class="page-header">
+        <h1>Palmarès</h1>
+    </div>
 
 <?php
 // Fonction PHP pour les badges de position
@@ -22,7 +24,7 @@ function podiumBadge($pos) {
 <div class="category-block"
      style="--category-color: <?= htmlspecialchars($drivers[0]->category_color) ?>">
 
-    <h2><?= htmlspecialchars($category) ?></h2>
+    <h2 class="category-title has-content"><?= htmlspecialchars($category) ?></h2>
 
     <!-- DRIVERS -->
     <h3>Palmarès Pilotes</h3>

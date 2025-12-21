@@ -2,7 +2,7 @@
 $seasonTitle = ($seasonFilter === 'active') 
     ? 'Saison actuelle' 
     : 'Saison ' . ($listByCategory[array_key_first($listByCategory)][0]->season_number ?? '');
-$title = "Classement – $seasonTitle";
+$title = "Classements - $seasonTitle";
 
 
 
@@ -22,73 +22,100 @@ function podiumBadge($pos) {
     <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
     <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
 
-    <div class="section-header">
-        <h1>Classements – <?= htmlspecialchars($seasonTitle) ?></h1>
+    <div class="page-header">
+        <h1>Classements</h1>
 
         <?php if ($lastGPUpdate): ?>
             <p class="last-update">
-                Dernière mise à jour : <?= date('d/m/Y H:i', strtotime($lastGPUpdate->updated_at)) ?>
-                - <?= htmlspecialchars($lastGPUpdate->category_name) ?> Saison <?= htmlspecialchars($lastGPUpdate->season_number) ?>
-                - GP <?= htmlspecialchars($lastGPUpdate->gp_ordre) ?>
-                - <?= htmlspecialchars($lastGPUpdate->circuit_name) ?> (<?= htmlspecialchars($lastGPUpdate->country_name) ?>)
+                <span class="lu-label">Dernière mise à jour</span> :
+                <span class="lu-date"><?= date('d/m/Y H:i', strtotime($lastGPUpdate->updated_at)) ?></span>
+
+                <span class="lu-tablet">
+                    <span class="lu-sep"> / </span>
+                    <span class="lu-category"><?= htmlspecialchars($lastGPUpdate->category_name) ?></span>
+                    <span class="lu-sep"> - </span>
+                    <span class="lu-season">Saison <?= htmlspecialchars($lastGPUpdate->season_number) ?></span>
+                    <span class="lu-sep"> - </span>
+                    <span class="lu-gp">GP <?= htmlspecialchars($lastGPUpdate->gp_ordre) ?></span>
+                </span>
+
+                <span class="lu-desktop">
+                    <span class="lu-sep"> - </span>
+                    <span class="lu-circuit">
+                        <?= htmlspecialchars($lastGPUpdate->circuit_name) ?>
+                        (<?= htmlspecialchars($lastGPUpdate->country_name) ?>)
+                    </span>
+                </span>
             </p>
         <?php endif; ?>
-
+    </div>
+    <div>
         <!-- Sélecteur de saison -->
-        <form method="get" class="season-selector">
+        <form method="get">
             <input type="hidden" name="controller" value="classements">
             <input type="hidden" name="action" value="standings">
 
-            <label for="season_filter">Afficher saison :</label>
-            <select name="season_id" id="season_filter" onchange="this.form.submit()">
-                <option value="active" <?= $seasonFilter === 'active' ? 'selected' : '' ?>>Saison actuelle</option>
+            <label for="season_filter" class="visually-hidden">Afficher une saison :</label>
+            <div class="form-group">
+                <select name="season_id" id="season_filter" onchange="this.form.submit()">
+                    <option value="active" <?= $seasonFilter === 'active' ? 'selected' : '' ?>>Saison actuelle</option>
 
-                <?php
-                $categories = [];
-                foreach ($seasons as $season) {
-                    $categories[$season->category][] = $season;
-                }
+                    <?php
+                    $categories = [];
+                    foreach ($seasons as $season) {
+                        $categories[$season->category][] = $season;
+                    }
 
-                foreach ($categories as $catName => $catSeasons): ?>
-                    <optgroup label="<?= htmlspecialchars($catName) ?>">
-                        <?php foreach ($catSeasons as $season): ?>
-                            <?php if ($season->status === 'desactive'): ?>
-                                <option value="<?= $season->season_id ?>" <?= $seasonFilter == $season->season_id ? 'selected' : '' ?>>
-                                    Saison <?= htmlspecialchars($season->season_number) ?>
-                                    - <?= htmlspecialchars($season->videogame) ?>
-                                    - <?= htmlspecialchars($season->platform) ?>
-                                </option>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </optgroup>
-                <?php endforeach; ?>
-            </select>
+                    foreach ($categories as $catName => $catSeasons): ?>
+                        <optgroup label="<?= htmlspecialchars($catName) ?>">
+                            <?php foreach ($catSeasons as $season): ?>
+                                <?php if ($season->status === 'desactive'): ?>
+                                    <option value="<?= $season->season_id ?>" <?= $seasonFilter == $season->season_id ? 'selected' : '' ?>>
+                                        Saison <?= htmlspecialchars($season->season_number) ?>
+                                        - <?= htmlspecialchars($season->videogame) ?>
+                                        - <?= htmlspecialchars($season->platform) ?>
+                                    </option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </form>
     </div>
 
     <!-- Tableaux par catégorie -->
     <?php if (!empty($listByCategory)): ?>
-        <?php foreach ($listByCategory as $categoryName => $drivers): ?>
+        <?php foreach ($listByCategory as $categoryName => $drivers): 
+                $seasonNumber = $drivers[0]->season_number ?? null; 
+            ?>
             <div class="category-block"
                     style="--category-color: <?= htmlspecialchars($categoryColors[$categoryName] ?? '#E10600') ?>">
 
-                <h2>
-                    <?= htmlspecialchars($categoryName) ?>
+                <h2 class="category-title has-content">
+                    <span class="category-name">
+                        <?= htmlspecialchars($categoryName) ?>
+                    </span>
 
-                    <?php if (!empty($drivers[0]->platform) || !empty($drivers[0]->videogame)): ?>
-                        <span class="season-extra-info">
-                            / 
-                            <?php if (!empty($drivers[0]->platform)): ?>
-                                <?= htmlspecialchars($drivers[0]->platform) ?>
-                            <?php endif; ?>
+                <?php if ($seasonNumber): ?>
+                    <span class="season-title">
+                        Saison <?= htmlspecialchars($seasonNumber) ?>
+                    </span>
+                <?php endif; ?>
 
-                            <?php if (!empty($drivers[0]->platform) && !empty($drivers[0]->videogame)): ?>
-                                – 
-                            <?php endif; ?>
+                    <?php
+                    $extra = [];
 
-                            <?php if (!empty($drivers[0]->videogame)): ?>
-                                <?= htmlspecialchars($drivers[0]->videogame) ?>
-                            <?php endif; ?>
+                    if (!empty($drivers[0]->videogame)) {
+                        $extra[] = htmlspecialchars($drivers[0]->videogame);
+                    }
+                    if (!empty($drivers[0]->platform)) {
+                        $extra[] = htmlspecialchars($drivers[0]->platform);
+                    }
+
+                    if ($extra): ?>
+                        <span class="category-extra">
+                            <?= implode(' - ', $extra) ?>
                         </span>
                     <?php endif; ?>
                 </h2>
@@ -236,68 +263,87 @@ function podiumBadge($pos) {
 
                 <!-- Résultats GP -->
                 <?php if (!empty($gpByCategory[$categoryName])): ?>
-                    <h3 style="margin-top:30px;">Résultats GP <?= htmlspecialchars($categoryName) ?></h3>
-                    <button class="gp-toggle-btn-category" data-category="<?= htmlspecialchars($categoryName) ?>">Afficher tous les GP</button>
+                    <h3 class="gp-title">
+                        Résultats GP <?= htmlspecialchars($categoryName) ?>
+                    </h3>
+                    <p class="gp-subtitle">
+                        Cliquez sur le GP pour voir les résultats complets
+                    </p>
+
+                <div class="table-responsive">
+                <table class="dashboard-table gp-season-table">
+                    <thead>
+                        <tr>
+                            <th>GP</th>
+                            <th>Circuit</th>
+                            <th>1er</th>
+                            <th>2e</th>
+                            <th>3e</th>
+                            <th>Pole</th>
+                            <th>FastestLap</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
                     <?php foreach ($gpByCategory[$categoryName] as $gp): ?>
-                        <?php $top3 = json_decode($gp->top3 ?? '[]'); ?>
-                        <div class="gp-content gp-category-<?= htmlspecialchars($categoryName) ?>">
-                            <div class="table-responsive">
+                        <?php
+                            $top3 = json_decode($gp->top3 ?? '[]');
+                        ?>
+                        <tr class="gp-row" data-gp-id="<?= (int)$gp->id ?>">
 
-                                <!-- Titre GP avec le drapeau -->
-                                <h4>
-                                    <?php if (!empty($gp->country_flag)): ?>
-                                        <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="driver-flag" alt="flag">
+                            <!-- GP N° -->
+                            <td><strong><?= htmlspecialchars($gp->gp_ordre) ?></strong></td>
+
+                            <!-- Circuit -->
+                            <td class="circuit-cell">
+                                <?php if (!empty($gp->country_flag)): ?>
+                                    <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="driver-flag" alt="flag">
+                                <?php endif; ?>
+                                <?= htmlspecialchars($gp->circuit_name) ?>
+                                <span class="country-name">(<?= htmlspecialchars($gp->country_name) ?>)</span>
+                            </td>
+
+                            <!-- Podium -->
+                            <?php for ($i = 0; $i < 3; $i++): ?>
+                                <td class="driver-cell-small">
+                                    <?php if (!empty($top3[$i])): ?>
+                                        <?= htmlspecialchars($top3[$i]->nickname ?? '') ?>
+                                    <?php else: ?>
+                                        
                                     <?php endif; ?>
+                                </td>
+                            <?php endfor; ?>
 
-                                    GP <?= htmlspecialchars($gp->gp_ordre) ?>
-                                    - <?= htmlspecialchars($gp->circuit_name ?? '') ?> (<?= htmlspecialchars($gp->country_name ?? '') ?>)
-                                    / <?= $gp->total_gp ?>
-                                </h4>
+                            <!-- Pole -->
+                            <td>
+                                <?php if (!empty($gp->pole_driver)): ?>
+                                    <span class="badge badge-purple">
+                                        <?= htmlspecialchars($gp->pole_driver) ?>
+                                    </span>
+                                <?php else: ?>
+                                    
+                                <?php endif; ?>
+                            </td>
 
-                                <table class="dashboard-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Pos</th><th>Pilote</th><th>Équipe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $pos = 1; ?>
-                                        <?php foreach ($top3 as $entry): ?>
-                                        <tr>
-                                            <td><?= podiumBadge($pos++) ?></td>
+                            <!-- Fastest Lap -->
+                            <td>
+                                <?php if (!empty($gp->fastest_lap_driver)): ?>
+                                    <span class="badge badge-purple">
+                                        <?= htmlspecialchars($gp->fastest_lap_driver) ?>
+                                    </span>
+                                <?php else: ?>
+                                    
+                                <?php endif; ?>
+                            </td>
 
-                                            <!-- Pilote avec dégradé + flag -->
-                                            <td class="driver-cell" style="--team-color: <?= htmlspecialchars($entry->team_color ?? '') ?>">
-                                                <div class="driver-gradient"></div>
-                                                <span class="driver-content">
-                                                    <?php if (!empty($entry->driver_flag ?? null)): ?>
-                                                        <img src="<?= htmlspecialchars($entry->driver_flag) ?>" class="driver-flag" alt="flag">
-                                                    <?php endif; ?>
-                                                    <?= htmlspecialchars($entry->nickname ?? '') ?>
-                                                </span>
-                                            </td>
-
-                                            <!-- Équipe -->
-                                            <td class="team-cell" style="background: <?= htmlspecialchars($entry->team_color ?? '') ?>">
-                                                <?php if (!empty($entry->team_logo ?? null)): ?>
-                                                    <img src="<?= htmlspecialchars($entry->team_logo) ?>" class="team-logo-gp" alt="logo">
-                                                <?php endif; ?>
-                                                <span class="team-name"><?= htmlspecialchars($entry->team_name ?? '') ?></span>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-
-                                <p><strong>Pole :</strong> <?= htmlspecialchars($gp->pole_driver ?? '') ?> <?= !empty($gp->pole_time) ? "({$gp->pole_time})" : "" ?></p>
-                                <p><strong>Fastest Lap :</strong> <?= htmlspecialchars($gp->fastest_lap_driver ?? '') ?> <?= !empty($gp->fastest_lap_time) ? "({$gp->fastest_lap_time})" : "" ?></p>
-
-                                <a href="#" class="gp-details-link" data-gp-id="<?= $gp->id ?>">Afficher les résultats complets</a>
-                            </div>
-                        </div>
+                        </tr>
                     <?php endforeach; ?>
+
+                    </tbody>
+                </table>
+                </div>
                 <?php endif; ?>
+
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -312,6 +358,23 @@ function podiumBadge($pos) {
         <div id="gp-modal-body"></div>
     </div>
 </div>
+
+<script>
+// Réduit la taille des infos de la dernière mise à jour
+(function () {
+    const label = document.querySelector('.lu-label');
+    if (!label) return;
+
+    function updateLabel() {
+        label.textContent = window.innerWidth <= 700
+            ? 'MAJ'
+            : 'Dernière mise à jour';
+    }
+
+    window.addEventListener('resize', updateLabel);
+    updateLabel();
+})();
+</script>
 
 <script>
 /* Toggle GP pour la catégorie */
@@ -334,18 +397,20 @@ document.querySelectorAll('.gp-toggle-btn-category').forEach(btn => {
     });
 });
 
-/* Ouvre le modal avec détails GP */
-document.querySelectorAll('.gp-details-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const gpId = this.dataset.gpId;
-        fetch(`index.php?controller=classements&action=gpDetails&gp_id=${gpId}`)
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('gp-modal-body').innerHTML = html;
-                document.getElementById('gp-modal').style.display = 'block';
-            });
-    });
+/* Ouvre le modal Résultats du GP en cliquant sur une ligne GP */
+document.addEventListener('click', function (e) {
+    const row = e.target.closest('.gp-row');
+    if (!row) return;
+
+    const gpId = row.dataset.gpId;
+    if (!gpId) return;
+
+    fetch(`index.php?controller=classements&action=gpDetails&gp_id=${gpId}`)
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('gp-modal-body').innerHTML = html;
+            document.getElementById('gp-modal').style.display = 'block';
+        });
 });
 
 /* Fermer le modal */

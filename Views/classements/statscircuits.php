@@ -5,30 +5,35 @@
     <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
     <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
 
-    <h1>Statistiques par circuit</h1>
+    <div class="page-header">
+        <h1>Statistiques par circuit</h1>
+    </div>
 
     <!-- SÉLECTEUR DE CIRCUIT -->
     <form method="get" class="circuit-selector">
         <input type="hidden" name="controller" value="statscircuits">
         <input type="hidden" name="action" value="index">
 
-        <label for="circuit_id">Choisir un circuit :</label>
-        <select name="circuit_id" onchange="this.form.submit()">
-            <option value="">-- Choisir un circuit --</option>
-            <?php foreach ($circuits as $c): ?>
-                <option value="<?= $c->id ?>" <?= ($circuitId ?? null) == $c->id ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($c->name) ?> (<?= htmlspecialchars($c->country) ?>)
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <label for="circuit_id" class="visually-hidden">Choisir un circuit :</label>
+        <div class="form-group">
+            <select name="circuit_id" onchange="this.form.submit()">
+                <option value="">Choisir un circuit :</option>
+                <?php foreach ($circuits as $c): ?>
+                    <option value="<?= $c->id ?>" <?= ($circuitId ?? null) == $c->id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c->name) ?> (<?= htmlspecialchars($c->country) ?>)
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </form>
 
-    <h2>
+    <h2 class="category-title <?= $selectedCircuit ? 'has-content' : '' ?>">
         <?php if ($selectedCircuit): ?>
-        <div class="selected-circuit">
-            <img src="<?= htmlspecialchars($selectedCircuit->country_flag) ?>" alt="<?= htmlspecialchars($selectedCircuit->country) ?>" class="circuit-flag">
-            <strong><?= htmlspecialchars($selectedCircuit->name) ?></strong> – <?= htmlspecialchars($selectedCircuit->country) ?>
-        </div>
+            <div class="selected-circuit">
+                <img src="<?= htmlspecialchars($selectedCircuit->country_flag) ?>" alt="<?= htmlspecialchars($selectedCircuit->country) ?>" class="circuit-flag">
+                <strong><?= htmlspecialchars($selectedCircuit->name) ?></strong>
+                – <?= htmlspecialchars($selectedCircuit->country) ?>
+            </div>
         <?php endif; ?>
     </h2>
 

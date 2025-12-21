@@ -8,7 +8,7 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-FAIRE TITRES AVEC BORDURES STYLE F1
+AJOUTER FAVICON
 
 PAGE CLASSEMENTS : AFFICHER LES RESULTATS DES GP : Faire un seul tableau condensé avec top 3 + PP + HL + Bouton pour ouvrir _gp_details.php
 que de faire un tableau par GP (visuellement lourd)

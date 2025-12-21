@@ -2,8 +2,8 @@
 
 .hero-section {
     flex-direction: column;
-    margin: 20px;
-    padding: 20px;
+    margin: 25px;
+    padding: 25px;
 }
 
 .hero-section img {
@@ -24,4 +24,20 @@
 
 .img-object-position-bottom {
     object-position: bottom;
+}
+
+.section-dashboard {
+    margin: 25px;
+    padding: 25px;
+}
+
+.login-container {
+    width: 450px;
+    margin: 25px auto;
+    padding: 25px;
+}
+
+/* Infos dernière mise à jour */
+.lu-desktop {
+    display: none;
 }

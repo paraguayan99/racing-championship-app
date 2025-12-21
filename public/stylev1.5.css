@@ -169,7 +169,7 @@ footer {
 /* Visuel Dashboard */
 .section-dashboard {
     background: #15151E;
-    margin: 40px;
+    margin: 30px;
     padding: 30px;
     border-radius: 20px;
     gap: 20px;
@@ -350,8 +350,8 @@ footer {
     align-items: center;
     gap: 20px;
     background: #15151E;
-    margin: 40px;
-    padding: 30px;
+    margin: 20px;
+    padding: 20px;
     border-radius: 20px;
     flex-wrap: wrap;
 }
@@ -460,10 +460,7 @@ footer {
 /* Formulaire de connexion au DASHBOARD */
 .login-container {
     background-color: #15151E;
-    max-width: 50%;
-    margin: 50px auto;
-    padding: 25px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .login-container h1 {
@@ -613,7 +610,7 @@ footer {
     font-weight: bold;
 }
 
-/* Formulaires Create & Update */
+/* Formulaires Create & Update, les Select pages Classements ... */
 
 .form-wrapper {
     background: #0f0f15;
@@ -651,6 +648,19 @@ footer {
 .form-group input:focus,
 .form-group select:focus {
     outline: 2px solid #E10600;
+}
+
+/* Pour cacher les label côté front mais ne pas enlever le contenu pour l'accessibilité */
+.visually-hidden {
+    position: absolute;      /* Sort du flux */
+    width: 1px;
+    height: 1px;             /* Évite impact layout */
+    margin: -1px;            /* Cache totalement */
+    overflow: hidden;        /* Empêche débordement */
+    clip: rect(0, 0, 0, 0);  /* Masque visuellement */
+    white-space: nowrap;     /* Évite retour à la ligne */
+    border: 0;
+    padding: 0;              /* Nettoyage */
 }
 
 /* Forme des boutons et catégories inutiles car tous les boutons sont des nav-btn ??? */
@@ -712,9 +722,150 @@ footer {
 
 /* Page Classements ... */
 
-/* Select des saisons */
-.season-selector {
-    margin-top: 10px;
+/* Mise en forme des titres des pages Classements, Palmarès et Circuits */
+
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #000000;
+    padding: 12px 16px;
+    margin: 40px 0px 10px;
+    border-radius: 10px;
+
+    --fade-dir: to bottom;
+
+    background-image:
+        linear-gradient(var(--fade-dir),
+            transparent 00%,
+            #15151E 100%
+        ),
+        repeating-linear-gradient(
+            135deg,           
+            rgba(255,255,255,0.05) 0 40px,   
+            transparent 40px 45px,       
+            rgba(255,255,255,0.05) 45px 85px,
+            transparent 85px 200px,
+            rgba(255,255,255,0.05) 200px 230px,
+            transparent 230px 235px,       
+            rgba(255,255,255,0.05) 235px 265px,
+            transparent 265px 400px
+        );
+}
+
+.page-header h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.page-header .last-update {
+    margin: 0;
+    margin-left: auto;
+    color: #687080;
+    font-size: 0.85rem;
+}
+
+/* SELECT de la page Classements pour SEASONS */
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Select */
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+
+    color: #d4d7dd;
+    background-color: #000000;
+
+    padding: 0.5rem 2.2rem 0.5rem 0.75rem;
+    border: 1px solid #2c2f36;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+/* Icône Font Awesome */
+.select-wrapper::after {
+    content: "\f078"; /* fa-chevron-down */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    pointer-events: none;
+    color: #d4d7dd;
+    font-size: 0.75rem;
+}
+
+/* Bordure des titles h2 de chaque catégorie */
+
+.category-title.has-content {
+    margin-top: 80px ;
+    position: relative;
+    padding: 5px 40px;
+    color: white;
+    font-weight: 600;
+
+    border-top: 6px solid var(--category-color, #E10600);
+    border-right: 6px solid var(--category-color, #E10600);
+    border-top-right-radius: 16px;
+
+    overflow: hidden;
+}
+
+.category-title.has-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--category-color, #E10600) 40%, transparent),
+        transparent 90%
+    );
+    z-index: 0;
+}
+
+/* Nom de la catégorie F1 F2 ... */
+.category-title .category-name {
+    font-size: 1.2em;
+}
+
+/* Saison */
+.category-title .season-title {
+    font-size: 0.9em;
+    font-weight: 400;
+    margin-left: 40px;
+    opacity: 0.85;
+}
+
+/* Videogame + platform */
+.category-title .category-extra {
+    display: inline-block;
+    margin-left: 40px;
+
+    font-size: 0.75em;
+    font-weight: 400;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+/* Le texte passe au-dessus du fond */
+.category-title > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* Badges 1 / 2 / 3 ... */
@@ -801,6 +952,44 @@ footer {
     width: 20%;
 }
 
+/* CSS du nouveau format de la liste des GP avec top 3 */
+
+.badge-purple {
+    background: #8e44ad;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.gp-season-table td {
+    vertical-align: middle;
+}
+
+.circuit-cell {
+    text-align: left;
+    white-space: nowrap;
+}
+
+.country-name {
+    opacity: 0.7;
+    margin-left: 4px;
+}
+
+.driver-cell-small {
+    font-weight: 500;
+}
+
+.gp-row {
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.gp-row:hover {
+    background: rgba(255,255,255,0.05);
+}
 
 /* Liste des GP avec TOP 3 + PP + FL */
 
@@ -837,6 +1026,16 @@ footer {
 .gp-toggle-btn-category:hover {
     background-color: color-mix(in srgb, var(--category-color) 30%, white);
     color: #000;
+}
+
+.gp-title {
+    margin-bottom: 0;
+}
+
+.gp-subtitle {
+    font-size: 0.85rem;
+    margin: 0;
+    color: #687080;
 }
 
 /* --- Modal dynamique AJAX pour Afficher les résultats complets --- */

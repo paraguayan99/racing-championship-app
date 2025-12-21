@@ -75,8 +75,8 @@ footer nav {
 
 .hero-section {
     flex-direction: column;
-    margin: 20px;
-    padding: 20px;
+    /* margin: 20px;
+    padding: 20px; */
 }
 
 .hero-section.flex-reverse {
@@ -120,9 +120,24 @@ footer nav {
     padding: 14px 22px;
 }
 
+/* Page Classements */
+
+/* Infos dernière mise à jour */
+.lu-desktop,
+.lu-tablet {
+    display: none;
+}
+
+/* Connexion au dashboard */
+.login-container {
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
 /* dashboard */
 .section-dashboard {
-    margin: 15px;
+    margin: 20px;
     padding: 20px;
 }
 
