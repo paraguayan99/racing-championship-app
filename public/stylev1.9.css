@@ -525,6 +525,7 @@ footer {
 
 .dashboard-table {
     width: 100%;
+    position: relative;
     border-collapse: collapse;
     background: #0f0f15;
     border-radius: 10px;
@@ -542,20 +543,53 @@ footer {
 
 .dashboard-table th {
     background: var(--category-color, #E10600);
-    padding: 6px 8px;
+    /* padding: 6px 8px; */
     text-align: left;
     color: white;
     font-weight: 600;
 }
 
 .dashboard-table td {
-    padding: 4px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    /* padding: 4px 8px; */
+    border-bottom: 1px solid #15151E;
+    /* text-align: right; */
 }
 
-.dashboard-table tr:hover td {
-    background: rgba(255,255,255,0.03);
+.dashboard-table th.text-right,
+.dashboard-table td.text-right {
+    text-align: right;
 }
+
+.dashboard-table th.text-center,
+.dashboard-table td.text-center {
+    text-align: center;
+}
+
+.dashboard-table td {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-table td::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.03);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 2;
+}
+
+.dashboard-table tr:hover td::after {
+    opacity: 1;
+}
+
+
+
+
+
+
 
 .actions-column {
     text-align: center;
@@ -870,12 +904,21 @@ footer {
 
 /* Badges 1 / 2 / 3 ... */
 .badge {
-    padding: 2px 6px;
+    padding: 0px 6px;
     border-radius: 5px;
     font-weight: bold;
-    display: inline-block;
-    min-width: 20px;
+    min-width: 15px;
     text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-table th.badge-width,
+.dashboard-table td.badge-width {
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 /* Podiums */
@@ -887,16 +930,9 @@ footer {
 .badge-normal { background: #15151E; color: #fff; }
 
 /* Colonne Pilote */
-
 .driver-cell {
     position: relative;
     overflow: hidden;
-}
-
-/* Colonne Pilote : ~20% */
-.dashboard-table td.driver-cell,
-.dashboard-table th:nth-child(2) {
-    width: 20%;
 }
 
 /* Dégradé : couleur définie via la variable CSS de la table teams.color */
@@ -919,7 +955,7 @@ footer {
     align-items: center;
 }
 
-.driver-flag {
+.drivers-teams-flag {
     height: 12px;
     margin-right: 6px;
     vertical-align: middle;
@@ -928,32 +964,133 @@ footer {
 /* colonne Equipe */
 
 .team-cell {
-    position: relative;
+    background-color: var(--team-color, transparent);
+    background-image: var(--team-logo, none);
+    background-repeat: no-repeat;
+    background-position: right -20px center;
+    background-size: 160px auto;
+    height: auto;
 }
 
 .team-name {
     position: relative;
-    z-index: 2;
-    padding-right: 60px;
+    z-index: 1;
 }
 
-.team-logo {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    object-fit: contain;
-    z-index: 3;
+/* Classement Pilotes uniquement */
+.drivers-table thead th:nth-child(1)::after { content: ""; }
+.drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
+.drivers-table thead th:nth-child(3)::after { content: ""; }
+.drivers-table thead th:nth-child(4)::after { content: "Pts"; }
+.drivers-table thead th:nth-child(5)::after { content: "GP"; }
+.drivers-table thead th:nth-child(6)::after { content: "Vict"; }
+.drivers-table thead th:nth-child(7)::after { content: "Podi"; }
+.drivers-table thead th:nth-child(8)::after { content: "Pole"; }
+.drivers-table thead th:nth-child(9)::after { content: "FastestL"; }
+
+.drivers-table thead th {
+    font-size: 0;
 }
 
-/* Colonne Equipe : ~20% */
-.dashboard-table td.team-cell,
-.dashboard-table th:nth-child(3) {
+.drivers-table thead th::after {
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* Colonne Pilote */
+.drivers-table td.driver-cell,
+.drivers-table th:nth-child(2) {
     width: 20%;
 }
 
-/* CSS du nouveau format de la liste des GP avec top 3 */
+/* Colonne Équipe */
+.drivers-table td.team-cell,
+.drivers-table th:nth-child(3) {
+    width: 20%;
+}
 
+/* Colonne Points */
+.drivers-table tbody td:nth-child(4) {
+    font-weight: 700;
+}
+
+/* Alignement à gauche du contenu des colonnes */
+.text-left {
+    text-align: left;
+}
+
+/* Classement Equipes uniquement */
+.teams-team-cell {
+    position: relative;
+    overflow: hidden;
+}
+
+.team-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--team-color) 100%, transparent) 40%,
+        color-mix(in srgb, var(--team-color) 0%, transparent) 90%
+    );
+    z-index: 1;
+}
+
+.team-logo-bg {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: auto;
+    width: 160px;
+    z-index: 2;
+}
+
+.team-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+}
+
+
+.teams-table thead th:nth-child(1)::after { content: ""; }
+.teams-table thead th:nth-child(2)::after { content: "Équipe"; }
+.teams-table thead th:nth-child(3)::after { content: "Pts"; }
+
+.teams-table thead th {
+    font-size: 0;
+}
+
+.teams-table thead th::after {
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* Colonne Équipe */
+.teams-table td.team-cell,
+.teams-table th:nth-child(2) {
+    width: 60%;
+}
+
+/* Colonne Points */
+.teams-table tbody td:nth-child(3) {
+    font-weight: 700;
+}
+
+
+
+
+
+
+
+
+
+
+/* CSS du nouveau format de la liste des GP avec top 3 */
 .badge-purple {
     background: #8e44ad;
     color: #fff;

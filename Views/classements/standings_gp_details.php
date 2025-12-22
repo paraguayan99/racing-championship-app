@@ -20,7 +20,7 @@ function podiumBadge($pos) {
 
         <!-- Ajout du drapeau du pays du GP -->
         <?php if (!empty($gp->country_flag)): ?>
-            <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="driver-flag" alt="flag">
+            <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
         <?php endif; ?>
 
         GP <?= htmlspecialchars($gp->gp_ordre) ?>
@@ -66,7 +66,7 @@ function podiumBadge($pos) {
                             <div class="driver-gradient"></div>
                             <span class="driver-content">
                                 <?php if (!empty($point->driver_flag)): ?>
-                                    <img src="<?= htmlspecialchars($point->driver_flag) ?>" class="driver-flag" alt="flag">
+                                    <img src="<?= htmlspecialchars($point->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
                                 <?php endif; ?>
                                 <?= htmlspecialchars($point->nickname) ?>
                             </span>

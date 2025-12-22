@@ -159,7 +159,6 @@ footer nav {
 
 .dashboard-table th, .dashboard-table td {
     font-size: 0.875rem;
-    padding: 8px;
 }
 
 /* Modal Afficher les résultats complets */
@@ -179,4 +178,106 @@ footer nav {
     bottom: 20px;
     right: 20px;
     font-size: 1rem;
+}
+
+/* Page Classements */
+
+/* Bordure des titles h2 de chaque catégorie */
+.category-title.has-content {
+    padding: 5px 20px;
+}
+
+/* Saison */
+.category-title .season-title {
+    margin-left: 0px;
+}
+
+/* Videogame + platform */
+.category-title .category-extra {
+    margin-left: 0px;
+}
+
+/* Badges 1 / 2 / 3 ... */
+.badge {
+    padding: 0px;
+}
+
+.dashboard-table th.badge-width,
+.dashboard-table td.badge-width {
+    width: 20px;
+}
+
+/* Classements */
+/* Classement Pilotes uniquement */
+.drivers-table thead th:nth-child(1)::after { content: ""; }
+.drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
+.drivers-table thead th:nth-child(3)::after { content: ""; }
+.drivers-table thead th:nth-child(4)::after { content: "Pts"; }
+.drivers-table thead th:nth-child(5)::after { content: "GP"; }
+.drivers-table thead th:nth-child(6)::after { content: "Vi"; }
+.drivers-table thead th:nth-child(7)::after { content: "Po"; }
+.drivers-table thead th:nth-child(8)::after { content: "PP"; }
+.drivers-table thead th:nth-child(9)::after { content: "FL"; }
+
+.drivers-table thead th {
+    font-size: 0;
+}
+
+.drivers-table thead th::after {
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* Colonne Pilote */
+.drivers-table td.driver-cell,
+.drivers-table th:nth-child(2) {
+    width: 30%;
+}
+
+.driver-teams-flag {
+    height: 8px;
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+/* Colonne Équipe */
+.drivers-table td.team-cell,
+.drivers-table th:nth-child(3) {
+    width: 10%;
+}
+
+/* Cache le nom des écuries */
+.drivers-table .team-name {
+    display: none;
+}
+
+/* Background image logo écurie */
+.team-cell {
+    background-position: right -40px center;
+    background-size: 110px auto;
+}
+
+/* Classement Equipes uniquement */
+
+.teams-table thead th::after {
+    font-size: 0.875rem;
+}
+
+/* Colonne Équipe */
+.teams-table td.team-cell,
+.teams-table th:nth-child(2) {
+    width: 70%;
+}
+
+.team-logo-bg {
+    right: -40px;
+}
+
+.team-gradient {
+    background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--team-color) 100%, transparent) 60%,
+        color-mix(in srgb, var(--team-color) 0%, transparent) 90%
+    );
 }

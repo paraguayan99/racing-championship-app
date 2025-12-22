@@ -125,47 +125,60 @@ function podiumBadge($pos) {
                     <h3 style="margin-top:30px;">Classement Pilotes <?= htmlspecialchars($categoryName) ?></h3>
 
                     <div class="table-responsive">
-                        <table class="dashboard-table">
+                        <table class="dashboard-table drivers-table">
                             <thead>
                                 <tr>
-                                    <th>Pos</th><th>Pilote</th><th>Équipe</th><th>Points</th><th>GP</th>
-                                    <th>Victoires</th><th>Podiums</th><th>Pole</th><th>Fastest Lap</th>
+                                    <th class="badge-width">Position</th>
+                                    <th>Pilote</th>
+                                    <th>Équipe</th>
+                                    <th class="text-center">Points</th>
+                                    <th class="text-center">GP</th>
+                                    <th class="text-center">Victoires</th>
+                                    <th class="text-center">Podiums</th>
+                                    <th class="text-center">Pole Position</th>
+                                    <th class="text-center">Fastest Lap</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $position = 1; ?>
                                 <?php foreach ($listByCategory[$categoryName] as $row): ?>
                                     <tr>
-                                        <td><?= podiumBadge($position++) ?></td>
+                                        <td class="badge-width"><?= podiumBadge($position++) ?></td>
 
                                         <!-- Pilote -->
-                                        <td class="driver-cell" style="--team-color: <?= htmlspecialchars($row->team_color ?? '') ?>">
+                                        <td class="driver-cell" 
+                                            style="--team-color: <?= htmlspecialchars($row->team_color ?? '') ?>
+                                            ">
                                             <div class="driver-gradient"></div>
+                                            
                                             <span class="driver-content">
                                                 <?php if (!empty($row->driver_flag ?? null)): ?>
-                                                    <img src="<?= htmlspecialchars($row->driver_flag) ?>" class="driver-flag" alt="flag">
+                                                    <img src="<?= htmlspecialchars($row->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
                                                 <?php endif; ?>
-                                                <?= htmlspecialchars($row->nickname) ?>
+
+                                                <!-- Class pour cibler le nom du pilote en JavaScript et en réduire sa taille -->
+                                                <span class="driver-name">
+                                                    <?= htmlspecialchars($row->nickname) ?>
+                                                </span>
                                             </span>
                                         </td>
 
                                         <!-- Équipe -->
-                                        <td class="team-cell" style="background: <?= htmlspecialchars($row->team_color ?? '') ?>">
-                                            <?php if (!empty($row->team_flag ?? null)): ?>
-                                                <img src="<?= htmlspecialchars($row->team_flag) ?>" class="driver-flag" alt="flag">
-                                            <?php endif; ?>
-                                            <?php if (!empty($row->team_logo ?? null)): ?>
-                                                <img src="<?= htmlspecialchars($row->team_logo) ?>" class="team-logo" alt="logo">
-                                            <?php endif; ?>
+                                        <td class="team-cell"
+                                            style="
+                                                --team-color: <?= htmlspecialchars($row->team_color ?? '') ?>;
+                                                --team-logo: url('<?= htmlspecialchars($row->team_logo ?? '') ?>');
+                                            ">
                                             <span class="team-name"><?= htmlspecialchars($row->team_name ?? '') ?></span>
                                         </td>
 
-                                        <td><?= htmlspecialchars(rtrim(rtrim(number_format($row->total_points ?? 0, 1, '.', ''), '0'), '.')) ?></td>
-                                        <td><?= htmlspecialchars($row->gp_count ?? 0) ?></td>
-                                        <td><?= htmlspecialchars($row->wins ?? 0) ?></td>
-                                        <td><?= htmlspecialchars($row->podiums ?? 0) ?></td>
-                                        <td><?= htmlspecialchars($row->pole_count ?? 0) ?></td>
-                                        <td><?= htmlspecialchars($row->fastestlap_count ?? 0) ?></td>
+
+                                        <td class="text-center"><?= htmlspecialchars(rtrim(rtrim(number_format($row->total_points ?? 0, 1, '.', ''), '0'), '.')) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row->gp_count ?? 0) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row->wins ?? 0) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row->podiums ?? 0) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row->pole_count ?? 0) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row->fastestlap_count ?? 0) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -178,25 +191,44 @@ function podiumBadge($pos) {
                     <h3 style="margin-top:30px;">Classement Équipes <?= htmlspecialchars($categoryName) ?></h3>
 
                     <div class="table-responsive">
-                        <table class="dashboard-table">
+                        <table class="dashboard-table teams-table">
                             <thead>
-                                <tr><th>Pos</th><th>Équipe</th><th>Points</th></tr>
+                                <tr>
+                                    <th class="badge-width">Position</th>
+                                    <th>Équipe</th>
+                                    <th class="text-center">Points</th></tr>
                             </thead>
                             <tbody>
                                 <?php $teamPos = 1; ?>
                                 <?php foreach ($teamsByCategory[$categoryName] as $team): ?>
                                     <tr>
-                                        <td><?= podiumBadge($teamPos++) ?></td>
-                                        <td class="team-cell" style="background: <?= htmlspecialchars($team->team_color ?? '') ?>">
-                                            <?php if (!empty($team->team_flag ?? null)): ?>
-                                                <img src="<?= htmlspecialchars($team->team_flag) ?>" class="driver-flag" alt="flag">
-                                            <?php endif; ?>
+                                        <td class="badge-width"><?= podiumBadge($teamPos++) ?></td>
+
+                                        <td class="teams-team-cell" style="--team-color: <?= htmlspecialchars($team->team_color ?? '') ?>;">
+                                            
+                                            <!-- Gradient derrière -->
+                                            <div class="team-gradient"></div>
+                                            
+                                            <!-- Logo derrière le contenu mais devant le gradient -->
                                             <?php if (!empty($team->team_logo ?? null)): ?>
-                                                <img src="<?= htmlspecialchars($team->team_logo) ?>" class="team-logo" alt="logo">
+                                                <img src="<?= htmlspecialchars($team->team_logo) ?>"
+                                                    class="team-logo-bg"
+                                                    alt="logo">
                                             <?php endif; ?>
-                                            <span class="team-name"><?= htmlspecialchars($team->team_name ?? '') ?></span>
+                                            
+                                            <!-- Contenu au-dessus -->
+                                            <span class="team-content">
+                                                <?php if (!empty($team->team_flag ?? null)): ?>
+                                                    <img src="<?= htmlspecialchars($team->team_flag) ?>"
+                                                        class="drivers-teams-flag"
+                                                        alt="flag">
+                                                <?php endif; ?>
+
+                                                <span><?= htmlspecialchars($team->team_name ?? '') ?></span>
+                                            </span>
                                         </td>
-                                        <td><?= htmlspecialchars(rtrim(rtrim(number_format($team->total_points ?? 0, 1, '.', ''), '0'), '.')) ?></td>
+
+                                        <td class="text-center"><?= htmlspecialchars(rtrim(rtrim(number_format($team->total_points ?? 0, 1, '.', ''), '0'), '.')) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -215,8 +247,8 @@ function podiumBadge($pos) {
                                     <th>GP</th>
                                     <th>Pilote</th>
                                     <th>Équipe</th>
-                                    <th>Points retirés</th>
-                                    <th>Commentaire</th>
+                                    <th>PEN</th>
+                                    <th>COMM</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -225,7 +257,7 @@ function podiumBadge($pos) {
                                         <!-- GP avec flag -->
                                         <td>
                                             <?php if (!empty($p->country_flag)): ?>
-                                                <img src="<?= htmlspecialchars($p->country_flag) ?>" class="driver-flag" alt="flag">
+                                                <img src="<?= htmlspecialchars($p->country_flag) ?>" class="drivers-teams-flag" alt="flag">
                                             <?php endif; ?>
                                             GP <?= htmlspecialchars($p->gp_ordre ?? '') ?> - <?= htmlspecialchars($p->circuit_name ?? '') ?>
                                         </td>
@@ -235,7 +267,7 @@ function podiumBadge($pos) {
                                             <div class="driver-gradient"></div>
                                             <span class="driver-content">
                                                 <?php if (!empty($p->driver_flag ?? null)): ?>
-                                                    <img src="<?= htmlspecialchars($p->driver_flag) ?>" class="driver-flag" alt="flag">
+                                                    <img src="<?= htmlspecialchars($p->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
                                                 <?php endif; ?>
                                                 <?= htmlspecialchars($p->driver_name ?? '') ?>
                                             </span>
@@ -276,11 +308,11 @@ function podiumBadge($pos) {
                         <tr>
                             <th>GP</th>
                             <th>Circuit</th>
-                            <th>1er</th>
-                            <th>2e</th>
-                            <th>3e</th>
-                            <th>Pole</th>
-                            <th>FastestLap</th>
+                            <th>1E</th>
+                            <th>2E</th>
+                            <th>3E</th>
+                            <th>PP</th>
+                            <th>FL</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -297,7 +329,7 @@ function podiumBadge($pos) {
                             <!-- Circuit -->
                             <td class="circuit-cell">
                                 <?php if (!empty($gp->country_flag)): ?>
-                                    <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="driver-flag" alt="flag">
+                                    <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
                                 <?php endif; ?>
                                 <?= htmlspecialchars($gp->circuit_name) ?>
                                 <span class="country-name">(<?= htmlspecialchars($gp->country_name) ?>)</span>
@@ -425,4 +457,75 @@ window.addEventListener('click', e => {
     }
 });
 </script>
+
+<!-- Responsive Classements Pilotes - Réduit taille du nom des pilotes et des écuries - Mobile & Tablette -->
+<script>
+(function () {
+
+    function updateResponsiveNames() {
+        const w = window.innerWidth;
+
+        /* ===== PILOTES (Classement Pilotes) ===== */
+        document.querySelectorAll('.driver-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 500) {
+                el.textContent = full.substring(0, 8);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 12);
+            }
+            else if (w <= 900) {
+                el.textContent = full.substring(0, 16);
+            }
+            else {
+                el.textContent = full;
+            }
+        });
+
+        /* ===== ÉCURIES ===== (Classement Pilotes) */
+        document.querySelectorAll('.drivers-table .team-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 900) {
+                el.textContent = full.substring(0, 10);
+            }
+            else {
+                el.textContent = full;
+            }
+        });
+
+        /* ===== ÉCURIES (Classement Équipes) ===== */
+        document.querySelectorAll('.teams-table .team-content span').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 700) {
+                el.textContent = full.substring(0, 20);
+            } else {
+                el.textContent = full;
+            }
+        });
+    }
+
+    window.addEventListener('resize', updateResponsiveNames);
+    updateResponsiveNames();
+
+})();
+</script>
+
+
+
+
 
