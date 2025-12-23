@@ -374,3 +374,22 @@ footer nav {
     padding: 1px 2px;
 }
 }
+
+/* Modal affiche Résultats complets du GP */
+
+.gp-modal {
+    min-width: 400px;
+}
+
+.modal-gp-title.has-content {
+    font-size: 0.85rem;
+    padding: 5px 0px 0px 10px;
+}
+
+.modal-pp-fl {
+    font-size: 0.875rem;
+}
+
+.modal-gp-results-table thead th::after {
+    font-size: 0.875rem;
+}

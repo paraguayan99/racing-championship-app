@@ -464,6 +464,7 @@ document.addEventListener('click', function (e) {
         .then(html => {
             document.getElementById('gp-modal-body').innerHTML = html;
             document.getElementById('gp-modal').style.display = 'block';
+            updateResponsiveNames();
         });
 });
 
@@ -480,10 +481,8 @@ window.addEventListener('click', e => {
 });
 </script>
 
-<!-- Responsive Classements Pilotes - Réduit taille du nom des pilotes et des écuries - Mobile & Tablette -->
+<!-- Responsive - Réduit taille du nom des pilotes / des écuries / des circuits sur Mobile & Tablette -->
 <script>
-(function () {
-
     function updateResponsiveNames() {
         const w = window.innerWidth;
 
@@ -676,12 +675,38 @@ window.addEventListener('click', e => {
                 el.textContent = full.substring(0, 18);
             }
         });
+
+        document.querySelectorAll('.modal-gp-results-table .driver-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            el.textContent =
+                w <= 500 ? full.substring(0, 12) :
+                w <= 700 ? full.substring(0, 18) :
+                w <= 900 ? full.substring(0, 22) :
+                           full.substring(0, 30);
+        });
+
+        document.querySelectorAll('.modal-gp-results-table .team-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            el.textContent =
+                w <= 500 ? full.substring(0, 12) :
+                w <= 700 ? full.substring(0, 18) :
+                w <= 900 ? full.substring(0, 22) :
+                           full.substring(0, 30);
+        });
     }
 
     window.addEventListener('resize', updateResponsiveNames);
     updateResponsiveNames();
-
-})();
 </script>
 
 

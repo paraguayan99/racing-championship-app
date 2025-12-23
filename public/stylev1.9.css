@@ -1005,8 +1005,6 @@ footer {
 
 .drivers-table thead th::after {
     font-size: 1rem;
-    font-weight: 600;
-    display: block;
 }
 
 /* Colonne Pilote */
@@ -1077,8 +1075,6 @@ footer {
 
 .teams-table thead th::after {
     font-size: 1rem;
-    font-weight: 600;
-    display: block;
 }
 
 /* Colonne Équipe */
@@ -1132,8 +1128,6 @@ footer {
 .penalties-table td:nth-child(5) {
     width: 25%;
 }
-
-
 
 
 /* Tableaux Résultats GP : Top 3 + PP + FL de la Saison uniquement */
@@ -1210,6 +1204,7 @@ footer {
     color: #687080;
 }
 
+
 /* --- Modal dynamique AJAX pour Afficher les résultats complets --- */
 .gp-modal {
     display: none; /* caché par défaut */
@@ -1236,6 +1231,7 @@ footer {
 }
 
 .gp-modal-close {
+    padding-left: 10px;
     color: #aaa;
     float: right;
     font-size: 1.75rem;
@@ -1285,6 +1281,95 @@ footer {
 .gp-details-container p {
     margin: 5px 0;
 }
+
+/* Bordure du title des Résultats Complets du GP */
+
+.modal-gp-title.has-content {
+    margin-top: 0px ;
+    position: relative;
+    padding: 5px 40px;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 900;
+
+    border-top: 6px solid var(--category-color, #E10600);
+    border-right: 6px solid var(--category-color, #E10600);
+    border-top-right-radius: 16px;
+
+    overflow: hidden;
+}
+
+.modal-gp-title.has-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--category-color, #E10600) 40%, transparent),
+        transparent 90%
+    );
+    z-index: 0;
+}
+
+/* .modal-gp-title .category-name {
+    font-size: 1.85rem;
+    font-weight: 900;
+}
+
+.modal-gp-title .season-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-left: 40px;
+    opacity: 0.85;
+} */
+
+/* Réduire l'espace vertical des lignes Pole Position et Fastest Lap */
+.modal-pp-fl {
+    margin: 0;
+    padding: 5px 0px 0px 30px;
+}
+
+/* Tableau des Résultats du GP */
+
+.modal-gp-results-table thead th:nth-child(1)::after { content: ""; }
+.modal-gp-results-table thead th:nth-child(2)::after { content: "Pilote"; }
+.modal-gp-results-table thead th:nth-child(3)::after { content: "Équipe"; }
+.modal-gp-results-table thead th:nth-child(4)::after { content: "Points"; }
+.modal-gp-results-table thead th:nth-child(5)::after { content: ""; }
+
+.modal-gp-results-table thead th {
+    font-size: 0;
+}
+
+.modal-gp-results-table thead th::after {
+    font-size: 1rem;
+}
+
+.modal-gp-results-table tbody td:nth-child(4),
+.modal-gp-results-table tbody td:nth-child(5) { 
+    font-weight: 700; 
+}
+
+/* Pilote */
+.modal-gp-results-table th:nth-child(2),
+.modal-gp-results-table td:nth-child(2) {
+    width: 35%;
+}
+
+/* Équipe */
+.modal-gp-results-table th:nth-child(3),
+.modal-gp-results-table td:nth-child(3) {
+    width: 35%;
+}
+
+
+
+
+
+
+
+
+
 
 /* Page Palmarès pour effectuer le tri par colonne en Javascript */
 
@@ -1336,7 +1421,7 @@ table.sortable th.no-sort::after {
     color: white;
     padding: 4px 8px;
     border-radius: 12px;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 600;
     display: inline-block;
 }
