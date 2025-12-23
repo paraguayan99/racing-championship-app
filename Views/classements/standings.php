@@ -15,6 +15,11 @@ function podiumBadge($pos) {
         default => '<span class="badge badge-normal">' . $pos . '</span>',
     };
 }
+
+// Fonction badges Liste des GP
+function gpBadge($gpNumber) {
+    return '<span class="badge badge-normal">' . (int)$gpNumber . '</span>';
+}
 ?>
 
 <div class="section-dashboard">
@@ -238,54 +243,65 @@ function podiumBadge($pos) {
 
                 <!-- Pénalités -->
                 <?php if (!empty($penaltiesByCategory[$categoryName])): ?>
-                    <h3 style="margin-top:30px;">Pénalités <?= htmlspecialchars($categoryName) ?></h3>
+                    <h3 style="margin-top:30px;">
+                        Pénalités <?= htmlspecialchars($categoryName) ?>
+                    </h3>
 
                     <div class="table-responsive">
-                        <table class="dashboard-table">
+                        <table class="dashboard-table penalties-table">
                             <thead>
                                 <tr>
-                                    <th>GP</th>
-                                    <th>Pilote</th>
-                                    <th>Équipe</th>
-                                    <th>PEN</th>
-                                    <th>COMM</th>
+                                    <th class="text-center">GP</th>
+                                    <th class="text-center">Pilote</th>
+                                    <th class="text-center">Équipe</th>
+                                    <th class="text-center">Pénalité</th>
+                                    <th class="text-center">Commentaire</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 <?php foreach ($penaltiesByCategory[$categoryName] as $p): ?>
                                     <tr>
-                                        <!-- GP avec flag -->
-                                        <td>
+
+                                        <!-- GP -->
+                                        <td class="gp-cell">
                                             <?php if (!empty($p->country_flag)): ?>
-                                                <img src="<?= htmlspecialchars($p->country_flag) ?>" class="drivers-teams-flag" alt="flag">
+                                                <img
+                                                    src="<?= htmlspecialchars($p->country_flag) ?>"
+                                                    class="drivers-teams-flag"
+                                                    alt="flag">
                                             <?php endif; ?>
-                                            GP <?= htmlspecialchars($p->gp_ordre ?? '') ?> - <?= htmlspecialchars($p->circuit_name ?? '') ?>
+
+                                            <span class="gp-name">
+                                                GP <?= htmlspecialchars($p->gp_ordre ?? '') ?>
+                                                - <?= htmlspecialchars($p->circuit_name ?? '') ?>
+                                            </span>
                                         </td>
 
-                                        <!-- Pilote avec gradient -->
-                                        <td class="driver-cell" style="--team-color: <?= htmlspecialchars($p->team_color ?? '') ?>">
-                                            <div class="driver-gradient"></div>
-                                            <span class="driver-content">
-                                                <?php if (!empty($p->driver_flag ?? null)): ?>
-                                                    <img src="<?= htmlspecialchars($p->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
-                                                <?php endif; ?>
+                                        <!-- Pilote -->
+                                        <td class="driver-cell text-center">
+                                            <span class="driver-name">
                                                 <?= htmlspecialchars($p->driver_name ?? '') ?>
                                             </span>
                                         </td>
 
-                                        <!-- Équipe avec background couleur -->
-                                        <td class="team-cell" style="background: <?= htmlspecialchars($p->team_color ?? '') ?>">
-                                            <?php if (!empty($p->team_logo ?? null)): ?>
-                                                <img src="<?= htmlspecialchars($p->team_logo) ?>" class="team-logo" alt="logo">
-                                            <?php endif; ?>
-                                            <span class="team-name"><?= htmlspecialchars($p->team_name ?? '') ?></span>
+                                        <!-- Équipe -->
+                                        <td class="team-cell text-center">
+                                            <span class="team-name">
+                                                <?= htmlspecialchars($p->team_name ?? '') ?>
+                                            </span>
                                         </td>
 
                                         <!-- Points retirés -->
-                                        <td class="penalty-points"><?= htmlspecialchars($p->points_removed ?? 0) ?></td>
+                                        <td class="penalty-points text-center">
+                                            <?= htmlspecialchars($p->points_removed ?? 0) ?>
+                                        </td>
 
                                         <!-- Commentaire -->
-                                        <td><?= nl2br(htmlspecialchars($p->comment ?? '')) ?></td>
+                                        <td class="penalty-comment text-center">
+                                            <?= nl2br(htmlspecialchars($p->comment ?? '')) ?>
+                                        </td>
+
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -306,13 +322,13 @@ function podiumBadge($pos) {
                 <table class="dashboard-table gp-season-table">
                     <thead>
                         <tr>
-                            <th>GP</th>
+                            <th class="badge-width">GP</th>
                             <th>Circuit</th>
-                            <th>1E</th>
-                            <th>2E</th>
-                            <th>3E</th>
-                            <th>PP</th>
-                            <th>FL</th>
+                            <th class="text-center">1er</th>
+                            <th class="text-center">2e</th>
+                            <th class="text-center">3e</th>
+                            <th class="text-center">Pole Position</th>
+                            <th class="text-center">Fastest Lap</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -324,22 +340,28 @@ function podiumBadge($pos) {
                         <tr class="gp-row" data-gp-id="<?= (int)$gp->id ?>">
 
                             <!-- GP N° -->
-                            <td><strong><?= htmlspecialchars($gp->gp_ordre) ?></strong></td>
-
+                            <td class="badge-width"><?= gpBadge($gp->gp_ordre) ?></td>
+                           
                             <!-- Circuit -->
                             <td class="circuit-cell">
                                 <?php if (!empty($gp->country_flag)): ?>
                                     <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
                                 <?php endif; ?>
-                                <?= htmlspecialchars($gp->circuit_name) ?>
-                                <span class="country-name">(<?= htmlspecialchars($gp->country_name) ?>)</span>
+                                <span class="circuit-name">
+                                    <?= htmlspecialchars($gp->circuit_name) ?>
+                                </span>
+                                <span class="country-code">
+                                    <?= htmlspecialchars($gp->country_code) ?>
+                                </span>
                             </td>
 
                             <!-- Podium -->
                             <?php for ($i = 0; $i < 3; $i++): ?>
-                                <td class="driver-cell-small">
+                                <td class="text-center">
                                     <?php if (!empty($top3[$i])): ?>
-                                        <?= htmlspecialchars($top3[$i]->nickname ?? '') ?>
+                                        <span class="driver-name">
+                                            <?= htmlspecialchars($top3[$i]->nickname ?? '') ?>
+                                        </span>
                                     <?php else: ?>
                                         
                                     <?php endif; ?>
@@ -347,9 +369,9 @@ function podiumBadge($pos) {
                             <?php endfor; ?>
 
                             <!-- Pole -->
-                            <td>
+                            <td class="text-center">
                                 <?php if (!empty($gp->pole_driver)): ?>
-                                    <span class="badge badge-purple">
+                                    <span class="badge badge-purple driver-name">
                                         <?= htmlspecialchars($gp->pole_driver) ?>
                                     </span>
                                 <?php else: ?>
@@ -358,9 +380,9 @@ function podiumBadge($pos) {
                             </td>
 
                             <!-- Fastest Lap -->
-                            <td>
+                            <td class="text-center">
                                 <?php if (!empty($gp->fastest_lap_driver)): ?>
-                                    <span class="badge badge-purple">
+                                    <span class="badge badge-purple driver-name">
                                         <?= htmlspecialchars($gp->fastest_lap_driver) ?>
                                     </span>
                                 <?php else: ?>
@@ -483,7 +505,7 @@ window.addEventListener('click', e => {
                 el.textContent = full.substring(0, 16);
             }
             else {
-                el.textContent = full;
+                el.textContent = full.substring(0, 20);
             }
         });
 
@@ -499,7 +521,7 @@ window.addEventListener('click', e => {
                 el.textContent = full.substring(0, 10);
             }
             else {
-                el.textContent = full;
+                el.textContent = full.substring(0, 20);
             }
         });
 
@@ -514,7 +536,144 @@ window.addEventListener('click', e => {
             if (w <= 700) {
                 el.textContent = full.substring(0, 20);
             } else {
-                el.textContent = full;
+                el.textContent = full.substring(0, 30);
+            }
+        });
+
+        /* ===== PENALITES ===== */
+        document.querySelectorAll('.penalties-table .gp-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 5);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 10);
+            }
+            else if (w <= 900) {
+                el.textContent = full.substring(0, 12);
+            }
+            else {
+                el.textContent = full.substring(0, 20);
+            }
+        });
+
+        document.querySelectorAll('.penalties-table .driver-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 8);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 16);
+            }
+            else if (w <= 1200) {
+                el.textContent = full.substring(0, 24);
+            }
+            else {
+                el.textContent = full.substring(0, 30);
+            }
+        });
+
+        document.querySelectorAll('.penalties-table .team-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 8);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 16);
+            }
+            else if (w <= 1200) {
+                el.textContent = full.substring(0, 24);
+            }
+            else {
+                el.textContent = full.substring(0, 30);
+            }
+        });
+
+        document.querySelectorAll('.penalties-table .penalty-comment').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 5);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 10);
+            }
+            else if (w <= 1000) {
+                el.textContent = full.substring(0, 18);
+            }
+            else if (w <= 1200) {
+                el.textContent = full.substring(0, 30);
+            }
+            else {
+                el.textContent = full.substring(0, 35);
+            }
+        });
+
+        /* ===== RESULTATS GP ===== */
+        document.querySelectorAll('.gp-season-table .circuit-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 3);
+            }
+            else if (w <= 750) {
+                el.textContent = full.substring(0, 4);
+            }
+            else if (w <= 900) {
+                el.textContent = full.substring(0, 6);
+            }
+            else if (w <= 1000) {
+                el.textContent = full.substring(0, 9);
+            }
+            else if (w <= 1200) {
+                el.textContent = full.substring(0, 12);
+            }
+            else {
+                el.textContent = full.substring(0, 18);
+            }
+        });
+
+        document.querySelectorAll('.gp-season-table .driver-name').forEach(el => {
+            if (!el.dataset.fullname) {
+                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            const full = el.dataset.fullname;
+
+            if (w <= 600) {
+                el.textContent = full.substring(0, 4);
+            }
+            else if (w <= 700) {
+                el.textContent = full.substring(0, 7);
+            }
+            else if (w <= 1000) {
+                el.textContent = full.substring(0, 10);
+            }
+            else {
+                el.textContent = full.substring(0, 18);
             }
         });
     }

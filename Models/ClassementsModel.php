@@ -245,6 +245,7 @@ class ClassementsModel extends DbConnect
             SELECT g.*, s.season_number, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
+                co.code AS country_code,
                 co.flag AS country_flag,
                 (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
                 (
@@ -293,6 +294,7 @@ class ClassementsModel extends DbConnect
             SELECT g.*, s.season_number, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
+                co.code AS country_code,
                 co.flag AS country_flag,
                 (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
                 (
@@ -422,7 +424,8 @@ class ClassementsModel extends DbConnect
                 -- Équipe
                 t.name AS team_name,
                 t.logo AS team_logo,
-                t.color AS team_color
+                t.color AS team_color,
+                team_country.flag AS team_flag
 
             FROM penalties p
             JOIN gp g ON g.id = p.gp_id
@@ -431,6 +434,7 @@ class ClassementsModel extends DbConnect
             LEFT JOIN drivers d ON d.id = p.driver_id
             LEFT JOIN countries country ON country.id = d.country_id
             LEFT JOIN teams t ON t.id = p.team_id
+            LEFT JOIN countries team_country ON team_country.id = t.country_id
             LEFT JOIN circuits cir ON cir.id = g.circuit_id
             LEFT JOIN countries co ON co.id = cir.country_id
             WHERE s.status = 'active'
@@ -460,7 +464,8 @@ class ClassementsModel extends DbConnect
                 -- Équipe
                 t.name AS team_name,
                 t.logo AS team_logo,
-                t.color AS team_color
+                t.color AS team_color,
+                team_country.flag AS team_flag
 
             FROM penalties p
             JOIN gp g ON g.id = p.gp_id
@@ -469,6 +474,7 @@ class ClassementsModel extends DbConnect
             LEFT JOIN drivers d ON d.id = p.driver_id
             LEFT JOIN countries country ON country.id = d.country_id
             LEFT JOIN teams t ON t.id = p.team_id
+            LEFT JOIN countries team_country ON team_country.id = t.country_id
             LEFT JOIN circuits cir ON cir.id = g.circuit_id
             LEFT JOIN countries co ON co.id = cir.country_id
             WHERE s.id = :season_id
@@ -480,12 +486,6 @@ class ClassementsModel extends DbConnect
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-
-
-
-
-
-    
 }
 ?>
 

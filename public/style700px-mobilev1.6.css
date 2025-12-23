@@ -197,6 +197,19 @@ footer nav {
     margin-left: 0px;
 }
 
+/* Pour réduire l'espace verticale si il y a un retour à la ligne */
+.category-title {
+    line-height: 0.8;
+}
+
+/* .season-title {
+    line-height: 1.1;
+}
+
+.category-extra {
+    line-height: 1.2;
+} */
+
 /* Badges 1 / 2 / 3 ... */
 .badge {
     padding: 0px;
@@ -225,8 +238,6 @@ footer nav {
 
 .drivers-table thead th::after {
     font-size: 0.875rem;
-    font-weight: 600;
-    display: block;
 }
 
 /* Colonne Pilote */
@@ -280,4 +291,86 @@ footer nav {
         color-mix(in srgb, var(--team-color) 100%, transparent) 60%,
         color-mix(in srgb, var(--team-color) 0%, transparent) 90%
     );
+}
+
+/* Tableaux Pénalités uniquement */
+
+.penalties-table thead th:nth-child(4)::after { content: "Pén"; }
+.penalties-table thead th:nth-child(5)::after { content: "Comm"; }
+
+.penalties-table thead th:nth-child(4),
+.penalties-table thead th:nth-child(5) {
+    font-size: 0;
+}
+
+.penalties-table thead th:nth-child(4)::after,
+.penalties-table thead th:nth-child(5)::after {
+    font-size: 0.875rem;
+}
+
+/* GP */
+.penalties-table th:nth-child(1),
+.penalties-table td:nth-child(1) {
+    width: 24%;
+}
+
+/* Pilote */
+.penalties-table th:nth-child(2),
+.penalties-table td:nth-child(2) {
+    width: 24%;
+}
+
+/* Équipe */
+.penalties-table th:nth-child(3),
+.penalties-table td:nth-child(3) {
+    width: 24%;
+}
+
+/* Pénalité (points) */
+.penalties-table th:nth-child(4),
+.penalties-table td:nth-child(4) {
+    width: 10%;
+}
+
+/* Commentaire */
+.penalties-table th:nth-child(5),
+.penalties-table td:nth-child(5) {
+    width: 18%;
+}
+
+/* Tableaux Résultats GP */
+.gp-season-table thead th:nth-child(6)::after { content: "PP"; }
+.gp-season-table thead th:nth-child(7)::after { content: "FL"; }
+
+.gp-season-table thead th:nth-child(6),
+.gp-season-table thead th:nth-child(7) {
+    font-size: 0;
+}
+
+.gp-season-table thead th:nth-child(6)::after,
+.gp-season-table thead th:nth-child(7)::after {
+    font-size: 1rem;
+}
+
+/* Colonne Circuit + Code PAYS et Badge purple PP + FL */
+@media screen and (max-width: 700px) {
+    .gp-season-table th:nth-child(2),
+    .gp-season-table td:nth-child(2) {
+        width: 25%;
+    }
+
+    .badge-purple {
+    padding: 2px 4px;
+}
+}
+
+@media screen and (max-width: 500px) {
+    .gp-season-table th:nth-child(2),
+    .gp-season-table td:nth-child(2) {
+        width: 30%;
+    }
+
+    .badge-purple {
+    padding: 1px 2px;
+}
 }

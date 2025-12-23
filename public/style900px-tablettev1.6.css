@@ -81,3 +81,17 @@
 .team-cell {
     background-position: right -50px center;
 }
+
+/* Tableaux Résultats GP */
+.gp-season-table thead th:nth-child(6)::after { content: "Pole"; }
+.gp-season-table thead th:nth-child(7)::after { content: "FastestL"; }
+
+.gp-season-table thead th:nth-child(6),
+.gp-season-table thead th:nth-child(7) {
+    font-size: 0;
+}
+
+.gp-season-table thead th:nth-child(6)::after,
+.gp-season-table thead th:nth-child(7)::after {
+    font-size: 1rem;
+}
