@@ -383,7 +383,7 @@ footer nav {
 
 .modal-gp-title.has-content {
     font-size: 0.85rem;
-    padding: 5px 0px 0px 10px;
+    padding: 5px 5px 0px 10px;
 }
 
 .modal-pp-fl {
@@ -392,4 +392,51 @@ footer nav {
 
 .modal-gp-results-table thead th::after {
     font-size: 0.875rem;
+}
+
+/* Page Palmarès */
+
+table.sortable th {
+    padding-right: 5px;
+}
+
+table.sortable th::after {
+    font-size: 0.6rem;
+}
+
+table.sortable th.asc::after {
+    font-size: 0.6rem;
+}
+
+table.sortable th.desc::after {
+    font-size: 0.6rem;
+}
+
+/* Tailles des colonnes */
+/* Pilote */
+.palmares-drivers-table th:nth-child(2),
+.palmares-drivers-table td:nth-child(2) {
+    
+}
+
+/* 5 colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
+.palmares-drivers-table th:nth-child(3),
+.palmares-drivers-table td:nth-child(3),
+.palmares-drivers-table th:nth-child(4),
+.palmares-drivers-table td:nth-child(4),
+.palmares-drivers-table th:nth-child(5),
+.palmares-drivers-table td:nth-child(5),
+.palmares-drivers-table th:nth-child(6),
+.palmares-drivers-table td:nth-child(6),
+.palmares-drivers-table th:nth-child(7),
+.palmares-drivers-table td:nth-child(7) {
+    width: 8%;
+}
+
+/* 2 colonnes : GP + Pts */
+.palmares-drivers-table th:nth-child(8),
+.palmares-drivers-table td:nth-child(8),
+.palmares-drivers-table th:nth-child(9),
+.palmares-drivers-table td:nth-child(9) {
+    width: 9%;
 }

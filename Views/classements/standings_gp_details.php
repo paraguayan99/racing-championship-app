@@ -19,16 +19,18 @@ function podiumBadge($pos) {
     <h3 class="modal-gp-title has-content"
         style="--category-color: <?= htmlspecialchars($gp->category_color ?? '#E10600') ?>;">
 
-        <!-- Ajout du drapeau du pays du GP -->
-        <?php if (!empty($gp->country_flag)): ?>
-            <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
-        <?php endif; ?>
+        <span class="gp-title-text-modal">
+            <!-- Ajout du drapeau du pays du GP -->
+            <?php if (!empty($gp->country_flag)): ?>
+                <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
+            <?php endif; ?>
 
-        GP <?= htmlspecialchars($gp->gp_ordre) ?>
-        - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
-        (<?= htmlspecialchars($gp->country_name ?? '') ?>)
-        / Saison <?= htmlspecialchars($gp->season_number) ?> - <?= htmlspecialchars($gp->category) ?>
-    </h3>
+            GP <?= htmlspecialchars($gp->gp_ordre) ?>
+            - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
+            (<?= htmlspecialchars($gp->country_name ?? '') ?>)
+            / Saison <?= htmlspecialchars($gp->season_number) ?> - <?= htmlspecialchars($gp->category) ?>
+        </span>
+        </h3>
 
     <!-- Affichage de Pole Position et/ou Fastest Lap si les données sont présentes -->
     <?php if (!empty($gp->pole_driver) || !empty($gp->pole_time)) : ?>

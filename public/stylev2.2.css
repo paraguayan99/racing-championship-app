@@ -1311,6 +1311,12 @@ footer {
     z-index: 0;
 }
 
+/* Le texte passe au-dessus du fond */
+.gp-title-text-modal {
+    position: relative;
+    z-index: 1;
+}
+
 /* .modal-gp-title .category-name {
     font-size: 1.85rem;
     font-weight: 900;
@@ -1326,7 +1332,7 @@ footer {
 /* Réduire l'espace vertical des lignes Pole Position et Fastest Lap */
 .modal-pp-fl {
     margin: 0;
-    padding: 5px 0px 0px 30px;
+    padding: 5px 5px 0px 30px;
 }
 
 /* Tableau des Résultats du GP */
@@ -1376,7 +1382,13 @@ footer {
 table.sortable th {
     cursor: pointer;
     position: relative;
-    padding-right: 22px;
+    padding-right: 10px;
+}
+
+/* Centrer verticalement contenu du thead */
+table.sortable th span {
+    display: flex;
+    align-items: center;
 }
 
 table.sortable th::after {
@@ -1396,9 +1408,113 @@ table.sortable th.desc::after {
     opacity: 1;
 }
 
-table.sortable th.no-sort::after {
-    content: none;      /* supprime les flèches */
+/* no-sort : Supprime les flèches de tri et garde le curseur de la souris par défaut */
+table.sortable th.no-sort {
+    cursor: default;
+    position: relative;
+    padding-right: 0px;
 }
+
+table.sortable th.no-sort::after {
+    content: none;
+}
+
+/* Met en gras la colonne triée */
+.highlight-column {
+    font-weight: 700;
+}
+
+
+/* Palmarès Pilotes + Equipes - subtitle et thead responsive */
+.label-aria {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+}
+
+.palmares-table th.th-responsive span {
+    display: none;
+    white-space: nowrap;
+}
+
+.gp-subtitle span {
+    display: none;
+}
+
+@media (min-width: 901px) {
+    .palmares-table th.th-responsive .label-long {
+        display: inline;
+    }
+
+    .gp-subtitle .label-long {
+        display: inline;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .palmares-table th.th-responsive .label-medium {
+        display: inline;
+    }
+
+    .gp-subtitle .label-medium {
+        display: inline;
+    }
+}
+
+@media (max-width: 700px) {
+    .palmares-table th.th-responsive .label-short {
+        display: inline;
+    }
+
+    .gp-subtitle .label-short {
+        display: inline;
+    }
+}
+
+/* Palmarès Pilotes */
+
+/* Tailles des colonnes */
+/* Colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
+.palmares-drivers-table th:nth-child(3),
+.palmares-drivers-table td:nth-child(3),
+.palmares-drivers-table th:nth-child(4),
+.palmares-drivers-table td:nth-child(4),
+.palmares-drivers-table th:nth-child(5),
+.palmares-drivers-table td:nth-child(5),
+.palmares-drivers-table th:nth-child(6),
+.palmares-drivers-table td:nth-child(6),
+.palmares-drivers-table th:nth-child(7),
+.palmares-drivers-table td:nth-child(7) {
+    width: 8%;
+}
+
+/* Colonnes : GP + Points */
+.palmares-drivers-table th:nth-child(8),
+.palmares-drivers-table td:nth-child(8),
+.palmares-drivers-table th:nth-child(9),
+.palmares-drivers-table td:nth-child(9) {
+    width: 9%;
+}
+
+/* MODIFIER */
+
+/* Palmarès Equipes */
+
+/* Tailles des colonnes */
+/* Colonnes : Champions + Points */
+.palmares-teams-table th:nth-child(3),
+.palmares-teams-table td:nth-child(3),
+.palmares-teams-table th:nth-child(4),
+.palmares-teams-table td:nth-child(4) {
+    width: 20%;
+}
+
+
+
+
+
 
 /* Page Circuits */
 
