@@ -22,7 +22,7 @@ class StatsCircuitsModel extends DbConnect
     }
 
     /* ---------------------------------------------------------
-       TOP 10 CHRONOS (POLES + FASTEST LAP)
+       TOP 10 CHRONOS (POLE POSITION + FASTEST LAP)
     --------------------------------------------------------- */
     public static function getCircuitTopChronos($circuitId)
     {
@@ -36,7 +36,7 @@ class StatsCircuitsModel extends DbConnect
             s.platform,
             d.nickname,
             gs.pole_position_time AS chrono,
-            'Pole' AS chrono_type
+            'Pole Position' AS chrono_type
         FROM gp_stats gs
         JOIN gp g ON g.id = gs.gp_id
         JOIN seasons s ON s.id = g.season_id

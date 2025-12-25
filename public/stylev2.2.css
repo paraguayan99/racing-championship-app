@@ -1434,7 +1434,7 @@ table.sortable th.no-sort::after {
     clip: rect(0,0,0,0);
 }
 
-.palmares-table th.th-responsive span {
+.table-th-responsive th.th-responsive span {
     display: none;
     white-space: nowrap;
 }
@@ -1444,7 +1444,7 @@ table.sortable th.no-sort::after {
 }
 
 @media (min-width: 901px) {
-    .palmares-table th.th-responsive .label-long {
+    .table-th-responsive th.th-responsive .label-long {
         display: inline;
     }
 
@@ -1454,7 +1454,7 @@ table.sortable th.no-sort::after {
 }
 
 @media (min-width: 701px) and (max-width: 900px) {
-    .palmares-table th.th-responsive .label-medium {
+    .table-th-responsive th.th-responsive .label-medium {
         display: inline;
     }
 
@@ -1464,7 +1464,7 @@ table.sortable th.no-sort::after {
 }
 
 @media (max-width: 700px) {
-    .palmares-table th.th-responsive .label-short {
+    .table-th-responsive th.th-responsive .label-short {
         display: inline;
     }
 
@@ -1498,8 +1498,6 @@ table.sortable th.no-sort::after {
     width: 9%;
 }
 
-/* MODIFIER */
-
 /* Palmarès Equipes */
 
 /* Tailles des colonnes */
@@ -1510,9 +1508,6 @@ table.sortable th.no-sort::after {
 .palmares-teams-table td:nth-child(4) {
     width: 20%;
 }
-
-
-
 
 
 
@@ -1531,7 +1526,6 @@ table.sortable th.no-sort::after {
 }
 
 /* Chronos avec Badge violet */
-
 .badge-purple {
     background: #8e44ad;
     color: white;
@@ -1541,6 +1535,79 @@ table.sortable th.no-sort::after {
     font-weight: 600;
     display: inline-block;
 }
+
+.circuit-title {
+    font-size: 1.5rem;
+}
+
+
+/* TOP 10 Tailles des colonnes*/
+
+/* Pilote */
+.circuits-top10-table th:nth-child(2),
+.circuits-top10-table td:nth-child(2) {
+    width: 20%;
+}
+
+/* Chrono */
+.circuits-top10-table th:nth-child(3),
+.circuits-top10-table td:nth-child(3) {
+    width: 15%;
+}
+
+/* Type */
+.circuits-top10-table th:nth-child(4),
+.circuits-top10-table td:nth-child(4) {
+    width: 10%;
+}
+
+/* Catégorie */
+.circuits-top10-table th:nth-child(5),
+.circuits-top10-table td:nth-child(5) {
+    width: 10%;
+}
+
+/* Saison */
+.circuits-top10-table th:nth-child(6),
+.circuits-top10-table td:nth-child(6) {
+    width: 5%;
+}
+
+/* Jeu */
+.circuits-top10-table th:nth-child(7),
+.circuits-top10-table td:nth-child(7) {
+    /* width: 20%; */
+}
+
+/* Console */
+.circuits-top10-table th:nth-child(8),
+.circuits-top10-table td:nth-child(8) {
+    width: 10%;
+}
+
+/* COURSES DISPUTEES */
+.total-row {
+    font-weight: bold;
+}
+
+/* CIRCUITS CLASSEMENT PILOTES */
+/* Tailles des colonnes */
+
+/* 5 colonnes : GP + Victoires + Podiums + PP + FL */
+.circuits-drivers-table th:nth-child(3),
+.circuits-drivers-table td:nth-child(3),
+.circuits-drivers-table th:nth-child(4),
+.circuits-drivers-table td:nth-child(4),
+.circuits-drivers-table th:nth-child(5),
+.circuits-drivers-table td:nth-child(5),
+.circuits-drivers-table th:nth-child(6),
+.circuits-drivers-table td:nth-child(6),
+.circuits-drivers-table th:nth-child(7),
+.circuits-drivers-table td:nth-child(7) {
+    width: 11%;
+}
+
+
 
 
 

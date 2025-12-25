@@ -40,7 +40,7 @@ function podiumBadge($pos) {
     </p>
 
     <div class="table-responsive">
-    <table class="dashboard-table sortable palmares-table palmares-drivers-table">
+    <table class="dashboard-table sortable table-th-responsive palmares-drivers-table">
         <thead>
             <tr>
                 <th class="badge-width no-sort th-responsive">
@@ -111,7 +111,7 @@ function podiumBadge($pos) {
     <?php if (!empty($teamsByCategory[$category])): ?>
     <h3>Palmarès Équipes</h3>
     <div class="table-responsive">
-    <table class="dashboard-table sortable palmares-table palmares-teams-table">
+    <table class="dashboard-table sortable table-th-responsive palmares-teams-table">
         <thead>
             <tr>
                 <th class="badge-width no-sort th-responsive">

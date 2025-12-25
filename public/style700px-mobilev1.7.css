@@ -440,3 +440,51 @@ table.sortable th.desc::after {
 .palmares-drivers-table td:nth-child(9) {
     width: 9%;
 }
+
+/* PAGE CIRCUITS */
+/* TOP 10 Tailles des colonnes*/
+
+.circuit-title {
+    font-size: 1.2rem;
+}
+
+@media screen and (max-width: 500px) {
+    /* Chrono */
+    .circuits-top10-table th:nth-child(3),
+    .circuits-top10-table td:nth-child(3) {
+        width: 18%;
+    }
+}
+
+/* PAGE CIRCUITS CLASSEMENT PILOTES */
+/* Tailles des colonnes */
+
+/* 5 colonnes : GP + Victoires + Podiums + PP + FL */
+.circuits-drivers-table th:nth-child(3),
+.circuits-drivers-table td:nth-child(3),
+.circuits-drivers-table th:nth-child(4),
+.circuits-drivers-table td:nth-child(4),
+.circuits-drivers-table th:nth-child(5),
+.circuits-drivers-table td:nth-child(5),
+.circuits-drivers-table th:nth-child(6),
+.circuits-drivers-table td:nth-child(6),
+.circuits-drivers-table th:nth-child(7),
+.circuits-drivers-table td:nth-child(7) {
+    width: 10%;
+}
+
+@media screen and (max-width: 500px) {
+    /* 5 colonnes : GP + Victoires + Podiums + PP + FL */
+    .circuits-drivers-table th:nth-child(3),
+    .circuits-drivers-table td:nth-child(3),
+    .circuits-drivers-table th:nth-child(4),
+    .circuits-drivers-table td:nth-child(4),
+    .circuits-drivers-table th:nth-child(5),
+    .circuits-drivers-table td:nth-child(5),
+    .circuits-drivers-table th:nth-child(6),
+    .circuits-drivers-table td:nth-child(6),
+    .circuits-drivers-table th:nth-child(7),
+    .circuits-drivers-table td:nth-child(7) {
+        width: 9%;
+    }
+}
