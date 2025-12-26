@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Gestion des Grand Prix'; ?>
+<?php $title = 'Team-eRacing - Calendriers'; ?>
 
 <?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
     <div class="<?= htmlspecialchars($classMsg ?? '') ?>">
@@ -9,9 +9,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des Grand Prix des Saisons Actives</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=gp&action=create">Ajouter un GP</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Calendriers
+            </h2>
+            <p class="dashboard-crud-subtitle">Constituer les ordres d'apparition des Grands Prix durant la Saison</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=gp&action=create">Ajouter GP</a>
     </div>
 
     <div class="table-responsive">
@@ -19,7 +26,7 @@
             <thead>
                 <tr>
                     <th>Saison</th>
-                    <th>Ordre GP</th>
+                    <th>Ordre</th>
                     <th>Circuit</th>
                     <th>Pays</th>
                     <th class="actions-column">Actions</th>

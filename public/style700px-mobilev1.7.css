@@ -141,6 +141,16 @@ footer nav {
     padding: 20px;
 }
 
+.nav-btn-dashboard {
+    padding: 10px 10px;
+}
+
+.btn-header-dashboard span {
+    font-weight: 600;
+    font-size: 0.75rem;
+    margin-left: auto;
+}
+
 .msg-success {
     margin: 15px;
     padding: 20px;
@@ -151,15 +161,56 @@ footer nav {
     padding: 20px;
 }
 
-.section-header {
+/* .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-}
+} */
 
 .dashboard-table th, .dashboard-table td {
     font-size: 0.875rem;
 }
+
+/* Titres des sections Admin / Modo */
+.page-header-dashboard h1 {
+    font-size: 1.1rem;
+}
+
+/* Commentaires des sections Admin / Modo */
+.page-header-dashboard p {
+    font-size: 0.75rem;
+}
+
+/* Titres des Boutons de la 1ère page du dashboard */
+.home-nav-btn-dashboard h3 {
+    font-size: 0.85rem ;
+}
+
+/* Commentaires des Boutons de la 1ère page du dashboard */
+.btn-subtitle {
+    font-size: 0.75rem ;
+}
+
+/* Dashboard section CRUD */
+.dashboard-crud-title {
+    font-size: 1.3rem;
+}
+
+.dashboard-crud-subtitle {
+    font-size: 0.75rem;
+    font-weight: normal;
+    margin: 0;
+    color: #687080;
+}
+
+.category-title.big-line-height {
+    line-height: 1.2;
+}
+
+
+
+
+
 
 /* Modal Afficher les résultats complets */
 .gp-modal-content {
@@ -413,11 +464,6 @@ table.sortable th.desc::after {
 }
 
 /* Tailles des colonnes */
-/* Pilote */
-.palmares-drivers-table th:nth-child(2),
-.palmares-drivers-table td:nth-child(2) {
-    
-}
 
 /* 5 colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
 .palmares-drivers-table th:nth-child(3),

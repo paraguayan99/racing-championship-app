@@ -115,11 +115,6 @@ table.sortable th.desc::after {
 }
 
 /* Tailles des colonnes */
-/* Pilote */
-.palmares-drivers-table th:nth-child(2),
-.palmares-drivers-table td:nth-child(2) {
-    
-}
 
 /* 5 colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
 .palmares-drivers-table th:nth-child(3),
@@ -141,4 +136,11 @@ table.sortable th.desc::after {
 .palmares-drivers-table th:nth-child(9),
 .palmares-drivers-table td:nth-child(9) {
     width: 9%;
+}
+
+/* DASHBOARD */
+
+/* Boutons de la 1ère page du dashboard */
+.home-nav-btn-dashboard h3 {
+    font-size: 1rem ;
 }

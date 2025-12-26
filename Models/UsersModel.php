@@ -17,6 +17,19 @@ class UsersModel extends DbConnect {
         return $stmt->fetch();
     }
 
+    public static function findById($id) {
+        $db = new DbConnect();
+        $stmt = $db->getConnection()->prepare("
+            SELECT users.id, users.email, roles.name AS role
+            FROM users
+            JOIN roles ON users.role_id = roles.id
+            WHERE users.id = ?
+        ");
+        $stmt->execute([$id]);
+        // FETCH_ASSOC pour retourner un tableau associatif
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public static function getRoleName($role_id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT name FROM roles WHERE id=?");

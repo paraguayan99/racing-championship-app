@@ -109,7 +109,7 @@ function podiumBadge($pos) {
 
     <!-- TEAMS -->
     <?php if (!empty($teamsByCategory[$category])): ?>
-    <h3>Palmarès Équipes</h3>
+    <h3>Palmarès Constructeurs</h3>
     <div class="table-responsive">
     <table class="dashboard-table sortable table-th-responsive palmares-teams-table">
         <thead>
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         forceSortDesc(table, 2); // colonne Titres
     });
 
-    // === PALMARÈS ÉQUIPES : Titres DESC ===
+    // === PALMARÈS CONSTRUCTEURS : Titres DESC ===
     document.querySelectorAll('table.palmares-teams-table').forEach(table => {
         forceSortDesc(table, 2); // colonne Titres
     });

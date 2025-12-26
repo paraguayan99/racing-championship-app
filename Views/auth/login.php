@@ -5,7 +5,7 @@ use App\Core\Auth;
 ?>
 
 <div class="login-container">
-    <h1>Connexion au Dashboard</h1>
+    <h1>Connexion</h1>
 
     <?php if ($errorMessage): ?>
         <div class="error-message">

@@ -9,6 +9,11 @@ abstract class Controller
     {
         \App\Core\Auth::start();
 
+        // Empêcher le cache navigateur UNIQUEMENT des pages sécurisées
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
         if (!\App\Core\Auth::check()) {
             header('Location: index.php?controller=auth&action=login');
             exit;

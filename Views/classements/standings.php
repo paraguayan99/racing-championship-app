@@ -193,7 +193,7 @@ function gpBadge($gpNumber) {
 
                 <!-- Classement Équipes -->
                 <?php if (!empty($teamsByCategory[$categoryName])): ?>
-                    <h3 style="margin-top:30px;">Classement Équipes <?= htmlspecialchars($categoryName) ?></h3>
+                    <h3 style="margin-top:30px;">Classement Constructeurs <?= htmlspecialchars($categoryName) ?></h3>
 
                     <div class="table-responsive">
                         <table class="dashboard-table teams-table">
@@ -524,7 +524,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /* ===== ÉCURIES (Classement Équipes) ===== */
+        /* ===== ÉCURIES (Classement Constructeurs) ===== */
         document.querySelectorAll('.teams-table .team-content span').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();

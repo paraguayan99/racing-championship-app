@@ -1,10 +1,16 @@
-<?php $title = 'Team-eRacing - Gestion des Grand Prix'; ?>
+<?php $title = 'Team-eRacing - Calendriers'; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn-dashboard" href="index.php?controller=gp">Retour à la liste</a>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=gp">Retour à la liste</a>
 
-    <h1>Créer un Grand Prix</h1>
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Ajouter GP
+            </h2>
+        </div>
+    </div>
 
     <?php if (!empty($message)): ?>
         <div class="<?= htmlspecialchars($classMsg) ?>">

@@ -8,7 +8,9 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-DASHBOARD : Améliorer MENU + Responsive
+DASHBOARD : 
+1/ HTML CSS des TITLES + BOUTONS : INDEX / CREATE / UPDATE / DELETE
+2/ RESPONSIVE des tableaux du CRUD
 
 PAGE PALMARES : Ajouter logo TEAM et color background
 

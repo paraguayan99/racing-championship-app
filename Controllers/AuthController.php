@@ -63,14 +63,49 @@ class AuthController extends Controller
     }
 
     // Déconnexion
+    
+    // public function logout()
+    // {
+    //     session_start();
+    //     $_SESSION = [];
+    //     unset($_SESSION['csrf_token']);
+    //     session_destroy();
+    //     header('Location: index.php?controller=auth&action=login');
+    //     exit();
+    // }
+
     public function logout()
     {
-        session_start();
+        // Utilise ton gestionnaire centralisé
+        \App\Core\Auth::start();
+
+        // Vide toutes les variables
         $_SESSION = [];
-        unset($_SESSION['csrf_token']);
+
+        // Supprime le cookie de session
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
+
+        // Détruit la session
         session_destroy();
+
+        // Regénère un nouvel id vide
+        session_regenerate_id(true);
+
         header('Location: index.php?controller=auth&action=login');
         exit();
     }
+
 }
 

@@ -1,27 +1,33 @@
-<?php $title = "Team-eRacing - Gestion des Grand Prix"; ?>
+<?php $title = "Team-eRacing - Calendriers"; ?>
 
 <div class="section-dashboard">
 
-    <h1>Supprimer le Grand Prix <?= htmlspecialchars($countryName) ?> -
-        <?= htmlspecialchars($name) ?> /
-        <?= htmlspecialchars($seasonName) ?>
-    </h1>
+    <div class="section-header">
+        <div class="category-title has-content section-title-crud big-line-height">
+            <h2 class="dashboard-crud-title no-margin">
+                Supprimer GP 
+            </h2>
+            <p class="dashboard-crud-subtitle"><?= htmlspecialchars($countryName) ?> - <?= htmlspecialchars($name) ?> / <?= htmlspecialchars($seasonName) ?></p>
+        </div>
+    </div>
 
-    <p>Voulez-vous vraiment supprimer ce Grand Prix ?</p>
+    <p>Voulez-vous vraiment supprimer ?</p>
 
     <div class="delete-actions">
+        <div class="delete-width">
+            <form action="index.php?controller=gp&action=delete&id=<?= $id ?>" method="POST">
+                <?php
+                use App\Core\Auth;
+                $csrf = Auth::csrfToken();
+                ?>
+                <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+                <button type="submit" class="btn red">Supprimer</button>
+            </form>
+        </div>
 
-    <form action="index.php?controller=gp&action=delete&id=<?= $id ?>" method="POST">
-        <?php
-        use App\Core\Auth;
-        $csrf = Auth::csrfToken();
-        ?>
-        <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
-        <button type="submit" class="btn btn-danger">Supprimer</button>
-    </form>
-
-    <a href="index.php?controller=gp" class="btn btn-light">Annuler</a>
-
+        <div class="annule-width">
+            <a href="index.php?controller=gp" class="btn black">Annuler</a>
+        </div>
     </div>
 
 </div>
