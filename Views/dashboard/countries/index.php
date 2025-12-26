@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des pays</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=countries&action=create">Ajouter un nouveau pays</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Pays
+            </h2>
+            <p class="dashboard-crud-subtitle">Associer ces pays ensuite aux pilotes, teams et circuits</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=countries&action=create">Ajouter pays</a>
     </div>
 
     <div class="table-responsive">

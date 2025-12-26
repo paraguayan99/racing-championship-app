@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des utilisateurs</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=users&action=create">Ajouter un nouvel utilisateur</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Utilisateurs
+            </h2>
+            <p class="dashboard-crud-subtitle">Gérer les membres du site et leurs rôles</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=users&action=create">Ajouter utilisateur</a>
     </div>
 
     <div class="table-responsive">

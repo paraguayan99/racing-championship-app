@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Pénalités des GP'; ?>
+<?php $title = 'Team-eRacing - Pénalités'; ?>
 
 <?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
     <div class="<?= htmlspecialchars($classMsg ?? '') ?>">
@@ -9,9 +9,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Pénalités des GP des Saisons Actives</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=penalties&action=create">Ajouter une Pénalité</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Pénalités
+            </h2>
+            <p class="dashboard-crud-subtitle">Appliquer au pilote et/ou l’équipe engagée sur un GP</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=penalties&action=create">Ajouter pénalité</a>
     </div>
 
     <div class="table-responsive">

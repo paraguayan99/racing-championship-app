@@ -84,7 +84,7 @@ class GpPointsController extends Controller {
                     ");
 
                     if ($stmt->execute([$gp_id, $driver_id, $team_id, $position, $points_numeric, $points_text])) {
-                        $message = "Point GP créé avec succès";
+                        $message = "Résultat créé avec succès";
                         $classMsg = "msg-success";
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'create');
                     } else {
@@ -143,7 +143,7 @@ class GpPointsController extends Controller {
 
         $point = GpPointsModel::findById($id);
         if (!$point) {
-            $message = "Point GP introuvable";
+            $message = "Résultat introuvable";
             $classMsg = "msg-error";
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
@@ -215,7 +215,7 @@ class GpPointsController extends Controller {
                     ");
 
                     if ($stmt->execute([$gp_id, $driver_id, $team_id, $position, $points_numeric, $points_text, $id])) {
-                        $message = "Point GP mis à jour";
+                        $message = "Résultat mis à jour";
                         $classMsg = "msg-success";
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'update');
                     } else {
@@ -274,7 +274,7 @@ class GpPointsController extends Controller {
         // Récupérer le point GP à supprimer
         $point = GpPointsModel::findById($id);
         if (!$point) {
-            $message = "Point GP introuvable.";
+            $message = "Résultat introuvable.";
             $classMsg = "msg-error";
 
             $this->render('dashboard/gp_points/index', [
@@ -350,7 +350,7 @@ class GpPointsController extends Controller {
             try {
                 $stmt = $pdo->prepare("DELETE FROM gp_points WHERE id = ?");
                 if ($stmt->execute([$id])) {
-                    $message = "Point GP supprimé avec succès.";
+                    $message = "Résultat supprimé avec succès.";
                     $classMsg = "msg-success";
 
                     // Log des modifications

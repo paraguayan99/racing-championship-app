@@ -1,10 +1,16 @@
-<?php $title = 'Team-eRacing - Affectations Pilotes - Écuries'; ?>
+<?php $title = 'Team-eRacing - Associations Pilotes - Teams'; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers">Retour à la liste</a>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers">Retour</a>
 
-    <h1>Créer une affectation</h1>
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Ajouter association
+            </h2>
+        </div>
+    </div>
 
     <?php if (!empty($message)): ?>
         <div class="<?= htmlspecialchars($classMsg) ?>">

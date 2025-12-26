@@ -53,7 +53,7 @@ class TeamsDriversController extends Controller {
                         $_POST['driver_id'],
                         $_POST['team_id']
                     ])) {
-                        $message = "Association faite avec succès";
+                        $message = "Association crée avec succès";
                         $classMsg = "msg-success";
                     } else {
                         $message = "Erreur : Ce pilote est déjà associé à un team dans cette saison.";

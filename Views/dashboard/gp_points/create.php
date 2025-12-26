@@ -1,10 +1,16 @@
-<?php $title = "Team-eRacing - Ajouter Résultats d'un GP"; ?>
+<?php $title = "Team-eRacing - GP - Résultats"; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn-dashboard" href="index.php?controller=gppoints">Retour à la liste</a>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=gppoints">Retour</a>
 
-    <h1>Ajouter Résultats d'un GP</h1>
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Ajouter résultats
+            </h2>
+        </div>
+    </div>
 
     <?php if (!empty($message)): ?>
         <div class="<?= htmlspecialchars($classMsg) ?>">

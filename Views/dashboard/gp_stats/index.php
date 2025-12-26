@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Statistiques des GP'; ?>
+<?php $title = 'Team-eRacing - GP - Pole Position & Fastest Lap'; ?>
 
 <?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
     <div class="<?= htmlspecialchars($classMsg ?? '') ?>">
@@ -9,9 +9,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Statistiques des GP des Saisons Actives</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=gpstats&action=create">Ajouter Statistiques d'un GP</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin title-ppfl">
+                GP - Pole Position & Fastest Lap
+            </h2>
+            <p class="dashboard-crud-subtitle">Joindre les noms des pilotes et leurs chronos</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=gpstats&action=create">Ajouter Pole Position & Fastest Lap</a>
     </div>
 
     <div class="table-responsive">

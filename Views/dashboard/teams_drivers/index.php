@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Affectations Pilotes - Écuries'; ?>
+<?php $title = 'Team-eRacing - Associations Pilotes - Teams'; ?>
 
 <?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
     <div class="<?= htmlspecialchars($classMsg ?? '') ?>">
@@ -9,9 +9,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des affectations Pilote - Écurie des Saisons Actives</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers&action=create">Ajouter une affectation</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin title-teams-drivers">
+                Associations Pilotes-Teams
+            </h2>
+            <p class="dashboard-crud-subtitle">Insérer teams au classement pilotes sans impacter le constructeur</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers&action=create">Ajouter association</a>
     </div>
 
     <div class="table-responsive">

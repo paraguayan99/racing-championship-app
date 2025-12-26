@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Résultats des GP'; ?>
+<?php $title = 'Team-eRacing - GP - Résultats'; ?>
 
 <?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
     <div class="<?= htmlspecialchars($classMsg) ?>">
@@ -9,9 +9,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Résultats des GP des Saisons actives</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=gppoints&action=create">Ajouter Résultats d'un GP</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                GP - Résultats
+            </h2>
+            <p class="dashboard-crud-subtitle">Compléter les résultats des Grands Prix</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=gppoints&action=create">Ajouter résultats</a>
     </div>
 
     <div class="table-responsive">
@@ -40,7 +47,7 @@
                         $currentGP = $gpKey;
                 ?>
                 <tr class="gp-summary" data-gp="<?= $gpKey ?>">
-                    <td><button class="toggle-gp"><i class="fa-solid fa-arrow-down"></i></button></td>
+                    <td><button class="btn-reveal-gp"><i class="fa-solid fa-arrow-down"></i></button></td>
                     <td colspan="7">
                         <?= htmlspecialchars($pt->category_name ?? '') ?> 
                         - Saison <?= htmlspecialchars($pt->season_number ?? '') ?> 
@@ -76,7 +83,7 @@
 </div>
 
 <script>
-document.querySelectorAll('.toggle-gp').forEach(btn => {
+document.querySelectorAll('.btn-reveal-gp').forEach(btn => {
     btn.addEventListener('click', function() {
         const tr = this.closest('tr');
         const gpKey = tr.dataset.gp;
@@ -91,9 +98,13 @@ document.querySelectorAll('.toggle-gp').forEach(btn => {
         if (icon.classList.contains('fa-arrow-down')) {
             icon.classList.remove('fa-arrow-down');
             icon.classList.add('fa-arrow-up');
+            // Modifie la classe CSS de l'icône après ouverture
+            this.classList.add('btn-reveal-gp-open');
         } else {
             icon.classList.remove('fa-arrow-up');
             icon.classList.add('fa-arrow-down');
+            // Supprime la classe CSS de l'icône si ce n'est pas ouvert
+            this.classList.remove('btn-reveal-gp-open');
         }
     });
 });

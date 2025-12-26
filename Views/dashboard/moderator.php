@@ -24,7 +24,7 @@ if ($userId) {
     <div class="page-header page-header-dashboard">
         <h1>Dashboard Modérateur</h1>
         <p class="page-header-dashboard-subtitle-right">
-            <span>Accès à la gestion des saisons actives</span>
+            <span>Accès à la gestion des saisons actuelles</span>
         </p>
     </div>
 

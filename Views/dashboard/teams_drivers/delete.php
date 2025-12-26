@@ -1,28 +1,37 @@
-<?php $title = "Team-eRacing - Affectations Pilotes - Écuries"; ?>
+<?php $title = "Team-eRacing - Associations Pilotes - Teams"; ?>
 
 <div class="section-dashboard">
 
-    <h1>Supprimer affectation :
-        <?= htmlspecialchars($seasonName) ?> / 
-        <?= htmlspecialchars($driverName) ?>  
-        <?= htmlspecialchars($teamName) ?>
-    </h1>
+    <div class="section-header">
+        <div class="category-title has-content section-title-crud big-line-height">
+            <h2 class="dashboard-crud-title no-margin">
+                Supprimer association
+            </h2>
+            <p class="dashboard-crud-subtitle">
+                <?= htmlspecialchars($seasonName) ?> / 
+                <?= htmlspecialchars($driverName) ?>  
+                <?= htmlspecialchars($teamName) ?>
+            </p>
+        </div>
+    </div>
 
-    <p>Voulez-vous vraiment supprimer cette affectation ?</p>
+    <h3 class="h3-delete">Voulez-vous vraiment supprimer ?</h3>
 
     <div class="delete-actions">
+        <div class="delete-width">
+            <form action="index.php?controller=teamsdrivers&action=delete&id=<?= $id ?>" method="POST">
+                <?php
+                use App\Core\Auth;
+                $csrf = Auth::csrfToken();
+                ?>
+                <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+                <button type="submit" class="btn red">Supprimer</button>
+            </form>
+        </div>
 
-    <form action="index.php?controller=teamsdrivers&action=delete&id=<?= $id ?>" method="POST">
-        <?php
-        use App\Core\Auth;
-        $csrf = Auth::csrfToken();
-        ?>
-        <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
-        <button type="submit" class="btn btn-danger">Supprimer</button>
-    </form>
-
-    <a href="index.php?controller=teamsdrivers" class="btn btn-light">Annuler</a>
-
+        <div class="annule-width">
+            <a href="index.php?controller=teamsdrivers" class="btn black">Annuler</a>
+        </div>
     </div>
 
 </div>

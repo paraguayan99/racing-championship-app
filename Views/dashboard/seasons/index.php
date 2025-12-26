@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des saisons</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=seasons&action=create">Ajouter une nouvelle saison</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Saisons
+            </h2>
+            <p class="dashboard-crud-subtitle">Générer de nouvelles saisons pour une catégorie</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=seasons&action=create">Ajouter saison</a>
     </div>
 
     <div class="table-responsive">

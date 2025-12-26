@@ -1,10 +1,16 @@
-<?php $title = "Team-eRacing - Ajouter Statistiques d'un GP"; ?>
+<?php $title = "Team-eRacing - GP - Pole Position & Fastest Lap"; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn-dashboard" href="index.php?controller=gpstats">Retour à la liste</a>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=gpstats">Retour</a>
 
-    <h1>Ajouter Statistiques d'un GP</h1>
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin title-ppfl">
+                Ajouter Pole Position & Fastest Lap
+            </h2>
+        </div>
+    </div>
 
     <?php if (!empty($message)): ?>
         <div class="<?= htmlspecialchars($classMsg) ?>">
@@ -70,4 +76,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-

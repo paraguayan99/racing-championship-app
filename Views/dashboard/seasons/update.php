@@ -3,8 +3,13 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=seasons">Retour à la liste</a>
-        <h1>Modifier une saison</h1>
+        <a class="nav-btn-dashboard" href="index.php?controller=seasons">Retour</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Modifier saison
+            </h2>
+        </div>
     </div>
 
     <div class="form-wrapper">

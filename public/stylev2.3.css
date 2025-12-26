@@ -561,7 +561,7 @@ footer {
     text-indent: 20px;
 }
 
-.btn {
+/* .btn {
     font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     padding: 10px;
@@ -571,7 +571,8 @@ footer {
     font-weight: 600;
     cursor: pointer;
     border-radius: 10px;
-}
+    transition: background-color 0.3s;
+} */
 
 .btn:hover {
     background-color: #fdbcba;
@@ -676,6 +677,7 @@ footer {
     margin: 0 4px;
     text-decoration: none;
     display: inline-flex;
+    transition: background-color 0.3s; /* Animation douce */
 }
 
 .action-btn.edit {
@@ -688,8 +690,14 @@ footer {
     color: white;
 }
 
-.action-btn:hover {
-    opacity: .8;
+.action-btn.edit:hover {
+    background: white;
+    color: #000000;
+}
+
+.action-btn.delete:hover {
+    background: white;
+    color: #E10600;
 }
 
 /* Message succès ou échec après une requete du CRUD */
@@ -770,18 +778,26 @@ footer {
     padding: 0;              /* Nettoyage */
 }
 
-/* Forme des boutons et catégories inutiles car tous les boutons sont des nav-btn ??? */
+/* Pages DELETE */
+/* Forme des boutons Supprimer / Annuler */
+.h3-delete {
+    display: flex;
+    justify-content: center ;
+}
+
  .btn, button {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     font-size: 1rem;
-    font-weight: 600;
     padding: 10px;
+    background-color: #E10600;
     border-radius: 10px;
     border: none;
     color: white;
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
+    transition: background-color 0.3s; /* Animation douce */
 }
 
 .delete-actions {
@@ -798,10 +814,9 @@ footer {
     width: 40%;
 }
 
-
-.red {
+/* .red {
     background: #E10600;
-}
+} */
 
 .btn.red:hover {
     background-color: #fdbcba;
@@ -863,6 +878,31 @@ footer {
     background: #919090;
 } */
 
+/*  */
+
+.btn-reveal-gp {
+    width: 60px;
+    font-size: 0.85rem;
+    padding: 2px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background-color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s; /* Animation douce */
+}
+
+.btn-reveal-gp:hover {
+    background-color: white;
+    color: #000000;
+}
+
+.btn-reveal-gp-open {
+    background-color: white;
+    color: #000000;
+}
 
 /* Page Classements ... */
 

@@ -1,4 +1,4 @@
-<?php $title = 'Team-eRacing - Équipes'; ?>
+<?php $title = 'Team-eRacing - Teams'; ?>
 
 <!-- Définir des valeurs par défaut si les variables $message et $classMsg n'existent pas -->
 <!-- Cela permet d'éviter les Warning PHP -->
@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des équipes</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=teams&action=create">Ajouter une nouvelle équipe</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Teams
+            </h2>
+            <p class="dashboard-crud-subtitle">Attribuer leurs noms, logos, couleurs et nationalités</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=teams&action=create">Ajouter team</a>
     </div>
 
     <div class="table-responsive">

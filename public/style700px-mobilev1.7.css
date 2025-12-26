@@ -207,6 +207,47 @@ footer nav {
     line-height: 1.2;
 }
 
+@media screen and (max-width: 500px) {
+    /* Pages DELETE */
+    .h3-delete {
+        font-size: 1rem;
+    }
+
+    /* title du CRUD GP - POLE & FASTEST LAP */
+    .dashboard-crud-title.no-margin.title-ppfl {
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    /* title Page DELETE - POLE & FASTEST LAP */
+    .dashboard-crud-title.no-margin.title-ppfl.ppfl-delete {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    /* title Page DELETE - POLE & FASTEST LAP */
+    .dashboard-crud-title.no-margin.title-ppfl.ppfl-delete {
+        font-size: 1rem;
+    }
+
+    /* title Page DELETE - AJUSTEMENTS MANUELS */
+    .dashboard-crud-title.no-margin.title-adjustments {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    /* title Page DELETE - POLE & FASTEST LAP */
+    .dashboard-crud-title.no-margin.title-ppfl.ppfl-delete {
+        font-size: 0.85rem;
+    }
+
+    .dashboard-crud-title.no-margin.title-teams-drivers {
+        font-size: 1.1rem;
+    }
+}
 
 
 
@@ -534,3 +575,4 @@ table.sortable th.desc::after {
         width: 9%;
     }
 }
+

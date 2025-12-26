@@ -81,7 +81,7 @@ if ($userId) {
 
         <a class="home-nav-btn-dashboard nav-btn-dashboard btn-width-large" href="index.php?controller=seasons&action=index">
             <h3 class="no-margin">Saisons</h3>
-            <span class="btn-subtitle">Générer de nouvelles saisons pour les catégories mises en place</span>
+            <span class="btn-subtitle">Générer de nouvelles saisons pour une catégorie</span>
         </a>
 
         <a class="home-nav-btn-dashboard nav-btn-dashboard btn-width-large" href="index.php?controller=countries&action=index">

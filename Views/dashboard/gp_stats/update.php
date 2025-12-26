@@ -1,10 +1,15 @@
-<?php $title = "Team-eRacing - Modifier Statistiques d'un GP"; ?>
+<?php $title = "Team-eRacing - GP - Pole Position & Fastest Lap"; ?>
 
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=gpstats">Retour à la liste</a>
-        <h1>Modifier Statistiques d'un GP</h1>
+        <a class="nav-btn-dashboard" href="index.php?controller=gpstats">Retour</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin title-ppfl">
+                Modifier Pole Position & Fastest Lap
+            </h2>
+        </div>
     </div>
 
     <div class="form-wrapper">

@@ -1,10 +1,16 @@
-<?php $title = 'Team-eRacing - Équipes' ?>
+<?php $title = 'Team-eRacing - Teams' ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn-dashboard" href="index.php?controller=teams">Retour à la liste</a>
+    <div class="section-header">
+        <a class="nav-btn-dashboard" href="index.php?controller=teams">Retour</a>
 
-    <h1>Créer une équipe</h1>
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Ajouter team
+            </h2>
+        </div>
+    </div>
 
     <?php if (!empty($message)): ?>
         <div class="<?= htmlspecialchars($classMsg) ?>">

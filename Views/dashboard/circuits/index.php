@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des circuits</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=circuits&action=create">Ajouter un nouveau circuit</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Circuits
+            </h2>
+            <p class="dashboard-crud-subtitle">Etablir leurs noms et pays</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=circuits&action=create">Ajouter circuit</a>
     </div>
 
     <div class="table-responsive">

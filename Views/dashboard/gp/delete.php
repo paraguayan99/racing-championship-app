@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <p>Voulez-vous vraiment supprimer ?</p>
+    <h3 class="h3-delete">Voulez-vous vraiment supprimer ?</h3>
 
     <div class="delete-actions">
         <div class="delete-width">

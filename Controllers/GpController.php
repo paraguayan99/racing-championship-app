@@ -52,7 +52,7 @@ class GpController extends Controller {
                         $_POST['circuit_id'],
                         $_POST['gp_ordre']
                     ])) {
-                        $message = "Grand Prix ajouté avec succès.";
+                        $message = "GP ajouté avec succès au calendrier.";
                         $classMsg = "msg-success";
                     } else {
                         $message = "Erreur lors de l'ajout.";
@@ -143,7 +143,7 @@ class GpController extends Controller {
         $row = GpModel::find($id);
 
         if (!$row) {
-            $message = "Grand Prix introuvable.";
+            $message = "GP introuvable.";
             $classMsg = "msg-error";
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
@@ -296,7 +296,7 @@ class GpController extends Controller {
         $row = GpModel::find($id);
 
         if (!$row) {
-            $message = "Erreur : ce Grand Prix n'existe pas.";
+            $message = "Erreur : ce GP n'existe pas.";
             $classMsg = "msg-error";
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
@@ -324,7 +324,7 @@ class GpController extends Controller {
                 $stmt = $pdo->prepare("DELETE FROM gp WHERE id=?");
 
                 if ($stmt->execute([$id])) {
-                    $message = "Grand Prix supprimé.";
+                    $message = "GP supprimé du calendrier.";
                     $classMsg = "msg-success";
                 } else {
                     $message = "Erreur lors de la suppression.";

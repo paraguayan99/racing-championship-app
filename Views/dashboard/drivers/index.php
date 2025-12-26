@@ -11,9 +11,16 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour au Dashboard</a>
-        <h1>Gestion des pilotes</h1>
-        <a class="nav-btn-dashboard" href="index.php?controller=drivers&action=create">Ajouter un nouveau pilote</a>
+        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+
+        <div class="category-title has-content section-title-crud">
+            <h2 class="dashboard-crud-title no-margin">
+                Pilotes
+            </h2>
+            <p class="dashboard-crud-subtitle">Créer leurs pseudos et nationalités</p>
+        </div>
+
+        <a class="nav-btn-dashboard" href="index.php?controller=drivers&action=create">Ajouter pilote</a>
     </div>
 
     <div class="table-responsive">

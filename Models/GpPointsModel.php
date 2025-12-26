@@ -72,8 +72,8 @@ class GpPointsModel extends DbConnect {
                 c.name ASC,
                 s.season_number ASC,
 
-                /* Pour que le dernier GP POINTS ajoutés soient en haut de la VUE INDEX */
-                gp.gp_ordre DESC,
+                /* Pour que le premier GP soit en haut de la VUE INDEX et des SELECT CREATE UPDATE */
+                gp.gp_ordre ASC,
                 
                 /* DNF, DNS, DSQ = NULL en dernier au classement */
                 (gp_points.position IS NULL) ASC,

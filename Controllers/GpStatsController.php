@@ -77,7 +77,7 @@ class GpStatsController extends Controller {
                     $gp = GpModel::find($gp_id);
                     $season = SeasonsModel::findById($gp->season_id ?? null);
                     if (!$season || $season->status !== 'active') {
-                        $message = "Impossible de créer ces stats : la saison est désactivée.";
+                        $message = "Impossible de créer ces Pole Position & Fastest Lap : la saison est désactivée.";
                         $classMsg = "msg-error";
                     } else {
                         $db = new GpStatsModel();
@@ -94,7 +94,7 @@ class GpStatsController extends Controller {
                                 $fastest_lap_driver,
                                 $fastest_lap_time
                             ])) {
-                                $message = "Stats GP créées avec succès";
+                                $message = "Pole Position & Fastest Lap du GP créées avec succès";
                                 $classMsg = "msg-success";
                                 UpdatesLogModel::logUpdate('gp_stats', null, $gp_id, $_SESSION['user_id'], 'create');
                             } else {
@@ -102,7 +102,7 @@ class GpStatsController extends Controller {
                                 $classMsg = "msg-error";
                             }
                         } catch (\PDOException $e) {
-                            $message = "Erreur : données invalides, pilotes non renseignés ou stats déjà existantes pour ce GP";
+                            $message = "Erreur : données invalides, pilotes non renseignés ou données déjà existantes pour ce GP";
                             $classMsg = "msg-error";
                         }
                     }
@@ -152,7 +152,7 @@ class GpStatsController extends Controller {
 
         $stats = GpStatsModel::findByGpId($gp_id);
         if (!$stats) {
-            $message = "Stats GP introuvables";
+            $message = "Pole Position & Fastest Lap du GP introuvables";
             $classMsg = "msg-error";
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
@@ -232,7 +232,7 @@ class GpStatsController extends Controller {
                             $fastest_lap_time,
                             $gp_id
                         ])) {
-                            $message = "Stats GP mises à jour";
+                            $message = "Pole Position & Fastest Lap du GP mises à jour";
                             $classMsg = "msg-success";
                             UpdatesLogModel::logUpdate('gp_stats', null, $new_gp_id, $_SESSION['user_id'], 'update');
                         } else {
@@ -240,7 +240,7 @@ class GpStatsController extends Controller {
                             $classMsg = "msg-error";
                         }
                     } catch (\PDOException $e) {
-                        $message = "Erreur : données invalides, pilotes non renseignés ou stats déjà existantes pour ce GP";
+                        $message = "Erreur : données invalides, pilotes non renseignés ou données déjà existantes pour ce GP";
                         $classMsg = "msg-error";
                     }
                 }
@@ -299,7 +299,7 @@ class GpStatsController extends Controller {
         // Récupérer stats
         $stats = GpStatsModel::findByGpId($gp_id);
         if (!$stats) {
-            $message = "Stats GP introuvables.";
+            $message = "Pole Position & Fastest Lap du GP introuvables.";
             $classMsg = "msg-error";
 
             $this->render('dashboard/gp_stats/index', [
@@ -357,7 +357,7 @@ class GpStatsController extends Controller {
             try {
                 $stmt = $pdo->prepare("DELETE FROM gp_stats WHERE gp_id = ?");
                 if ($stmt->execute([$gp_id])) {
-                    $message = "Stats GP supprimées avec succès.";
+                    $message = "Pole Position & Fastest Lap du GP supprimées avec succès.";
                     $classMsg = "msg-success";
 
                     UpdatesLogModel::logUpdate('gp_stats', null, $gp_id, $_SESSION['user_id'], 'delete');
