@@ -42,7 +42,7 @@
                     <th class="th-responsive width-numbers text-center">
                             <span class="label-aria">Position</span>
                             <span aria-hidden="true" class="label-long">Position</span>
-                            <span aria-hidden="true" class="label-medium">Positi</span>
+                            <span aria-hidden="true" class="label-medium">Position</span>
                             <span aria-hidden="true" class="label-short">Pos</span>
                     </th>
                     <th class="th-responsive width-numbers text-center">
@@ -84,8 +84,8 @@
 
                 <tr class="gp-detail" data-gp="<?= $gpKey ?>" style="display:none;">
                     <td colspan="2"></td>
-                    <td class="width-gp-results-main upside"><?= htmlspecialchars($pt->driver_nickname ?? '') ?></td>
-                    <td class="width-gp-results-main upside"><?= htmlspecialchars($pt->team_name ?? '') ?></td>
+                    <td class="width-gp-results-main text-long-responsive down"><?= htmlspecialchars($pt->driver_nickname ?? '') ?></td>
+                    <td class="width-gp-results-main text-long-responsive down"><?= htmlspecialchars($pt->team_name ?? '') ?></td>
                     <td class="width-numbers text-center"><?= $pt->position === null ? '' : $pt->position ?></td>
                     <td class="width-numbers text-center td-bold"><?= htmlspecialchars(rtrim(rtrim(number_format($pt->points_numeric, 1, '.', ''), '0'), '.')) ?></td>
                     <td class="width-3-letters text-center"><?= htmlspecialchars($pt->points_text ?? '') ?></td>

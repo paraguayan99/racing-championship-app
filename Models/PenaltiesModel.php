@@ -39,7 +39,8 @@ class PenaltiesModel extends DbConnect {
                 t.name AS team_name,
 
                 ci.name AS circuit_name,
-                co.name AS country_name
+                co.name AS country_name,
+                co.code AS country_code
 
             FROM penalties
 

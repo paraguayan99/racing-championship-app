@@ -24,21 +24,21 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
                     <th>Rôle</th>
                     <th>Email</th>
-                    <th>Actions</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $user): ?>
                 <tr>
-                    <td><?= htmlspecialchars($user->role) ?></td>
-                    <td><?= htmlspecialchars($user->email) ?></td>
-                    <td class="actions">
+                    <td class="down"><?= htmlspecialchars($user->role) ?></td>
+                    <td class="down"><?= htmlspecialchars($user->email) ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=users&action=update&id=<?= $user->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

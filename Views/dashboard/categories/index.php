@@ -24,31 +24,27 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
                     <th>Nom</th>
-                    <th>Couleur</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="categories-color text-center">Couleur</th>
+                    <th class="status text-center">Status</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $cat): ?>
                 <tr>
-                    <td><?= htmlspecialchars($cat->name) ?></td>
-                    <td>
-                        <span style="display:inline-block;
-                                    width:20px;
-                                    height:20px;
-                                    background-color:<?= htmlspecialchars($cat->color) ?>;
-                                    border-radius:4px;">
+                    <td class="down"><?= htmlspecialchars($cat->name) ?></td>
+                    <td class="categories-color text-center down">
+                        <span class="preview-color"
+                                style="--preview-color: <?= htmlspecialchars($cat->color) ?>;">
                         </span>
-                        <?= htmlspecialchars($cat->color) ?>
                     </td>
-                    <td><?= htmlspecialchars($cat->status) ?></td>
-                    <td class="actions">
+                    <td class="status text-center down"><?= htmlspecialchars($cat->status) ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=categories&action=update&id=<?= $cat->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

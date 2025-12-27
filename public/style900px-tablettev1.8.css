@@ -82,6 +82,14 @@
     background-position: right -50px center;
 }
 
+/* Classement Equipes uniquement */
+
+/* Colonne Équipe */
+.teams-table td.team-cell,
+.teams-table th:nth-child(2) {
+    width: 56%;
+}
+
 /* Tableaux Résultats GP */
 .gp-season-table thead th:nth-child(6)::after { content: "Pole"; }
 .gp-season-table thead th:nth-child(7)::after { content: "FastestL"; }
@@ -145,14 +153,14 @@ table.sortable th.desc::after {
     font-size: 1rem ;
 }
 
-/* Table GP Pole & Fastest Lap */
+/* Table GP Pole & Fastest Lap / Table Pénalités */
 /* Pour les noms des GP */
-.dashboard-table td.width-namegp-pp-fl {
+.dashboard-table td.name-gp-verylong {
     font-size: 0.75rem;
 }
 
-/* Pour les noms des pilotes et teams */
-.dashboard-table td.driver-team-pp-fl {
+/* Pour les noms des pilotes et teams et commentaires */
+.dashboard-table td.text-long-responsive {
     font-size : 0.85rem;
 }
 
@@ -160,4 +168,28 @@ table.sortable th.desc::after {
 .dashboard-table th.width-chrono,
 .dashboard-table td.width-chrono {
     width: 80px;
+}
+
+/* Table catégories */
+.dashboard-table th.categories-color,
+.dashboard-table td.categories-color {
+    width: 100px;
+}
+
+/* Table Teams */
+.dashboard-table th.teams-color,
+.dashboard-table td.teams-color {
+    width: 70px;
+}
+
+.dashboard-table th.teams-logo,
+.dashboard-table td.teams-logo {
+    width: 90px;
+}
+
+.preview-logo {
+    width: auto;
+    max-width : 90px;
+    height: 18px;
+    vertical-align: middle;
 }

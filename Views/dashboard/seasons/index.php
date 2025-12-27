@@ -24,27 +24,37 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table table-th-responsive fix">
             <thead>
                 <tr>
-                    <th>Numéro de saison</th>
-                    <th>Catégorie</th>
-                    <th>Jeu vidéo</th>
-                    <th>Plateforme</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="width-numbers text-center">N°</th>
+                    <th class="down">Catégorie</th>
+                    <th class="text-center th-responsive">
+                        <span class="label-aria">Jeu vidéo</span>
+                        <span aria-hidden="true" class="label-long">Jeu vidéo</span>
+                        <span aria-hidden="true" class="label-medium">Jeu vidéo</span>
+                        <span aria-hidden="true" class="label-short">Jeu</span>
+                    </th>
+                    <th class="text-center th-responsive text-center">
+                        <span class="label-aria">Console</span>
+                        <span aria-hidden="true" class="label-long">Console</span>
+                        <span aria-hidden="true" class="label-medium">Cons</span>
+                        <span aria-hidden="true" class="label-short">Cons</span>
+                    </th>
+                    <th class="status text-center">Status</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $season): ?>
                 <tr>
-                    <td><?= htmlspecialchars($season->season_number) ?></td>
-                    <td><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
-                    <td><?= htmlspecialchars($season->videogame) ?></td>
-                    <td><?= htmlspecialchars($season->platform) ?></td>
-                    <td><?= htmlspecialchars($season->status) ?></td>
-                    <td class="actions">
+                    <td class="width-numbers text-center"><?= htmlspecialchars($season->season_number) ?></td>
+                    <td class="down"><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
+                    <td class="down text-center"><?= htmlspecialchars($season->videogame) ?></td>
+                    <td class="down text-center"><?= htmlspecialchars($season->platform) ?></td>
+                    <td class="status text-center down"><?= htmlspecialchars($season->status) ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=seasons&action=update&id=<?= $season->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

@@ -108,7 +108,7 @@ class TeamsController extends Controller {
             ->addLabel("logo", "URL ou chemin du logo :")
             ->addInput("text", "logo")
             ->addLabel("color", "Couleur :")
-            ->addInput("text", "color")
+            ->addInput("color", "color")
             ->addLabel("country_id", "Pays :")
             ->addSelect("country_id", $countriesOptions)
             ->addLabel("status", "Statut :")
@@ -159,6 +159,12 @@ class TeamsController extends Controller {
 
                     // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
+                    $color = null;
+
+                    // Si la case supprimer n'est PAS cochée, on garde la couleur choisie
+                    if (empty($_POST['clear_color'])) {
+                        $color = $_POST['color'] ?? null;
+                    }
 
                     $stmt = $pdo->prepare("
                         UPDATE teams SET name=?, logo=?, color=?, country_id=?, status=? WHERE id=?
@@ -166,8 +172,8 @@ class TeamsController extends Controller {
 
                     if ($stmt->execute([
                         $name,
-                        $_POST['logo'],
-                        trim($_POST['color']),
+                        $_POST['logo'] ?? null,
+                        $color,
                         $_POST['country_id'],
                         $_POST['status'],
                         $id
@@ -215,7 +221,9 @@ class TeamsController extends Controller {
             ->addLabel("logo", "URL ou chemin du logo :")
             ->addInput("text", "logo", ["value" => $team->logo])
             ->addLabel("color", "Couleur :")
-            ->addInput("text", "color", ["value" => $team->color])
+            ->addInput("color", "color", ["value" => $team->color])
+            ->addLabel("clear_color", "Supprimer la couleur :")
+            ->addInput("checkbox", "clear_color", ["value" => 1])
             ->addLabel("country_id", "Pays :")
             ->addSelect("country_id", $countriesOptions, ["value" => $team->country_id])
             ->addLabel("status", "Statut :")

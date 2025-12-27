@@ -621,13 +621,13 @@ table.sortable th.desc::after {
 
 /* Table GP Pole & Fastest Lap */
 /* Pour les noms des GP */
-.dashboard-table th.width-namegp-pp-fl,
-.dashboard-table td.width-namegp-pp-fl {
+.dashboard-table th.name-gp-verylong,
+.dashboard-table td.name-gp-verylong {
     width: 25%;
 }
 
 /* Pour les noms des GP */
-.dashboard-table td.width-namegp-pp-fl {
+.dashboard-table td.name-gp-verylong {
     font-size: 0.75rem;
 }
 
@@ -642,12 +642,12 @@ table.sortable th.desc::after {
 }
 
 /* Pour les noms des pilotes et teams */
-.dashboard-table td.driver-team-pp-fl {
+.dashboard-table td.text-long-responsive {
     font-size : 0.85rem;
 }
 
 @media screen and (max-width: 500px) {
-    .dashboard-table td.width-namegp-pp-fl {
+    .dashboard-table td.name-gp-verylong {
         font-size: 0.6rem;
     }
 
@@ -662,9 +662,64 @@ table.sortable th.desc::after {
     }
 
     /* Pour les noms des pilotes et teams */
-    .dashboard-table td.driver-team-pp-fl {
+    .dashboard-table td.text-long-responsive {
         font-size : 0.75rem;
     }
 }
 
+/* Table Catégories */
+/* Colonne active / desactive */
+.dashboard-table th.status,
+.dashboard-table td.status {
+    width: 60px;
+}
+
+.dashboard-table th.categories-color,
+.dashboard-table td.categories-color {
+    width: 60px;
+}
+
+/* Table Pays */
+/* Largeur de la colonne pour révéler résultats */
+.dashboard-table th.width-code,
+.dashboard-table td.width-code {
+    width: 60px;
+}
+
+/* Table Teams */
+.dashboard-table th.teams-color,
+.dashboard-table td.teams-color {
+    width: 50px;
+}
+
+.dashboard-table th.teams-logo,
+.dashboard-table td.teams-logo {
+    width: 80px;
+}
+
+.preview-logo {
+    width: auto;
+    max-width : 80px;
+    height: 15px;
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 500px) {
+    .dashboard-table th.teams-color,
+    .dashboard-table td.teams-color {
+        width: 20px;
+    }
+
+    .dashboard-table th.teams-logo,
+    .dashboard-table td.teams-logo {
+        width: 60px;
+    }
+
+    .preview-logo {
+        width: auto;
+        max-width : 60px;
+        height: 12px;
+        vertical-align: middle;
+    }
+}
 

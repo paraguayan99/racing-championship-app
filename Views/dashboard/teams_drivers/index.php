@@ -13,7 +13,7 @@
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin title-teams-drivers">
-                Associations Pilotes-Teams
+                Associations Pilotes - Teams
             </h2>
             <p class="dashboard-crud-subtitle">Insérer teams au classement pilotes sans impacter le constructeur</p>
         </div>
@@ -27,7 +27,7 @@
                 <tr>
                     <th class="width-small-info text-center">Saison</th>
                     <th>Pilote</th>
-                    <th>Écurie</th>
+                    <th>Team</th>
                     <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
@@ -36,9 +36,9 @@
                 <?php foreach ($list as $td): ?>
                     <?php if (isset($td->season_status) && $td->season_status === 'active'): ?>
                         <tr>
-                            <td class="width-small-info text-center upside"><?= htmlspecialchars($td->category_name ?? '') ?> - S<?= htmlspecialchars($td->season_number ?? '') ?></td>
-                            <td class="upside"><?= htmlspecialchars($td->driver) ?></td>
-                            <td class="upside"><?= htmlspecialchars($td->team) ?></td>
+                            <td class="width-small-info text-center down"><?= htmlspecialchars($td->category_name ?? '') ?> - S<?= htmlspecialchars($td->season_number ?? '') ?></td>
+                            <td class="down"><?= htmlspecialchars($td->driver) ?></td>
+                            <td class="down"><?= htmlspecialchars($td->team) ?></td>
                             <td class="width-actions text-center">
                                 <a class="action-btn edit" href="index.php?controller=teamsdrivers&action=update&id=<?= $td->id ?>">
                                     <i class="fa-solid fa-pen"></i>

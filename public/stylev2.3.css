@@ -676,15 +676,24 @@ footer {
     width: 90px;
 }
 
-/* Tableau : Classes pour permettre aux éléments trop longs de se cacher derrière la cellule suivante */
+/* Tableau : Classes pour permettre aux éléments trop longs 
+de se cacher derrière ou passer au dessus de la cellule suivante */
 
 table.fix{
   table-layout: fixed;
 }
 
-td.upside{
+/* Texte passes en dessous de la celulle suivante */
+th.down,
+td.down {
   white-space: nowrap;
   overflow: hidden;
+}
+
+/* Texte reste visible dans la celulle suivante */
+th.upside,
+td.upside {
+  white-space: nowrap;
 }
 
 /* Classe Mettre en gras une colonne */
@@ -748,15 +757,11 @@ td.upside{
     width: 25%;
 }
 
-/* Table GP Pole & Fastest Lap */
-/* Passe par dessus (pour Pole Position et Fastest Lap) */
-th.upside{
-  white-space: nowrap;
-}
+/* Table GP Pole & Fastest Lap / Table Pénalités */
 
 /* Pour les noms des GP */
-.dashboard-table th.width-namegp-pp-fl,
-.dashboard-table td.width-namegp-pp-fl {
+.dashboard-table th.name-gp-verylong,
+.dashboard-table td.name-gp-verylong {
     width: 30%;
 }
 
@@ -775,6 +780,46 @@ th.upside{
     font-weight: 600;
 }
 
+/* Table Catégories */
+/* Colonne active / desactive */
+.dashboard-table th.status,
+.dashboard-table td.status {
+    width: 100px;
+}
+
+.preview-color {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: var(--preview-color);
+    vertical-align: middle;
+}
+
+/* Table Pays */
+/* Largeur de la colonne pour révéler résultats */
+.dashboard-table th.width-code,
+.dashboard-table td.width-code {
+    width: 80px;
+}
+
+/* Table Teams */
+.dashboard-table th.teams-color,
+.dashboard-table td.teams-color {
+    width: 100px;
+}
+
+.dashboard-table th.teams-logo,
+.dashboard-table td.teams-logo {
+    width: 110px;
+}
+
+.preview-logo {
+    width: auto;
+    max-width : 110px;
+    height: 22px;
+    vertical-align: middle;
+}
 
 /* Message succès ou échec après une requete du CRUD */
 
@@ -834,6 +879,13 @@ th.upside{
 
 .form-group select {
     padding: 12px;
+}
+
+/* Checkbox pour supprimer la couleur dans la table Teams UPDATE */
+.form-group input[type="checkbox"] {
+    width: auto;
+    display: inline-block;
+    margin-left: 60px;
 }
 
 .form-group input:focus,
@@ -1309,7 +1361,14 @@ th.upside{
 /* Colonne Équipe */
 .teams-table td.team-cell,
 .teams-table th:nth-child(2) {
-    width: 60%;
+    width: 40.2%;
+}
+
+@media screen and (max-width: 1000px) {
+    .teams-table td.team-cell,
+    .teams-table th:nth-child(2) {
+        width: 48%;
+    }
 }
 
 /* Colonne Points */

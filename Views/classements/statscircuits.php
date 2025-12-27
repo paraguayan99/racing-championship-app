@@ -103,9 +103,9 @@
                         <span aria-hidden="true" class="label-short">Sai</span>
                     </th>
                     <th class="text-center th-responsive">
-                        <span class="label-aria">Jeu</span>
-                        <span aria-hidden="true" class="label-long">Jeu</span>
-                        <span aria-hidden="true" class="label-medium">Jeu</span>
+                        <span class="label-aria">Jeu vidéo</span>
+                        <span aria-hidden="true" class="label-long">Jeu vidéo</span>
+                        <span aria-hidden="true" class="label-medium">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-short">Jeu</span>
                     </th>
                     <th class="text-center th-responsive">

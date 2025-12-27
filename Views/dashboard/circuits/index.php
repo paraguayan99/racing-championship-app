@@ -24,23 +24,23 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
                     <th>Nom</th>
                     <th>Pays</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
+                    <th class="status text-center">Statut</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $circuit): ?>
                 <tr>
-                    <td><?= htmlspecialchars($circuit->name) ?></td>
-                    <td><?= htmlspecialchars($circuit->country) ?></td>
-                    <td><?= htmlspecialchars($circuit->status) ?></td>
-                    <td class="actions">
+                    <td class="down"><?= htmlspecialchars($circuit->name) ?></td>
+                    <td class="down"><?= htmlspecialchars($circuit->country) ?></td>
+                    <td class="status text-center down"><?= htmlspecialchars($circuit->status) ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=circuits&action=update&id=<?= $circuit->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

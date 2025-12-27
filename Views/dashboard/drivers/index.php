@@ -24,23 +24,23 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
                     <th>Pseudo</th>
                     <th>Pays</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
+                    <th class="status text-center">Statut</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $driver): ?>
                 <tr>
-                    <td><?= htmlspecialchars($driver->nickname) ?></td>
-                    <td><?= htmlspecialchars($driver->country) ?></td>
-                    <td><?= htmlspecialchars($driver->status) ?></td>
-                    <td class="actions">
+                    <td class="down"><?= htmlspecialchars($driver->nickname) ?></td>
+                    <td class="down"><?= htmlspecialchars($driver->country) ?></td>
+                    <td class="status text-center down"><?= htmlspecialchars($driver->status) ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=drivers&action=update&id=<?= $driver->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

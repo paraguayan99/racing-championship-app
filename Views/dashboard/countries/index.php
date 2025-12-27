@@ -24,23 +24,31 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
+                    <th class="width-code text-center">Code</th>
                     <th>Nom</th>
-                    <th>Code</th>
                     <th>Drapeau</th>
-                    <th>Actions</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $country): ?>
                 <tr>
-                    <td><?= htmlspecialchars($country->name) ?></td>
-                    <td><?= htmlspecialchars($country->code ?? '') ?></td>
-                    <td><?= htmlspecialchars($country->flag ?? '') ?></td>
-                    <td class="actions">
+                    <td class="width-code text-center"><?= htmlspecialchars($country->code ?? '') ?></td>
+                    <td class="down"><?= htmlspecialchars($country->name) ?></td>
+                    <td class="down">
+                        <?php if (!empty($country->flag)): ?>
+                            <img 
+                                src="<?= htmlspecialchars($country->flag) ?>" 
+                                alt="Drapeau <?= htmlspecialchars($country->name) ?>"
+                                class="drivers-teams-flag">
+                        <?php endif; ?>
+                        
+                        <?= htmlspecialchars($country->flag ?? '') ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=countries&action=update&id=<?= $country->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

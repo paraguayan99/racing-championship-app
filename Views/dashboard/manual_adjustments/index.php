@@ -22,25 +22,37 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table table-th-responsive fix">
             <thead>
                 <tr>
-                    <th>Saison</th>
+                    <th class="width-small-info text-center">Saison</th>
                     <th>Pilote</th>
                     <th>Équipe</th>
-                    <th>Points</th>
-                    <th>Commentaires</th>
-                    <th>Actions</th>
+                    <th class="th-responsive width-numbers text-center">
+                            <span class="label-aria">Points</span>
+                            <span aria-hidden="true" class="label-long">Points</span>
+                            <span aria-hidden="true" class="label-medium">Points</span>
+                            <span aria-hidden="true" class="label-short">Pts</span>
+                    </th>
+                    <th class="th-responsive text-center">
+                            <span class="label-aria">Commentaire</span>
+                            <span aria-hidden="true" class="label-long">Commentaire</span>
+                            <span aria-hidden="true" class="label-medium">Commentaire</span>
+                            <span aria-hidden="true" class="label-short">Com</span>
+                    </th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $adj): ?>
                 <tr>
-                    <td><?= htmlspecialchars($adj->category_name ?? '') ?> - Saison <?= htmlspecialchars($adj->season_number ?? '') ?></td>
-                    <td><?= htmlspecialchars($adj->driver_nickname ?? '') ?></td>
-                    <td><?= htmlspecialchars($adj->team_name ?? '') ?></td>
-                    <td>
+                    <td class="width-small-info text-center down">
+                        <?= htmlspecialchars($adj->category_name ?? '') ?> 
+                        - S<?= htmlspecialchars($adj->season_number ?? '') ?></td>
+                    <td class="down"><?= htmlspecialchars($adj->driver_nickname ?? '') ?></td>
+                    <td class="down"><?= htmlspecialchars($adj->team_name ?? '') ?></td>
+                    <td class="width-numbers text-center td-bold">
                         <?= htmlspecialchars(
                             rtrim(
                                 rtrim(number_format($adj->points, 1, '.', ''), '0'),
@@ -48,8 +60,8 @@
                             )
                         ) ?>
                     </td>
-                    <td><?= htmlspecialchars($adj->comment ?? '') ?></td>
-                    <td class="actions">
+                    <td class="down"><?= htmlspecialchars($adj->comment ?? '') ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=manualadjustments&action=update&id=<?= $adj->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

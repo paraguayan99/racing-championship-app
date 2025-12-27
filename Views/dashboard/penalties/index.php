@@ -22,32 +22,45 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table table-th-responsive fix">
             <thead>
                 <tr>
-                    <th>GP</th>
+                    <th class="name-gp-verylong text-center">GP</th>
                     <th>Pilote</th>
                     <th>Team</th>
-                    <th>Point(s) retiré(s)</th>
-                    <th>Commentaire</th>
-                    <th>Actions</th>
+                    <th class="th-responsive width-numbers text-center">
+                        <span class="label-aria">Pénalité</span>
+                            <span aria-hidden="true" class="label-long">Pénalité</span>
+                            <span aria-hidden="true" class="label-medium">Pénalité</span>
+                            <span aria-hidden="true" class="label-short">Pén</span>
+                    </th>
+                    <th class="th-responsive text-center">
+                            <span class="label-aria">Commentaire</span>
+                            <span aria-hidden="true" class="label-long">Commentaire</span>
+                            <span aria-hidden="true" class="label-medium">Commentaire</span>
+                            <span aria-hidden="true" class="label-short">Com</span>
+                    </th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $penalty): ?>
                 <tr>
-                    <td>
-                        <?= htmlspecialchars($penalty->category_name ?? '') ?>
-                        - Saison <?= htmlspecialchars($penalty->season_number ?? '') ?>
+                    <td class="name-gp-verylong down">
+                        <?= htmlspecialchars($penalty->category_name ?? '') ?> 
+                        - S<?= htmlspecialchars($penalty->season_number ?? '') ?> 
                         / GP <?= htmlspecialchars($penalty->gp_ordre ?? '') ?>
-                        - <?= htmlspecialchars($penalty->country_name ?? '') ?>
+                        <span class="country-code">
+                            <?= htmlspecialchars($penalty->country_code ?? '') ?>
+                            - <?= htmlspecialchars($penalty->circuit_name ?? '') ?>
+                        </span>
                     </td>
-                    <td><?= htmlspecialchars($penalty->driver_nickname ?? '') ?></td>
-                    <td><?= htmlspecialchars($penalty->team_name ?? '') ?></td>
-                    <td><?= htmlspecialchars($penalty->points_removed ?? '') ?></td>
-                    <td><?= htmlspecialchars($penalty->comment ?? '') ?></td>
-                    <td class="actions">
+                    <td class="text-long-responsive down"><?= htmlspecialchars($penalty->driver_nickname ?? '') ?></td>
+                    <td class="text-long-responsive down"><?= htmlspecialchars($penalty->team_name ?? '') ?></td>
+                    <td class="width-numbers text-center td-bold"><?= htmlspecialchars($penalty->points_removed ?? '') ?></td>
+                    <td class="text-long-responsive down"><?= htmlspecialchars($penalty->comment ?? '') ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=penalties&action=update&id=<?= $penalty->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

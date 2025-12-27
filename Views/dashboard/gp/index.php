@@ -37,10 +37,10 @@
                 <?php foreach ($list as $gp): ?>
                     <?php if (isset($gp->season_status) && $gp->season_status === 'active'): ?>
                         <tr>
-                            <td class="width-small-info text-center upside"><?= htmlspecialchars($gp->category ?? '') ?> - S<?= htmlspecialchars($gp->season_number ?? '') ?></td>
+                            <td class="width-small-info text-center down"><?= htmlspecialchars($gp->category ?? '') ?> - S<?= htmlspecialchars($gp->season_number ?? '') ?></td>
                             <td class="width-numbers text-center"><?= htmlspecialchars($gp->gp_ordre ?? '') ?></td>
-                            <td class="upside"><?= htmlspecialchars($gp->circuit_name ?? '') ?></td>
-                            <td class="upside"><?= htmlspecialchars($gp->countryName ?? '') ?></td>
+                            <td class="down"><?= htmlspecialchars($gp->circuit_name ?? '') ?></td>
+                            <td class="down"><?= htmlspecialchars($gp->countryName ?? '') ?></td>
                             <td class="width-actions text-center">
                                 <a class="action-btn edit" href="index.php?controller=gp&action=update&id=<?= $gp->id ?>">
                                     <i class="fa-solid fa-pen"></i>

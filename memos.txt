@@ -8,8 +8,10 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-DASHBOARD : 
-2/ RESPONSIVE des tableaux du CRUD
+FAIRE PAGE MENTIONS LEGALES et le SITEMAP
+
+RESPONSIVE PAGE CLASSEMENTS / PALMARES / CIRCUITS : 
+Enlever tout le JavaScript et utiliser le CSS table fix et upside / down pour cacher les textes longs
 
 PAGE PALMARES : Ajouter logo TEAM et color background
 
