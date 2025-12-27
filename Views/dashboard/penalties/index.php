@@ -30,7 +30,7 @@
                     <th>Team</th>
                     <th>Point(s) retiré(s)</th>
                     <th>Commentaire</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

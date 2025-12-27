@@ -30,7 +30,7 @@
                     <th>Nom</th>
                     <th>Couleur</th>
                     <th>Status</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

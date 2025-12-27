@@ -30,7 +30,7 @@
                     <th>Pseudo</th>
                     <th>Pays</th>
                     <th>Statut</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

@@ -576,3 +576,95 @@ table.sortable th.desc::after {
     }
 }
 
+/* DASHBOARD */
+
+/* Tableaux du CRUD */
+/* Boutons actions Update Delete */
+
+.action-btn {
+    padding: 2px 10px;
+}
+
+.dashboard-table th.width-actions,
+.dashboard-table td.width-actions {
+    width: 87px;
+}
+
+/* Pour colonne */
+.dashboard-table th.width-small-info,
+.dashboard-table td.width-small-info {
+    width: 70px;
+}
+
+/* Numbers à 1 ou 2 chiffres */
+.dashboard-table th.width-numbers,
+.dashboard-table td.width-numbers {
+    width: 30px;
+}
+
+/* TABLE GP Résultats */
+/* Largeur du bouton pour révéler résultats */
+.btn-reveal-gp {
+    width: 40px;
+}
+
+/* Largeur de la colonne pour révéler résultats */
+.dashboard-table th.width-reveal-gp,
+.dashboard-table td.width-reveal-gp {
+    width: 50px;
+}
+
+/* Colonne noms des pilotes et teams */
+.width-gp-points-main {
+    width: 30%;
+}
+
+/* Table GP Pole & Fastest Lap */
+/* Pour les noms des GP */
+.dashboard-table th.width-namegp-pp-fl,
+.dashboard-table td.width-namegp-pp-fl {
+    width: 25%;
+}
+
+/* Pour les noms des GP */
+.dashboard-table td.width-namegp-pp-fl {
+    font-size: 0.75rem;
+}
+
+/* Pour les chronos */
+.dashboard-table th.width-chrono,
+.dashboard-table td.width-chrono {
+    width: 60px;
+}
+
+.dashboard-table .badge-purple-dashboard {
+    font-size: 0.75rem;
+}
+
+/* Pour les noms des pilotes et teams */
+.dashboard-table td.driver-team-pp-fl {
+    font-size : 0.85rem;
+}
+
+@media screen and (max-width: 500px) {
+    .dashboard-table td.width-namegp-pp-fl {
+        font-size: 0.6rem;
+    }
+
+    /* Pour les chronos */
+    .dashboard-table th.width-chrono,
+    .dashboard-table td.width-chrono {
+        width: 40px;
+    }
+
+    .dashboard-table .badge-purple-dashboard {
+        font-size: 0.6rem;
+    }
+
+    /* Pour les noms des pilotes et teams */
+    .dashboard-table td.driver-team-pp-fl {
+        font-size : 0.75rem;
+    }
+}
+
+

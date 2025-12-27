@@ -22,13 +22,13 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
-                    <th>Saison</th>
+                    <th class="width-small-info text-center">Saison</th>
                     <th>Pilote</th>
                     <th>Écurie</th>
-                    <th class="actions-column">Actions</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
@@ -36,10 +36,10 @@
                 <?php foreach ($list as $td): ?>
                     <?php if (isset($td->season_status) && $td->season_status === 'active'): ?>
                         <tr>
-                            <td><?= htmlspecialchars($td->category_name ?? '') ?> - Saison <?= htmlspecialchars($td->season_number ?? '') ?></td>
-                            <td><?= htmlspecialchars($td->driver) ?></td>
-                            <td><?= htmlspecialchars($td->team) ?></td>
-                            <td class="actions">
+                            <td class="width-small-info text-center upside"><?= htmlspecialchars($td->category_name ?? '') ?> - S<?= htmlspecialchars($td->season_number ?? '') ?></td>
+                            <td class="upside"><?= htmlspecialchars($td->driver) ?></td>
+                            <td class="upside"><?= htmlspecialchars($td->team) ?></td>
+                            <td class="width-actions text-center">
                                 <a class="action-btn edit" href="index.php?controller=teamsdrivers&action=update&id=<?= $td->id ?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>

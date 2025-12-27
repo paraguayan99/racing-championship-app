@@ -37,7 +37,8 @@ class GpStatsModel extends DbConnect {
                 d2.nickname AS fl_driver_name,
 
                 ci.name AS circuit_name,
-                co.name AS country_name
+                co.name AS country_name,
+                co.code AS country_code
 
             FROM gp_stats
 

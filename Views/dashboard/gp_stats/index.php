@@ -22,33 +22,71 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table table-th-responsive fix">
             <thead>
                 <tr>
-                    <th>GP</th>
-                    <th>Pole Position - Pilote</th>
-                    <th>Pole Position - Temps</th>
-                    <th>Meilleur Tour - Pilote</th>
-                    <th>Meilleur Tour - Temps</th>
-                    <th class="actions-column">Actions</th>
+                    <th class="width-namegp-pp-fl text-center">GP</th>
+                    <th class="upside">Pole Position</th>
+                    <th class="width-chrono"></th>
+                    <th class="upside">Fastest Lap</th>
+                    <th class="width-chrono"></th>
+                    <th class="width-actions text-center">Actions</th>
+                </tr>
+                <tr>
+                    <th class="width-namegp-pp-fl"></th>
+                    <th class="th-responsive">
+                            <span class="label-aria">Pilote</span>
+                            <span aria-hidden="true" class="label-long">Pilote</span>
+                            <span aria-hidden="true" class="label-medium">Pilote</span>
+                            <span aria-hidden="true" class="label-short">Pil</span>
+                    </th>
+                    <th class="th-responsive width-chrono text-center">
+                            <span class="label-aria">Chrono</span>
+                            <span aria-hidden="true" class="label-long">Chrono</span>
+                            <span aria-hidden="true" class="label-medium">Chrono</span>
+                            <span aria-hidden="true" class="label-short">Chro</span>
+                    </th>
+                    <th class="th-responsive">
+                            <span class="label-aria">Pilote</span>
+                            <span aria-hidden="true" class="label-long">Pilote</span>
+                            <span aria-hidden="true" class="label-medium">Pilote</span>
+                            <span aria-hidden="true" class="label-short">Pil</span>
+                    </th>
+                    <th class="th-responsive width-chrono text-center">
+                            <span class="label-aria">Chrono</span>
+                            <span aria-hidden="true" class="label-long">Chrono</span>
+                            <span aria-hidden="true" class="label-medium">Chrono</span>
+                            <span aria-hidden="true" class="label-short">Chro</span>
+                    </th>
+                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($list as $stat): ?>
                 <tr>
-                    <td>
+                    <td class="width-namegp-pp-fl upside">
                         <?= htmlspecialchars($stat->category_name ?? '') ?> 
-                        - Saison <?= htmlspecialchars($stat->season_number ?? '') ?> 
-                        / GP <?= htmlspecialchars($stat->gp_ordre ?? '') ?> 
-                        - <?= htmlspecialchars($stat->country_name ?? '') ?> 
-                        - <?= htmlspecialchars($stat->circuit_name ?? '') ?>
+                        - S<?= htmlspecialchars($stat->season_number ?? '') ?> 
+                        / GP <?= htmlspecialchars($stat->gp_ordre ?? '') ?>
+                        <span class="country-code">
+                            <?= htmlspecialchars($stat->country_code ?? '') ?>
+                            - <?= htmlspecialchars($stat->circuit_name ?? '') ?>
+                        </span>
                     </td>
-                    <td><?= htmlspecialchars($stat->pole_driver_name ?? '') ?></td>
-                    <td><?= htmlspecialchars($stat->pole_position_time ?? '') ?></td>
-                    <td><?= htmlspecialchars($stat->fl_driver_name ?? '') ?></td>
-                    <td><?= htmlspecialchars($stat->fastest_lap_time ?? '') ?></td>
-                    <td class="actions">
+                    <td class="driver-team-pp-fl upside"><?= htmlspecialchars($stat->pole_driver_name ?? '') ?></td>
+                    <td class="width-chrono text-center">
+                        <span class="badge-purple-dashboard">
+                            <?= htmlspecialchars($stat->pole_position_time ?? '') ?>
+                        </span>
+                    </td>
+                    <td class="driver-team-pp-fl upside"><?= htmlspecialchars($stat->fl_driver_name ?? '') ?></td>
+                    <td class="width-chrono text-center">
+                        <span class="badge-purple-dashboard">
+                            <?= htmlspecialchars($stat->fastest_lap_time ?? '') ?>
+                        </span>
+                    </td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=gpstats&action=update&gp_id=<?= $stat->gp_id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

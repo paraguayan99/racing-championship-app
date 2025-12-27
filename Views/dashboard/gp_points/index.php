@@ -22,17 +22,42 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table table-th-responsive fix">
             <thead>
                 <tr>
-                    <th></th>
-                    <th>GP</th>
-                    <th>Pilote</th>
-                    <th>Team</th>
-                    <th>Position</th>
-                    <th>Points numériques</th>
-                    <th>Points texte</th>
-                    <th class="actions-column">Actions</th>
+                    <th class="th-responsive width-reveal-gp">
+                            <span class="label-aria">Voir résultats</span>
+                            <span aria-hidden="true" class="label-long"></span>
+                            <span aria-hidden="true" class="label-medium"></span>
+                            <span aria-hidden="true" class="label-short"></span>
+                    </th>
+                    <th class="th-responsive">
+                            <span class="label-aria">GP</span>
+                            <span aria-hidden="true" class="label-long"></span>
+                            <span aria-hidden="true" class="label-medium"></span>
+                            <span aria-hidden="true" class="label-short"></span>
+                    </th>
+                    <th class="width-gp-points-main">Pilote</th>
+                    <th class="width-gp-points-main">Team</th>
+                    <th class="th-responsive width-numbers text-center">
+                            <span class="label-aria">Position</span>
+                            <span aria-hidden="true" class="label-long">Position</span>
+                            <span aria-hidden="true" class="label-medium">Positi</span>
+                            <span aria-hidden="true" class="label-short">Pos</span>
+                    </th>
+                    <th class="th-responsive width-numbers text-center">
+                            <span class="label-aria">Points</span>
+                            <span aria-hidden="true" class="label-long">Points</span>
+                            <span aria-hidden="true" class="label-medium">Points</span>
+                            <span aria-hidden="true" class="label-short">Pts</span>
+                    </th>
+                    <th class="th-responsive width-3-letters text-center">
+                            <span class="label-aria">DNF / DNS / DSQ</span>
+                            <span aria-hidden="true" class="label-long"></span>
+                            <span aria-hidden="true" class="label-medium"></span>
+                            <span aria-hidden="true" class="label-short"></span>
+                    </th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
@@ -46,8 +71,8 @@
                     if ($gpKey !== $currentGP):
                         $currentGP = $gpKey;
                 ?>
-                <tr class="gp-summary" data-gp="<?= $gpKey ?>">
-                    <td><button class="btn-reveal-gp"><i class="fa-solid fa-arrow-down"></i></button></td>
+                <tr data-gp="<?= $gpKey ?>">
+                    <td class="width-reveal-gp text-center"><button class="btn-reveal-gp"><i class="fa-solid fa-arrow-down"></i></button></td>
                     <td colspan="7">
                         <?= htmlspecialchars($pt->category_name ?? '') ?> 
                         - Saison <?= htmlspecialchars($pt->season_number ?? '') ?> 
@@ -58,14 +83,13 @@
                 <?php endif; ?>
 
                 <tr class="gp-detail" data-gp="<?= $gpKey ?>" style="display:none;">
-                    <td></td>
-                    <td></td>
-                    <td><?= htmlspecialchars($pt->driver_nickname ?? '') ?></td>
-                    <td><?= htmlspecialchars($pt->team_name ?? '') ?></td>
-                    <td><?= $pt->position === null ? '' : $pt->position ?></td>
-                    <td><?= htmlspecialchars(rtrim(rtrim(number_format($pt->points_numeric, 1, '.', ''), '0'), '.')) ?></td>
-                    <td><?= htmlspecialchars($pt->points_text ?? '') ?></td>
-                    <td class="actions">
+                    <td colspan="2"></td>
+                    <td class="width-gp-results-main upside"><?= htmlspecialchars($pt->driver_nickname ?? '') ?></td>
+                    <td class="width-gp-results-main upside"><?= htmlspecialchars($pt->team_name ?? '') ?></td>
+                    <td class="width-numbers text-center"><?= $pt->position === null ? '' : $pt->position ?></td>
+                    <td class="width-numbers text-center td-bold"><?= htmlspecialchars(rtrim(rtrim(number_format($pt->points_numeric, 1, '.', ''), '0'), '.')) ?></td>
+                    <td class="width-3-letters text-center"><?= htmlspecialchars($pt->points_text ?? '') ?></td>
+                    <td class="width-actions text-center">
                         <a class="action-btn edit" href="index.php?controller=gppoints&action=update&id=<?= $pt->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>

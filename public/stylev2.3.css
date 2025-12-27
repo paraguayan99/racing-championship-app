@@ -659,14 +659,38 @@ footer {
     opacity: 1;
 }
 
+/* Dashboard Largeurs des colonnes des tableaux des index du CRUD */
 
+.dashboard-table th.width-actions,
+.dashboard-table td.width-actions {
+    width: 130px;
+}
 
+.dashboard-table th.width-numbers,
+.dashboard-table td.width-numbers {
+    width: 60px;
+}
 
+.dashboard-table th.width-small-info,
+.dashboard-table td.width-small-info {
+    width: 90px;
+}
 
+/* Tableau : Classes pour permettre aux éléments trop longs de se cacher derrière la cellule suivante */
 
+table.fix{
+  table-layout: fixed;
+}
 
-.actions-column {
-    text-align: center;
+td.upside{
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Classe Mettre en gras une colonne */
+
+.td-bold {
+    font-weight: 700;
 }
 
 /* Icones Update et Delete dans les Index des tables de la BDD */
@@ -699,6 +723,58 @@ footer {
     background: white;
     color: #E10600;
 }
+
+/* TABLE GP Résultats */
+/* colonne du nom du GP */
+.dashboard-table th.width-gp-hidden,
+.dashboard-table td.width-gp-hidden {
+    width: 20px;
+}
+
+/* Largeur de la colonne pour révéler résultats */
+.dashboard-table th.width-reveal-gp,
+.dashboard-table td.width-reveal-gp {
+    width: 70px;
+}
+
+/* Pour DNF DNS DSQ */
+.dashboard-table th.width-3-letters,
+.dashboard-table td.width-3-letters {
+    width: 40px;
+}
+
+/* Colonne noms des pilotes et teams */
+.width-gp-points-main {
+    width: 25%;
+}
+
+/* Table GP Pole & Fastest Lap */
+/* Passe par dessus (pour Pole Position et Fastest Lap) */
+th.upside{
+  white-space: nowrap;
+}
+
+/* Pour les noms des GP */
+.dashboard-table th.width-namegp-pp-fl,
+.dashboard-table td.width-namegp-pp-fl {
+    width: 30%;
+}
+
+/* Pour les chronos */
+.dashboard-table th.width-chrono,
+.dashboard-table td.width-chrono {
+    width: 100px;
+}
+
+.badge-purple-dashboard {
+    background: #8e44ad;
+    color: white;
+    padding: 1px 2px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
 
 /* Message succès ou échec après une requete du CRUD */
 

@@ -30,7 +30,7 @@
                     <th>Nom</th>
                     <th>Code</th>
                     <th>Drapeau</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

@@ -32,7 +32,7 @@
                     <th>Jeu vidéo</th>
                     <th>Plateforme</th>
                     <th>Status</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

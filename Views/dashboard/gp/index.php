@@ -22,14 +22,14 @@
     </div>
 
     <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix">
             <thead>
                 <tr>
-                    <th>Saison</th>
-                    <th>Ordre</th>
+                    <th class="width-small-info text-center">Saison</th>
+                    <th class="width-numbers text-center">N°</th>
                     <th>Circuit</th>
                     <th>Pays</th>
-                    <th class="actions-column">Actions</th>
+                    <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
 
@@ -37,11 +37,11 @@
                 <?php foreach ($list as $gp): ?>
                     <?php if (isset($gp->season_status) && $gp->season_status === 'active'): ?>
                         <tr>
-                            <td><?= htmlspecialchars($gp->category ?? '') ?> - Saison <?= htmlspecialchars($gp->season_number ?? '') ?></td>
-                            <td><?= htmlspecialchars($gp->gp_ordre ?? '') ?></td>
-                            <td><?= htmlspecialchars($gp->circuit_name ?? '') ?></td>
-                            <td><?= htmlspecialchars($gp->countryName ?? '') ?></td>
-                            <td class="actions">
+                            <td class="width-small-info text-center upside"><?= htmlspecialchars($gp->category ?? '') ?> - S<?= htmlspecialchars($gp->season_number ?? '') ?></td>
+                            <td class="width-numbers text-center"><?= htmlspecialchars($gp->gp_ordre ?? '') ?></td>
+                            <td class="upside"><?= htmlspecialchars($gp->circuit_name ?? '') ?></td>
+                            <td class="upside"><?= htmlspecialchars($gp->countryName ?? '') ?></td>
+                            <td class="width-actions text-center">
                                 <a class="action-btn edit" href="index.php?controller=gp&action=update&id=<?= $gp->id ?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>

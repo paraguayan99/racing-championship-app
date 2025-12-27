@@ -29,7 +29,7 @@
                 <tr>
                     <th>Rôle</th>
                     <th>Email</th>
-                    <th class="actions-column">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

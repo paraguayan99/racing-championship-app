@@ -144,3 +144,20 @@ table.sortable th.desc::after {
 .home-nav-btn-dashboard h3 {
     font-size: 1rem ;
 }
+
+/* Table GP Pole & Fastest Lap */
+/* Pour les noms des GP */
+.dashboard-table td.width-namegp-pp-fl {
+    font-size: 0.75rem;
+}
+
+/* Pour les noms des pilotes et teams */
+.dashboard-table td.driver-team-pp-fl {
+    font-size : 0.85rem;
+}
+
+/* Pour les chronos */
+.dashboard-table th.width-chrono,
+.dashboard-table td.width-chrono {
+    width: 80px;
+}
