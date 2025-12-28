@@ -61,7 +61,7 @@
     </nav>
 
     <div class="logo_footer">
-        <p>© 2025 Team-eRacing</p>
+        <p>© 2026 Team-eRacing.fr</p>
         <a href="index.php">
             <img src="img/logo_team_eracing.png" alt="Logo Team-eRacing">
         </a>
