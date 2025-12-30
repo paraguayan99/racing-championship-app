@@ -77,7 +77,8 @@
                         <?= htmlspecialchars($pt->category_name ?? '') ?> 
                         - Saison <?= htmlspecialchars($pt->season_number ?? '') ?> 
                         / GP <?= htmlspecialchars($pt->gp_ordre ?? '') ?> 
-                        - <?= htmlspecialchars($pt->country_name ?? '') ?>
+                        - <?= htmlspecialchars($pt->circuit_name ?? '') ?>
+                        (<?= htmlspecialchars($pt->country_name ?? '') ?>)
                     </td>
                 </tr>
                 <?php endif; ?>

@@ -37,10 +37,13 @@ class GpPointsController extends Controller {
         $allGps = GpModel::all(); 
         $circuits = CircuitsModel::all();
 
-        // Tableau circuit_id => country_name
-        $circuitCountries = [];
+        // Tableau circuit_id => ['name' => ..., 'country' => ...]
+        $circuitData = [];
         foreach ($circuits as $c) {
-            $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
+            $circuitData[$c->id] = [
+                'name'    => $c->name ?? 'Circuit inconnu',
+                'country' => $c->country ?? 'Pays inconnu'
+            ];
         }
 
         // Préparer la liste des GP pour le select
@@ -48,11 +51,16 @@ class GpPointsController extends Controller {
         foreach ($seasons as $s) {
             foreach ($allGps as $gp) {
                 if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
-                                    . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
-                                    . " - " . $countryName;
+
+                    $countryName = $circuitData[$gp->circuit_id]['country'] ?? 'Pays inconnu';
+                    $circuitName = $circuitData[$gp->circuit_id]['name'] ?? 'Circuit inconnu';
+
+                    $gps[$gp->id] =
+                        $gp->category
+                        . " - Saison " . $s->season_number
+                        . " / GP " . $gp->gp_ordre
+                        . " - " . $circuitName
+                        . " (" . $countryName . ")";
                 }
             }
         }
@@ -67,7 +75,7 @@ class GpPointsController extends Controller {
                 // Position peut être null si non renseigné
                 $position = !empty($_POST['position']) ? intval($_POST['position']) : null;
 
-                // Points numériques, support demi-points et virgule
+                // Points, support demi-points et virgule
                 $points_numeric = !empty($_POST['points_numeric']) ? floatval(str_replace(',', '.', $_POST['points_numeric'])) : 0;
 
                 // Points textes, 3 lettres max et convertit en majuscule
@@ -93,7 +101,7 @@ class GpPointsController extends Controller {
                     }
 
                 } catch (\PDOException $e) {
-                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points numériques doivent être un chiffre positif (0.5pt autorisé)";
+                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points doivent être un chiffre positif (0.5pt autorisé)";
                     $classMsg = "msg-error";
                 }
 
@@ -122,9 +130,9 @@ class GpPointsController extends Controller {
             ->addSelect("team_id", array_column($teams, 'name', 'id'))
             ->addLabel("position", "Position :")
             ->addInput("number", "position")
-            ->addLabel("points_numeric", "Points numériques :")
+            ->addLabel("points_numeric", "Points :")
             ->addInput("number", "points_numeric", ["step" => "0.5"])
-            ->addLabel("points_text", "Points texte :")
+            ->addLabel("points_text", "DNF-DNS-DSQ :")
             ->addInput("text", "points_text")
             ->addSubmit("Créer")
             ->endForm();
@@ -173,20 +181,30 @@ class GpPointsController extends Controller {
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
-        $circuitCountries = [];
+        // Tableau circuit_id => ['name' => ..., 'country' => ...]
+        $circuitData = [];
         foreach ($circuits as $c) {
-            $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
+            $circuitData[$c->id] = [
+                'name'    => $c->name ?? 'Circuit inconnu',
+                'country' => $c->country ?? 'Pays inconnu'
+            ];
         }
 
+        // Préparer la liste des GP pour le select
         $gps = [];
         foreach ($seasons as $s) {
             foreach ($allGps as $gp) {
                 if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
-                                    . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
-                                    . " - " . $countryName;
+
+                    $countryName = $circuitData[$gp->circuit_id]['country'] ?? 'Pays inconnu';
+                    $circuitName = $circuitData[$gp->circuit_id]['name'] ?? 'Circuit inconnu';
+
+                    $gps[$gp->id] =
+                        $gp->category
+                        . " - Saison " . $s->season_number
+                        . " / GP " . $gp->gp_ordre
+                        . " - " . $circuitName
+                        . " (" . $countryName . ")";
                 }
             }
         }
@@ -223,7 +241,7 @@ class GpPointsController extends Controller {
                         $classMsg = "msg-error";
                     }
                 } catch (\PDOException $e) {
-                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points numériques doivent être un chiffre positif (0.5pt autorisé)";
+                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points doivent être un chiffre positif (0.5pt autorisé)";
                     $classMsg = "msg-error";
                 }
 
@@ -252,9 +270,9 @@ class GpPointsController extends Controller {
             ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $point->team_id])
             ->addLabel("position", "Position :")
             ->addInput("number", "position", ["value" => $point->position ?? ''])
-            ->addLabel("points_numeric", "Points numériques :")
+            ->addLabel("points_numeric", "Points :")
             ->addInput("number", "points_numeric", ["step" => "0.5", "value" => $point->points_numeric])
-            ->addLabel("points_text", "Points texte :")
+            ->addLabel("points_text", "DNF-DNS-DSQ :")
             ->addInput("text", "points_text", ["value" => $point->points_text ?? ''])
             ->addSubmit("Mettre à jour")
             ->endForm();

@@ -321,7 +321,7 @@ footer {
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     margin: 10px 0px;
-    color: #fff;
+    color: white;
 }
 
 /* Texte secondaire mais dans le h1 pour le SEO */
@@ -345,7 +345,7 @@ footer {
     font-family: 'Poppins', sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #fff;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -516,7 +516,7 @@ footer {
 .discord-btn {
     white-space: nowrap;
     background: #5865F2;
-    color: #fff;
+    color: white;
     padding: 22px 22px;
     border-radius: 18px;
     font-size: 1.125rem;
@@ -876,7 +876,7 @@ td.upside {
     display: block;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #ffffff;
+    color: white;
 }
 
 .form-group input,
@@ -1229,10 +1229,10 @@ td.upside {
 /* Podiums */
 .badge-gold { background: #ffd700; color: #000; }
 .badge-silver { background: #c0c0c0; color: #000; }
-.badge-bronze { background: #cd7f32; color: #fff; }
+.badge-bronze { background: #cd7f32; color: #d4d7dd;; }
 
 /* Positions 4+ */
-.badge-normal { background: #15151E; color: #fff; }
+.badge-normal { background: #15151E; color: #d4d7dd;; }
 
 /* Colonne Pilote */
 .driver-cell {
@@ -1262,6 +1262,7 @@ td.upside {
 
 .drivers-teams-flag {
     height: 12px;
+    border-radius: 3px;
     margin-right: 6px;
     vertical-align: middle;
 }
@@ -1285,7 +1286,7 @@ td.upside {
 /* Classement Pilotes uniquement */
 .drivers-table thead th:nth-child(1)::after { content: ""; }
 .drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: ""; }
+.drivers-table thead th:nth-child(3)::after { content: "Équipe"; }
 .drivers-table thead th:nth-child(4)::after { content: "Pts"; }
 .drivers-table thead th:nth-child(5)::after { content: "GP"; }
 .drivers-table thead th:nth-child(6)::after { content: "Vict"; }
@@ -1311,6 +1312,13 @@ td.upside {
 .drivers-table td.team-cell,
 .drivers-table th:nth-child(3) {
     width: 20%;
+}
+
+.drivers-table .team-name,
+.modal-gp-results-table .team-name {
+    text-shadow:     
+        0 0 4px rgba(0,0,0,1),
+        0 0 10px rgba(0,0,0,.7);
 }
 
 /* Colonne Points */
@@ -1823,6 +1831,7 @@ table.sortable th.no-sort::after {
 
 .selected-circuit img.circuit-flag {
     width: 32px;
+    border-radius: 4px;
     height: auto;
 }
 

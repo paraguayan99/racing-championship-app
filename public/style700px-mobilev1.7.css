@@ -316,7 +316,7 @@ footer nav {
 /* Classement Pilotes uniquement */
 .drivers-table thead th:nth-child(1)::after { content: ""; }
 .drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: ""; }
+.drivers-table thead th:nth-child(3)::after { content: "Equ"; }
 .drivers-table thead th:nth-child(4)::after { content: "Pts"; }
 .drivers-table thead th:nth-child(5)::after { content: "GP"; }
 .drivers-table thead th:nth-child(6)::after { content: "Vi"; }
