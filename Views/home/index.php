@@ -153,6 +153,7 @@
     </div>
 </section>
 
+<!-- Améliore le réferencement naturel SEO -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -187,6 +188,7 @@
 }
 </script>
 
+<!-- Flèche pour le retour en haut de page -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".hero-section");

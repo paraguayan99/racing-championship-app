@@ -40,6 +40,9 @@ class Form
     // Méthode permettant de générer la balise ouvrante HTML du formulaire
     public function startForm(string $action = '#', string $method = "POST", array $attributes = []): self
     {
+        // XSS Échapper action et method pour prévenir toute injection
+        $action = htmlspecialchars($action, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $method = htmlspecialchars($method, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         // On commence la creation du formulaire avec l'ouverture de la balise form et ses attribututs action method
         // AJOUT DE LA CLASSE CSS
         $this->formElements = "<form action='$action' method='$method' class='login-form'";
@@ -54,7 +57,8 @@ class Form
         // DEBUT DE LA DIV DE LA CLASSE CSS
         $this->formElements .= "<div class='form-group'><label for='$for'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
-        $this->formElements .= "$text</label>";
+        // $this->formElements .= "$text</label>";
+        $this->formElements .= htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "</label>";
         return $this;
     }
 
@@ -93,7 +97,8 @@ class Form
         // On ajoute la balise textarea et l'attribut name
         $this->formElements .= "<textarea name='$name'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
-        $this->formElements .= "$text</textarea>";
+        // $this->formElements .= "$text</textarea>";
+        $this->formElements .= htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "</textarea>";
         return $this;
     }
 
@@ -142,7 +147,12 @@ class Form
     public function addSubmit($value = "Envoyer", $class = "btn")
     {
         $this->formElements .= '<div class="form-group">';
-        $this->formElements .= '<button type="submit" class="'.$class.'">'.$value.'</button>';
+        // $this->formElements .= '<button type="submit" class="'.$class.'">'.$value.'</button>';
+        $this->formElements .= '<button 
+                                    type="submit" 
+                                    class="'.htmlspecialchars($class, ENT_QUOTES, 'UTF-8')
+                                        .'">'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+                                        .'</button>';
         $this->formElements .= '</div>';
 
         return $this;
@@ -186,7 +196,8 @@ class Form
     public function addCSRF(): self
     {
         $token = \App\Core\Auth::csrfToken();
-        $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
+        // $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
+        $this->formElements .= "<input type='hidden' name='csrf_token' value='".htmlspecialchars($token, ENT_QUOTES, 'UTF-8')."'>";
         return $this;
     }
 

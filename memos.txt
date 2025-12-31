@@ -66,19 +66,3 @@ ______________________________________
 La colonne active / desactive des catégories n'a pas d'incidence sur les autres tables de la BDD
 
 ______________________________________
--- REQUETES SQL POUR AUTO INCREMENTER A L'ID le plus petit sur toutes les tables
-
-ALTER TABLE categories AUTO_INCREMENT = 1;
-ALTER TABLE circuits AUTO_INCREMENT = 1;
-ALTER TABLE countries AUTO_INCREMENT = 1;
-ALTER TABLE drivers AUTO_INCREMENT = 1;
-ALTER TABLE gp AUTO_INCREMENT = 1;
-ALTER TABLE gp_points AUTO_INCREMENT = 1;
-ALTER TABLE manual_adjustments AUTO_INCREMENT = 1;
-ALTER TABLE penalties AUTO_INCREMENT = 1;
-ALTER TABLE roles AUTO_INCREMENT = 1;
-ALTER TABLE seasons AUTO_INCREMENT = 1;
-ALTER TABLE teams AUTO_INCREMENT = 1;
-ALTER TABLE teams_drivers AUTO_INCREMENT = 1;
-ALTER TABLE updates_log AUTO_INCREMENT = 1;
-ALTER TABLE users AUTO_INCREMENT = 1;
