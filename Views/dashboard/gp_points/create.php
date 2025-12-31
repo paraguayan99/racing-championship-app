@@ -1,5 +1,11 @@
 <?php $title = "Team-eRacing - GP - Résultats"; ?>
 
+<?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
+    <div class="<?= htmlspecialchars($classMsg) ?>">
+        <?= htmlspecialchars($message ?? '') ?>
+    </div>
+<?php endif; ?>
+
 <div class="section-dashboard">
 
     <div class="section-header">
@@ -11,12 +17,6 @@
             </h2>
         </div>
     </div>
-
-    <?php if (!empty($message)): ?>
-        <div class="<?= htmlspecialchars($classMsg) ?>">
-            <?= htmlspecialchars($message) ?>
-        </div>
-    <?php endif; ?>
 
     <?= $form->getFormElements(); ?>
 

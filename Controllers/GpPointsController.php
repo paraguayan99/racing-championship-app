@@ -30,6 +30,7 @@ class GpPointsController extends Controller {
     {
         $message = '';
         $classMsg = '';
+        $isSuccess = false;
 
         $seasons = SeasonsModel::getActive();
         $drivers = DriversModel::getActive();
@@ -94,6 +95,7 @@ class GpPointsController extends Controller {
                     if ($stmt->execute([$gp_id, $driver_id, $team_id, $position, $points_numeric, $points_text])) {
                         $message = "Résultat créé avec succès";
                         $classMsg = "msg-success";
+                        $isSuccess = true;
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'create');
                     } else {
                         $message = "Erreur lors de la création";
@@ -109,13 +111,19 @@ class GpPointsController extends Controller {
                 $message = "Création échouée : informations manquantes";
                 $classMsg = "msg-error";
             }
+        }
 
-            $this->render('dashboard/gp_points/index', [
-                'list' => GpPointsModel::allWithSeasonActive(),
-                'message' => $message,
-                'classMsg' => $classMsg
-            ]);
-            return;
+        // Récupération de l'id du GP si formulaire soumis pour resélectionner le même GP
+        $selectedGpId = $_POST['gp_id'] ?? null;
+
+        // Récupération du driver et du team si la création a échoué
+        $selectedDriverId = $_POST['driver_id'] ?? null;
+        $selectedTeamId   = $_POST['team_id'] ?? null;
+
+        // Driver et Team réinitialisé si la création a été exécutée
+        if ($isSuccess) {
+            $selectedDriverId = null;
+            $selectedTeamId = null;
         }
 
         // Formulaire
@@ -123,17 +131,22 @@ class GpPointsController extends Controller {
         $form->startForm("index.php?controller=gppoints&action=create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
-            ->addSelect("gp_id", $gps)
+            ->addSelect("gp_id", $gps, ["value" => $selectedGpId])
             ->addLabel("driver_id", "Pilote :")
-            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'))
+            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'), ["value" => $selectedDriverId])
             ->addLabel("team_id", "Team :")
-            ->addSelect("team_id", array_column($teams, 'name', 'id'))
+            ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $selectedTeamId])
             ->addLabel("position", "Position :")
             ->addInput("number", "position")
             ->addLabel("points_numeric", "Points :")
             ->addInput("number", "points_numeric", ["step" => "0.5"])
             ->addLabel("points_text", "DNF-DNS-DSQ :")
-            ->addInput("text", "points_text")
+            ->addInput("text", "points_text", [
+                "maxlength" => 3,
+                "pattern"   => "[A-Za-z]{0,3}",
+                "title"     => "3 lettres maximum (DNF, DNS, DSQ)",
+                "style"     => "text-transform: uppercase"
+            ])
             ->addSubmit("Créer")
             ->endForm();
 
