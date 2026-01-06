@@ -11,11 +11,9 @@ class DriversController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
+    // Afficher liste des pilotes
     public function index()
     {
         $drivers = DriversModel::all();
@@ -39,7 +37,8 @@ class DriversController extends Controller {
 
             if (Form::validatePost($_POST, ['nickname', 'country_id', 'status'])) {
 
-                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                // Supprime les espaces au début et à la fin de la chaine de texte 
+                // pour comparer si doublon (laisse des espaces entre les mots intacts)
                 $nickname = trim($_POST['nickname']);
                 $country_id = $_POST['country_id'];
                 $status = $_POST['status'];
@@ -48,6 +47,7 @@ class DriversController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO drivers (nickname, country_id, status)
                         VALUES (?, ?, ?)
@@ -77,6 +77,7 @@ class DriversController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/drivers/index', [
                 'list' => DriversModel::all(),
                 'countries' => $countries,
@@ -124,6 +125,7 @@ class DriversController extends Controller {
         $db = new DriversModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM drivers WHERE id=?");
         $stmt->execute([$id]);
         $driver = $stmt->fetch();
@@ -132,6 +134,7 @@ class DriversController extends Controller {
             $message = "Pilote introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/drivers/index', [
                 'list' => DriversModel::all(),
                 'countries' => CountriesModel::all(),
@@ -149,9 +152,11 @@ class DriversController extends Controller {
 
                 try {
 
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['nickname']);
 
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE drivers 
                         SET nickname=?, country_id=?, status=?
@@ -182,6 +187,7 @@ class DriversController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/drivers/index', [
                 'list' => DriversModel::all(),
                 'countries' => $countries,
@@ -230,6 +236,7 @@ class DriversController extends Controller {
         $db = new DriversModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM drivers WHERE id=?");
         $stmt->execute([$id]);
         $driver = $stmt->fetch();
@@ -238,6 +245,7 @@ class DriversController extends Controller {
             $message = "Erreur : le pilote demandé n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/drivers/index', [
                 'list' => DriversModel::all(),
                 'countries' => CountriesModel::all(),
@@ -250,6 +258,7 @@ class DriversController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM drivers WHERE id=?");
 
                 if ($stmt->execute([$id])) {
@@ -267,6 +276,7 @@ class DriversController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/drivers/index', [
                 'list' => DriversModel::all(),
                 'countries' => CountriesModel::all(),

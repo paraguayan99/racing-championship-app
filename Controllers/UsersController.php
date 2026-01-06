@@ -15,19 +15,20 @@ class UsersController extends Controller {
         // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
+    // Affiche la liste des utilisateurs
     public function index()
     {
         // On instancie la classe et on stocke dans une variable le return de la méthode all et allRoles
         $users = UsersModel::all();
         $roles = RolesModel::allRoles();
 
-        // Préparer les options du select pour les rôles
+        // Prépare les options du select pour les rôles
         $rolesOptions = [];
         foreach ($roles as $r) {
             $rolesOptions[$r->id] = $r->name;
         }
 
-        // Passer le formulaire à la vue
+        // Passe le formulaire à la vue
         $this->render('dashboard/users/index', [
             'list' => $users,
             'roles' => $roles
@@ -43,8 +44,7 @@ class UsersController extends Controller {
 
         $roles = RolesModel::allRoles();
 
-
-        // SI POST : traiter le formulaire
+        // Si formulaire reçu en POST : traiter le formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (Form::validatePost($_POST, ['email', 'password', 'role_id'])) {
@@ -59,6 +59,7 @@ class UsersController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, role_id) VALUES (?, ?, ?)");
 
                     if ($stmt->execute([$email, $password_hash, $role_id])) {
@@ -85,7 +86,7 @@ class UsersController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Après traitement du formulaire en POST : afficher la liste avec message
+            // Après traitement du formulaire en POST : afficher la liste avec message succès ou erreur
             $this->render('dashboard/users/index', [
                 'list' => UsersModel::all(),
                 'roles' => $roles,
@@ -95,7 +96,7 @@ class UsersController extends Controller {
             return;
         }
 
-        // Si pas de POST mais action=create en GET : afficher le formulaire de création
+        // Si pas de données reçues en POST mais action=create en GET : afficher le formulaire de création
 
         $form = new Form();
         $rolesOptions = [];
@@ -115,7 +116,7 @@ class UsersController extends Controller {
             ->addSubmit("Créer")
             ->endForm();
 
-        // Affichage du formulaire dans la vue DÉDIÉE
+        // Affichage du formulaire dans la vue
         $this->render('dashboard/users/create', [
             'roles' => $roles,
             'form' => $form,
@@ -134,6 +135,7 @@ class UsersController extends Controller {
         $db = new UsersModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
         $stmt->execute([$id]);
         $user = $stmt->fetch();
@@ -142,7 +144,7 @@ class UsersController extends Controller {
             $message = "Utilisateur introuvable";
             $classMsg = "msg-error";
 
-            // Affichage de la page liste
+            // Retour liste avec message erreur
             $this->render('dashboard/users/index', [
                 'list' => UsersModel::all(),
                 'roles' => RolesModel::allRoles(),
@@ -162,6 +164,7 @@ class UsersController extends Controller {
                     $email = trim($_POST['email']);
                     $email = strtolower($email);
 
+                    // Requete préparée
                     $stmt = $pdo->prepare("UPDATE users SET email=?, role_id=? WHERE id=?");
                     if ($stmt->execute([$email, $_POST['role_id'], $id])) {
                         $message = "Mise à jour réussie";
@@ -184,7 +187,7 @@ class UsersController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Afficher directement la liste comme pour create
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/users/index', [
                 'list' => UsersModel::all(),
                 'roles' => $roles,
@@ -195,7 +198,7 @@ class UsersController extends Controller {
             return;
         }
 
-        // Si on arrive ici, c'est un GET => afficher formulaire update
+        // Si on arrive ici, c'est un GET UPDATE => afficher formulaire update
         $form = new Form();
         $rolesOptions = [];
         foreach ($roles as $r) {
@@ -236,10 +239,10 @@ class UsersController extends Controller {
         $user = $stmt->fetch();
 
         if (!$user) {
-            // Utilisateur inexistant → message d’erreur + retour liste
             $message = "Erreur : l’utilisateur demandé n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/users/index', [
                 'list' => UsersModel::all(),
                 'roles' => RolesModel::allRoles(),
@@ -250,10 +253,11 @@ class UsersController extends Controller {
             return;
         }
 
-        // Si on est ici → utilisateur existe
+        // Si on est ici, l'utilisateur existe
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM users WHERE id=?");
                 if ($stmt->execute([$id])) {
                     $message = "Utilisateur supprimé avec succès";
@@ -268,7 +272,7 @@ class UsersController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Retour à la liste avec message
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/users/index', [
                 'list' => UsersModel::all(),
                 'roles' => RolesModel::allRoles(),
@@ -279,7 +283,6 @@ class UsersController extends Controller {
             return;
         }
 
-        // GET ⇒ afficher page de confirmation
         $this->render('dashboard/users/delete', [
             'id' => $id,
             'email' => $user->email,

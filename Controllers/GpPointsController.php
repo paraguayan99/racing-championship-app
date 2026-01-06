@@ -18,6 +18,7 @@ class GpPointsController extends Controller {
         $this->authMiddleware(["Administrateur", "Moderateur"]);
     }
 
+    // Afficher liste des résultats des GP
     public function index()
     {
         $gpPoints = GpPointsModel::allWithSeasonActive();
@@ -26,6 +27,9 @@ class GpPointsController extends Controller {
         ]);
     }
 
+    // Créer un résultat de GP 
+    // Reste sur le formulaire de la page Create (pas de retour à l'index) 
+    // pour améliorer l'UX de l'ajout de plusieurs résultats
     public function create()
     {
         $message = '';
@@ -87,6 +91,7 @@ class GpPointsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO gp_points (gp_id, driver_id, team_id, position, points_numeric, points_text)
                         VALUES (?, ?, ?, ?, ?, ?)
@@ -150,6 +155,7 @@ class GpPointsController extends Controller {
             ->addSubmit("Créer")
             ->endForm();
 
+        // Retour formulaire Create avec message succès ou erreur
         $this->render('dashboard/gp_points/create', [
             'form' => $form,
             'message' => $message,
@@ -157,6 +163,7 @@ class GpPointsController extends Controller {
         ]);
     }
 
+    // Mettre à jour un résultat de GP
     public function update($id)
     {
         $message = '';
@@ -180,6 +187,8 @@ class GpPointsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier ce résultat : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -194,7 +203,7 @@ class GpPointsController extends Controller {
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
-        // Tableau circuit_id => ['name' => ..., 'country' => ...]
+        // Tableau circuit_id
         $circuitData = [];
         foreach ($circuits as $c) {
             $circuitData[$c->id] = [
@@ -239,6 +248,7 @@ class GpPointsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE gp_points
                         SET gp_id=?, driver_id=?, team_id=?, position=?, points_numeric=?, points_text=?
@@ -263,6 +273,7 @@ class GpPointsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -297,6 +308,7 @@ class GpPointsController extends Controller {
         ]);
     }
 
+    // Supprimer un résultat de GP
     public function delete($id)
     {
         $message = '';
@@ -308,6 +320,7 @@ class GpPointsController extends Controller {
             $message = "Résultat introuvable.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -322,6 +335,8 @@ class GpPointsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer ce résultat : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -335,7 +350,7 @@ class GpPointsController extends Controller {
         $teams = TeamsModel::getActive();
         $seasons = SeasonsModel::getActive();
 
-        // Construire les tableaux associatifs id => nom pour affichage
+        // Construire les tableaux associatifs
         $driversMap = [];
         foreach ($drivers as $d) {
             $driversMap[$d->id] = $d->nickname;
@@ -367,7 +382,6 @@ class GpPointsController extends Controller {
             }
         }
 
-
         // Récupérer les noms pour la vue
         $driverName = $driversMap[$point->driver_id] ?? '';
         $teamName = $teamsMap[$point->team_id] ?? '';
@@ -379,6 +393,7 @@ class GpPointsController extends Controller {
             $pdo = $db->getConnection();
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM gp_points WHERE id = ?");
                 if ($stmt->execute([$id])) {
                     $message = "Résultat supprimé avec succès.";
@@ -395,6 +410,7 @@ class GpPointsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,

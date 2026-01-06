@@ -11,12 +11,9 @@ class SeasonsController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
-    // Liste des saisons
+    // Afficher la liste des saisons
     public function index()
     {
         $seasons = SeasonsModel::all();
@@ -52,6 +49,7 @@ class SeasonsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("INSERT INTO seasons (season_number, category_id, videogame, platform, status) VALUES (?, ?, ?, ?, ?)");
                     $stmt->execute([$season_number, $category_id, $videogame, $platform, $status]);
                     $message = "Saison créée avec succès";
@@ -69,6 +67,7 @@ class SeasonsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/seasons/index', [
                 'list' => SeasonsModel::all(),
                 'categories' => $categories,
@@ -116,6 +115,7 @@ class SeasonsController extends Controller {
         $db = new SeasonsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM seasons WHERE id=?");
         $stmt->execute([$id]);
         $season = $stmt->fetch();
@@ -124,6 +124,7 @@ class SeasonsController extends Controller {
             $message = "Saison introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/seasons/index', [
                 'list' => SeasonsModel::all(),
                 'categories' => SeasonsModel::allCategories(),
@@ -138,6 +139,7 @@ class SeasonsController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame', 'platform', 'status'])) {
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("UPDATE seasons SET season_number=?, category_id=?, videogame=?, platform=?, status=? WHERE id=?");
                     if ($stmt->execute([$_POST['season_number'], $_POST['category_id'], $_POST['videogame'], $_POST['platform'], $_POST['status'], $id])) {
                         $message = "Mise à jour réussie";
@@ -159,6 +161,7 @@ class SeasonsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/seasons/index', [
                 'list' => SeasonsModel::all(),
                 'categories' => $categories,
@@ -207,6 +210,7 @@ class SeasonsController extends Controller {
         $db = new SeasonsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("
             SELECT seasons.*, categories.name AS category_name
             FROM seasons
@@ -220,6 +224,7 @@ class SeasonsController extends Controller {
             $message = "Erreur : la saison demandée n'existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/seasons/index', [
                 'list' => SeasonsModel::all(),
                 'categories' => SeasonsModel::allCategories(),
@@ -240,12 +245,12 @@ class SeasonsController extends Controller {
                     $classMsg = "msg-error";
                 }
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
+                // $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
                 $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/seasons/index', [
                 'list' => SeasonsModel::all(),
                 'categories' => SeasonsModel::allCategories(),

@@ -9,9 +9,6 @@ class CategoriesController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
     // LISTE DES CATÉGORIES
@@ -46,7 +43,7 @@ class CategoriesController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
-                    // Vérif existance
+                    // Requete préparée
                     $stmt = $pdo->prepare("SELECT * FROM categories WHERE name=?");
                     $stmt->execute([$name]);
                     if ($stmt->fetch()) {
@@ -87,7 +84,7 @@ class CategoriesController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Retour liste avec message
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/categories/index', [
                 'list' => CategoriesModel::all(),
                 'message' => $message,
@@ -146,15 +143,16 @@ class CategoriesController extends Controller {
             return;
         }
 
-        // SI POST
+        // Si données reçues en POST, traitement de la requete préparée
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (Form::validatePost($_POST, ['name', 'color', 'status'])) {
 
                 try {
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
-                    // Vérifier existence nom
+
                     $stmt = $pdo->prepare("SELECT * FROM categories WHERE name=? AND id!=?");
                     $stmt->execute([$name, $id]);
 
@@ -171,7 +169,8 @@ class CategoriesController extends Controller {
                     }
 
                     // UPDATE
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
 
                     $stmt = $pdo->prepare("UPDATE categories SET name=?, color=?, status=? WHERE id=?");
@@ -194,7 +193,7 @@ class CategoriesController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Retour liste
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/categories/index', [
                 'list' => CategoriesModel::all(),
                 'message' => $message,
@@ -236,7 +235,7 @@ class CategoriesController extends Controller {
         $db = new CategoriesModel();
         $pdo = $db->getConnection();
 
-        // Vérifier si catégorie existe
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM categories WHERE id=?");
         $stmt->execute([$id]);
         $category = $stmt->fetch();
@@ -272,8 +271,6 @@ class CategoriesController extends Controller {
                 // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
                 $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
-                // $message = "Erreur lors de la suppression";
-                // $classMsg = "msg-error";
             }
 
             $this->render('dashboard/categories/index', [

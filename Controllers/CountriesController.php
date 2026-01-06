@@ -10,9 +10,6 @@ class CountriesController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
     // Liste des pays
@@ -37,19 +34,22 @@ class CountriesController extends Controller {
 
             if (Form::validatePost($_POST, ['name'])) {
 
-                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                // Supprime les espaces au début et à la fin de la chaine de texte 
+                // pour comparer si doublon (laisse des espaces entre les mots intacts)
                 $name = trim($_POST['name']); 
 
                 // Forcer le code si absent ou trop court (<3 lettres)
                 $code = (empty($name) || strlen($_POST['code']) < 3) 
                         ? strtoupper(substr($name, 0, 3)) 
-                        : strtoupper($_POST['code']); // on met aussi en majuscule pour uniformité
+                        : strtoupper($_POST['code']); 
+                        // on met aussi en majuscule pour uniformité
                 $flag = $_POST['flag'] ?? null;
 
                 $db = new CountriesModel();
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("INSERT INTO countries (name, code, flag) VALUES (?, ?, ?)");
 
                     if ($stmt->execute([$name, $code, $flag])) {
@@ -76,6 +76,7 @@ class CountriesController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/countries/index', [
                 'list' => CountriesModel::all(),
                 'message' => $message,
@@ -113,6 +114,7 @@ class CountriesController extends Controller {
         $db = new CountriesModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM countries WHERE id=?");
         $stmt->execute([$id]);
         $country = $stmt->fetch();
@@ -121,6 +123,7 @@ class CountriesController extends Controller {
             $message = "Pays introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/countries/index', [
                 'list' => CountriesModel::all(),
                 'message' => $message,
@@ -138,9 +141,11 @@ class CountriesController extends Controller {
                         : strtoupper($_POST['code']); // on met aussi en majuscule pour uniformité
 
                 try {
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']); 
 
+                    // Requete préparée
                     $stmt = $pdo->prepare("UPDATE countries SET name=?, code=?, flag=? WHERE id=?");
                     if ($stmt->execute([$name, $code ?? null, $_POST['flag'] ?? null, $id])) {
                         $message = "Mise à jour réussie";
@@ -163,6 +168,7 @@ class CountriesController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/countries/index', [
                 'list' => CountriesModel::all(),
                 'message' => $message,
@@ -201,6 +207,7 @@ class CountriesController extends Controller {
         $db = new CountriesModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM countries WHERE id=?");
         $stmt->execute([$id]);
         $country = $stmt->fetch();
@@ -209,6 +216,7 @@ class CountriesController extends Controller {
             $message = "Erreur : le pays demandé n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/countries/index', [
                 'list' => CountriesModel::all(),
                 'message' => $message,
@@ -234,6 +242,7 @@ class CountriesController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/countries/index', [
                 'list' => CountriesModel::all(),
                 'message' => $message,

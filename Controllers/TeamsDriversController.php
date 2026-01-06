@@ -11,10 +11,11 @@ class TeamsDriversController extends Controller {
 
     public function __construct()
     {
-        // Accès autorisé aux Admin et Modo
+        // Accès autorisé aux Administrateurs et Modérateurs
         $this->authMiddleware(["Administrateur", "Moderateur"]);
     }
 
+    // Affiche la liste des associations des saisons actives
     public function index()
     {
         $list = TeamsDriversModel::all();
@@ -24,13 +25,13 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // CRÉER une association pilote → écurie → saison
+    // Créer une association pilote - équipe
     public function create()
     {
         $message = '';
         $classMsg = '';
 
-        // Ne récupère que les éléments ACTIVE pour ne pas surcharger les select
+        // Ne récupère que les éléments ACTIFS pour ne pas surcharger les select
         $seasons = SeasonsModel::getActive();
         $drivers = DriversModel::getActive();
         $teams   = TeamsModel::getActive();
@@ -43,6 +44,7 @@ class TeamsDriversController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO teams_drivers (season_id, driver_id, team_id)
                         VALUES (?, ?, ?)
@@ -70,6 +72,7 @@ class TeamsDriversController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -118,7 +121,7 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // UPDATE
+    // Modifier une association pilote - équipe
     public function update($id)
     {
         $message = '';
@@ -132,6 +135,8 @@ class TeamsDriversController extends Controller {
         if (!$row) {
             $message = "Association introuvable";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -140,11 +145,13 @@ class TeamsDriversController extends Controller {
             return;
         }
 
-        // Vérifier le statut de la saison via SeasonsModel
+        // Vérifier le statut active / desactive de la saison
         $season = SeasonsModel::findById($row->season_id);
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -154,7 +161,7 @@ class TeamsDriversController extends Controller {
         }
 
 
-        // Ne récupère que les éléments ACTIVE pour ne pas surcharger les select
+        // Ne récupère que les éléments ACTIFS pour ne pas surcharger les select
         $seasons = SeasonsModel::getActive();
         $drivers = DriversModel::getActive();
         $teams   = TeamsModel::getActive();
@@ -164,6 +171,7 @@ class TeamsDriversController extends Controller {
             if (Form::validatePost($_POST, ['season_id', 'driver_id', 'team_id'])) {
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE teams_drivers 
                         SET season_id=?, driver_id=?, team_id=?
@@ -193,6 +201,7 @@ class TeamsDriversController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -241,19 +250,17 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // DELETE
+    // Supprimer une association pilote - équipe
     public function delete($id)
     {
         $message = '';
         $classMsg = '';
 
-
-        // On instancie ces Models pour préparer les variables à afficher sur la page delete
         $seasons = SeasonsModel::all();
         $drivers = DriversModel::all();
         $teams   = TeamsModel::all();
 
-        // Construire les options pour récupérer facilement les noms
+        // Récupération des infos
         $seasonOptions = [];
         foreach ($seasons as $s) {
             $seasonOptions[$s->id] = $s->category
@@ -279,6 +286,8 @@ class TeamsDriversController extends Controller {
         if (!$row) {
             $message = "Erreur : l’association demandée n’existe pas.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -287,7 +296,7 @@ class TeamsDriversController extends Controller {
             return;
         }
 
-        // Vérifier le statut de la saison avant de permettre la suppression
+        // Vérifier le statut active / desactive de la saison
         $season = SeasonsModel::findById($row->season_id);
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer : la saison est désactivée.";
@@ -303,6 +312,7 @@ class TeamsDriversController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM teams_drivers WHERE id=?");
 
                 if ($stmt->execute([$id])) {
@@ -314,12 +324,12 @@ class TeamsDriversController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
+                // $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
                 $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams_drivers/index', [
                 'list' => TeamsDriversModel::all(),
                 'message' => $message,
@@ -328,7 +338,7 @@ class TeamsDriversController extends Controller {
             return;
         }
 
-        // Récupération des noms pour l'affichage
+        // Récupération des infos
         $seasonName = $seasonOptions[$row->season_id] ?? '';
         $driverName = $driverOptions[$row->driver_id] ?? '';
         $teamName   = $teamOptions[$row->team_id] ?? '';

@@ -53,7 +53,7 @@ footer nav {
 /* Styles pour écrans < 450px */
 @media screen and (max-width: 450px) {
     .hero h1 {
-        font-size: 1.3rem; /* encore plus petit pour mobile */
+        font-size: 1.3rem;
     }
 
     .community-tag {

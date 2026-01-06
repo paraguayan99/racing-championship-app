@@ -11,11 +11,9 @@ class TeamsController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
+    // Affiche la liste des équipes
     public function index()
     {
         $teams = TeamsModel::all();
@@ -45,7 +43,8 @@ class TeamsController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'country_id'])) {
 
-                // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                // Supprime les espaces au début et à la fin de la chaine de texte 
+                // pour comparer si doublon (laisse des espaces entre les mots intacts)
                 $name = trim($_POST['name']);
                 $logo = $_POST['logo'] ?? null;
                 $color = trim($_POST['color']) ?? null;
@@ -56,6 +55,7 @@ class TeamsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO teams (name, logo, color, country_id, status)
                         VALUES (?, ?, ?, ?, ?)
@@ -85,6 +85,7 @@ class TeamsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams/index', [
                 'list' => TeamsModel::all(),
                 'countries' => $countries,
@@ -94,7 +95,7 @@ class TeamsController extends Controller {
             return;
         }
 
-        // Form GET
+        // Formulaire
         $form = new Form();
         $countriesOptions = [];
         foreach ($countries as $c) {
@@ -133,6 +134,7 @@ class TeamsController extends Controller {
         $db = new TeamsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM teams WHERE id=?");
         $stmt->execute([$id]);
         $team = $stmt->fetch();
@@ -141,6 +143,7 @@ class TeamsController extends Controller {
             $message = "Équipe introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/teams/index', [
                 'list' => TeamsModel::all(),
                 'countries' => CountriesModel::all(),
@@ -157,15 +160,17 @@ class TeamsController extends Controller {
             if (Form::validatePost($_POST, ['name', 'country_id'])) {
                 try {
 
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
                     $color = null;
 
-                    // Si la case supprimer n'est PAS cochée, on garde la couleur choisie
+                    // Si la case supprimer n'est pas cochée, on garde la couleur choisie
                     if (empty($_POST['clear_color'])) {
                         $color = $_POST['color'] ?? null;
                     }
 
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE teams SET name=?, logo=?, color=?, country_id=?, status=? WHERE id=?
                     ");
@@ -198,6 +203,7 @@ class TeamsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams/index', [
                 'list' => TeamsModel::all(),
                 'countries' => $countries,
@@ -207,7 +213,7 @@ class TeamsController extends Controller {
             return;
         }
 
-        // Form GET
+        // Formulaire
         $form = new Form();
         $countriesOptions = [];
         foreach ($countries as $c) {
@@ -249,6 +255,7 @@ class TeamsController extends Controller {
         $db = new TeamsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM teams WHERE id=?");
         $stmt->execute([$id]);
         $team = $stmt->fetch();
@@ -257,6 +264,7 @@ class TeamsController extends Controller {
             $message = "Erreur : l’équipe demandée n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/teams/index', [
                 'list' => TeamsModel::all(),
                 'countries' => CountriesModel::all(),
@@ -269,6 +277,7 @@ class TeamsController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM teams WHERE id=?");
 
                 if ($stmt->execute([$id])) {
@@ -280,12 +289,12 @@ class TeamsController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
+                // $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
                 $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/teams/index', [
                 'list' => TeamsModel::all(),
                 'countries' => CountriesModel::all(),

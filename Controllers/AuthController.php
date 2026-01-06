@@ -41,20 +41,6 @@ class AuthController extends Controller
                 } else {
                     $error = "Identifiants invalides";
                 }
-
-                // if ($user && password_verify($password, $user->password_hash)) {
-                //     // Connexion sécurisée
-                //     session_start();
-                //     $_SESSION['user_id'] = $user->id;
-                //     $_SESSION['role_id'] = $user->role_id;
-                //     $_SESSION['role'] = UsersModel::getRoleName($user->role_id);
-
-                //     // Redirection simple vers le dashboard
-                //     header('Location: index.php?controller=dashboard&action=index');
-                //     exit();
-                // } else {
-                //     $error = "Identifiants invalides";
-                // }
             }
         }
 
@@ -62,21 +48,9 @@ class AuthController extends Controller
         $this->render('auth/login', ['error' => $error]);
     }
 
-    // Déconnexion
-    
-    // public function logout()
-    // {
-    //     session_start();
-    //     $_SESSION = [];
-    //     unset($_SESSION['csrf_token']);
-    //     session_destroy();
-    //     header('Location: index.php?controller=auth&action=login');
-    //     exit();
-    // }
-
     public function logout()
     {
-        // Utilise ton gestionnaire centralisé
+        // Utilise gestionnaire centralisé
         \App\Core\Auth::start();
 
         // Vide toutes les variables
@@ -106,6 +80,6 @@ class AuthController extends Controller
         header('Location: index.php?controller=auth&action=login');
         exit();
     }
-
 }
+?>
 

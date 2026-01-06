@@ -23,7 +23,7 @@ class ClassementsController extends Controller
             $penalties = ClassementsModel::getPenaltiesBySeason($seasonFilter);
         }
 
-        // Récupérer couleur de la catégorie
+        // Récupére couleur de la catégorie
         $categoryColors = [];
         // Drivers
         foreach ($drivers as $d) {
@@ -98,7 +98,5 @@ class ClassementsController extends Controller
         // Inclut la vue pour afficher le modal
         include __DIR__ . '/../Views/classements/standings_gp_details.php';
     }
-
-
 }
 ?>

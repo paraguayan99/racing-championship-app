@@ -10,9 +10,6 @@ class CircuitsController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
     // INDEX : liste des circuits
@@ -43,10 +40,12 @@ class CircuitsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
                     $country_id = $_POST['country_id'];
 
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO circuits (name, country_id) 
                         VALUES (?, ?)
@@ -76,7 +75,7 @@ class CircuitsController extends Controller {
                 $classMsg = "msg-error";
             }
 
-            // Retour à la liste après traitement
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/circuits/index', [
                 'list' => CircuitsModel::all(),
                 'countries' => $countries,
@@ -120,6 +119,7 @@ class CircuitsController extends Controller {
         $db = new CircuitsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM circuits WHERE id=?");
         $stmt->execute([$id]);
         $circuit = $stmt->fetch();
@@ -128,6 +128,7 @@ class CircuitsController extends Controller {
             $message = "Circuit introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/circuits/index', [
                 'list' => CircuitsModel::all(),
                 'countries' => CircuitsModel::allCountries(),
@@ -143,13 +144,15 @@ class CircuitsController extends Controller {
 
             if (Form::validatePost($_POST, ['name', 'country_id', 'status'])) {
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE circuits 
                         SET name=?, country_id=?, status=? 
                         WHERE id=?
                     ");
 
-                    // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
+                    // Supprime les espaces au début et à la fin de la chaine de texte 
+                    // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
 
                     if ($stmt->execute([$name, $_POST['country_id'], $_POST['status'], $id])) {
@@ -176,6 +179,7 @@ class CircuitsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/circuits/index', [
                 'list' => CircuitsModel::all(),
                 'countries' => $countries,
@@ -224,6 +228,7 @@ class CircuitsController extends Controller {
         $db = new CircuitsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM circuits WHERE id=?");
         $stmt->execute([$id]);
         $circuit = $stmt->fetch();
@@ -232,6 +237,7 @@ class CircuitsController extends Controller {
             $message = "Erreur : le circuit demandé n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/circuits/index', [
                 'list' => CircuitsModel::all(),
                 'countries' => CircuitsModel::allCountries(),
@@ -244,6 +250,7 @@ class CircuitsController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM circuits WHERE id=?");
                 if ($stmt->execute([$id])) {
                     $message = "Circuit supprimé avec succès";
@@ -260,6 +267,7 @@ class CircuitsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/circuits/index', [
                 'list' => CircuitsModel::all(),
                 'countries' => CircuitsModel::allCountries(),

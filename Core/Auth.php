@@ -10,7 +10,7 @@ class Auth
         if (session_status() === PHP_SESSION_NONE) {
             // Sécuriser la session : strict mode et cookies sûrs
             ini_set('session.use_strict_mode', 1);
-            // Nom de session custom (optionnel)
+            // Nom de session personnalisé si plusieurs applis sur le même nom de domaine 
             session_name('team_eracing_sid');
 
             // Paramètres cookies : à définir AVANT session_start()
@@ -77,6 +77,7 @@ class Auth
     public static function validateCSRF(string $token): bool
     {
         self::start();
-        return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+        return isset($_SESSION['csrf_token']) 
+            && hash_equals($_SESSION['csrf_token'], $token);
     }
 }

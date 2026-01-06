@@ -5,6 +5,7 @@ use App\Models\PalmaresModel;
 
 class PalmaresController extends Controller
 {
+    // Affiche la page Palmarès de toutes les catégories
     public function index()
     {
         $drivers = PalmaresModel::getDriversStats();
@@ -27,3 +28,4 @@ class PalmaresController extends Controller
         );
     }
 }
+?>

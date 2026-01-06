@@ -12,7 +12,7 @@
 <!-- iPhone / iPad écran d’accueil -->
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon-180.png">
 <!-- Android -->
-<link rel="manifest" href="/manifest.webmanifest">
+<link rel="manifest" href="./manifest.webmanifest">
 <!-- Couleur de thème navigateur mobile -->
 <meta name="theme-color" content="#000000">
 

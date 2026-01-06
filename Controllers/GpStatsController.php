@@ -17,6 +17,7 @@ class GpStatsController extends Controller {
         $this->authMiddleware(["Administrateur", "Moderateur"]);
     }
 
+    // Afficher liste des stats des GP
     public function index()
     {
         $gpStats = GpStatsModel::allWithSeasonActive();
@@ -25,6 +26,7 @@ class GpStatsController extends Controller {
         ]);
     }
 
+    // Créer des stats pour un GP
     public function create()
     {
         $message = '';
@@ -35,7 +37,7 @@ class GpStatsController extends Controller {
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
-        // Tableau circuit_id => country_name
+        // Tableau circuit_id
         $circuitCountries = [];
         foreach ($circuits as $c) {
             $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
@@ -66,7 +68,7 @@ class GpStatsController extends Controller {
                 $fastest_lap_driver = !empty($_POST['fastest_lap_driver']) ? intval($_POST['fastest_lap_driver']) : null;
                 $fastest_lap_time = !empty($_POST['fastest_lap_time']) ? trim($_POST['fastest_lap_time']) : null;
 
-                // Vérification format strict m:ss.mmm
+                // Vérification format strict des chronos : m:ss.mmm
                 $timePattern = '/^\d+:[0-5]\d\.\d{3}$/';
                 if (($pole_position_time && !preg_match($timePattern, $pole_position_time)) ||
                     ($fastest_lap_time && !preg_match($timePattern, $fastest_lap_time))) {
@@ -83,6 +85,7 @@ class GpStatsController extends Controller {
                         $db = new GpStatsModel();
                         $pdo = $db->getConnection();
                         try {
+                            // Requete préparée
                             $stmt = $pdo->prepare("
                                 INSERT INTO gp_stats (gp_id, pole_position_driver, pole_position_time, fastest_lap_driver, fastest_lap_time)
                                 VALUES (?, ?, ?, ?, ?)
@@ -108,6 +111,7 @@ class GpStatsController extends Controller {
                     }
                 }
 
+                // Retour liste avec message succès ou erreur
                 $this->render('dashboard/gp_stats/index', [
                     'list' => GpStatsModel::allWithSeasonActive(),
                     'message' => $message,
@@ -145,6 +149,7 @@ class GpStatsController extends Controller {
         ]);
     }
 
+    // Mettre à jour les stats d'un GP
     public function update($gp_id)
     {
         $message = '';
@@ -154,6 +159,8 @@ class GpStatsController extends Controller {
         if (!$stats) {
             $message = "Pole Position & Fastest Lap du GP introuvables";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -168,6 +175,8 @@ class GpStatsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -209,7 +218,7 @@ class GpStatsController extends Controller {
                 $fastest_lap_driver = !empty($_POST['fastest_lap_driver']) ? intval($_POST['fastest_lap_driver']) : null;
                 $fastest_lap_time = !empty($_POST['fastest_lap_time']) ? trim($_POST['fastest_lap_time']) : null;
 
-                // Validation strict m:ss.mmm
+                // Validation strict du format du chrono : m:ss.mmm
                 $timePattern = '/^\d+:[0-5]\d\.\d{3}$/';
                 if (($pole_position_time && !preg_match($timePattern, $pole_position_time)) ||
                     ($fastest_lap_time && !preg_match($timePattern, $fastest_lap_time))) {
@@ -219,6 +228,7 @@ class GpStatsController extends Controller {
                     $db = new GpStatsModel();
                     $pdo = $db->getConnection();
                     try {
+                        // Requete préparée
                         $stmt = $pdo->prepare("
                             UPDATE gp_stats
                             SET gp_id=?, pole_position_driver=?, pole_position_time=?, fastest_lap_driver=?, fastest_lap_time=?
@@ -245,6 +255,7 @@ class GpStatsController extends Controller {
                     }
                 }
 
+                // Retour liste avec message succès ou erreur
                 $this->render('dashboard/gp_stats/index', [
                     'list' => GpStatsModel::allWithSeasonActive(),
                     'message' => $message,
@@ -290,7 +301,7 @@ class GpStatsController extends Controller {
         ]);
     }
 
-
+    // Supprimer les stats d'un GP
     public function delete($gp_id)
     {
         $message = '';
@@ -302,6 +313,7 @@ class GpStatsController extends Controller {
             $message = "Pole Position & Fastest Lap du GP introuvables.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -316,6 +328,8 @@ class GpStatsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -324,7 +338,7 @@ class GpStatsController extends Controller {
             return;
         }
 
-        // Nom GP
+        // Nom du GP
         $seasons = SeasonsModel::getActive();
         $circuits = CircuitsModel::all();
         $allGps = GpModel::all();
@@ -349,12 +363,13 @@ class GpStatsController extends Controller {
 
         $gpName = $gps[$gp_id] ?? '';
 
-        // Formulaire soumis ?
+        // Formulaire soumis
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = new GpStatsModel();
             $pdo = $db->getConnection();
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM gp_stats WHERE gp_id = ?");
                 if ($stmt->execute([$gp_id])) {
                     $message = "Pole Position & Fastest Lap du GP supprimées avec succès.";
@@ -370,6 +385,7 @@ class GpStatsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/gp_stats/index', [
                 'list' => GpStatsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -378,7 +394,7 @@ class GpStatsController extends Controller {
             return;
         }
 
-        // Vue confirmation
+        // Variables passées à la vue
         $this->render('dashboard/gp_stats/delete', [
             'id' => $gp_id,
             'gpName' => $gpName,
@@ -386,6 +402,5 @@ class GpStatsController extends Controller {
             'classMsg' => $classMsg
         ]);
     }
-
 }
 ?>

@@ -5,14 +5,16 @@ use App\Models\StatsCircuitsModel;
 
 class StatsCircuitsController extends Controller
 {
+    // Affiche les stats du circuit sélectionné
     public function index(...$args)
     {
-        // EXACTEMENT comme standings
+        // Récupère le circuit id
         $circuitId = $args['circuit_id'] ?? $_GET['circuit_id'] ?? null;
 
-        // Liste déroulante
+        // Prépare les infos
         $circuits = StatsCircuitsModel::getAllCircuitsForSelect();
-        $selectedCircuit = null; // toujours défini pour ne pas avoir d'erreur
+        // selectedCircuit défini pour ne pas avoir d'erreur
+        $selectedCircuit = null;
 
         if ($circuitId) {
             $topChronos = StatsCircuitsModel::getCircuitTopChronos($circuitId);
@@ -39,7 +41,7 @@ class StatsCircuitsController extends Controller
             $totalGP = 0;
         }
 
-
+        // Envoie toutes les données à la vue
         $this->render(
             'classements/statscircuits',
             compact(
@@ -54,4 +56,5 @@ class StatsCircuitsController extends Controller
         );
     }
 }
+?>
 

@@ -1,13 +1,18 @@
 GITHUB
 Pour commit sur main :
 
-cd C:\wamp64\www\dwwmprojetexamen
+cd C:\wamp64\www\racing-championship-app
 git status
 git add . (Ajoutes tous les fichiers UNTRACKED)
 git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
+Commenter tout le code
+
+// Ajout dans la BDD à la table updates_log
+// Retour liste avec message succès ou erreur
+// $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
 
 Table circuits, courses disputées compte les courses du calendrier même si il n'a pas eu lieu
 sans vérifier si il y a des gp points de déclaré dedans

@@ -17,6 +17,7 @@ class PenaltiesController extends Controller {
         $this->authMiddleware(["Administrateur", "Moderateur"]);
     }
 
+    // Affiche la liste des pénalités des saisons actives
     public function index()
     {
         $penalties = PenaltiesModel::allWithSeasonActive();
@@ -25,6 +26,7 @@ class PenaltiesController extends Controller {
         ]);
     }
 
+    // Créer une pénalité
     public function create()
     {
         $message = '';
@@ -36,7 +38,7 @@ class PenaltiesController extends Controller {
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
-        // Préparer le mapping GP => texte
+        // Récupérer les infos
         $circuitCountries = [];
         foreach ($circuits as $c) {
             $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
@@ -62,7 +64,6 @@ class PenaltiesController extends Controller {
                 $message = "Création échouée : informations manquantes";
                 $classMsg = "msg-error";
             } else {
-
                 $gp_id = $_POST['gp_id'];
                 $driver_id = !empty($_POST['driver_id']) ? $_POST['driver_id'] : null;
                 $team_id = !empty($_POST['team_id']) ? $_POST['team_id'] : null;
@@ -86,6 +87,7 @@ class PenaltiesController extends Controller {
                         $db = new PenaltiesModel();
                         $pdo = $db->getConnection();
                         try {
+                            // Requete préparée
                             $stmt = $pdo->prepare("
                                 INSERT INTO penalties (gp_id, driver_id, team_id, points_removed, comment)
                                 VALUES (?, ?, ?, ?, ?)
@@ -106,6 +108,7 @@ class PenaltiesController extends Controller {
                 }
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -114,7 +117,7 @@ class PenaltiesController extends Controller {
             return;
         }
 
-        // Préparer selects pilotes et teams
+        // Préparer select des pilotes et des teams
         $driversSelect = ['' => 'Aucun'] + array_column($drivers, 'nickname', 'id');
         $teamsSelect = ['' => 'Aucun'] + array_column($teams, 'name', 'id');
 
@@ -142,7 +145,7 @@ class PenaltiesController extends Controller {
         ]);
     }
 
-
+    // Mettre à jour une pénalité
     public function update($id)
     {
         $message = '';
@@ -152,6 +155,8 @@ class PenaltiesController extends Controller {
         if (!$penalty) {
             $message = "Pénalité introuvable";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -165,6 +170,8 @@ class PenaltiesController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier cette pénalité : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -179,6 +186,7 @@ class PenaltiesController extends Controller {
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
+        // Récupérer les infos
         $circuitCountries = [];
         foreach ($circuits as $c) {
             $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
@@ -203,7 +211,6 @@ class PenaltiesController extends Controller {
                 $message = "Mise à jour échouée : informations manquantes";
                 $classMsg = "msg-error";
             } else {
-
                 $gp_id = $_POST['gp_id'];
                 $driver_id = !empty($_POST['driver_id']) ? $_POST['driver_id'] : null;
                 $team_id = !empty($_POST['team_id']) ? $_POST['team_id'] : null;
@@ -218,6 +225,7 @@ class PenaltiesController extends Controller {
                     $db = new PenaltiesModel();
                     $pdo = $db->getConnection();
                     try {
+                        // Requete préparée
                         $stmt = $pdo->prepare("
                             UPDATE penalties
                             SET gp_id=?, driver_id=?, team_id=?, points_removed=?, comment=?
@@ -238,6 +246,7 @@ class PenaltiesController extends Controller {
                 }
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -272,6 +281,7 @@ class PenaltiesController extends Controller {
         ]);
     }
 
+    // Supprimer une pénalité
     public function delete($id)
     {
         $message = '';
@@ -281,6 +291,8 @@ class PenaltiesController extends Controller {
         if (!$penalty) {
             $message = "Pénalité introuvable.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -294,6 +306,8 @@ class PenaltiesController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer cette pénalité : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -306,11 +320,12 @@ class PenaltiesController extends Controller {
         $driverName = $penalty->driver_id ? DriversModel::find($penalty->driver_id)->nickname ?? 'Inconnu' : 'Aucun';
         $teamName = $penalty->team_id ? TeamsModel::findById($penalty->team_id)->name ?? 'Inconnu' : 'Aucun';
 
-        // Préparer les infos GP
+        // Préparer les infos
         $seasons = SeasonsModel::getActive();
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
+        // Récupérer les infos
         $circuitCountries = [];
         foreach ($circuits as $c) {
             $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
@@ -334,6 +349,7 @@ class PenaltiesController extends Controller {
             $pdo = $db->getConnection();
 
             try {
+                //  Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM penalties WHERE id = ?");
                 if ($stmt->execute([$id])) {
                     $message = "Pénalité supprimée avec succès.";
@@ -348,6 +364,7 @@ class PenaltiesController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/penalties/index', [
                 'list' => PenaltiesModel::allWithSeasonActive(),
                 'message' => $message,
@@ -366,6 +383,5 @@ class PenaltiesController extends Controller {
             'classMsg' => $classMsg
         ]);
     }
-
 }
 ?>

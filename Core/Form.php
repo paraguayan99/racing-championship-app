@@ -54,7 +54,7 @@ class Form
     public function addLabel(string $for, string $text, array $attributes = []): self
     {
         // On ajoute la balise label et l'attribut for
-        // DEBUT DE LA DIV DE LA CLASSE CSS
+        // Début de la div de la classe CSS 'form-group'
         $this->formElements .= "<div class='form-group'><label for='$for'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
         // $this->formElements .= "$text</label>";
@@ -63,21 +63,11 @@ class Form
     }
 
     // Méthode permettant d'ajouter un champ
-    // public function addInput(string $type, string $name, array $attributes = []): self
-    // {
-    //     // On ajoute la balise input et les attributs type name
-    //     $this->formElements .= "<input type='$type' name='$name'";
-    //     $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
-    //     return $this;
-    // }
-
-    // Méthode permettant d'ajouter un champ
     public function addInput(string $type, string $name, array $attributes = []): self
     {
         $typeEsc = htmlspecialchars($type, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $nameEsc = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-        // handle value attribute if provided
         $value = '';
         if (isset($attributes['value'])) {
             $value = ' value="' . htmlspecialchars((string)$attributes['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '"';
@@ -86,7 +76,7 @@ class Form
 
         $this->formElements .= "<input type='{$typeEsc}' name='{$nameEsc}'{$value}";
         $this->formElements .= !empty($attributes) ? $this->addAttributes($attributes) . "></div>" : "></div>";
-        // FIN DE LA DIV DE LA CLASSE CSS </div>
+        // Fin de la div de la classe CSS 'form-group'
         return $this;
     }
 

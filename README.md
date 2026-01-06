@@ -1,128 +1,115 @@
-[ Cahier des charges Projet Examen DWWM - CEFii Angers ]  
+# Racing Championship App
+# Web MVC PHP platform
+Gestion d’un championnat de courses en ligne
 
-Projet « Gestion d’un championnat de courses en ligne »  
+🎯 Objectif du projet
+Créer une application web permettant de centraliser, automatiser et rendre consultables :
+les classements pilotes et équipes
+les palmarès
+l’historique des saisons
+les statistiques principales
 
-// Résumé du projet  
-Créer un site web pour centraliser, automatiser et rendre consultables les classements, palmarès et l’historique d’un championnat de courses en ligne. Remplacer les classements issus d’images Excel statiques par une base de données dynamique, offrir une vitrine SEO, une page « rejoindre » (pour le Discord), et un espace administration pour reporter les résultats (calculs automatiques classement pilotes / équipes, pénalités…).  
+Le projet remplace les anciens classements issus d’images Excel statiques par une base de données dynamique, tout en offrant une vitrine accessible et optimisée SEO pour la communauté.
 
-// Objectifs  
-• Centraliser les résultats saison par saison dans une BDD.  
-• Calculer automatiquement les classements pilotes et écuries, et appliquer des pénalités.  
-• Publier un site vitrine optimisé SEO pour attirer de nouveaux pilotes via les moteurs de recherche.  
-• Fournir un espace admin/modérateur sécurisé pour ajouter/modifier/supprimer courses et résultats.  
-• Produire documentation et livrables pour l’examen (code, README, manuel, démonstration).  
+👤 Contexte & communauté
+Passionné d’informatique depuis l’enfance, j’ai évolué comme boulanger puis commercial avant de me reconvertir vers le développement web.
+Je fais partie d’une communauté de pilotes virtuels qui organise depuis 2008 un championnat en ligne (PlayStation), aujourd’hui à sa 26e saison, répartie en catégories F1 / F2.
+👉 Courses : 2 fois par semaine, 21h–23h
+👉 Organisation : bénévoles, modérateurs, pilotes équipés (volant, casque, playseat)
+Depuis 2016, je participe activement à l’organisation et le suivi des résultats.
+Jusqu’ici, les classements étaient gérés manuellement sous Excel, ce qui limitait :
+l’automatisation
+la lisibilité
+la fiabilité des calculs
 
-// Contenus Principaux  
-- Visible de tous  
-• Page d’accueil : présentation du championnat, news, contenus adaptés pour le SEO  
-• Page Classements / Palmarès / Historique : par saison, classement pilotes, classement équipes, tri, filtres (catégorie F1/F2), vainqueurs, podiums, stats globales …  
-• Page Nous rejoindre : lien/invitation Discord.  
-• Footer : mentions légales, RGPD, réseaux sociaux.  
+Cette application devient l’outil central pour gérer les classements du championnat et valoriser la communauté.
 
-- Administration (authentification nécessaire)  
-• Authentification (login) pour Administrateurs / Modérateurs.  
-• CRUD : saisons, Grand Prix, résultats (liste des pilotes et leurs positions), équipes, pilotes.  
-• Formulaire d’ajout de résultat par Grand Prix : entrée manuelle.  
-• Interface d’application de pénalités (retirer X pts, disqualifier).  
+📌 Fonctionnalités principales
+🔎 Côté public
+Page Accueil (présentation + liens YouTube, Twitch, Discord)
+Rubrique Classements / Palmarès / Circuits
+filtres par saison et catégorie
+tri dynamique
+statistiques globales
+Lien Nous rejoindre (invitation Discord)
+Mentions légales & Politique de confidentialité (RGPD)
 
-// Exigences techniques  
-- Languages & logiciels  
-• Front : HTML, CSS, JavaScript.  
-• Back : PHP, architecture MVC (models, views, controllers).  
-• BDD : MySQL.  
-• Versioning : Git + GitHub.  
-• IDE : VSCode.  
-• Hébergement : OVH / phpMyAdmin.  
+🔐 Dashboard (authentification requise)
 
-- Architecture & bonnes pratiques  
-• Respect du pattern MVC, séparation logique.  
-• Sécurisation de l’application (injections SQL, XSS, faille CSRF token, sessions).  
-• Accessibilité du site  
-• Responsive-design (développement en mobile-first)  
+Gestion des catégories, saisons, GP, pilotes, équipes, Grand Prix
+CRUD complet (liste, ajout, modification, suppression)
+Formulaire de saisie des résultats
 
-// Base de données relationnelle  
-• Tables : users / seasons / teams / grand_prix / results / penalties  
+Gestion des rôles :
+Administrateur (accès total à la BDD)
+Modérateur (accès à la gestion des saisons actives)
+Utilisateur (aucun accès)
 
-// Règles de calcul (barème + pénalités)  
-• Calcul classement pilotes : somme points results - somme points penalties (par pilote sur une saison).  
-• Calcul classement équipes : somme points des pilotes d’une même écurie.  
-• Gestion égalités : comparer nombre de victoires, puis 2e places, etc.  
+🏗️ Architecture & stack technique
+Front-end : HTML, CSS, JavaScript
+Back-end : PHP avec architecture MVC
+Base de données : MySQL
+Hébergement : Local (WAMP) → OVH (tests) → O2SWITCH (déploiement final)
+Versioning : Git + GitHub
+IDE : Visual Studio Code
 
-// Import / Migration des données existantes  
-• Ajout manuellement des résultats des grand prix saison par saison.  
-• Validation post-import : contrôles d’intégrité (erreur calcul, somme points, doublons).  
+🔒 Sécurité
+Protection contre injections SQL & XSS
+Tokens CSRF sur formulaires POST
+Sessions sécurisées & prévention hijacking
+HTTPS obligatoire
+Respect RGPD
 
-// Sécurité & conformité  
-• HTTPS obligatoire.  
-• Protection CSRF token sur tous les formulaires POST.  
-• Protection des injections (XSS).  
-• Protection de détournement de sessions.  
-• RGPD : page mentions légales.  
+🌐 Accessibilité & SEO
+- SEO
+Balises meta dynamiques
+Sitemap XML & robots.txt
+Mobile-first
+- Accessibilité
+Contraste et tailles lisibles
+Images avec attributs ALT
+Navigation clavier
+ARIA pour éléments dynamiques
 
-// SEO & accessibilité  
-• SEO :  
-o URLs propres (SEO) : /classements/2025, /gp/monaco-2025.  
-o Meta titles & descriptions dynamiques.  
-o Sitemap XML et robots.txt.  
-o Mobile-first responsive design.  
+🗄️ Base de données — 15 tables
+- Administrateur (accès total à la BDD) :
+users
+roles
+countries
+circuits
+categories
+seasons
+teams
+drivers
+manual_adjustments
 
-• Accessibilité :  
-o Contraste couleurs, tailles de police lisibles.  
-o Attributs alt sur images, formulaires accessibles (labels).  
-o Navigation clavier, aria-* pour éléments dynamiques.  
+- Modérateur (accès à la gestion des saisons actives) :
+teams-drivers
+gp
+gp_points
+gp_stats
+penalties
 
-// UI / UX — pages & composants (maquettes)  
-• Wireframes à produire : page d’accueil, page classements / palmarès / historique, page nous rejoindre, page connexion, page profil admin / modérateur, formulaire ajout résultat grand prix.  
-• Responsive : mobile / tablette / desktop.  
+- Table non accessible via le Dashboard :
+updates_log
+→ Permet de récupérer date de la dernière mise à jour des classements pour l'afficher sur le site
 
-// Authentification & rôles  
-• Rôles : admin, modérateur, public.  
-• Permissions contrôlées côté serveur.  
-• Page de login + mot de passe.  
+🗄️ Base de données — 4 vues
+drivers_standings
+drivers_palmares
+teams_standings
+teams_palmares
 
-// Tests & validation  
-• Tests unitaires PHP (calculs points, règles égalité).  
-• Tests d’intégration basiques (CRUD modèles).  
-• Tests manuels de parcours (ajout résultat → recalcul classement).  
-• Tests responsive design  
-• Tests accessibilité  
-
-// Documentation & livrables pour l’examen  
-• README (installation, configuration, structure, commandes).  
-• Guide déploiement (hébergement choisi).  
-• Manuel utilisateur (comment consulter classements, chercher pilotes).  
-• Manuel administrateur (connexion, ajout résultats, appliquer pénalités).  
-• Jeu de données de tests.  
-• Présentation / slides + vidéo de démonstration.  
-• GitHub public et historique des commits.  
-• Code source complet (MVC PHP)  
-• Données de la BDD via exportation (.sql / .csv)  
-
-// Planning - Checklist : tâches avant / pendant / après développement  
-- Avant  
-• Récupérer toutes les sources de données et les analyser (images classements et fichiers Excel originaux).  
-• Préparer wireframes + maquettes.  
-• Choisir hébergement & nom de domaine.  
-• Créer Git / GitHub.  
-• Définir utilisateurs et permissions.  
-• Valider spécifications du site et cas d’usage.  
-
-- Pendant  
-• Initialiser structure MVC.  
-• Réaliser les schémas et mettre en place BDD.  
-• Implémenter les tables de la BDD.  
-• Pages publiques : accueil, classements, nous rejoindre.  
-• Page connexion + Page profil / dashboard admin/modérateur.  
-• Formulaire ajout résultat grand prix.  
-• Algorithme calcul points + pénalités.  
-• Tests unitaires.  
-• Mise en place SEO (sitemap, meta).  
-• Responsive & accessibilité.  
-• Revue sécurité (faille CSRF, injection XSS, session).  
-
-- Après  
-• Migration complète des données historiques.  
-• Documentation complète (admin/modérateur/développeur).  
-• Démo vidéo + slides pour l’examen.  
-• Plan de sauvegarde + procédure de restauration.  
-• Ouverture GitHub en public et vérifier historique des commits.  
+Règles de calcul :
+- Classement Pilotes = comptabilise le nombre de Pole, Fastest Lap, Victoires, Podiums, GP et Points selon le calcul suivant :
+    somme(points) de chaque GP de la saison
+    − pénalités de chaque GP 
+    - ajustements manuels de la saison
+- Classement Equipes = comptabilise le nombre de Points selon le calcul suivant :
+    somme(points) de chaque GP de la saison
+    − pénalités de chaque GP
+    - ajustements manuels de la saison
+- Palmarès Pilotes = Sur toutes les saisons et par catégorie : 
+    comptabilise le nombre de Titres, Vice-champions, Troisièmes, Victoires, Podiums, GP et Points.
+- Palmarès Equipes = Sur toutes les saisons et par catégorie :
+    comptabilise le nombre de Titres et les Points.

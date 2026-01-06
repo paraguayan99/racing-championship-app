@@ -15,11 +15,9 @@ class ManualAdjustmentsController extends Controller {
     {
         // Seuls les administrateurs peuvent accéder à ce controller
         $this->authMiddleware("Administrateur");
-
-        // Pour élargir les accès aux autres rôles en array
-        // $this->authMiddleware(["Administrateur", "Moderateur", "User"]);
     }
 
+    // Afficher tous les ajustements manuels des saisons actives
     public function index()
     {
         $manuals = ManualAdjustmentsModel::allWithSeasonActive();
@@ -56,6 +54,7 @@ class ManualAdjustmentsController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparées
                     $stmt = $pdo->prepare("
                         INSERT INTO manual_adjustments (season_id, driver_id, team_id, points, comment)
                         VALUES (?, ?, ?, ?, ?)
@@ -65,8 +64,9 @@ class ManualAdjustmentsController extends Controller {
                         $message = "Ajustement créé avec succès";
                         $classMsg = "msg-success";
 
-                        // AJOUT DANS LA TABLE UPDATES_LOG POUR AVOIR UN HISTORIQUE DES MAJ 
-                        $gp_id = null; // manual_adjustments affecte les saisons, pas les gp
+                        // Ajout dans la BDD à la table updates_log
+                        // manual_adjustments affecte les saisons, pas les gp
+                        $gp_id = null;
                         UpdatesLogModel::logUpdate('manual_adjustments', $season_id, $gp_id, $_SESSION['user_id'], 'create');
                     } else {
                         $message = "Erreur lors de la création.";
@@ -84,6 +84,7 @@ class ManualAdjustmentsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -147,6 +148,7 @@ class ManualAdjustmentsController extends Controller {
         $db = new ManualAdjustmentsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM manual_adjustments WHERE id=?");
         $stmt->execute([$id]);
         $manual = $stmt->fetch();
@@ -155,6 +157,7 @@ class ManualAdjustmentsController extends Controller {
             $message = "Ajustement introuvable";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -168,6 +171,8 @@ class ManualAdjustmentsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -176,7 +181,7 @@ class ManualAdjustmentsController extends Controller {
             return;
         }
 
-        // Elements actifs seulement
+        // Elements des saisons actives seulement
         $seasons = SeasonsModel::getActive();
         $drivers = DriversModel::getActive();
         $teams   = TeamsModel::getActive();
@@ -186,6 +191,7 @@ class ManualAdjustmentsController extends Controller {
             if (Form::validatePost($_POST, ['season_id', 'points'])) {
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE manual_adjustments
                         SET season_id=?, driver_id=?, team_id=?, points=?, comment=?
@@ -210,8 +216,9 @@ class ManualAdjustmentsController extends Controller {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
 
-                        // AJOUT DANS LA TABLE UPDATES_LOG POUR AVOIR UN HISTORIQUE DES MAJ 
-                        $gp_id = null; // manual_adjustments affecte les saisons, pas les gp
+                        // Ajout dans la BDD à la table updates_log
+                        // manual_adjustments affecte les saisons, pas les gp
+                        $gp_id = null;
                         UpdatesLogModel::logUpdate('manual_adjustments', $_POST['season_id'], $gp_id, $_SESSION['user_id'], 'update');
                     } else {
                         $message = "Erreur lors de la mise à jour";
@@ -228,6 +235,7 @@ class ManualAdjustmentsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -236,7 +244,7 @@ class ManualAdjustmentsController extends Controller {
             return;
         }
 
-        // FORMULAIRE
+        // Formulaire
         $form = new Form();
 
         $seasonOptions = [];
@@ -313,6 +321,7 @@ class ManualAdjustmentsController extends Controller {
         $db = new ManualAdjustmentsModel();
         $pdo = $db->getConnection();
 
+        // Requete préparée
         $stmt = $pdo->prepare("SELECT * FROM manual_adjustments WHERE id=?");
         $stmt->execute([$id]);
         $manual = $stmt->fetch();
@@ -321,6 +330,7 @@ class ManualAdjustmentsController extends Controller {
             $message = "Erreur : cet ajustement n’existe pas.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -334,6 +344,8 @@ class ManualAdjustmentsController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -345,14 +357,16 @@ class ManualAdjustmentsController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM manual_adjustments WHERE id=?");
 
                 if ($stmt->execute([$id])) {
                     $message = "Ajustement supprimé avec succès";
                     $classMsg = "msg-success";
 
-                    // AJOUT DANS LA TABLE UPDATES_LOG POUR AVOIR UN HISTORIQUE DES MAJ 
-                    $gp_id = null; // manual_adjustments affecte les saisons, pas les gp
+                    // Ajout dans la BDD à la table updates_log 
+                    // manual_adjustments affecte les saisons, pas les gp
+                    $gp_id = null;
                     $season_id = $manual->season_id;
                     UpdatesLogModel::logUpdate('manual_adjustments', $season_id, $gp_id, $_SESSION['user_id'], 'delete');
                 } else {
@@ -365,6 +379,7 @@ class ManualAdjustmentsController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/manual_adjustments/index', [
                 'list' => ManualAdjustmentsModel::allWithSeasonActive(),
                 'message' => $message,

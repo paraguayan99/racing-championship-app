@@ -15,16 +15,18 @@ class GpController extends Controller {
         $this->authMiddleware(["Administrateur", "Moderateur"]);
     }
 
+    // Afficher liste des GP
     public function index()
     {
-        $list = GpModel::allWithCountry(); // récupère les GP avec countryName intégré
+        $list = GpModel::allWithCountry(); 
+        // récupère les GP avec countryName intégré
 
         $this->render('dashboard/gp/index', [
             'list' => $list
         ]);
     }
 
-    // CREATE
+    // Créer un GP
     public function create()
     {
         $message = '';
@@ -42,6 +44,7 @@ class GpController extends Controller {
                 $pdo = $db->getConnection();
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO gp (season_id, circuit_id, gp_ordre)
                         VALUES (?, ?, ?)
@@ -64,6 +67,7 @@ class GpController extends Controller {
                     $classMsg = "msg-error";
                 }
 
+                // Retour liste avec message succès ou erreur
                 $this->render('dashboard/gp/index', [
                     'list' => GpModel::allWithCountry(),
                     'message' => $message,
@@ -75,6 +79,7 @@ class GpController extends Controller {
             $message = "Création échouée : informations manquantes.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -131,7 +136,7 @@ class GpController extends Controller {
         ]);
     }
 
-    // UPDATE
+    // Mettre à jour un GP
     public function update($id)
     {
         $message = '';
@@ -145,6 +150,8 @@ class GpController extends Controller {
         if (!$row) {
             $message = "GP introuvable.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -158,6 +165,8 @@ class GpController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de modifier : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -166,7 +175,7 @@ class GpController extends Controller {
             return;
         }
 
-        // Elements actifs seulement
+        // Elements des saisons actives seulement
         $seasons  = SeasonsModel::getActive();
         $circuits = CircuitsModel::getActive();
 
@@ -175,6 +184,7 @@ class GpController extends Controller {
             if (Form::validatePost($_POST, ['season_id', 'circuit_id', 'gp_ordre'])) {
 
                 try {
+                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE gp
                         SET season_id=?, circuit_id=?, gp_ordre=?
@@ -199,6 +209,7 @@ class GpController extends Controller {
                     $classMsg = "msg-error";
                 }
 
+                // Retour liste avec message succès ou erreur
                 $this->render('dashboard/gp/index', [
                     'list' => GpModel::allWithCountry(),
                     'message' => $message,
@@ -210,6 +221,7 @@ class GpController extends Controller {
             $message = "Mise à jour échouée : informations manquantes.";
             $classMsg = "msg-error";
 
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -267,7 +279,7 @@ class GpController extends Controller {
         ]);
     }
 
-    // DELETE
+    // Supprimer un GP
     public function delete($id)
     {
         $message = '';
@@ -298,6 +310,8 @@ class GpController extends Controller {
         if (!$row) {
             $message = "Erreur : ce GP n'existe pas.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -311,6 +325,8 @@ class GpController extends Controller {
         if (!$season || $season->status !== 'active') {
             $message = "Impossible de supprimer : la saison est désactivée.";
             $classMsg = "msg-error";
+
+            // Retour liste avec message erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -321,6 +337,7 @@ class GpController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
+                // Requete préparée
                 $stmt = $pdo->prepare("DELETE FROM gp WHERE id=?");
 
                 if ($stmt->execute([$id])) {
@@ -338,6 +355,7 @@ class GpController extends Controller {
                 $classMsg = "msg-error";
             }
 
+            // Retour liste avec message succès ou erreur
             $this->render('dashboard/gp/index', [
                 'list' => GpModel::allWithCountry(),
                 'message' => $message,
@@ -346,7 +364,7 @@ class GpController extends Controller {
             return;
         }
 
-        // Variables envoyées à la vue delete.php
+        // Variables envoyées à la vue
         $circuitName = $circuitNames[$row->circuit_id] ?? '';
         $seasonName = $seasonNames[$row->season_id] ?? '';
         $countryName = $circuitCountries[$row->circuit_id] ?? 'Pays inconnu';
@@ -360,6 +378,5 @@ class GpController extends Controller {
             'classMsg' => $classMsg
         ]);
     }
-
 }
 ?>
