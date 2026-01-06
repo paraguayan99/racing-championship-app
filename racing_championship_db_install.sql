@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `championship_db`
+-- Base de données : `racing_championship_db`
 --
 
 -- --------------------------------------------------------
@@ -36,15 +36,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `color`, `status`) VALUES
-(1, 'F1', '#e10600', 'active'),
-(2, 'F2', '#366092', 'active'),
-(3, 'F3', '#c904d7', 'active');
 
 --
 -- Déclencheurs `categories`
@@ -76,30 +67,6 @@ CREATE TABLE IF NOT EXISTS `circuits` (
   KEY `idx_circuit_status` (`status`),
   KEY `idx_circuit_country` (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `circuits`
---
-
-INSERT INTO `circuits` (`id`, `name`, `country_id`, `status`) VALUES
-(1, 'Sakhir', 2, 'active'),
-(2, 'Sepang', 3, 'active'),
-(3, 'Melbourne', 4, 'active'),
-(4, 'Imola', 5, 'active'),
-(5, 'Nurburgring', 6, 'active'),
-(6, 'Barcelone', 7, 'active'),
-(7, 'Monte-Carlo', 8, 'active'),
-(8, 'Silverstone', 9, 'active'),
-(9, 'Montreal', 10, 'active'),
-(10, 'Indianapolis', 11, 'active'),
-(11, 'Nevers Magny-Cours', 1, 'active'),
-(12, 'Hockenheim', 6, 'active'),
-(13, 'Hungaroring', 12, 'active'),
-(14, 'Istanbul', 13, 'active'),
-(15, 'Monza', 5, 'active'),
-(16, 'Shanghai', 14, 'active'),
-(17, 'Suzuka', 15, 'active'),
-(18, 'Interlagos', 16, 'active');
 
 --
 -- Déclencheurs `circuits`
@@ -136,25 +103,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `flag`) VALUES
-(1, 'France', 'FRA', 'img/flags/france.png'),
-(2, 'Bahreïn', 'BAH', 'img/flags/bahrein.png'),
-(3, 'Malaisie', 'MAL', 'img/flags/malaisie.png'),
-(4, 'Australie', 'AUS', 'img/flags/australie.png'),
-(5, 'Italie', 'ITA', 'img/flags/italie.png'),
-(6, 'Allemagne', 'ALL', 'img/flags/allemagne.png'),
-(7, 'Espagne', 'ESP', 'img/flags/espagne.png'),
-(8, 'Monaco', 'MON', 'img/flags/monaco.png'),
-(9, 'Grande-Bretagne', 'GBR', 'img/flags/grandebretagne.png'),
-(10, 'Canada', 'CAN', 'img/flags/canada.png'),
-(11, 'États-Unis', 'USA', 'img/flags/etatsunis.png'),
-(12, 'Hongrie', 'HON', 'img/flags/hongrie.png'),
-(13, 'Turquie', 'TUR', 'img/flags/turquie.png'),
-(14, 'Chine', 'CHI', 'img/flags/chine.png'),
-(15, 'Japon', 'JAP', 'img/flags/japon.png'),
-(16, 'Brésil', 'BRE', 'img/flags/bresil.png'),
-(17, 'Suisse', 'SUI', 'img/flags/suisse.png'),
-(18, 'Autriche', 'AUT', 'img/flags/autriche.png'),
-(19, 'Pays-Bas', 'P-B', 'img/flags/paysbas.png');
+(1, 'France', 'FRA', 'img/flags/france.png');
 
 --
 -- Déclencheurs `countries`
@@ -195,24 +144,6 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   KEY `idx_driver_status` (`status`),
   KEY `idx_driver_country` (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `drivers`
---
-
-INSERT INTO `drivers` (`id`, `nickname`, `country_id`, `status`) VALUES
-(1, '[Driver removed]', 1, 'active'),
-(2, 'Jujubiker', 1, 'active'),
-(3, 'Martlio', 1, 'active'),
-(4, 'Guignol81', 1, 'active'),
-(5, 'Jimboparisgo', 1, 'active'),
-(6, 'Chapi-chapo', 1, 'active'),
-(7, 'Didi511', 1, 'active'),
-(8, 'Senna76', 1, 'active'),
-(9, 'Fox', 1, 'active'),
-(10, 'Nordschleife', 1, 'active'),
-(11, 'Ludovico6', 1, 'active'),
-(12, 'Gafit', 1, 'active');
 
 --
 -- Déclencheurs `drivers`
@@ -292,30 +223,6 @@ CREATE TABLE IF NOT EXISTS `gp` (
   KEY `idx_gp_circuit` (`circuit_id`),
   KEY `idx_gp_season_ordre` (`season_id`,`gp_ordre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `gp`
---
-
-INSERT INTO `gp` (`id`, `season_id`, `circuit_id`, `gp_ordre`) VALUES
-(1, 1, 1, 1),
-(2, 1, 2, 2),
-(3, 1, 3, 3),
-(4, 1, 4, 4),
-(5, 1, 5, 5),
-(6, 1, 6, 6),
-(7, 1, 7, 7),
-(8, 1, 8, 8),
-(9, 1, 9, 9),
-(10, 1, 10, 10),
-(11, 1, 11, 11),
-(12, 1, 12, 12),
-(13, 1, 13, 13),
-(14, 1, 14, 14),
-(15, 1, 15, 15),
-(16, 1, 16, 16),
-(17, 1, 17, 17),
-(18, 1, 18, 18);
 
 --
 -- Déclencheurs `gp`
@@ -466,13 +373,6 @@ CREATE TABLE IF NOT EXISTS `seasons` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `seasons`
---
-
-INSERT INTO `seasons` (`id`, `season_number`, `category_id`, `videogame`, `platform`, `status`) VALUES
-(1, 1, 1, 'F1 Championship Edition', 'PS3', 'active');
-
---
 -- Déclencheurs `seasons`
 --
 DROP TRIGGER IF EXISTS `before_delete_season`;
@@ -512,24 +412,6 @@ CREATE TABLE IF NOT EXISTS `teams` (
   KEY `idx_team_status` (`status`),
   KEY `idx_team_country` (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `teams`
---
-
-INSERT INTO `teams` (`id`, `name`, `logo`, `color`, `country_id`, `status`) VALUES
-(1, '[Team removed]', '', NULL, 1, 'active'),
-(2, 'Toyota', '', '#f90606', 15, 'active'),
-(3, 'Williams', 'img/teams/williams.png', '#03a8ea', 9, 'active'),
-(4, 'Ferrari', 'img/teams/ferrari.png', '#fe0000', 5, 'active'),
-(5, 'Renault', '', '#8e9018', 1, 'active'),
-(6, 'Super Aguri', '', '#ff0000', 15, 'active'),
-(7, 'Honda', '', '#000000', 15, 'active'),
-(8, 'BMW Sauber', '', '#139fcd', 17, 'active'),
-(9, 'McLaren', 'img/teams/mclaren.png', '#ff8500', 9, 'active'),
-(10, 'Red Bull', 'img/teams/redbull.png', '#15185e', 18, 'active'),
-(11, 'Toro Rosso', '', '#2f2cf2', 5, 'active'),
-(12, 'Spyker', '', '#000000', 19, 'active');
 
 --
 -- Déclencheurs `teams`
@@ -649,16 +531,6 @@ CREATE TABLE IF NOT EXISTS `updates_log` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `updates_log`
---
-
-INSERT INTO `updates_log` (`id`, `season_id`, `gp_id`, `table_name`, `updated_at`, `updated_by`, `action`) VALUES
-(43, NULL, 1, 'gp_points', '2025-12-29 23:52:49', 1, 'create'),
-(44, NULL, 1, 'gp_points', '2025-12-29 23:54:44', 1, 'delete'),
-(45, NULL, 1, 'gp_points', '2025-12-29 23:57:04', 1, 'create'),
-(46, NULL, 1, 'gp_points', '2025-12-29 23:59:17', 1, 'delete');
-
---
 -- Déclencheurs `updates_log`
 --
 DROP TRIGGER IF EXISTS `trg_updates_log_check`;
@@ -704,9 +576,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role_id`) VALUES
-(1, 'paraguayan99@laposte.net', '$2y$10$jI3l3bZc92tGCe.OqMbVWuu/diVN7AlMHhxkEWUKR8BxgY3ardwYC', 1),
-(2, 'moderateur@gmail.com', '$2y$10$7YqgqnOXLMpR7GxIkDSb/OWnUGtFIa8Ip6yXgOPyNW0GZ5dkmLQt6', 2),
-(3, 'utilisateur@gmail.com', '$2y$10$S6lHWQKDdWupIJfwkRgnzOYeNhRGsTOqv8jlInjBV7SYwjNIcDjT2', 3);
+(1, 'admin@racing-championship-app.fr', '$2y$10$63SO9YwcUadXturiIb6OIe5OFxXKbr476nr7fuC1EmAnPdcUs8VU.', 1);
 
 -- --------------------------------------------------------
 
