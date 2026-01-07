@@ -1,20 +1,22 @@
 <?php
 namespace App\Controllers;
 
+use App\Core\Auth;
+
 abstract class Controller 
 {
     // Verification à chaque appel des Controllers : 
     // LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
     protected function authMiddleware(string|array $requiredRoles = null)
     {
-        \App\Core\Auth::start();
+        Auth::start();
 
         // Empêche le cache navigateur UNIQUEMENT des pages sécurisées
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Pragma: no-cache");
         header("Expires: 0");
 
-        if (!\App\Core\Auth::check()) {
+        if (!Auth::check()) {
             header('Location: index.php?controller=auth&action=login');
             exit;
         }
@@ -25,13 +27,13 @@ abstract class Controller
 
             if (is_array($requiredRoles)) {
                 foreach ($requiredRoles as $role) {
-                    if (\App\Core\Auth::hasRole($role)) {
+                    if (Auth::hasRole($role)) {
                         $userHasRole = true;
                         break;
                     }
                 }
             } else {
-                $userHasRole = \App\Core\Auth::hasRole($requiredRoles);
+                $userHasRole = Auth::hasRole($requiredRoles);
             }
 
             if (!$userHasRole) {
@@ -54,7 +56,7 @@ abstract class Controller
         // Vérification CSRF pour POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!isset($_POST['csrf_token']) 
-                || !\App\Core\Auth::validateCSRF($_POST['csrf_token'])) {
+                || !Auth::validateCSRF($_POST['csrf_token'])) {
                 http_response_code(403);
                 // Titre de la page
                 $title = "Team-eRacing";

@@ -31,12 +31,3 @@ use App\Core\Auth;
         </div>
     </form>
 </div>
-
-
-<?php
-// SCRIPT POUR CREER MOT DE PASSE HASHE ET SECURISE DANS LA BDD
-
-// $motdepasse = 'user'; // Le mot de passe en clair
-// $hash = password_hash($motdepasse, PASSWORD_DEFAULT);
-// echo $hash;
-?>

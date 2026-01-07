@@ -52,7 +52,7 @@
         }
     ?>
 
-        <!-- ================= TOP 10 CHRONOS ================= -->
+        <!--  TOP 10 CHRONOS  -->
         <?php if (!empty($topChronos)) : ?>
         <h3 class="gp-title">Top Chronos</h3>
 
@@ -134,7 +134,7 @@
         </div>
         <?php endif; ?>
 
-        <!-- ================= GP PAR CATÉGORIE ================= -->
+        <!--  GP PAR CATÉGORIE  -->
         <h3 class="gp-title">Courses disputées</h3>
 
         <div class="table-responsive">
@@ -159,7 +159,7 @@
             </tbody>
         </table>
         </div>
-        <!-- ================= CLASSEMENT PILOTES ================= -->
+        <!--  CLASSEMENT PILOTES  -->
         <h3 class="gp-title">Classement Pilotes</h3>
 
         <p class="gp-subtitle">
@@ -226,7 +226,7 @@
 
 </div>
 
-<!-- ================= TRI JS (IDENTIQUE AU PALMARÈS) ================= -->
+<!--  TRI JS (IDENTIQUE AU PALMARÈS)  -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (th !== header) th.classList.remove('asc', 'desc');
                 });
 
-                if(columnIndex === 0) return; // ignore colonne Pos
+                if(columnIndex === 0) return; // ignore colonne Position
 
                 const rows = Array.from(tbody.querySelectorAll('tr'));
 
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 rows.forEach(row => tbody.appendChild(row));
 
-                // recalculer badges Pos
+                // recalculer badges Position
                 rows.forEach((row, index) => {
                     row.children[0].innerHTML = podiumBadge(index + 1);
                 });
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        // === TRI AUTOMATIQUE au chargement sur Victoires (col index 3) ===
+        // === TRI AUTOMATIQUE au chargement sur Victoires ===
         const victoriesHeader = table.querySelectorAll('th')[3];
         if(victoriesHeader) victoriesHeader.click(); // déclenche le tri
 
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateResponsiveNames() {
         const w = window.innerWidth;
 
-        /* ===== CIRCUIT TITLE ===== */
+        /*  CIRCUIT TITLE  */
         document.querySelectorAll('.circuit-title').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== PILOTES (Circuits TOP 10) ===== */
+        /*  PILOTES (Circuits TOP 10)  */
         document.querySelectorAll('.driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== TYPE POLE POSITION OU FASTEST LAP (Circuits TOP 10) ===== */
+        /*  TYPE POLE POSITION OU FASTEST LAP (Circuits TOP 10)  */
         document.querySelectorAll('.top10-type').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== CATEGORIES ET CONSOLE (Circuits TOP 10) ===== */
+        /*  CATEGORIES ET CONSOLE (Circuits TOP 10)  */
         document.querySelectorAll('.top10-category-console').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== JEU VIDEO (Circuits TOP 10) ===== */
+        /*  JEU VIDEO (Circuits TOP 10)  */
         document.querySelectorAll('.top10-videogame').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== PILOTES (Classement Pilotes) ===== */
+        /*  PILOTES (Classement Pilotes)  */
         document.querySelectorAll('.drivers-standings-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -436,9 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     }
-
     window.addEventListener('resize', updateResponsiveNames);
     updateResponsiveNames();
-
 });
 </script>

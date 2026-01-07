@@ -5,14 +5,10 @@ use App\Core\DbConnect;
 
 class UpdatesLogModel extends DbConnect {
 
-    /**
-     * Enregistre une mise à jour dans la table updates_log
-     * 
-     * @param string $table Nom de la table modifiée
-     * @param int|null $season_id Saison concernée
-     * @param int|null $gp_id GP concerné
-     * @param int $user_id Utilisateur ayant effectué la modification
-     */
+    //  @param string $table Nom de la table modifiée
+    //  @param int|null $season_id Saison concernée
+    //  @param int|null $gp_id GP concerné
+    //  @param int $user_id Utilisateur ayant effectué la modification
 
     public static function logUpdate(string $table, ?int $season_id, ?int $gp_id, ?int $user_id = null, string $action = '')
     {
@@ -44,10 +40,7 @@ class UpdatesLogModel extends DbConnect {
         ]);
     }
 
-
-    /**
-     * Optionnel : récupérer tout l'historique
-     */
+    // Récupère tout l'historique
     public static function getAll()
     {
         $db = new DbConnect();
@@ -59,10 +52,7 @@ class UpdatesLogModel extends DbConnect {
         ")->fetchAll(\PDO::FETCH_OBJ);
     }
     
-
-    /**
-     * Optionnel : récupérer la dernière mise à jour d'une table/saison/GP
-     */
+    // Récupère la dernière mise à jour
     public static function getLast(string $table, ?int $season_id = null, ?int $gp_id = null)
     {
         $db = new DbConnect();

@@ -12,7 +12,7 @@ class SeasonsModel extends DbConnect {
     public $platform;
     public $status;
 
-    // Récupérer toutes les saisons avec le nom de la catégorie
+    // Récupère toutes les saisons avec le nom de la catégorie
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -22,13 +22,13 @@ class SeasonsModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Récupérer toutes les catégories (pour les select dans le formulaire)
+    // Récupère toutes les catégories (pour les select dans le formulaire)
     public static function allCategories(){
         $db = new DbConnect();
         return $db->getConnection()->query("SELECT * FROM categories")->fetchAll();
     }
 
-    // Récupérer une saison par ID
+    // Récupère une saison par un ID
     public static function findById($id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM seasons WHERE id = ?");
@@ -54,6 +54,5 @@ class SeasonsModel extends DbConnect {
             ORDER BY seasons.season_number DESC
         ")->fetchAll(\PDO::FETCH_OBJ);
     }
-
 }
 ?>

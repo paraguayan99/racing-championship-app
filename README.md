@@ -33,7 +33,7 @@ Depuis 2016, je participe activement à l’organisation. Jusqu’ici, les class
 
 Cette application web devient l’**outil central** pour gérer le championnat et valoriser la communauté. 
 
-Il a été réalisé en Novembre et Décembre 2025 dans le cadre de mon projet de fin de formation pour mon titre de DWWM.
+Il a été réalisé en Novembre et Décembre 2025 dans le cadre de mon projet de fin de formation de DWWM.
 
 ---
 
@@ -150,18 +150,18 @@ comptabilise le nombre de Titres et les Points.
 
 ---
 
-## 🚀 Déploiement : Installation en local avec Wampserver
+## 🚀 Plan de déploiement simplifié en local
 
-1. Cloner le dépôt  
+1. Cloner le dépôt (ou télécharger le ZIP) :
 ```bash
 git clone https://github.com/paraguayan99/racing-championship-app.git
 ```
-2. Créer votre Virtual Host relié au dossier du dépôt clôné avec Wampserver
-3. Créer la base MySQL via PHPMyAdmin et importer le script présent dans le fichier ```racing_championship_db_install.sql```
-4. Configurer, si besoin, la connexion à la BDD dans le fichier ```Core/DbConnect.php```
-5. Se connecter au Dashboard administrateur de l'application web avec l'utilisateur par défaut :
+2. Créer votre Virtual Host relié au dossier du dépôt cloné, par exemple avec Wampserver.
+3. Créer la base MySQL via phpMyAdmin et importer le script présent dans le fichier : ```racing_championship_db_install.sql```
+4. Configurer, si besoin, la connexion à la BDD dans le fichier : ```Core/DbConnect.php```
+5. Se connecter au Dashboard Administrateur de l'application web avec l'utilisateur par défaut :
 - identifiant : ```admin@racing-championship-app.fr```
 - mdp : ```admin12345```
-6. Créer votre propre utilisateur avec mot de passe sécurisé dans la table Utilisateurs avec le role Administrateur
+6. Accéder à la table Utilisateurs et créez votre propre utilisateur + mot de passe sécurisé avec le rôle Administrateur.
 7. Supprimer l'utilisateur par défaut :
 - ```admin@racing-championship-app.fr```

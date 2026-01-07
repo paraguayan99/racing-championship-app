@@ -11,7 +11,7 @@ class GpStatsModel extends DbConnect {
     public $fastest_lap_driver;
     public $fastest_lap_time;
 
-    // Récupérer toutes les stats avec infos Saison, GP, Country, Drivers
+    // Récupère toutes les stats des Saisons Actives avec infos Saison, GP, Country, Drivers
     public static function allWithSeasonActive()
     {
         $db = new DbConnect();
@@ -76,7 +76,7 @@ class GpStatsModel extends DbConnect {
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // Récupérer une stat par GP ID (clé primaire)
+    // Récupère une stat par GP ID
     public static function findByGpId($gp_id)
     {
         $db = new DbConnect();

@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                if(columnIndex === 0) return; // ignore colonne Pos
+                if(columnIndex === 0) return; // ignore colonne Position
 
                 const rows = Array.from(tbody.querySelectorAll('tr'));
 
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 rows.forEach(row => tbody.appendChild(row));
 
-                // recalculer badges Pos
+                // recalculer badges Position
                 rows.forEach((row, index) => {
                     row.children[0].innerHTML = podiumBadge(index + 1);
                 });
@@ -234,12 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // === PALMARÈS PILOTES : Titres DESC ===
+    // PALMARÈS PILOTES : Titres DESC
     document.querySelectorAll('table.palmares-drivers-table').forEach(table => {
         forceSortDesc(table, 2); // colonne Titres
     });
 
-    // === PALMARÈS CONSTRUCTEURS : Titres DESC ===
+    // PALMARÈS CONSTRUCTEURS : Titres DESC
     document.querySelectorAll('table.palmares-teams-table').forEach(table => {
         forceSortDesc(table, 2); // colonne Titres
     });
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateResponsiveNames() {
         const w = window.innerWidth;
 
-        /* ===== PILOTES (Palmarès Pilotes) ===== */
+        /* Palmarès Pilotes */
         document.querySelectorAll('.driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        /* ===== EQUIPES (Palmarès Equipes) ===== */
+        /* Palmarès Equipes */
         document.querySelectorAll('.team-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -298,10 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
     window.addEventListener('resize', updateResponsiveNames);
     updateResponsiveNames();
-
 });
 </script>
 

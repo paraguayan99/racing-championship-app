@@ -13,7 +13,7 @@ class GpPointsModel extends DbConnect {
     public $points_numeric;
     public $points_text;
 
-    // Récupérer tous les GP Points avec infos Saison, GP, Country, Driver, Team
+    // Récupère tous les GP Points des saisons actives avec infos Saison, GP, Country, Driver, Team
     public static function allWithSeasonActive()
     {
         $db = new DbConnect();
@@ -86,7 +86,7 @@ class GpPointsModel extends DbConnect {
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // Récupérer tous les GP Points pour un GP spécifique
+    // Récupère tous les GP Points pour un GP spécifique
     public static function allByGp($gp_id)
     {
         $db = new DbConnect();
@@ -95,7 +95,7 @@ class GpPointsModel extends DbConnect {
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // Récupérer un point par ID
+    // Récupère GP Points par un ID spécifique
     public static function findById($id)
     {
         $db = new DbConnect();

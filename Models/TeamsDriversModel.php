@@ -10,6 +10,7 @@ class TeamsDriversModel extends DbConnect {
     public $driver_id;
     public $team_id;
 
+    // Récupère toutes les associations Pilotes - Teams
     public static function all()
     {
         $db = new DbConnect();
@@ -45,7 +46,7 @@ class TeamsDriversModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Obtenir une ligne précise
+    // Récupère l'associations Pilote - Team par un ID
     public static function find($id) {
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("

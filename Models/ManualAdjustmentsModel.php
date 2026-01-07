@@ -12,31 +12,33 @@ class ManualAdjustmentsModel extends DbConnect {
     public $points;
     public $comment;
 
+    // Récupère tous les ajustements manuels
     public static function all() {
-    $db = new DbConnect();
-    $stmt = $db->getConnection()->prepare("
-        SELECT 
-            ma.id,
-            ma.season_id,
-            ma.driver_id,
-            ma.team_id,
-            ma.points,
-            ma.comment,
-            d.nickname AS driver_nickname,
-            t.name AS team_name,
-            s.season_number,
-            c.name AS category_name
-        FROM manual_adjustments ma
-        JOIN seasons s ON ma.season_id = s.id
-        JOIN categories c ON s.category_id = c.id
-        LEFT JOIN drivers d ON ma.driver_id = d.id
-        LEFT JOIN teams t ON ma.team_id = t.id
-        ORDER BY ma.id DESC
-    ");
-    $stmt->execute();
-    return $stmt->fetchAll(\PDO::FETCH_OBJ);
-}
+        $db = new DbConnect();
+        $stmt = $db->getConnection()->prepare("
+            SELECT 
+                ma.id,
+                ma.season_id,
+                ma.driver_id,
+                ma.team_id,
+                ma.points,
+                ma.comment,
+                d.nickname AS driver_nickname,
+                t.name AS team_name,
+                s.season_number,
+                c.name AS category_name
+            FROM manual_adjustments ma
+            JOIN seasons s ON ma.season_id = s.id
+            JOIN categories c ON s.category_id = c.id
+            LEFT JOIN drivers d ON ma.driver_id = d.id
+            LEFT JOIN teams t ON ma.team_id = t.id
+            ORDER BY ma.id DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
 
+    // Récupère tous les ajustements manuels des Saisons Actives
     public static function allWithSeasonActive()
     {
         $db = new DbConnect();
@@ -69,7 +71,6 @@ class ManualAdjustmentsModel extends DbConnect {
 
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll();
-}
-
+    }
 }
 ?>
