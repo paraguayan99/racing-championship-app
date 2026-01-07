@@ -12,7 +12,7 @@ class PenaltiesModel extends DbConnect {
     public $points_removed;
     public $comment;
 
-    // Récupérer toutes les pénalités avec infos Saison, GP, Country, Driver, Team
+    // Récupère toutes les pénalités des Saisons Actives avec infos Saison, GP, Country, Driver, Team
     public static function allWithSeasonActive()
     {
         $db = new DbConnect();
@@ -78,7 +78,7 @@ class PenaltiesModel extends DbConnect {
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // Récupérer une pénalité par ID
+    // Récupère une pénalité par un ID
     public static function findById($id)
     {
         $db = new DbConnect();

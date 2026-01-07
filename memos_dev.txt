@@ -8,7 +8,6 @@ git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
 git push origin main
 ______________________________________
-- Commenter tout le code
 
 - Table circuits, courses disputées compte les courses du calendrier même si il n'a pas eu lieu
 sans vérifier si il y a des gp points de déclaré dedans
@@ -39,6 +38,7 @@ Enlever tout le JavaScript et utiliser le CSS table fix et upside / down pour ca
 - DANS LE FORMULAIRE CREATE DE GP POINTS, LE TEAM_ID DOIT ETRE REMPLI/SUGGERE AUTOMATIQUEMENT 
 LORSQUON A SELECTIONNE LE DRIVER VIA LES INFOS DE LA TABLE TEAMS_DRIVERS ET SA TEAM ASSOCIEE
 
-- La colonne active / desactive des catégories n'a pas d'incidence sur les autres tables de la BDD
+- Vérifier La colonne active / desactive des catégories n'a pas d'incidence sur les autres tables de la BDD 
+mais peut etre dans le select du formulaire
 
 ______________________________________

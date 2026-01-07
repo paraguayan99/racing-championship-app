@@ -5,6 +5,7 @@ use App\Core\DbConnect;
 
 class PalmaresModel extends DbConnect
 {
+    // Récupère le Palmarès Pilotes de toutes les saisons
     public static function getDriversStats()
     {
         $db = new DbConnect();
@@ -18,6 +19,7 @@ class PalmaresModel extends DbConnect
             ->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    // Récupère le Palmarès Equipes de toutes les saisons
     public static function getTeamsStats()
     {
         $db = new DbConnect();

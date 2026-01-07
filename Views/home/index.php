@@ -188,7 +188,7 @@
 }
 </script>
 
-<!-- Flèche pour le retour en haut de page -->
+<!-- Apparition au scroll en fondu des sections -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".hero-section");

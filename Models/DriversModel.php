@@ -10,7 +10,7 @@ class DriversModel extends DbConnect {
     public $country_id;
     public $status;
 
-    // Récupérer un pilote par son ID
+    // Récupère un pilote par son ID
     public static function find($id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM drivers WHERE id = ?");
@@ -18,6 +18,7 @@ class DriversModel extends DbConnect {
         return $stmt->fetch();
     }
 
+    // Récupère un pilote par son pseudo
     public static function findByNickname($nickname){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM drivers WHERE nickname = ?");
@@ -25,6 +26,7 @@ class DriversModel extends DbConnect {
         return $stmt->fetch();
     }
 
+    // Récupère nom pays par son id
     public static function getCountryName($country_id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT name FROM countries WHERE id=?");
@@ -33,6 +35,7 @@ class DriversModel extends DbConnect {
         return $row ? $row->name : null;
     }
 
+    // Récupère tous les pilotes
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -42,7 +45,7 @@ class DriversModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Pour afficher uniquement les ACTIFS dans les formulaires
+    // Pour afficher uniquement les pilotes actifs dans les formulaires
     public static function getActive()
     {
         $db = new DbConnect();

@@ -11,13 +11,10 @@ class GpModel extends DbConnect {
     public $circuit_id;
     public $gp_ordre;
 
-    /**
-     * Retourne tous les GP triés par catégorie puis gp_ordre
-     */
+    // Retourne tous les GP triés par catégorie puis gp_ordre
     public static function all()
     {
         $db = new DbConnect();
-
         return $db->getConnection()->query("
             SELECT 
                 gp.id,
@@ -44,9 +41,8 @@ class GpModel extends DbConnect {
         ")->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    /**
-     * Trouver un GP par ID
-     */
+    // Trouver un GP par ID
+
     public static function find($id)
     {
         $db = new DbConnect();
@@ -57,25 +53,20 @@ class GpModel extends DbConnect {
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 
-    /**
-     * Retourne tous les GP enrichis avec le nom du pays du circuit
-     */
+    // Retourne tous les GP avec le nom du pays du circuit
     public static function allWithCountry()
     {
         $list = self::all(); // récupère les GP avec season, category, circuit_name
         $circuits = CircuitsModel::all();
-
         // Préparer un tableau circuit_id => countryName
         $circuitCountries = [];
         foreach ($circuits as $c) {
             $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
         }
-
         // Ajouter countryName à chaque GP
         foreach ($list as &$gp) {
             $gp->countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
         }
-
         return $list;
     }
 }

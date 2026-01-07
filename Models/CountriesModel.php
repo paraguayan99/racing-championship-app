@@ -10,7 +10,7 @@ class CountriesModel extends DbConnect {
     public $code;
     public $flag;
 
-    // Récupérer un pays par son nom
+    // Récupère un pays par son nom
     public static function findByName($name){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM countries WHERE name = ?");
@@ -18,7 +18,7 @@ class CountriesModel extends DbConnect {
         return $stmt->fetch();
     }
 
-    // Récupérer tous les pays
+    // Récupère tous les pays
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("

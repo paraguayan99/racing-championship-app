@@ -5,6 +5,7 @@ use App\Models\UsersModel;
 
 class Auth
 {
+    // Démarre une session sécurisée
     public static function start()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -81,3 +82,4 @@ class Auth
             && hash_equals($_SESSION['csrf_token'], $token);
     }
 }
+?>

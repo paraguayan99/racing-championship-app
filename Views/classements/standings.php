@@ -431,7 +431,7 @@ function gpBadge($gpNumber) {
 </script>
 
 <script>
-/* Toggle GP pour la catégorie */
+//  Toggle GP pour la catégorie 
 document.querySelectorAll('.gp-toggle-btn-category').forEach(btn => {
     btn.addEventListener('click', () => {
         const category = btn.dataset.category;
@@ -451,7 +451,7 @@ document.querySelectorAll('.gp-toggle-btn-category').forEach(btn => {
     });
 });
 
-/* Ouvre le modal Résultats du GP en cliquant sur une ligne GP */
+// Ouvre le modal Résultats du GP en cliquant sur une ligne GP
 document.addEventListener('click', function (e) {
     const row = e.target.closest('.gp-row');
     if (!row) return;
@@ -468,12 +468,12 @@ document.addEventListener('click', function (e) {
         });
 });
 
-/* Fermer le modal */
+// Fermer le modal
 document.querySelector('.gp-modal-close').addEventListener('click', () => {
     document.getElementById('gp-modal').style.display = 'none';
 });
 
-/* Fermer modal si clic en dehors */
+// Fermer modal si clic en dehors
 window.addEventListener('click', e => {
     if (e.target === document.getElementById('gp-modal')) {
         document.getElementById('gp-modal').style.display = 'none';
@@ -486,7 +486,7 @@ window.addEventListener('click', e => {
     function updateResponsiveNames() {
         const w = window.innerWidth;
 
-        /* ===== PILOTES (Classement Pilotes) ===== */
+        /* PILOTES (Classement Pilotes) */
         document.querySelectorAll('.driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();
@@ -508,7 +508,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /* ===== ÉCURIES ===== (Classement Pilotes) */
+        /*  ÉCURIES  (Classement Pilotes) */
         document.querySelectorAll('.drivers-table .team-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();
@@ -524,7 +524,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /* ===== ÉCURIES (Classement Constructeurs) ===== */
+        /*  ÉCURIES (Classement Constructeurs)  */
         document.querySelectorAll('.teams-table .team-content span').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();
@@ -539,7 +539,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /* ===== PENALITES ===== */
+        /*  PENALITES  */
         document.querySelectorAll('.penalties-table .gp-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -561,6 +561,7 @@ window.addEventListener('click', e => {
             }
         });
 
+        /*  PILOTES  (Tableau Pénalités) */
         document.querySelectorAll('.penalties-table .driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -582,6 +583,7 @@ window.addEventListener('click', e => {
             }
         });
 
+        /*  TEAMS  (Tableau Pénalités) */
         document.querySelectorAll('.penalties-table .team-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -603,6 +605,7 @@ window.addEventListener('click', e => {
             }
         });
 
+        /*  COMMENTAIRES  (Tableau Pénalités) */
         document.querySelectorAll('.penalties-table .penalty-comment').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -627,7 +630,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /* ===== RESULTATS GP ===== */
+        /*  CIRCUIT  (Tableau Liste des GP) */
         document.querySelectorAll('.gp-season-table .circuit-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -655,6 +658,7 @@ window.addEventListener('click', e => {
             }
         });
 
+        /*  PILOTES  (Tableau Liste des GP) */
         document.querySelectorAll('.gp-season-table .driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
@@ -676,6 +680,7 @@ window.addEventListener('click', e => {
             }
         });
 
+        /*  PILOTES  (Modal AJAX) */
         document.querySelectorAll('.modal-gp-results-table .driver-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();
@@ -690,6 +695,7 @@ window.addEventListener('click', e => {
                            full.substring(0, 30);
         });
 
+        /*  TEAMS  (Modal AJAX) */
         document.querySelectorAll('.modal-gp-results-table .team-name').forEach(el => {
             if (!el.dataset.fullname) {
                 el.dataset.fullname = el.textContent.trim();
@@ -704,7 +710,6 @@ window.addEventListener('click', e => {
                            full.substring(0, 30);
         });
     }
-
     window.addEventListener('resize', updateResponsiveNames);
     updateResponsiveNames();
 </script>

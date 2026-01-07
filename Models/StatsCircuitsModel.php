@@ -5,10 +5,7 @@ use App\Core\DbConnect;
 
 class StatsCircuitsModel extends DbConnect
 {
-    /* ---------------------------------------------------------
-       SELECT – LISTE DES CIRCUITS
-    --------------------------------------------------------- */
-
+    // Récupère la liste de tous circuits pour le select de la page Circuits
     public static function getAllCircuitsForSelect()
     {
         $db = new DbConnect();
@@ -21,9 +18,7 @@ class StatsCircuitsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    /* ---------------------------------------------------------
-       TOP 10 CHRONOS (POLE POSITION + FASTEST LAP)
-    --------------------------------------------------------- */
+    // TOP 10 CHRONOS (POLE POSITION + FASTEST LAP) par un ID de circuit
     public static function getCircuitTopChronos($circuitId)
     {
         $db = new DbConnect();
@@ -77,9 +72,7 @@ class StatsCircuitsModel extends DbConnect
     return $result ?: [];
     }
 
-    /* ---------------------------------------------------------
-       CLASSEMENT DRIVERS SUR LE CIRCUIT
-    --------------------------------------------------------- */
+    // CLASSEMENT DRIVERS SUR LE CIRCUIT par un ID de circuit
     public static function getDriversStatsByCircuit($circuitId)
     {
         $db = new DbConnect();
@@ -112,9 +105,7 @@ class StatsCircuitsModel extends DbConnect
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    /* ---------------------------------------------------------
-       NOMBRE DE GP PAR CATÉGORIE
-    --------------------------------------------------------- */
+    // NOMBRE DE GP PAR CATÉGORIE par un ID de circuit
     public static function getGPCountByCategory($circuitId)
     {
         $db = new DbConnect();
@@ -135,3 +126,4 @@ class StatsCircuitsModel extends DbConnect
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 }
+?>

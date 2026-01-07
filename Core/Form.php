@@ -13,17 +13,6 @@ class Form
     }
 
     // Méthode permettant d'ajouter un ou des attributs
-    // private function addAttributes(array $attributes): string
-    // {
-    //     $att = "";
-    //     // Chaque attribut est parcouru
-    //     foreach ($attributes as $attribute => $value) {
-    //         $att .= " $attribute=\"$value\"";
-    //     }
-    //     return $att;
-    // }
-
-    // Méthode permettant d'ajouter un ou des attributs
     private function addAttributes(array $attributes): string
     {
         $att = "";
@@ -35,7 +24,6 @@ class Form
         }
         return $att;
     }
-
 
     // Méthode permettant de générer la balise ouvrante HTML du formulaire
     public function startForm(string $action = '#', string $method = "POST", array $attributes = []): self
@@ -57,7 +45,6 @@ class Form
         // Début de la div de la classe CSS 'form-group'
         $this->formElements .= "<div class='form-group'><label for='$for'";
         $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
-        // $this->formElements .= "$text</label>";
         $this->formElements .= htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "</label>";
         return $this;
     }
@@ -67,13 +54,11 @@ class Form
     {
         $typeEsc = htmlspecialchars($type, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $nameEsc = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-
         $value = '';
         if (isset($attributes['value'])) {
             $value = ' value="' . htmlspecialchars((string)$attributes['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '"';
             unset($attributes['value']);
         }
-
         $this->formElements .= "<input type='{$typeEsc}' name='{$nameEsc}'{$value}";
         $this->formElements .= !empty($attributes) ? $this->addAttributes($attributes) . "></div>" : "></div>";
         // Fin de la div de la classe CSS 'form-group'
@@ -93,19 +78,6 @@ class Form
     }
 
     // Méthode permettant d'ajouter un champ select
-    // public function addSelect(string $name, array $options, array $attributes = []): self
-    // {
-    //     // On ajoute la balise select et l'attribut name
-    //     $this->formElements .= "<select name='$name'";
-    //     $this->formElements .= isset($attributes) ? $this->addAttributes($attributes) . ">" : ">";
-    //     foreach ($options as $key => $value) {
-    //         $this->formElements .= "<option value='$key'>$value</option>";
-    //     }
-    //     $this->formElements .= "</select>";
-    //     return $this;
-    // }
-
-    // Méthode permettant d'ajouter un champ select
     public function addSelect(string $name, array $options, array $attributes = []): self
     {
         // Extraire la valeur sélectionnée si elle existe
@@ -122,11 +94,6 @@ class Form
             $selected = ($key == $selectedValue) ? " selected" : "";
             $this->formElements .= "<option value='{$keyEsc}'{$selected}>{$valueEsc}</option>";
         }
-
-        // foreach ($options as $key => $value) {
-        //     $selected = ($key == $selectedValue) ? " selected" : "";
-        //     $this->formElements .= "<option value='$key'$selected>$value</option>";
-        // }
 
         $this->formElements .= "</select></div>";
         // FIN DE LA DIV DE LA CLASSE CSS </div>
@@ -186,14 +153,8 @@ class Form
     public function addCSRF(): self
     {
         $token = \App\Core\Auth::csrfToken();
-        // $this->formElements .= "<input type='hidden' name='csrf_token' value='$token'>";
         $this->formElements .= "<input type='hidden' name='csrf_token' value='".htmlspecialchars($token, ENT_QUOTES, 'UTF-8')."'>";
         return $this;
     }
-
-    // puis dans chaque formulaire : 
-    // $form->startForm(...)
-    //  ->addCSRF()
-    //  ->addLabel(...)
 }
 ?>

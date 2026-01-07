@@ -12,7 +12,7 @@ class TeamsModel extends DbConnect {
     public $country_id;
     public $status;
 
-    // Récupérer une équipe par son ID
+    // Récupère une équipe par son ID
     public static function findById($id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM teams WHERE id = ?");
@@ -20,7 +20,7 @@ class TeamsModel extends DbConnect {
         return $stmt->fetch();
     }
 
-    // Récupérer une équipe par son nom
+    // Récupère une équipe par son nom
     public static function findByName($name){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM teams WHERE name = ?");
@@ -28,7 +28,7 @@ class TeamsModel extends DbConnect {
         return $stmt->fetch();
     }
 
-    // Récupérer le nom du pays pour affichage
+    // Récupère le nom du pays par son ID
     public static function getCountryName($country_id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT name FROM countries WHERE id=?");
@@ -37,7 +37,7 @@ class TeamsModel extends DbConnect {
         return $row ? $row->name : null;
     }
 
-    // Récupérer toutes les équipes
+    // Récupère toutes les équipes
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -48,7 +48,7 @@ class TeamsModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Pour afficher uniquement les ACTIFS dans les formulaires
+    // Pour afficher uniquement les Teams Actives dans les formulaires
     public static function getActive()
     {
         $db = new DbConnect();
@@ -60,6 +60,5 @@ class TeamsModel extends DbConnect {
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
-
 }
 ?>

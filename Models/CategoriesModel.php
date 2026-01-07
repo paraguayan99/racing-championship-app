@@ -10,6 +10,7 @@ class CategoriesModel extends DbConnect {
     public $color;
     public $status;
 
+    // Categorie recherchée par son nom
     public static function findByName($name){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM categories WHERE name = ?");
@@ -17,6 +18,7 @@ class CategoriesModel extends DbConnect {
         return $stmt->fetch();
     }
 
+    // Toutes les catégories
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -26,14 +28,13 @@ class CategoriesModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Pour afficher uniquement les ACTIFS dans les formulaires
+    // Pour afficher uniquement les Catégories Actives dans les formulaires
     public static function getActive()
     {
         $db = new DbConnect();
         $sql = "SELECT * FROM categories WHERE status = 'active' ORDER BY name ASC";
         return $db->getConnection()->query($sql)->fetchAll();
     }
-
 }
 ?>
 

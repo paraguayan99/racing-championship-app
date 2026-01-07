@@ -10,7 +10,7 @@ class CircuitsModel extends DbConnect {
     public $country_id;
     public $status;
 
-    // Récupérer tous les circuits
+    // Récupère tous les circuits
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -20,7 +20,7 @@ class CircuitsModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Récupérer tous les pays
+    // Récupère tous les pays
     public static function allCountries(){
         $db = new DbConnect();
         return $db->getConnection()->query("
@@ -30,7 +30,7 @@ class CircuitsModel extends DbConnect {
         ")->fetchAll();
     }
 
-    // Pour afficher uniquement les ACTIFS dans les formulaires
+    // Pour afficher uniquement les Circuits Actifs dans les formulaires
     public static function getActive()
     {
         $db = new DbConnect();
@@ -42,6 +42,5 @@ class CircuitsModel extends DbConnect {
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
-
 }
 ?>

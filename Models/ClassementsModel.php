@@ -5,8 +5,7 @@ use App\Core\DbConnect;
 
 class ClassementsModel extends DbConnect
 {
-    // ----- PILOTES -----
-
+    // PILOTES
     // Récupère toutes les saisons actives et inactives pour le select de drivers_standings.php
     public static function getAllSeasonsForSelect()
     {
@@ -20,9 +19,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll();
     }
 
-    // ----------------------------
     // Dernière mise à jour GP avec infos du GP
-    // ----------------------------
     public static function getLastGPUpdate()
     {
         $db = new DbConnect();
@@ -57,7 +54,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchColumn();
     }
 
-
+    // Retourne les Classements Pilotes des Saisons Actives
     public static function getDriversStandingsActive()
     {
         $db = new DbConnect();
@@ -119,6 +116,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll();
     }
 
+    // Retourne le Classements Pilotes pour une saison donnée
     public static function getDriversStandingsBySeason($seasonId)
     {
         $db = new DbConnect();
@@ -184,10 +182,7 @@ class ClassementsModel extends DbConnect
         return $stmt->fetchAll();
     }
 
-    // ----------------------------
-    // TEAMS STANDINGS
-    // ----------------------------
-
+    // Retourne les Classements Constructeurs des Saisons Actives
     public static function getTeamsStandingsActive()
     {
         $db = new DbConnect();
@@ -211,6 +206,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll();
     }
 
+    // Retourne le Classements Constructeurs pour une saison donnée
     public static function getTeamsStandingsBySeason($seasonId)
     {
         $db = new DbConnect();
@@ -234,10 +230,8 @@ class ClassementsModel extends DbConnect
         return $stmt->fetchAll();
     }
 
-    // ----------------------------
-    // GP RESULTS
-    // ----------------------------
 
+    // Retourne les Résultats des GP des Saisons Actives
     public static function getSeasonGPResultsActive()
     {
         $db = new DbConnect();
@@ -287,6 +281,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    // Retourne les Résultats des GP pour une saison donnée
     public static function getSeasonGPResultsBySeason($seasonId)
     {
         $db = new DbConnect();
@@ -338,10 +333,7 @@ class ClassementsModel extends DbConnect
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // ----------------------------
-    // GP DETAILS
-    // ----------------------------
-
+    // Retourne les résultats d'un GP sélectionné
     public static function getGPDetails($gpId)
     {
         $db = new DbConnect();
@@ -398,11 +390,7 @@ class ClassementsModel extends DbConnect
         return $gp;
     }
 
-
-    // ----------------------------
-    // PENALITES
-    // ----------------------------
-
+    // Retourne les Pénalités des Saisons Actives
     public static function getPenaltiesActive()
     {
         $db = new DbConnect();
@@ -443,6 +431,7 @@ class ClassementsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    // Retourne les Pénalités pour une saison donnée
     public static function getPenaltiesBySeason($seasonId)
     {
         $db = new DbConnect();
@@ -485,7 +474,6 @@ class ClassementsModel extends DbConnect
         $stmt->execute(['season_id' => $seasonId]);
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
-
 }
 ?>
 

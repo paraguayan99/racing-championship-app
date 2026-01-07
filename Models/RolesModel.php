@@ -5,7 +5,7 @@ use App\Core\DbConnect;
 
 class RolesModel extends DbConnect {
 
-    // Permet de récupérer le nom des roles des Users
+    // Récupère le nom des roles des Users
     public static function allRoles()
     {
         $db = new DbConnect();

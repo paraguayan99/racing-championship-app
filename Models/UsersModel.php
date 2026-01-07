@@ -10,6 +10,7 @@ class UsersModel extends DbConnect {
     public $password_hash;
     public $role_id;
 
+    // Récupère Utilisateur par son email
     public static function findByEmail($email){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT * FROM users WHERE email = ?");
@@ -17,6 +18,7 @@ class UsersModel extends DbConnect {
         return $stmt->fetch();
     }
 
+    // Récupère Utilisateur par son ID
     public static function findById($id) {
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("
@@ -30,6 +32,7 @@ class UsersModel extends DbConnect {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    // Récupère le rôle de l'Utilisateur par son ID de rôle
     public static function getRoleName($role_id){
         $db = new DbConnect();
         $stmt = $db->getConnection()->prepare("SELECT name FROM roles WHERE id=?");
@@ -38,6 +41,7 @@ class UsersModel extends DbConnect {
         return $row ? $row->name : null;
     }
 
+    // Récupère tous les Utilisateurs
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
