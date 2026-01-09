@@ -1,0 +1,21 @@
+# Environnement
+.env
+.env.*
+
+# WAMP
+/wamp64/
+/tmp/
+
+# Dépendances PHP (si jamais)
+vendor/
+
+# Logs
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
