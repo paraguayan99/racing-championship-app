@@ -1,0 +1,22 @@
+# Active la réécriture
+RewriteEngine On
+
+###############################################
+# 1) Forcer HTTPS (compatible OVH mutualisé)
+###############################################
+
+# Si pas HTTPS ET pas déjà via proxy OVH
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+###############################################
+# 2) Supprimer index.php de l'URL (front controller)
+###############################################
+
+# Si le fichier ou dossier n'existe pas
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rediriger toutes les requêtes vers index.php
+RewriteRule ^ index.php [QSA,L]

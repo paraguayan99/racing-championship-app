@@ -9,14 +9,28 @@
     </div>
 
 <?php
-// Fonction PHP pour les badges de position
+// Fonction badges podium développé en local avec PHP 8 et +
+// function podiumBadge($pos) {
+//     return match($pos) {
+//         1 => '<span class="badge badge-gold">1</span>',
+//         2 => '<span class="badge badge-silver">2</span>',
+//         3 => '<span class="badge badge-bronze">3</span>',
+//         default => '<span class="badge badge-normal">' . $pos . '</span>',
+//     };
+// }
+
+// Fonction badges podium compatible OVH : PHP Version 7.4.33
 function podiumBadge($pos) {
-    return match($pos) {
-        1 => '<span class="badge badge-gold">1</span>',
-        2 => '<span class="badge badge-silver">2</span>',
-        3 => '<span class="badge badge-bronze">3</span>',
-        default => '<span class="badge badge-normal">' . $pos . '</span>',
-    };
+    switch ($pos) {
+        case 1:
+            return '<span class="badge badge-gold">1</span>';
+        case 2:
+            return '<span class="badge badge-silver">2</span>';
+        case 3:
+            return '<span class="badge badge-bronze">3</span>';
+        default:
+            return '<span class="badge badge-normal">' . $pos . '</span>';
+    }
 }
 ?>
 
