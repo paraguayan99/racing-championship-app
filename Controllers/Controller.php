@@ -7,7 +7,21 @@ abstract class Controller
 {
     // Verification à chaque appel des Controllers : 
     // LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
-    protected function authMiddleware(string|array $requiredRoles = null)
+
+    // -----------------------------------------------------
+
+    // Fonctionne pour WAMPSERVER
+    // Syntaxe pour PHP8 et +
+    // protected function authMiddleware(string|array $requiredRoles = null)
+
+    // -----------------------------------------------------
+
+    // Fonctionne pour OVH
+    // Syntaxe compatible OVH : PHP Version 7.4.33
+    /**
+     * @param string|array|null $requiredRoles
+     */
+    protected function authMiddleware($requiredRoles = null)
     {
         Auth::start();
 
@@ -76,6 +90,9 @@ abstract class Controller
     
     public function render(string $path, array $data = [])
     {
+        // Solution pour TOKEN avec OVH
+        \App\Core\Auth::start();
+
         // Permet d'extraire les données récupérées sous forme de variables
         extract($data);
 

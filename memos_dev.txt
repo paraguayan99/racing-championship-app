@@ -6,7 +6,7 @@ git status
 git add . (Ajoutes tous les fichiers UNTRACKED)
 git status (pour vérifier que tout a bien été TRACKED)
 git commit -m "" (Ajouter nom du commit)
-git push origin main
+git push origin ovh-php.7.4.33
 ______________________________________
 
 - Table circuits, courses disputées compte les courses du calendrier même si il n'a pas eu lieu
