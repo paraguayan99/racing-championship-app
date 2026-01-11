@@ -6,6 +6,9 @@
 /wamp64/
 /tmp/
 
+# Développement
+memos_dev.txt
+
 # Dépendances PHP (si jamais)
 vendor/
 
