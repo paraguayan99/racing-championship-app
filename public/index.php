@@ -31,7 +31,14 @@ use App\Core\Router;
 use App\Core\Auth;
 
 // On enregistre l'autoloader
+use App\Core\Auth;
+
+// On enregistre l'autoloader
 Autoloader::register();
+
+// On démarre la session IMMÉDIATEMENT après l'autoloader
+// AVANT toute sortie HTML ou echo
+Auth::start();
 
 // On démarre la session IMMÉDIATEMENT après l'autoloader
 // AVANT toute sortie HTML ou echo
