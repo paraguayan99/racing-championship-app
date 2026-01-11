@@ -23,7 +23,9 @@ if ($userId) {
 
     <div class="page-header page-header-dashboard">
         <h1>Dashboard Utilisateur</h1>
+        <p class="page-header-dashboard-subtitle-right">
+            <span>Aucun accès</span>
+        </p>
     </div>
 
-    <?php var_dump($_SESSION) ?>
 </div>

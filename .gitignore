@@ -2,6 +2,9 @@
 .env
 .env.*
 
+# Développement
+memos_dev.txt
+
 # WAMP
 /wamp64/
 /tmp/
