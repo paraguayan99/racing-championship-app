@@ -289,9 +289,28 @@ class TeamsController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_teams_drivers_team' => 'Impossible de supprimer : Le team est associé à un pilote dans une saison',
+                        'fk_gp_points_team' => 'Impossible de supprimer : Le team est associé à un résultat de GP',
+                        'fk_manual_adjustments_team' => 'Impossible de supprimer : Le team a des ajustements manuels',
+                        'fk_penalties_team' => 'Impossible de supprimer : Le team est associé à une pénalité',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             // Retour liste avec message succès ou erreur

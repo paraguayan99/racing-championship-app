@@ -245,9 +245,26 @@ class SeasonsController extends Controller {
                     $classMsg = "msg-error";
                 }
             } catch (\PDOException $e) {
-                // $e->errorInfo[2] contient le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_gp_season' => 'Impossible de supprimer : La saison contient des GP',
+                        'fk_teams_drivers_season' => 'Impossible de supprimer : La saison contient des associations pilotes - teams',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             // Retour liste avec message succès ou erreur
