@@ -1,9 +1,11 @@
+-- RACING CHAMPIONSHIP APP
+-- SCRIPT SQL pour installer la BDD
+--
 -- phpMyAdmin SQL Dump
 -- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : sqlprive-pc2372-001.eu.clouddb.ovh.net:35167
--- Généré le : dim. 11 jan. 2026 à 00:43
+-- Généré le : lun. 12 jan. 2026 à 13:18
 -- Version du serveur : 8.0.44-35
 -- Version de PHP : 8.1.33
 
@@ -16,10 +18,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `cefiidev1493`
---
 
 -- --------------------------------------------------------
 
@@ -34,6 +32,14 @@ CREATE TABLE `categories` (
   `status` enum('active','desactive') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `color`, `status`) VALUES
+(1, 'F1', '#e10600', 'active'),
+(2, 'F2', '#366092', 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +53,29 @@ CREATE TABLE `circuits` (
   `status` enum('active','desactive') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `circuits`
+--
+
+INSERT INTO `circuits` (`id`, `name`, `country_id`, `status`) VALUES
+(1, 'Sakhir', 2, 'active'),
+(2, 'Sepang', 3, 'active'),
+(3, 'Melbourne', 4, 'active'),
+(4, 'Imola', 5, 'active'),
+(5, 'Nurburgring', 6, 'active'),
+(6, 'Barcelone', 7, 'active'),
+(7, 'Monte-Carlo', 8, 'active'),
+(8, 'Silverstone', 9, 'active'),
+(9, 'Montreal', 10, 'active'),
+(10, 'Indianapolis', 11, 'active'),
+(11, 'Nevers Magny-Cours', 1, 'active'),
+(12, 'Hockenheim', 6, 'active'),
+(13, 'Hungaroring', 12, 'active'),
+(14, 'Istanbul', 13, 'active'),
+(15, 'Monza', 5, 'active'),
+(16, 'Shanghai', 14, 'active'),
+(17, 'Suzuka', 15, 'active'),
+(18, 'Interlagos', 16, 'active');
 
 -- --------------------------------------------------------
 
@@ -66,7 +95,26 @@ CREATE TABLE `countries` (
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `flag`) VALUES
-(1, 'France', 'FRA', 'img/flags/france.png');
+(1, 'France', 'FRA', 'img/flags/france.png'),
+(2, 'Bahreïn', 'BAH', 'img/flags/bahrein.png'),
+(3, 'Malaisie', 'MAL', 'img/flags/malaisie.png'),
+(4, 'Australie', 'AUS', 'img/flags/australie.png'),
+(5, 'Italie', 'ITA', 'img/flags/italie.png'),
+(6, 'Allemagne', 'ALL', 'img/flags/allemagne.png'),
+(7, 'Espagne', 'ESP', 'img/flags/espagne.png'),
+(8, 'Monaco', 'MON', 'img/flags/monaco.png'),
+(9, 'Grande-Bretagne', 'GBR', 'img/flags/grandebretagne.png'),
+(10, 'Canada', 'CAN', 'img/flags/canada.png'),
+(11, 'États-Unis', 'USA', 'img/flags/etatsunis.png'),
+(12, 'Hongrie', 'HON', 'img/flags/hongrie.png'),
+(13, 'Turquie', 'TUR', 'img/flags/turquie.png'),
+(14, 'Chine', 'CHI', 'img/flags/chine.png'),
+(15, 'Japon', 'JAP', 'img/flags/japon.png'),
+(16, 'Brésil', 'BRE', 'img/flags/bresil.png'),
+(17, 'Suisse', 'SUI', 'img/flags/suisse.png'),
+(18, 'Autriche', 'AUT', 'img/flags/autriche.png'),
+(19, 'Pays-Bas', 'P-B', 'img/flags/paysbas.png');
+
 -- --------------------------------------------------------
 
 --
@@ -80,6 +128,23 @@ CREATE TABLE `drivers` (
   `status` enum('active','desactive') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `drivers`
+--
+
+INSERT INTO `drivers` (`id`, `nickname`, `country_id`, `status`) VALUES
+(1, '[Driver removed]', 1, 'active'),
+(2, 'Jujubiker', 1, 'active'),
+(3, 'Martlio', 1, 'active'),
+(4, 'Guignol81', 1, 'active'),
+(5, 'Jimboparisgo', 1, 'active'),
+(6, 'Chapi-chapo', 1, 'active'),
+(7, 'Didi511', 1, 'active'),
+(8, 'Senna76', 1, 'active'),
+(9, 'Fox', 1, 'active'),
+(10, 'Nordschleife', 1, 'active'),
+(11, 'Ludovico6', 1, 'active'),
+(12, 'Gafit', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -132,6 +197,29 @@ CREATE TABLE `gp` (
   `gp_ordre` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `gp`
+--
+
+INSERT INTO `gp` (`id`, `season_id`, `circuit_id`, `gp_ordre`) VALUES
+(1, 1, 1, 1),
+(2, 1, 2, 2),
+(3, 1, 3, 3),
+(4, 1, 4, 4),
+(5, 1, 5, 5),
+(6, 1, 6, 6),
+(7, 1, 7, 7),
+(8, 1, 8, 8),
+(9, 1, 9, 9),
+(10, 1, 10, 10),
+(11, 1, 11, 11),
+(12, 1, 12, 12),
+(13, 1, 13, 13),
+(14, 1, 14, 14),
+(15, 1, 15, 15),
+(16, 1, 16, 16),
+(17, 1, 17, 17),
+(18, 1, 18, 18);
 
 -- --------------------------------------------------------
 
@@ -146,10 +234,132 @@ CREATE TABLE `gp_points` (
   `team_id` int NOT NULL,
   `position` int DEFAULT NULL,
   `points_numeric` decimal(4,1) NOT NULL DEFAULT '0.0',
-  `points_text` varchar(3) DEFAULT NULL,
-  `driver_unique_id` int GENERATED ALWAYS AS ((case when (`driver_id` = 1) then NULL else `driver_id` end)) STORED
+  `points_text` varchar(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `gp_points`
+--
+
+INSERT INTO `gp_points` (`id`, `gp_id`, `driver_id`, `team_id`, `position`, `points_numeric`, `points_text`) VALUES
+(3, 1, 1, 1, 1, 0.0, NULL),
+(4, 1, 1, 1, 2, 0.0, NULL),
+(5, 1, 4, 4, 3, 0.0, NULL),
+(6, 1, 5, 5, 6, 0.0, NULL),
+(7, 1, 7, 7, 4, 0.0, NULL),
+(8, 1, 12, 12, 5, 0.0, NULL),
+(9, 2, 1, 1, 1, 0.0, NULL),
+(10, 2, 4, 4, 3, 0.0, NULL),
+(11, 2, 5, 5, 5, 0.0, NULL),
+(12, 2, 7, 7, 2, 0.0, NULL),
+(13, 3, 2, 2, 2, 0.0, NULL),
+(14, 3, 1, 1, 1, 0.0, NULL),
+(15, 3, 1, 1, 3, 0.0, NULL),
+(16, 3, 4, 4, 5, 0.0, NULL),
+(17, 3, 8, 8, 7, 0.0, NULL),
+(18, 3, 12, 12, 11, 0.0, NULL),
+(19, 4, 1, 1, 1, 0.0, NULL),
+(20, 4, 2, 2, 2, 0.0, NULL),
+(21, 4, 4, 4, 6, 0.0, NULL),
+(22, 4, 8, 8, 3, 0.0, NULL),
+(23, 5, 2, 2, 1, 0.0, NULL),
+(24, 5, 1, 1, 2, 0.0, NULL),
+(25, 5, 1, 1, 3, 0.0, NULL),
+(26, 5, 4, 4, 7, 0.0, NULL),
+(27, 5, 5, 5, 10, 0.0, NULL),
+(28, 5, 7, 7, 5, 0.0, NULL),
+(29, 6, 2, 2, 1, 0.0, NULL),
+(30, 6, 1, 1, 2, 0.0, NULL),
+(31, 6, 5, 5, 3, 0.0, NULL),
+(32, 6, 7, 7, 5, 0.0, NULL),
+(33, 6, 4, 4, 8, 0.0, NULL),
+(34, 6, 12, 12, 11, 0.0, NULL),
+(35, 7, 2, 2, 1, 0.0, NULL),
+(36, 7, 1, 1, 2, 0.0, NULL),
+(37, 7, 1, 1, 3, 0.0, NULL),
+(38, 7, 4, 4, 11, 0.0, NULL),
+(39, 7, 5, 5, 8, 0.0, NULL),
+(40, 7, 12, 12, 10, 0.0, NULL),
+(41, 8, 2, 2, 2, 0.0, NULL),
+(42, 8, 3, 3, 1, 0.0, NULL),
+(43, 8, 6, 6, 3, 0.0, NULL),
+(44, 9, 2, 2, 1, 0.0, NULL),
+(45, 9, 4, 4, 6, 0.0, NULL),
+(46, 9, 5, 5, 3, 0.0, NULL),
+(47, 9, 8, 8, 8, 0.0, NULL),
+(48, 9, 1, 1, 2, 0.0, NULL),
+(49, 10, 2, 2, 1, 0.0, NULL),
+(50, 10, 1, 1, 2, 0.0, NULL),
+(51, 10, 4, 4, 3, 0.0, NULL),
+(52, 10, 5, 5, 8, 0.0, NULL),
+(53, 10, 6, 6, 6, 0.0, NULL),
+(54, 10, 7, 7, 5, 0.0, NULL),
+(55, 10, 12, 12, 11, 0.0, NULL),
+(56, 11, 2, 2, 2, 0.0, NULL),
+(57, 11, 3, 3, 1, 0.0, NULL),
+(58, 11, 4, 4, 3, 0.0, NULL),
+(59, 11, 5, 5, 5, 0.0, NULL),
+(60, 11, 6, 6, 8, 0.0, NULL),
+(61, 11, 7, 7, 9, 0.0, NULL),
+(62, 11, 8, 8, 4, 0.0, NULL),
+(63, 11, 9, 9, 7, 0.0, NULL),
+(64, 11, 11, 11, 6, 0.0, NULL),
+(65, 11, 12, 12, 10, 0.0, NULL),
+(66, 12, 2, 2, 1, 0.0, NULL),
+(67, 12, 3, 3, 2, 0.0, NULL),
+(68, 12, 4, 4, 4, 0.0, NULL),
+(69, 12, 5, 5, 6, 0.0, NULL),
+(70, 12, 11, 11, 8, 0.0, NULL),
+(71, 12, 1, 1, 3, 0.0, NULL),
+(72, 13, 2, 2, 2, 0.0, NULL),
+(73, 13, 3, 3, 1, 0.0, NULL),
+(74, 13, 4, 4, 9, 0.0, NULL),
+(75, 13, 5, 5, 5, 0.0, NULL),
+(76, 13, 6, 6, 6, 0.0, NULL),
+(77, 13, 9, 9, 3, 0.0, NULL),
+(78, 13, 10, 10, 4, 0.0, NULL),
+(79, 13, 11, 11, 8, 0.0, NULL),
+(80, 13, 12, 12, 11, 0.0, NULL),
+(81, 14, 2, 2, 4, 0.0, NULL),
+(82, 14, 3, 3, 1, 0.0, NULL),
+(83, 14, 4, 4, 2, 0.0, NULL),
+(84, 14, 5, 5, 7, 0.0, NULL),
+(85, 14, 6, 6, 5, 0.0, NULL),
+(86, 14, 10, 10, 3, 0.0, NULL),
+(87, 14, 11, 11, 9, 0.0, NULL),
+(88, 14, 12, 12, 11, 0.0, NULL),
+(89, 15, 2, 2, 2, 0.0, NULL),
+(90, 15, 3, 3, 1, 0.0, NULL),
+(91, 15, 4, 4, 10, 0.0, NULL),
+(92, 15, 5, 5, 3, 0.0, NULL),
+(93, 15, 6, 6, 4, 0.0, NULL),
+(94, 15, 7, 7, 8, 0.0, NULL),
+(95, 15, 8, 8, 7, 0.0, NULL),
+(96, 15, 10, 10, 9, 0.0, NULL),
+(97, 15, 12, 12, 11, 0.0, NULL),
+(98, 16, 2, 2, 2, 0.0, NULL),
+(99, 16, 3, 3, 1, 0.0, NULL),
+(100, 16, 4, 4, 5, 0.0, NULL),
+(101, 16, 6, 6, 3, 0.0, NULL),
+(102, 16, 9, 9, 4, 0.0, NULL),
+(103, 17, 2, 2, 1, 0.0, NULL),
+(104, 17, 4, 4, 7, 0.0, NULL),
+(105, 17, 5, 5, 4, 0.0, NULL),
+(106, 17, 6, 6, 5, 0.0, NULL),
+(107, 17, 7, 7, 8, 0.0, NULL),
+(108, 17, 8, 8, 6, 0.0, NULL),
+(109, 17, 10, 10, 9, 0.0, NULL),
+(110, 17, 1, 1, 2, 0.0, NULL),
+(111, 17, 1, 1, 3, 0.0, NULL),
+(112, 18, 2, 2, 1, 0.0, NULL),
+(113, 18, 1, 1, 2, 0.0, NULL),
+(114, 18, 4, 4, 8, 0.0, NULL),
+(115, 18, 5, 5, 3, 0.0, NULL),
+(116, 18, 6, 6, 4, 0.0, NULL),
+(117, 18, 7, 7, 7, 0.0, NULL),
+(118, 18, 8, 8, 5, 0.0, NULL),
+(119, 18, 9, 9, 10, 0.0, NULL),
+(120, 18, 10, 10, 9, 0.0, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,7 +374,6 @@ CREATE TABLE `gp_stats` (
   `fastest_lap_driver` int DEFAULT NULL,
   `fastest_lap_time` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 -- --------------------------------------------------------
 
@@ -181,6 +390,22 @@ CREATE TABLE `manual_adjustments` (
   `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `manual_adjustments`
+--
+
+INSERT INTO `manual_adjustments` (`id`, `season_id`, `driver_id`, `team_id`, `points`, `comment`) VALUES
+(1, 1, 2, 2, 141.0, NULL),
+(2, 1, 3, 3, 68.0, NULL),
+(3, 1, 4, 4, 57.0, NULL),
+(4, 1, 5, 5, 51.0, NULL),
+(5, 1, 6, 6, 38.0, NULL),
+(6, 1, 7, 7, 29.0, NULL),
+(7, 1, 8, 8, 23.0, NULL),
+(8, 1, 9, 9, 13.0, NULL),
+(9, 1, 10, 10, 11.0, NULL),
+(10, 1, 11, 11, 5.0, NULL),
+(11, 1, 12, 12, 4.0, NULL);
 
 -- --------------------------------------------------------
 
@@ -196,7 +421,6 @@ CREATE TABLE `penalties` (
   `points_removed` int NOT NULL,
   `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 -- --------------------------------------------------------
 
@@ -233,6 +457,14 @@ CREATE TABLE `seasons` (
   `status` enum('active','desactive') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `seasons`
+--
+
+INSERT INTO `seasons` (`id`, `season_number`, `category_id`, `videogame`, `platform`, `status`) VALUES
+(1, 1, 1, 'F1 Championship Edition', 'PS3', 'desactive'),
+(2, 1, 2, 'F1 Championship Edition', 'PS3', 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -248,6 +480,24 @@ CREATE TABLE `teams` (
   `status` enum('active','desactive') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `teams`
+--
+
+INSERT INTO `teams` (`id`, `name`, `logo`, `color`, `country_id`, `status`) VALUES
+(1, '[Team removed]', '', NULL, 1, 'active'),
+(2, 'Toyota', 'img/teams/toyota.png', '#c9c9c9', 15, 'active'),
+(3, 'Williams', 'img/teams/williams.png', '#03a8ea', 9, 'active'),
+(4, 'Ferrari', 'img/teams/ferrari.png', '#fe0000', 5, 'active'),
+(5, 'Renault', 'img/teams/renault.png', '#ffcd00', 1, 'active'),
+(6, 'Super Aguri', 'img/teams/super_aguri.png', '#ffffff', 15, 'active'),
+(7, 'Honda', 'img/teams/honda.png', '#48bb90', 15, 'active'),
+(8, 'BMW Sauber', 'img/teams/bmw.png', '#3290bf', 17, 'active'),
+(9, 'McLaren', 'img/teams/mclaren.png', '#ff8500', 9, 'active'),
+(10, 'Red Bull', 'img/teams/redbull.png', '#15185e', 18, 'active'),
+(11, 'Toro Rosso', 'img/teams/toro_rosso.png', '#11109a', 5, 'active'),
+(12, 'Spyker', 'img/teams/spyker.png', '#f79246', 19, 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -261,6 +511,22 @@ CREATE TABLE `teams_drivers` (
   `team_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `teams_drivers`
+--
+
+INSERT INTO `teams_drivers` (`id`, `season_id`, `driver_id`, `team_id`) VALUES
+(1, 1, 2, 2),
+(2, 1, 3, 3),
+(3, 1, 4, 4),
+(4, 1, 5, 5),
+(5, 1, 6, 6),
+(6, 1, 7, 7),
+(7, 1, 8, 8),
+(8, 1, 9, 9),
+(9, 1, 10, 10),
+(10, 1, 11, 11),
+(11, 1, 12, 12);
 
 -- --------------------------------------------------------
 
@@ -325,9 +591,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role_id`) VALUES
-(1, 'admin@racing-championship-app.fr', '$2y$10$63SO9YwcUadXturiIb6OIe5OFxXKbr476nr7fuC1EmAnPdcUs8VU.', 1);
+(1, 'administrateur@team-eracing.fr', '$2y$10$TcnrGUJJ1RxNH4tyclcLvOKn1hgo.wQuODPkaH/TYTav5IKPAl2bS', 1),
+(2, 'moderateur@team-eracing.fr', '$2y$10$D1vHJgJvBxWoZIUyykQN2u9QTP6npKSejgtUfcKdR0jLYGRdfhcE.', 2),
+(3, 'utilisateur@team-eracing.fr', '$2y$10$oyIHP3MLEYtR61F2xJlseOpGrkcUiTelkZo4QyQ6VOCU6b8wOyYTK', 3);
 
--- --------------------------------------------------------
 --
 -- Index pour les tables déchargées
 --
@@ -380,7 +647,6 @@ ALTER TABLE `gp`
 ALTER TABLE `gp_points`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_gp_position` (`gp_id`,`position`),
-  ADD UNIQUE KEY `uq_gp_driver` (`gp_id`,`driver_unique_id`),
   ADD KEY `idx_points_gp` (`gp_id`),
   ADD KEY `idx_points_driver` (`driver_id`),
   ADD KEY `idx_points_team` (`team_id`),
@@ -475,85 +741,85 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `circuits`
 --
 ALTER TABLE `circuits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `countries`
 --
 ALTER TABLE `countries`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `gp`
 --
 ALTER TABLE `gp`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `gp_points`
 --
 ALTER TABLE `gp_points`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `manual_adjustments`
 --
 ALTER TABLE `manual_adjustments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `penalties`
 --
 ALTER TABLE `penalties`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `seasons`
 --
 ALTER TABLE `seasons`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `teams_drivers`
 --
 ALTER TABLE `teams_drivers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `updates_log`
 --
 ALTER TABLE `updates_log`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------
 
@@ -599,14 +865,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`cefiidev1493`@`%` SQL SECURITY DEFINER VIEW 
 -- Contraintes pour la table `circuits`
 --
 ALTER TABLE `circuits`
-  ADD CONSTRAINT `circuits_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
   ADD CONSTRAINT `fk_circuits_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `drivers`
 --
 ALTER TABLE `drivers`
-  ADD CONSTRAINT `drivers_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
   ADD CONSTRAINT `fk_drivers_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
@@ -614,29 +878,50 @@ ALTER TABLE `drivers`
 --
 ALTER TABLE `gp`
   ADD CONSTRAINT `fk_gp_circuit` FOREIGN KEY (`circuit_id`) REFERENCES `circuits` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_gp_season` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `gp_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `gp_ibfk_2` FOREIGN KEY (`circuit_id`) REFERENCES `circuits` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_gp_season` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `gp_points`
 --
 ALTER TABLE `gp_points`
-  ADD CONSTRAINT `fk_gp_points_gp` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_gp_points_driver` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_gp_points_gp` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_gp_points_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `gp_stats`
+--
+ALTER TABLE `gp_stats`
+  ADD CONSTRAINT `fk_gp_stats_fastest_driver` FOREIGN KEY (`fastest_lap_driver`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_gp_stats_gp` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_gp_stats_pole_driver` FOREIGN KEY (`pole_position_driver`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `manual_adjustments`
+--
+ALTER TABLE `manual_adjustments`
+  ADD CONSTRAINT `fk_manual_adjustments_driver` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_manual_adjustments_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `penalties`
+--
+ALTER TABLE `penalties`
+  ADD CONSTRAINT `fk_penalties_driver` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_penalties_gp` FOREIGN KEY (`gp_id`) REFERENCES `gp` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_penalties_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `seasons`
 --
 ALTER TABLE `seasons`
-  ADD CONSTRAINT `fk_seasons_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `seasons_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_seasons_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `teams`
 --
 ALTER TABLE `teams`
-  ADD CONSTRAINT `fk_teams_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `teams_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
+  ADD CONSTRAINT `fk_teams_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `teams_drivers`
@@ -644,10 +929,7 @@ ALTER TABLE `teams`
 ALTER TABLE `teams_drivers`
   ADD CONSTRAINT `fk_teams_drivers_driver` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_teams_drivers_season` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_teams_drivers_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `teams_drivers_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `teams_drivers_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`),
-  ADD CONSTRAINT `teams_drivers_ibfk_3` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
+  ADD CONSTRAINT `fk_teams_drivers_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `updates_log`

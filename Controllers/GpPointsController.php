@@ -90,6 +90,23 @@ class GpPointsController extends Controller {
                 $db = new GpPointsModel();
                 $pdo = $db->getConnection();
 
+                // Ajout de la vérification applicative pour driver_id != 1
+                if ($driver_id != 1) {
+                    $checkStmt = $pdo->prepare("
+                        SELECT 1 
+                        FROM gp_points 
+                        WHERE gp_id = ? AND driver_id = ?
+                        LIMIT 1
+                    ");
+                    $checkStmt->execute([$gp_id, $driver_id]);
+
+                    if ($checkStmt->fetch()) {
+                        $message = "Ce pilote est déjà enregistré pour ce GP.";
+                        $classMsg = "msg-error";
+                        goto end_create;
+                    }
+                }
+
                 try {
                     // Requete préparée
                     $stmt = $pdo->prepare("
@@ -111,6 +128,8 @@ class GpPointsController extends Controller {
                     $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points doivent être un chiffre positif (0.5pt autorisé)";
                     $classMsg = "msg-error";
                 }
+
+                end_create:
 
             } else {
                 $message = "Création échouée : informations manquantes";
@@ -246,6 +265,49 @@ class GpPointsController extends Controller {
 
                 $db = new GpPointsModel();
                 $pdo = $db->getConnection();
+
+                // Ajout de la vérification applicative pour driver_id != 1
+                if ($driver_id != 1) {
+                    $checkStmt = $pdo->prepare("
+                        SELECT 1
+                        FROM gp_points
+                        WHERE gp_id = ?
+                          AND driver_id = ?
+                          AND id != ?
+                        LIMIT 1
+                    ");
+                    $checkStmt->execute([$gp_id, $driver_id, $id]);
+
+                    if ($checkStmt->fetch()) {
+                        $message = "Ce pilote est déjà enregistré pour ce GP.";
+                        $classMsg = "msg-error";
+
+                        $form = new Form();
+                        $form->startForm("index.php?controller=gppoints&action=update&id=".$id, "POST")
+                            ->addCSRF()
+                            ->addLabel("gp_id", "GP :")
+                            ->addSelect("gp_id", $gps, ["value" => $point->gp_id])
+                            ->addLabel("driver_id", "Pilote :")
+                            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'), ["value" => $point->driver_id])
+                            ->addLabel("team_id", "Team :")
+                            ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $point->team_id])
+                            ->addLabel("position", "Position :")
+                            ->addInput("number", "position", ["value" => $point->position ?? ''])
+                            ->addLabel("points_numeric", "Points :")
+                            ->addInput("number", "points_numeric", ["step" => "0.5", "value" => $point->points_numeric])
+                            ->addLabel("points_text", "DNF-DNS-DSQ :")
+                            ->addInput("text", "points_text", ["value" => $point->points_text ?? ''])
+                            ->addSubmit("Mettre à jour")
+                            ->endForm();
+
+                        $this->render('dashboard/gp_points/update', [
+                            'form' => $form,
+                            'message' => $message,
+                            'classMsg' => $classMsg
+                        ]);
+                        return;
+                    }
+                }
 
                 try {
                     // Requete préparée

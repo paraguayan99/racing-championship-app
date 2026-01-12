@@ -415,7 +415,7 @@ function gpBadge($gpNumber) {
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p style="text-align:center;">Aucun pilote trouvé pour cette saison.</p>
+        <p style="text-align:center;">La saison n’a pas encore commencé !</p>
     <?php endif; ?>
 </div>
 
