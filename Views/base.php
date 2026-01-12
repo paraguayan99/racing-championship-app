@@ -4,21 +4,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<base href="/cedric1493/racing-championship-app/public/">
 <title><?= htmlspecialchars($title ?? 'Team-eRacing | Championnat F1 25 en ligne sur PS5') ?></title>
 
 <!-- Favicon classiques onglet navigateur -->
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/cedric1493/racing-championship-app/public/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/cedric1493/racing-championship-app/public/img/favicon-16.png">
 <!-- iPhone / iPad écran d’accueil -->
-<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/cedric1493/racing-championship-app/public/img/apple-touch-icon-180.png">
 <!-- Android -->
-<link rel="manifest" href="./manifest.webmanifest">
+<link rel="manifest" href="/cedric1493/racing-championship-app/public/manifest.webmanifest">
 <!-- Couleur de thème navigateur mobile -->
 <meta name="theme-color" content="#000000">
 
 <meta name="description" content="Team-eRacing organise des championnats F1 25 en ligne sur PS5. Communauté F1 francophone, courses diffusées sur Twitch, replays YouTube et inscriptions sur Discord.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.team-eracing.fr/">
+<link rel="canonical" href="https://www.cefii-developpements.fr/cedric1493/racing-championship-app/public/index.php">
+
 <!-- Google Fonts pour les polices -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- CSS personnel, pas de Framework -->
