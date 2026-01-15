@@ -1,5 +1,13 @@
 <?php $title = "Team-eRacing - GP - Résultats"; ?>
 
+<!-- Définir des valeurs par défaut si les variables $message et $classMsg n'existent pas -->
+<!-- Cela permet d'éviter les Warning PHP -->
+<?php if (!empty($message ?? '') && !empty($classMsg ?? '')): ?>
+    <div class="<?= htmlspecialchars($classMsg) ?>">
+        <?= htmlspecialchars($message ?? '') ?>
+    </div>
+<?php endif; ?>
+
 <div class="section-dashboard">
 
     <div class="section-header">

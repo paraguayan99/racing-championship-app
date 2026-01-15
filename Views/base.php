@@ -24,7 +24,7 @@
 <!-- Google Fonts pour les polices -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- CSS personnel, pas de Framework -->
-<link rel="stylesheet" href="stylev1.0.css" />
+<link rel="stylesheet" href="stylev1.2.css" />
 <link rel="stylesheet" href="style700px-mobilev1.0.css" media="screen and (max-width: 700px)" />
 <link rel="stylesheet" href="style900px-tablettev1.0.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
 <link rel="stylesheet" href="style1400px-desktopv1.0.css" media="screen and (min-width: 901px)" />

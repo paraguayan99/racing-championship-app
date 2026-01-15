@@ -919,6 +919,19 @@ td.upside {
     padding: 0;              /* Nettoyage */
 }
 
+/* Suppression des flèches natives haut/bas d'un select type number */
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 /* Pages DELETE */
 /* Forme des boutons Supprimer / Annuler */
 .h3-delete {

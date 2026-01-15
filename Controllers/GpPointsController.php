@@ -27,9 +27,7 @@ class GpPointsController extends Controller {
         ]);
     }
 
-    // Créer un résultat de GP 
-    // Reste sur le formulaire de la page Create (pas de retour à l'index) 
-    // pour améliorer l'UX de l'ajout de plusieurs résultats
+    // Créer un résultat de GP
     public function create()
     {
         $message = '';
@@ -42,7 +40,7 @@ class GpPointsController extends Controller {
         $allGps = GpModel::all(); 
         $circuits = CircuitsModel::all();
 
-        // Tableau circuit_id => ['name' => ..., 'country' => ...]
+        // Tableau circuit_id
         $circuitData = [];
         foreach ($circuits as $c) {
             $circuitData[$c->id] = [
@@ -56,7 +54,6 @@ class GpPointsController extends Controller {
         foreach ($seasons as $s) {
             foreach ($allGps as $gp) {
                 if ($gp->season_id == $s->id) {
-
                     $countryName = $circuitData[$gp->circuit_id]['country'] ?? 'Pays inconnu';
                     $circuitName = $circuitData[$gp->circuit_id]['name'] ?? 'Circuit inconnu';
 
@@ -76,21 +73,26 @@ class GpPointsController extends Controller {
                 $gp_id = $_POST['gp_id'];
                 $driver_id = $_POST['driver_id'];
                 $team_id = $_POST['team_id'];
-
-                // Position peut être null si non renseigné
                 $position = !empty($_POST['position']) ? intval($_POST['position']) : null;
-
-                // Points, support demi-points et virgule
                 $points_numeric = !empty($_POST['points_numeric']) ? floatval(str_replace(',', '.', $_POST['points_numeric'])) : 0;
-
-                // Points textes, 3 lettres max et convertit en majuscule
                 $points_text = !empty(trim($_POST['points_text'])) ? strtoupper(substr(trim($_POST['points_text']), 0, 3)) : null;
 
+                // Validation métier
+                if ($position !== null && $position < 1) {
+                    $message = "Erreur : La position doit être supérieure ou égale à 1";
+                    $classMsg = "msg-error";
+                    goto end_create;
+                }
+
+                if ($points_numeric < 0) {
+                    $message = "Erreur : Les points ne peuvent pas être négatifs";
+                    $classMsg = "msg-error";
+                    goto end_create;
+                }
 
                 $db = new GpPointsModel();
                 $pdo = $db->getConnection();
 
-                // Ajout de la vérification applicative pour driver_id != 1
                 if ($driver_id != 1) {
                     $checkStmt = $pdo->prepare("
                         SELECT 1 
@@ -101,19 +103,17 @@ class GpPointsController extends Controller {
                     $checkStmt->execute([$gp_id, $driver_id]);
 
                     if ($checkStmt->fetch()) {
-                        $message = "Ce pilote est déjà enregistré pour ce GP.";
+                        $message = "Erreur : Pilote déjà enregistré pour ce GP";
                         $classMsg = "msg-error";
                         goto end_create;
                     }
                 }
 
                 try {
-                    // Requete préparée
                     $stmt = $pdo->prepare("
                         INSERT INTO gp_points (gp_id, driver_id, team_id, position, points_numeric, points_text)
                         VALUES (?, ?, ?, ?, ?, ?)
                     ");
-
                     if ($stmt->execute([$gp_id, $driver_id, $team_id, $position, $points_numeric, $points_text])) {
                         $message = "Résultat créé avec succès";
                         $classMsg = "msg-success";
@@ -123,35 +123,36 @@ class GpPointsController extends Controller {
                         $message = "Erreur lors de la création";
                         $classMsg = "msg-error";
                     }
-
                 } catch (\PDOException $e) {
-                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points doivent être un chiffre positif (0.5pt autorisé)";
+                    $message = "Erreur : Position déjà attribuée pour ce GP";
                     $classMsg = "msg-error";
                 }
 
                 end_create:
-
+                ;
             } else {
-                $message = "Création échouée : informations manquantes";
+                $message = "Erreur : informations manquantes";
                 $classMsg = "msg-error";
             }
         }
 
-        // Récupération de l'id du GP si formulaire soumis pour resélectionner le même GP
-        $selectedGpId = $_POST['gp_id'] ?? null;
+        $selectedGpId        = $_POST['gp_id'] ?? null;
+        $selectedDriverId    = $_POST['driver_id'] ?? null;
+        $selectedTeamId      = $_POST['team_id'] ?? null;
+        $selectedPosition    = $_POST['position'] ?? '';
+        $selectedPointsNumeric = $_POST['points_numeric'] ?? '';
+        $selectedPointsText  = $_POST['points_text'] ?? null;
 
-        // Récupération du driver et du team si la création a échoué
-        $selectedDriverId = $_POST['driver_id'] ?? null;
-        $selectedTeamId   = $_POST['team_id'] ?? null;
-
-        // Driver et Team réinitialisé si la création a été exécutée
         if ($isSuccess) {
             $selectedDriverId = null;
             $selectedTeamId = null;
+            $selectedPointsText = null;
+            $selectedPosition = '';
+            $selectedPointsNumeric = '';
         }
 
-        // Formulaire
         $form = new Form();
+
         $form->startForm("index.php?controller=gppoints&action=create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
@@ -161,20 +162,19 @@ class GpPointsController extends Controller {
             ->addLabel("team_id", "Team :")
             ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $selectedTeamId])
             ->addLabel("position", "Position :")
-            ->addInput("number", "position")
+            ->addInput("number", "position", ["min" => 1, "value" => $selectedPosition])
             ->addLabel("points_numeric", "Points :")
-            ->addInput("number", "points_numeric", ["step" => "0.5"])
+            ->addInput("number", "points_numeric", ["min" => 0, "step" => "0.5", "value" => $selectedPointsNumeric])
             ->addLabel("points_text", "DNF-DNS-DSQ :")
-            ->addInput("text", "points_text", [
-                "maxlength" => 3,
-                "pattern"   => "[A-Za-z]{0,3}",
-                "title"     => "3 lettres maximum (DNF, DNS, DSQ)",
-                "style"     => "text-transform: uppercase"
-            ])
+            ->addSelect("points_text", [
+                ''    => '',
+                "DNF" => "DNF (Abandon)",
+                "DNS" => "DNS (Non partant)",
+                "DSQ" => "DSQ (Disqualifié)"
+            ], ["value" => $selectedPointsText])
             ->addSubmit("Créer")
             ->endForm();
 
-        // Retour formulaire Create avec message succès ou erreur
         $this->render('dashboard/gp_points/create', [
             'form' => $form,
             'message' => $message,
@@ -200,14 +200,12 @@ class GpPointsController extends Controller {
             return;
         }
 
-        // Vérifier que la saison du GP est active
         $gp = GpModel::find($point->gp_id);
         $season = SeasonsModel::findById($gp->season_id ?? null);
-        if (!$season || $season->status !== 'active') {
-            $message = "Impossible de modifier ce résultat : la saison est désactivée.";
-            $classMsg = "msg-error";
 
-            // Retour liste avec message erreur
+        if (!$season || $season->status !== 'active') {
+            $message = "Impossible de modifier ce résultat : la saison est désactivée";
+            $classMsg = "msg-error";
             $this->render('dashboard/gp_points/index', [
                 'list' => GpPointsModel::allWithSeasonActive(),
                 'message' => $message,
@@ -216,34 +214,31 @@ class GpPointsController extends Controller {
             return;
         }
 
+        // Récupération des données pour les selects
         $seasons = SeasonsModel::getActive();
         $drivers = DriversModel::getActive();
         $teams = TeamsModel::getActive();
         $allGps = GpModel::all();
         $circuits = CircuitsModel::all();
 
-        // Tableau circuit_id
         $circuitData = [];
         foreach ($circuits as $c) {
             $circuitData[$c->id] = [
-                'name'    => $c->name ?? 'Circuit inconnu',
+                'name' => $c->name ?? 'Circuit inconnu',
                 'country' => $c->country ?? 'Pays inconnu'
             ];
         }
 
-        // Préparer la liste des GP pour le select
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
+            foreach ($allGps as $g) {
+                if ($g->season_id == $s->id) {
+                    $countryName = $circuitData[$g->circuit_id]['country'] ?? 'Pays inconnu';
+                    $circuitName = $circuitData[$g->circuit_id]['name'] ?? 'Circuit inconnu';
 
-                    $countryName = $circuitData[$gp->circuit_id]['country'] ?? 'Pays inconnu';
-                    $circuitName = $circuitData[$gp->circuit_id]['name'] ?? 'Circuit inconnu';
-
-                    $gps[$gp->id] =
-                        $gp->category
+                    $gps[$g->id] = $g->category
                         . " - Saison " . $s->season_number
-                        . " / GP " . $gp->gp_ordre
+                        . " / GP " . $g->gp_ordre
                         . " - " . $circuitName
                         . " (" . $countryName . ")";
                 }
@@ -256,61 +251,55 @@ class GpPointsController extends Controller {
                 $gp_id = $_POST['gp_id'];
                 $driver_id = $_POST['driver_id'];
                 $team_id = $_POST['team_id'];
-
                 $position = !empty($_POST['position']) ? intval($_POST['position']) : null;
                 $points_numeric = !empty($_POST['points_numeric']) ? floatval(str_replace(',', '.', $_POST['points_numeric'])) : 0;
-
-                // Points textes, 3 lettres max et convertit en majuscule
                 $points_text = !empty(trim($_POST['points_text'])) ? strtoupper(substr(trim($_POST['points_text']), 0, 3)) : null;
+
+                // Validation métier
+                if ($position !== null && $position < 1) {
+                    $this->renderUpdateForm(
+                        $id, $gps, $drivers, $teams,
+                        array_merge($_POST, ['position' => $position]),
+                        "Erreur : La position doit être supérieure ou égale à 1",
+                        "msg-error"
+                    );
+                    return;
+                }
+
+                if ($points_numeric < 0) {
+                    $this->renderUpdateForm(
+                        $id, $gps, $drivers, $teams,
+                        array_merge($_POST, ['points_numeric' => $points_numeric]),
+                        "Erreur : Les points ne peuvent pas être négatifs",
+                        "msg-error"
+                    );
+                    return;
+                }
 
                 $db = new GpPointsModel();
                 $pdo = $db->getConnection();
 
-                // Ajout de la vérification applicative pour driver_id != 1
+                // Vérification doublon pilote
                 if ($driver_id != 1) {
                     $checkStmt = $pdo->prepare("
                         SELECT 1
                         FROM gp_points
-                        WHERE gp_id = ?
-                          AND driver_id = ?
-                          AND id != ?
+                        WHERE gp_id = ? AND driver_id = ? AND id != ?
                         LIMIT 1
                     ");
                     $checkStmt->execute([$gp_id, $driver_id, $id]);
 
                     if ($checkStmt->fetch()) {
-                        $message = "Ce pilote est déjà enregistré pour ce GP.";
-                        $classMsg = "msg-error";
-
-                        $form = new Form();
-                        $form->startForm("index.php?controller=gppoints&action=update&id=".$id, "POST")
-                            ->addCSRF()
-                            ->addLabel("gp_id", "GP :")
-                            ->addSelect("gp_id", $gps, ["value" => $point->gp_id])
-                            ->addLabel("driver_id", "Pilote :")
-                            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'), ["value" => $point->driver_id])
-                            ->addLabel("team_id", "Team :")
-                            ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $point->team_id])
-                            ->addLabel("position", "Position :")
-                            ->addInput("number", "position", ["value" => $point->position ?? ''])
-                            ->addLabel("points_numeric", "Points :")
-                            ->addInput("number", "points_numeric", ["step" => "0.5", "value" => $point->points_numeric])
-                            ->addLabel("points_text", "DNF-DNS-DSQ :")
-                            ->addInput("text", "points_text", ["value" => $point->points_text ?? ''])
-                            ->addSubmit("Mettre à jour")
-                            ->endForm();
-
-                        $this->render('dashboard/gp_points/update', [
-                            'form' => $form,
-                            'message' => $message,
-                            'classMsg' => $classMsg
-                        ]);
+                        $this->renderUpdateForm(
+                            $id, $gps, $drivers, $teams, $_POST,
+                            "Erreur : Pilote déjà enregistré pour ce GP",
+                            "msg-error"
+                        );
                         return;
                     }
                 }
 
                 try {
-                    // Requete préparée
                     $stmt = $pdo->prepare("
                         UPDATE gp_points
                         SET gp_id=?, driver_id=?, team_id=?, position=?, points_numeric=?, points_text=?
@@ -321,45 +310,88 @@ class GpPointsController extends Controller {
                         $message = "Résultat mis à jour";
                         $classMsg = "msg-success";
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'update');
+                        // Retour à l'index seulement si succès
+                        $this->render('dashboard/gp_points/index', [
+                            'list' => GpPointsModel::allWithSeasonActive(),
+                            'message' => $message,
+                            'classMsg' => $classMsg
+                        ]);
+                        return;
                     } else {
-                        $message = "Erreur lors de la mise à jour";
-                        $classMsg = "msg-error";
+                        // Erreur générale sur update -> retour formulaire
+                        $this->renderUpdateForm(
+                            $id, $gps, $drivers, $teams, $_POST,
+                            "Erreur lors de la mise à jour",
+                            "msg-error"
+                        );
+                        return;
                     }
+
                 } catch (\PDOException $e) {
-                    $message = "Erreur : Pilote déjà ajouté, Position non unique, ou Position / Points doivent être un chiffre positif (0.5pt autorisé)";
-                    $classMsg = "msg-error";
+                    $this->renderUpdateForm(
+                        $id, $gps, $drivers, $teams, $_POST,
+                        "Erreur : Position déjà attribuée pour ce GP",
+                        "msg-error"
+                    );
+                    return;
                 }
 
             } else {
-                $message = "Mise à jour échouée : informations manquantes";
-                $classMsg = "msg-error";
+                $this->renderUpdateForm(
+                    $id, $gps, $drivers, $teams, $_POST,
+                    "Erreur : informations manquantes",
+                    "msg-error"
+                );
+                return;
             }
-
-            // Retour liste avec message succès ou erreur
-            $this->render('dashboard/gp_points/index', [
-                'list' => GpPointsModel::allWithSeasonActive(),
-                'message' => $message,
-                'classMsg' => $classMsg
-            ]);
-            return;
         }
 
-        // Formulaire
+        // Affichage du formulaire pour GET
+        $this->renderUpdateForm(
+            $id,
+            $gps,
+            $drivers,
+            $teams,
+            [
+                'gp_id' => $point->gp_id,
+                'driver_id' => $point->driver_id,
+                'team_id' => $point->team_id,
+                'position' => $point->position,
+                'points_numeric' => $point->points_numeric,
+                'points_text' => $point->points_text
+            ],
+            $message,
+            $classMsg
+        );
+    }
+
+    // Centralisation du formulaire de mise à jour
+    private function renderUpdateForm($id, $gps, $drivers, $teams, $data, $message, $classMsg)
+    {
         $form = new Form();
-        $form->startForm("index.php?controller=gppoints&action=update&id=".$id, "POST")
+
+        // Définir les options pour points_text
+        $pointsTextOptions = [
+            ''    => '',                // option vide par défaut
+            'DNF' => 'DNF (Abandon)',
+            'DNS' => 'DNS (Non partant)',
+            'DSQ' => 'DSQ (Disqualifié)'
+        ];
+
+        $form->startForm("index.php?controller=gppoints&action=update&id=" . $id, "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
-            ->addSelect("gp_id", $gps, ["value" => $point->gp_id])
+            ->addSelect("gp_id", $gps, ["value" => $data['gp_id'] ?? null])
             ->addLabel("driver_id", "Pilote :")
-            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'), ["value" => $point->driver_id])
+            ->addSelect("driver_id", array_column($drivers, 'nickname', 'id'), ["value" => $data['driver_id'] ?? null])
             ->addLabel("team_id", "Team :")
-            ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $point->team_id])
+            ->addSelect("team_id", array_column($teams, 'name', 'id'), ["value" => $data['team_id'] ?? null])
             ->addLabel("position", "Position :")
-            ->addInput("number", "position", ["value" => $point->position ?? ''])
+            ->addInput("number", "position", ["min" => 1, "value" => $data['position'] ?? ''])
             ->addLabel("points_numeric", "Points :")
-            ->addInput("number", "points_numeric", ["step" => "0.5", "value" => $point->points_numeric])
+            ->addInput("number", "points_numeric", ["min" => 0, "step" => "0.5", "value" => $data['points_numeric'] ?? 0])
             ->addLabel("points_text", "DNF-DNS-DSQ :")
-            ->addInput("text", "points_text", ["value" => $point->points_text ?? ''])
+            ->addSelect("points_text", $pointsTextOptions, ["value" => $data['points_text'] ?? ''])
             ->addSubmit("Mettre à jour")
             ->endForm();
 
@@ -491,6 +523,5 @@ class GpPointsController extends Controller {
             'classMsg' => $classMsg
         ]);
     }
-
 }
 ?>
