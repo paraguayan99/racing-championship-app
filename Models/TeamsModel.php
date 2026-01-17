@@ -42,9 +42,10 @@ class TeamsModel extends DbConnect {
         $db = new DbConnect();
         return $db->getConnection()->query("
             SELECT teams.id, teams.name, teams.logo, teams.color, teams.status,
-                   countries.name AS country
+                countries.name AS country
             FROM teams
             JOIN countries ON teams.country_id = countries.id
+            ORDER BY teams.name ASC
         ")->fetchAll();
     }
 
