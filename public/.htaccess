@@ -1,3 +1,9 @@
+# Désactiver le listing des dossiers comme img/flags/teams
+Options -Indexes
+
+# Envoyer ces erreurs 403 vers la page d'accueil
+ErrorDocument 403 /cedric1493/racing-championship-app/public/index.php
+
 # Active la réécriture
 RewriteEngine On
 
