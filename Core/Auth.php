@@ -5,46 +5,7 @@ use App\Models\UsersModel;
 
 class Auth
 {
-    // // Démarre une session sécurisée
-    // public static function start()
-    // {
-    //     if (session_status() === PHP_SESSION_NONE) {
-    //         // Sécuriser la session : strict mode et cookies sûrs
-    //         ini_set('session.use_strict_mode', 1);
-    //         // Nom de session personnalisé si plusieurs applis sur le même nom de domaine 
-    //         session_name('team_eracing_sid');
-
-    //         // Paramètres cookies : à définir AVANT session_start()
-    //         $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
-    //                 (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
-
-    //         session_set_cookie_params([
-    //             'lifetime' => 0,
-    //             'path' => '/',
-    //             'domain' => $_SERVER['HTTP_HOST'],
-    //             'secure' => $secure,
-    //             'httponly' => true,
-    //             'samesite' => 'Strict'
-    //         ]);
-
-    //         session_start();
-
-    //         // Deconnexion de l'utilisateur et destruction de la session après 5 minutes
-    //         $lifetime = 300 ; // durée en secondes 300 = 5 minutes
-
-    //         if (isset($_SESSION['time_activity']) && (time() - $_SESSION['time_activity'] > $lifetime)) {
-    //             session_unset();     // supprime les variables
-    //             session_destroy();   // détruit la session
-    //             header("Location: index.php?controller=auth&action=login");
-    //             exit();
-    //         }
-
-    //         $_SESSION['time_activity'] = time(); // mise à jour
-    //     }
-    // }
-
-
-    // Fonctionne pour OVH
+    // Démarre une session sécurisée
     public static function start()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -130,17 +91,6 @@ class Auth
     }
 
     // Génère un token CSRF
-    // public static function csrfToken(): string
-    // {
-    //     self::start();
-    //     if (empty($_SESSION['csrf_token'])) {
-    //         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    //     }
-    //     return $_SESSION['csrf_token'];
-    // }
-
-    // Génère un token CSRF
-    // Fonctionne pour OVH
     public static function csrfToken(): string
     {
         self::start();
@@ -153,6 +103,36 @@ class Auth
         self::start();
         return isset($_SESSION['csrf_token']) 
             && hash_equals($_SESSION['csrf_token'], $token);
+    }
+
+    // Génére le Captcha
+    public static function generateCaptcha(): string
+    {
+        self::start();
+
+        $a = random_int(1, 9);
+        $b = random_int(1, 5);
+
+        $_SESSION['captcha_answer'] = $a + $b;
+
+        return "Captcha : Combien font $a plus $b ?";
+    }
+
+    // Vérifie le Captcha
+    public static function validateCaptcha($answer): bool
+    {
+        self::start();
+
+        if (!isset($_SESSION['captcha_answer'])) {
+            return false;
+        }
+
+        $isValid = ((int)$answer === (int)$_SESSION['captcha_answer']);
+
+        // Supprime le captcha après usage
+        unset($_SESSION['captcha_answer']);
+
+        return $isValid;
     }
 }
 ?>

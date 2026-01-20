@@ -27,6 +27,11 @@ use App\Core\Auth;
         </div>
 
         <div class="form-group">
+            <label><?= Auth::generateCaptcha(); ?></label>
+            <input type="number" name="captcha" required placeholder="Votre réponse">
+        </div>
+
+        <div class="form-group">
             <button type="submit" class="btn">Se connecter</button>
         </div>
     </form>
