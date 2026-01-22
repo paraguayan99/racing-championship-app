@@ -24,7 +24,7 @@ namespace App;
 // }
 
 
-// Spécifique pour OVH
+// Modifications pour OVH et o2switch
 class Autoloader {
     static function register() {
         spl_autoload_register([__CLASS__, 'autoload']);
@@ -36,14 +36,17 @@ class Autoloader {
         $class = str_replace('\\', '/', $class);
 
         // Chemin absolu depuis le dossier racine du projet
-        $projectRoot = dirname(__DIR__) . '/racing-championship-app';
+        $projectRoot = dirname(__DIR__) . '/team-eracing.fr';
         $file = $projectRoot . '/' . $class . '.php';
 
         if (file_exists($file)) {
             require $file;
-        } else {
-            echo "Autoloader : fichier introuvable '$file' pour la classe $class";
-            exit;
-        }
+        } 
+        
+        // A SUPPRIMER CAR AFFICHE LERREUR PHP EN FRONT
+        // else {
+        //     echo "Autoloader : fichier introuvable '$file' pour la classe $class";
+        //     exit;
+        // }
     }
 }

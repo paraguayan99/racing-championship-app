@@ -59,7 +59,7 @@ abstract class Controller
                 $content = "<div class='section-dashboard'>
                                 <h1>Accès refusé</h1>
                                 <p>Vous n'avez pas les autorisations nécessaires.</p>
-                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
                             </div>";
 
                 include dirname(__DIR__) . '/Views/base.php';
@@ -79,7 +79,7 @@ abstract class Controller
                 $content = "<div class='section-dashboard'>
                                 <h1>Token invalide !</h1>
                                 <p>Veuillez réessayer ou recharger la page.</p>
-                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
                             </div>";
 
                 include dirname(__DIR__) . '/Views/base.php';

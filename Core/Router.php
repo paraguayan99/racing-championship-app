@@ -121,7 +121,7 @@ class Router
             <div class='section-dashboard'>
                 <h1>404 - Page introuvable</h1>
                 <p>La page que vous cherchez n'existe pas.</p>
-                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
             </div>
         ";
 
@@ -142,7 +142,7 @@ class Router
             <div class='section-dashboard'>
                 <h1>Token invalide !</h1>
                 <p>Veuillez réessayer ou recharger la page.</p>
-                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
             </div>
         ";
 

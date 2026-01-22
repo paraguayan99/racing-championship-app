@@ -13,7 +13,7 @@ class Auth
 
             session_set_cookie_params([
                 'lifetime' => 0,
-                'path' => '/cedric1493/racing-championship-app/public/',
+                'path' => '/',
                 'domain' => '',
                 'secure' => true,
                 'httponly' => true,
@@ -30,7 +30,7 @@ class Auth
                     session_id(),
                     [
                         'expires' => 0,
-                        'path' => '/cedric1493/racing-championship-app/public/',
+                        'path' => '/',
                         'domain' => '',
                         'secure' => true,
                         'httponly' => true,

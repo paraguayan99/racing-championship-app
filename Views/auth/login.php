@@ -13,7 +13,7 @@ use App\Core\Auth;
         </div>
     <?php endif; ?>
 
-    <form action="index.php?controller=auth&action=login" method="POST" class="login-form">
+    <form action="/auth/login" method="POST" class="login-form">
         <input type="hidden" name="csrf_token" value="<?= Auth::csrfToken() ?>">
 
         <div class="form-group">

@@ -1,5 +1,5 @@
 <?php
-// Afficher les erreurs avant tout affichage de HTML
+// Affiche les erreurs avant tout affichage de HTML
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -18,7 +18,7 @@ if (file_exists($envPath)) {
     }
 }
 
-// Solution trouvée pour les TOKENS avec OVH
+// Solution trouvée pour les TOKENS
 // Démarrer la session AVANT tout le contenu HTML
 // Cela permet aux cookies de session d'être envoyés correctement
 
@@ -28,9 +28,6 @@ include '../Autoloader.php';
 // On importe les namespaces nécessaires
 use App\Autoloader;
 use App\Core\Router;
-use App\Core\Auth;
-
-// On enregistre l'autoloader
 use App\Core\Auth;
 
 // On enregistre l'autoloader

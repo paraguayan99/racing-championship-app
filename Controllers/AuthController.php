@@ -66,7 +66,7 @@ class AuthController extends Controller
                     $_SESSION['role_id'] = $user->role_id;
                     $_SESSION['role']    = UsersModel::getRoleName($user->role_id);
 
-                    header('Location: index.php?controller=dashboard&action=index');
+                    header('Location: /dashboard');
                     exit();
                 }
                 else {
@@ -146,7 +146,7 @@ class AuthController extends Controller
         // Regénère un nouvel id vide
         // session_regenerate_id(true);
 
-        header('Location: index.php?controller=auth&action=login');
+        header('Location: /auth/login');
         exit();
     }
 }

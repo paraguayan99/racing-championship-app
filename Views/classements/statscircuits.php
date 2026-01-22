@@ -10,16 +10,16 @@
     </div>
 
     <!-- SÉLECTEUR DE CIRCUIT -->
-    <form method="get" class="circuit-selector">
+    <form method="get" class="circuit-selector" action="/statscircuits/index">
         <input type="hidden" name="controller" value="statscircuits">
         <input type="hidden" name="action" value="index">
 
         <label for="circuit_id" class="visually-hidden">Choisir un circuit :</label>
         <div class="form-group">
             <select name="circuit_id" onchange="this.form.submit()">
-                <option value="">Choisir un circuit :</option>
+                <option value="0" <?= ($circuitId ?? 0) == 0 ? 'selected' : '' ?>>Choisir un circuit :</option>
                 <?php foreach ($circuits as $c): ?>
-                    <option value="<?= $c->id ?>" <?= ($circuitId ?? null) == $c->id ? 'selected' : '' ?>>
+                    <option value="<?= $c->id ?>" <?= ($circuitId ?? 0) == $c->id ? 'selected' : '' ?>>
                         <?= htmlspecialchars($c->name) ?> (<?= htmlspecialchars($c->country) ?>)
                     </option>
                 <?php endforeach; ?>

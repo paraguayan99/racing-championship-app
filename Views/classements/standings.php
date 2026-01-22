@@ -70,7 +70,7 @@ function gpBadge($gpNumber) {
     </div>
     <div>
         <!-- Sélecteur de saison -->
-        <form method="get">
+        <form method="get" action="/classements/standings">
             <input type="hidden" name="controller" value="classements">
             <input type="hidden" name="action" value="standings">
 
@@ -473,7 +473,7 @@ document.addEventListener('click', function (e) {
     const gpId = row.dataset.gpId;
     if (!gpId) return;
 
-    fetch(`index.php?controller=classements&action=gpDetails&gp_id=${gpId}`)
+    fetch(`/index.php?controller=classements&action=gpDetails&gp_id=${gpId}`)
         .then(res => res.text())
         .then(html => {
             document.getElementById('gp-modal-body').innerHTML = html;

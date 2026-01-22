@@ -2,6 +2,14 @@
 .env
 .env.*
 
+# Référencement
+robots.txt
+sitemap.xml
+
+#Backup BDD
+bdd_export_saison1.sql
+bdd_export_saison2.sql
+
 # Développement
 memos_dev.txt
 
