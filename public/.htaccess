@@ -1,9 +1,6 @@
 # Désactiver le listing des dossiers
 Options -Indexes
 
-# Erreurs 403
-ErrorDocument 403 /team-eracing.fr
-
 # Active la réécriture
 RewriteEngine On
 

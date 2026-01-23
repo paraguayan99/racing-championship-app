@@ -23,35 +23,59 @@
         <a class="nav-btn-dashboard" href="index.php?controller=drivers&action=create">Ajouter pilote</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="dashboard-table fix">
-            <thead>
-                <tr>
-                    <th>Pseudo</th>
-                    <th>Pays</th>
-                    <th class="status text-center">Statut</th>
-                    <th class="width-actions text-center">Actions</th>
-                </tr>
-            </thead>
+    <form method="POST" action="/drivers/status">
+        <input type="hidden" name="csrf_token" value="<?= \App\Core\Auth::csrfToken() ?>">
 
-            <tbody>
-                <?php foreach ($list as $driver): ?>
-                <tr>
-                    <td class="down"><?= htmlspecialchars($driver->nickname) ?></td>
-                    <td class="down"><?= htmlspecialchars($driver->country) ?></td>
-                    <td class="status text-center down"><?= htmlspecialchars($driver->status) ?></td>
-                    <td class="width-actions text-center">
-                        <a class="action-btn edit" href="index.php?controller=drivers&action=update&id=<?= $driver->id ?>">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                        <a class="action-btn delete" href="index.php?controller=drivers&action=delete&id=<?= $driver->id ?>">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <button class="status-btn" type="submit" name="status" value="active">Activer</button>
+            <button class="status-btn" type="submit" name="status" value="desactive">Désactiver</button>
+        </div>
+
+        <div class="table-responsive with-status-btn">
+            <table class="dashboard-table fix">
+                <thead>
+                    <tr>
+                        <th class="width-checkbox">
+                            <input type="checkbox" id="check-all">
+                        </th>
+                        <th>Pseudo</th>
+                        <th>Pays</th>
+                        <th class="status text-center">Statut</th>
+                        <th class="width-actions text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($list as $driver): ?>
+                    <tr>
+                        <td class="width-checkbox">
+                            <input type="checkbox" name="drivers[]" value="<?= $driver->id ?>">
+                        </td>
+                        <td class="down"><?= htmlspecialchars($driver->nickname) ?></td>
+                        <td class="down"><?= htmlspecialchars($driver->country) ?></td>
+                        <td class="status text-center down"><?= htmlspecialchars($driver->status) ?></td>
+                        <td class="width-actions text-center">
+                            <a class="action-btn edit" href="index.php?controller=drivers&action=update&id=<?= $driver->id ?>">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a class="action-btn delete" href="index.php?controller=drivers&action=delete&id=<?= $driver->id ?>">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
 
 </div>
+
+<script>
+document.getElementById('check-all').addEventListener('change', function () {
+    document.querySelectorAll('input[name="drivers[]"]').forEach(cb => {
+        cb.checked = this.checked;
+    });
+});
+</script>

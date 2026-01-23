@@ -7,8 +7,7 @@ robots.txt
 sitemap.xml
 
 #Backup BDD
-bdd_export_saison1.sql
-bdd_export_saison2.sql
+bdd_export_*.sql
 
 # Développement
 memos_dev.txt

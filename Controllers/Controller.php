@@ -31,7 +31,7 @@ abstract class Controller
         header("Expires: 0");
 
         if (!Auth::check()) {
-            header('Location: index.php?controller=auth&action=login');
+            header('Location: /auth/login');
             exit;
         }
 

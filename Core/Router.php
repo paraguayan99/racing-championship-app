@@ -37,7 +37,6 @@ class Router
     // }
 
 
-
     // Fonctionne sur OVH
 
     //  Table de correspondance pour les controllers composés
@@ -100,13 +99,6 @@ class Router
             $this->render404();
         }
     }
-
-
-
-
-
-
-
 
     // Erreur si contrôleur n'existe pas
     private function render404()

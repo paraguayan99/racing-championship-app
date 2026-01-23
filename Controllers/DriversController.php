@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\Form;
 use App\Models\DriversModel;
 use App\Models\CountriesModel;
+use App\Core\Auth;
 
 class DriversController extends Controller {
 
@@ -22,6 +23,71 @@ class DriversController extends Controller {
         $this->render('dashboard/drivers/index', [
             'list' => $drivers,
             'countries' => $countries
+        ]);
+    }
+
+    public function status()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /drivers');
+            exit;
+        }
+
+        if (
+            !isset($_POST['csrf_token']) ||
+            !Auth::validateCSRF($_POST['csrf_token'])
+        ) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Action refusée : token de sécurité invalide',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        if (empty($_POST['drivers']) || empty($_POST['status'])) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Aucun pilote sélectionné',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        // Sécurisation du status (enum)
+        if (!in_array($_POST['status'], ['active', 'desactive'], true)) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Statut invalide',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        $ids = array_map('intval', $_POST['drivers']);
+        $status = $_POST['status'];
+
+        $db = new DriversModel();
+        $pdo = $db->getConnection();
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        $stmt = $pdo->prepare("
+            UPDATE drivers 
+            SET status = ?
+            WHERE id IN ($placeholders)
+        ");
+
+        $stmt->execute(array_merge([$status], $ids));
+
+        $this->render('dashboard/drivers/index', [
+            'list' => DriversModel::all(),
+            'countries' => CountriesModel::all(),
+            'message' => 'Statut mis à jour pour ' . count($ids) . ' pilote(s)',
+            'classMsg' => 'msg-success'
         ]);
     }
 

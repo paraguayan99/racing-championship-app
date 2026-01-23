@@ -689,6 +689,42 @@ footer {
     width: 90px;
 }
 
+/* Spécificités gestion des status active / desactive */
+
+.table-responsive.with-status-btn {
+    margin-top: 0px;
+}
+
+.dashboard-table th.width-checkbox,
+.dashboard-table td.width-checkbox {
+    width: 20px;
+}
+
+button.status-btn {
+    border: none;
+    font: inherit;
+    box-shadow: none;
+    -webkit-appearance: none;
+
+    text-align: center;
+    width: 100px;
+    margin: 20px 0px 5px;
+    padding: 2px;
+    border-radius: 5px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.status-btn:hover {
+    background-color: white;
+    color: #000000;
+}
+
+
 /* Tableau : Classes pour permettre aux éléments trop longs 
 de se cacher derrière ou passer au dessus de la cellule suivante */
 
@@ -980,6 +1016,7 @@ input[type=number] {
 .btn.black {
     text-align: center;
 }
+
 .black {
     background: #000000;
 }
