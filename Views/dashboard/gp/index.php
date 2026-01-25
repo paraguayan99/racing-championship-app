@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Constituer les ordres d'apparition des Grands Prix durant la Saison</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=gp&action=create">Ajouter GP</a>
+        <a class="nav-btn-dashboard" href="/gp/create">Ajouter GP</a>
     </div>
 
     <div class="table-responsive">
@@ -44,10 +44,10 @@
                             <td class="down"><?= htmlspecialchars($gp->circuit_name ?? '') ?></td>
                             <td class="down"><?= htmlspecialchars($gp->countryName ?? '') ?></td>
                             <td class="width-actions text-center">
-                                <a class="action-btn edit" href="index.php?controller=gp&action=update&id=<?= $gp->id ?>">
+                                <a class="action-btn edit" href="/gp/update/<?= $gp->id ?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
-                                <a class="action-btn delete" href="index.php?controller=gp&action=delete&id=<?= $gp->id ?>">
+                                <a class="action-btn delete" href="/gp/delete/<?= $gp->id ?>">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>

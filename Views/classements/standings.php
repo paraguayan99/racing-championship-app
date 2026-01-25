@@ -1,8 +1,4 @@
-<?php
-$seasonTitle = ($seasonFilter === 'active') 
-    ? 'Saison actuelle' 
-    : 'Saison ' . ($listByCategory[array_key_first($listByCategory)][0]->season_number ?? '');
-$title = "Classements - $seasonTitle";
+<?php $title = "Team-eRacing - Classements";
 
 
 
@@ -38,8 +34,8 @@ function gpBadge($gpNumber) {
 
 <div class="section-dashboard">
 
-    <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
-    <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
+    <a class="nav-btn red" href="/palmares">Palmarès</a>
+    <a class="nav-btn red" href="/statscircuits">Circuits</a>
 
     <div class="page-header">
         <h1>Classements</h1>

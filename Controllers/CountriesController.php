@@ -87,7 +87,7 @@ class CountriesController extends Controller {
 
         // GET : afficher formulaire création
         $form = new Form();
-        $form->startForm("index.php?controller=countries&action=create", "POST")
+        $form->startForm("/countries/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom du pays :")
             ->addInput("text", "name")
@@ -179,7 +179,7 @@ class CountriesController extends Controller {
 
         // GET : afficher formulaire update
         $form = new Form();
-        $form->startForm("index.php?controller=countries&action=update&id=" . $country->id, "POST")
+        $form->startForm("/countries/update/" . $country->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom du pays :")
             ->addInput("text", "name", ["value" => $country->name])

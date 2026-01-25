@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Générer de nouvelles saisons pour une catégorie</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=seasons&action=create">Ajouter saison</a>
+        <a class="nav-btn-dashboard" href="/seasons/create">Ajouter saison</a>
     </div>
 
     <div class="table-responsive">
@@ -55,10 +55,10 @@
                     <td class="down text-center"><?= htmlspecialchars($season->platform) ?></td>
                     <td class="status text-center down"><?= htmlspecialchars($season->status) ?></td>
                     <td class="width-actions text-center">
-                        <a class="action-btn edit" href="index.php?controller=seasons&action=update&id=<?= $season->id ?>">
+                        <a class="action-btn edit" href="/seasons/update/<?= $season->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a class="action-btn delete" href="index.php?controller=seasons&action=delete&id=<?= $season->id ?>">
+                        <a class="action-btn delete" href="/seasons/delete/<?= $season->id ?>">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>

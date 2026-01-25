@@ -117,7 +117,7 @@ class ManualAdjustmentsController extends Controller {
             $teamOptions[$t->id] = $t->name;
         }
 
-        $form->startForm("index.php?controller=manualadjustments&action=create", "POST")
+        $form->startForm("/manualadjustments/create", "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions)
@@ -268,7 +268,7 @@ class ManualAdjustmentsController extends Controller {
             $teamOptions[$t->id] = $t->name;
         }
 
-        $form->startForm("index.php?controller=manualadjustments&action=update&id=" . $manual->id, "POST")
+        $form->startForm("/manualadjustments/update/" . $manual->id, "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions, ["value" => $manual->season_id])

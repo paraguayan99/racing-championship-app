@@ -1,9 +1,9 @@
-<?php $title = "Statistiques par circuit"; ?>
+<?php $title = "Team-eRacing - Circuits"; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
-    <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
+    <a class="nav-btn" href="/classements/standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="/palmares">Palmarès</a>
 
     <div class="page-header">
         <h1>Circuits</h1>

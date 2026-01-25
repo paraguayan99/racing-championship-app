@@ -93,7 +93,7 @@ class CircuitsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=circuits&action=create", "POST")
+        $form->startForm("/circuits/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom du circuit :")
             ->addInput("text", "name")
@@ -196,7 +196,7 @@ class CircuitsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=circuits&action=update&id=" . $circuit->id, "POST")
+        $form->startForm("/circuits/update/" . $circuit->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom :")
             ->addInput("text", "name", ["value" => $circuit->name])

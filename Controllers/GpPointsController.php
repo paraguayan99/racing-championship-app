@@ -153,7 +153,7 @@ class GpPointsController extends Controller {
 
         $form = new Form();
 
-        $form->startForm("index.php?controller=gppoints&action=create", "POST")
+        $form->startForm("/gppoints/create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps, ["value" => $selectedGpId])
@@ -378,7 +378,7 @@ class GpPointsController extends Controller {
             'DSQ' => 'DSQ (Disqualifié)'
         ];
 
-        $form->startForm("index.php?controller=gppoints&action=update&id=" . $id, "POST")
+        $form->startForm("/gppoints/update/" . $id, "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps, ["value" => $data['gp_id'] ?? null])

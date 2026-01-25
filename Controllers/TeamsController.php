@@ -102,7 +102,7 @@ class TeamsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=teams&action=create", "POST")
+        $form->startForm("/teams/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de l’équipe :")
             ->addInput("text", "name")
@@ -220,7 +220,7 @@ class TeamsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=teams&action=update&id=" . $team->id, "POST")
+        $form->startForm("/teams/update/" . $team->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de l’équipe :")
             ->addInput("text", "name", ["value" => $team->name])

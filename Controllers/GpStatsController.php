@@ -127,7 +127,7 @@ class GpStatsController extends Controller {
 
         // Formulaire
         $form = new Form();
-        $form->startForm("index.php?controller=gpstats&action=create", "POST")
+        $form->startForm("/gpstats/create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps)
@@ -278,7 +278,7 @@ class GpStatsController extends Controller {
 
         // Formulaire
         $form = new Form();
-        $form->startForm("index.php?controller=gpstats&action=update&gp_id=".$gp_id, "POST")
+        $form->startForm("/gpstats/update/".$gp_id, "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps, ["value" => $stats->gp_id])

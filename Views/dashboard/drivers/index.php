@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Créer leurs pseudos et nationalités</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=drivers&action=create">Ajouter pilote</a>
+        <a class="nav-btn-dashboard" href="/drivers/create">Ajouter pilote</a>
     </div>
 
     <form method="POST" action="/drivers/status">
@@ -55,10 +55,10 @@
                         <td class="down"><?= htmlspecialchars($driver->country) ?></td>
                         <td class="status text-center down"><?= htmlspecialchars($driver->status) ?></td>
                         <td class="width-actions text-center">
-                            <a class="action-btn edit" href="index.php?controller=drivers&action=update&id=<?= $driver->id ?>">
+                            <a class="action-btn edit" href="/drivers/update/<?= $driver->id ?>">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a class="action-btn delete" href="index.php?controller=drivers&action=delete&id=<?= $driver->id ?>">
+                            <a class="action-btn delete" href="/drivers/delete/<?= $driver->id ?>">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>

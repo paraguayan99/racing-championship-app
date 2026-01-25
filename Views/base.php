@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+<?php
+// Redirection permanente vers la version sans www
+if (strpos($_SERVER['HTTP_HOST'], 'www.') === 0) {
+    $redirect = 'https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'];
+    header('Location: ' . $redirect, true, 301);
+    exit;
+}
+?>
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +19,8 @@
 <!-- Favicon classiques onglet navigateur -->
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16.png">
+<!-- Favicon pour google -->
+ <link rel="icon" href="/favicon.ico">
 <!-- iPhone / iPad écran d’accueil -->
 <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-180.png">
 <!-- Android -->
@@ -54,7 +65,7 @@ $canonical = $protocol . $host . ($uri === '' ? '/' : $uri);
     </span>
 </div>
 <nav>
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">CLASSEMENTS</a>
+    <a class="nav-btn" href="/classements/standings">CLASSEMENTS</a>
     <a class="nav-btn red" href="#discord">NOUS REJOINDRE</a>
 </nav>
 </header>
@@ -69,8 +80,8 @@ $canonical = $protocol . $host . ($uri === '' ? '/' : $uri);
 
 <footer>
     <nav aria-label="Liens de pied de page">
-        <a class="nav-btn" href="index.php?controller=mentions">Mentions légales</a>
-        <a class="nav-btn" href="index.php?controller=dashboard">Dashboard</a>
+        <a class="nav-btn" href="/mentions">Mentions légales</a>
+        <a class="nav-btn" href="/dashboard">Dashboard</a>
     </nav>
 
     <div class="logo_footer">

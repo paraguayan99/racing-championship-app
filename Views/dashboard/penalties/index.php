@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Appliquer au pilote et/ou l’équipe engagée sur un GP</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=penalties&action=create">Ajouter pénalité</a>
+        <a class="nav-btn-dashboard" href="/penalties/create">Ajouter pénalité</a>
     </div>
 
     <div class="table-responsive">
@@ -63,10 +63,10 @@
                     <td class="width-numbers text-center td-bold"><?= htmlspecialchars($penalty->points_removed ?? '') ?></td>
                     <td class="text-long-responsive down"><?= htmlspecialchars($penalty->comment ?? '') ?></td>
                     <td class="width-actions text-center">
-                        <a class="action-btn edit" href="index.php?controller=penalties&action=update&id=<?= $penalty->id ?>">
+                        <a class="action-btn edit" href="/penalties/update/<?= $penalty->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a class="action-btn delete" href="index.php?controller=penalties&action=delete&id=<?= $penalty->id ?>">
+                        <a class="action-btn delete" href="/penalties/delete/<?= $penalty->id ?>">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>

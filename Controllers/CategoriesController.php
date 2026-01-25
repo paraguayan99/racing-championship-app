@@ -96,7 +96,7 @@ class CategoriesController extends Controller {
         // GET => formulaire création
         $form = new Form();
 
-        $form->startForm("index.php?controller=categories&action=create", "POST")
+        $form->startForm("/categories/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de la catégorie :")
             ->addInput("text", "name")
@@ -205,7 +205,7 @@ class CategoriesController extends Controller {
         // GET => form update
         $form = new Form();
 
-        $form->startForm("index.php?controller=categories&action=update&id=" . $category->id, "POST")
+        $form->startForm("/categories/update/" . $category->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de la catégorie :")
             ->addInput("text", "name", ["value" => $category->name])

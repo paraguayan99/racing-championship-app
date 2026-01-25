@@ -160,7 +160,7 @@ class DriversController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=drivers&action=create", "POST")
+        $form->startForm("/drivers/create", "POST")
             ->addCSRF()
             ->addLabel("nickname", "Pseudo :")
             ->addInput("text", "nickname")
@@ -270,7 +270,7 @@ class DriversController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=drivers&action=update&id=" . $driver->id, "POST")
+        $form->startForm("/drivers/update/" . $driver->id, "POST")
             ->addCSRF()
             ->addLabel("nickname", "Pseudo :")
             ->addInput("text", "nickname", ["value" => $driver->nickname])

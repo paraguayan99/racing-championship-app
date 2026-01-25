@@ -11,20 +11,38 @@ RewriteCond %{THE_REQUEST} /public/index\.php [NC]
 RewriteRule ^index\.php$ https://team-eracing.fr/ [R=301,L]
 
 ###############################################
-# 1) Forcer HTTPS
+# 1) Forcer HTTPS + Redirection www → non-www
 ###############################################
+# Redirection www vers non-www
+RewriteCond %{HTTP_HOST} ^www\.team-eracing\.fr$ [NC]
+RewriteRule ^(.*)$ https://team-eracing.fr/$1 [R=301,L]
+
+# Forcer HTTPS (seulement si pas déjà en HTTPS)
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirection de /index.php vers la racine
+RewriteCond %{THE_REQUEST} \ /index\.php [NC]
+RewriteRule ^index\.php$ https://team-eracing.fr/ [R=301,L]
+
+# Redirection de /public/index.php vers la racine
+RewriteCond %{THE_REQUEST} \ /public/index\.php [NC]
+RewriteRule ^public/index\.php$ https://team-eracing.fr/ [R=301,L]
+
 ###############################################
 # 2) Redirections 301 : Anciennes URLs → Nouvelles URLs
+# Anciennes URLs : index.php?controller=categories&action=delete&id=1
 ###############################################
 
 # EXCLUSION AJAX gpDetails (MODALS)
 RewriteCond %{REQUEST_URI} .*/index\.php$
 RewriteCond %{QUERY_STRING} (^|&)action=gpDetails(&|$)
 RewriteRule ^ - [L]
+
+# Anciennes URLs avec gp_id → URLs propres
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)&gp_id=([0-9]+)
+RewriteRule ^index\.php$ /%1/%2/%3? [R=301,L]
 
 # Anciennes URLs avec paramètre _id → URLs propres
 RewriteCond %{THE_REQUEST} ^GET\ /([^/\s]+)/([^/\s?]+)\?controller=[^&\s]+&action=[^&\s]+&([a-zA-Z0-9_]+)_id=([a-zA-Z0-9_-]+)
@@ -59,6 +77,11 @@ RewriteRule ^$ index.php?controller=home&action=index [L,QSA]
 ###############################################
 # 4) URL Rewriting : URLs propres vers query string
 ###############################################
+
+# URL spécifique pour gpstats avec gp_id
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^gpstats/(update|delete|view)/([0-9]+)/?$ index.php?controller=gpstats&action=$1&gp_id=$2 [L,QSA]
 
 # URL CRUD simple avec id numérique : doit être **avant** la règle _id
 RewriteCond %{REQUEST_FILENAME} !-f

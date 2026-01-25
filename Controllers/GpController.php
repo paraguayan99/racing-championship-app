@@ -118,7 +118,7 @@ class GpController extends Controller {
         asort($seasonOptions);
         asort($circuitOptions);
 
-        $form->startForm("index.php?controller=gp&action=create", "POST")
+        $form->startForm("/gp/create", "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions)
@@ -259,7 +259,7 @@ class GpController extends Controller {
         asort($circuitOptions);
 
         $form = new Form();
-        $form->startForm("index.php?controller=gp&action=update&id=" . $row->id, "POST")
+        $form->startForm("/gp/update/" . $row->id, "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions, ["value" => $row->season_id])

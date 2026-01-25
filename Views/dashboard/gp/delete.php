@@ -15,7 +15,7 @@
 
     <div class="delete-actions">
         <div class="delete-width">
-            <form action="index.php?controller=gp&action=delete&id=<?= $id ?>" method="POST">
+            <form action="/gp/delete/<?= $id ?>" method="POST">
                 <?php
                 use App\Core\Auth;
                 $csrf = Auth::csrfToken();
@@ -26,7 +26,7 @@
         </div>
 
         <div class="annule-width">
-            <a href="index.php?controller=gp" class="btn black">Annuler</a>
+            <a href="/gp" class="btn black">Annuler</a>
         </div>
     </div>
 

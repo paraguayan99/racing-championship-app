@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Associer ces pays ensuite aux pilotes, teams et circuits</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=countries&action=create">Ajouter pays</a>
+        <a class="nav-btn-dashboard" href="/countries/create">Ajouter pays</a>
     </div>
 
     <div class="table-responsive">
@@ -49,10 +49,10 @@
                         
                         <?= htmlspecialchars($country->flag ?? '') ?></td>
                     <td class="width-actions text-center">
-                        <a class="action-btn edit" href="index.php?controller=countries&action=update&id=<?= $country->id ?>">
+                        <a class="action-btn edit" href="/countries/update/<?= $country->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a class="action-btn delete" href="index.php?controller=countries&action=delete&id=<?= $country->id ?>">
+                        <a class="action-btn delete" href="/countries/delete/<?= $country->id ?>">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>

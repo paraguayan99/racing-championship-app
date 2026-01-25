@@ -83,7 +83,7 @@ class SeasonsController extends Controller {
             $categoriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=seasons&action=create", "POST")
+        $form->startForm("/seasons/create", "POST")
             ->addCSRF()
             ->addLabel("season_number", "Numéro de saison :")
             ->addInput("number", "season_number")
@@ -177,7 +177,7 @@ class SeasonsController extends Controller {
             $categoriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=seasons&action=update&id=" . $season->id, "POST")
+        $form->startForm("/seasons/update/" . $season->id, "POST")
             ->addCSRF()
             ->addLabel("season_number", "Numéro de saison :")
             ->addInput("number", "season_number", ["value" => $season->season_number])

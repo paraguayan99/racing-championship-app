@@ -1,8 +1,8 @@
-<?php $title = "Palmarès"; ?>
+<?php $title = "Team-eRacing - Palmarès"; ?>
 
 <div class="section-dashboard">
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
-    <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
+    <a class="nav-btn" href="/classements/standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="/statscircuits">Circuits</a>
 
     <div class="page-header">
         <h1>Palmarès</h1>

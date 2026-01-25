@@ -123,7 +123,7 @@ class PenaltiesController extends Controller {
 
         // Formulaire
         $form = new Form();
-        $form->startForm("index.php?controller=penalties&action=create", "POST")
+        $form->startForm("/penalties/create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps)
@@ -259,7 +259,7 @@ class PenaltiesController extends Controller {
         $teamsSelect = ['' => 'Aucun'] + array_column($teams, 'name', 'id');
 
         $form = new Form();
-        $form->startForm("index.php?controller=penalties&action=update&id=".$id, "POST")
+        $form->startForm("/penalties/update/".$id, "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps, ["value" => $penalty->gp_id])

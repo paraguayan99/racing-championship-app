@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Compléter les résultats des Grands Prix</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=gppoints&action=create">Ajouter résultats</a>
+        <a class="nav-btn-dashboard" href="/gppoints/create">Ajouter résultats</a>
     </div>
 
     <div class="table-responsive">
@@ -93,10 +93,10 @@
                     <td class="width-numbers text-center td-bold"><?= htmlspecialchars(rtrim(rtrim(number_format($pt->points_numeric, 1, '.', ''), '0'), '.')) ?></td>
                     <td class="width-3-letters text-center"><?= htmlspecialchars($pt->points_text ?? '') ?></td>
                     <td class="width-actions text-center">
-                        <a class="action-btn edit" href="index.php?controller=gppoints&action=update&id=<?= $pt->id ?>">
+                        <a class="action-btn edit" href="/gppoints/update/<?= $pt->id ?>">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a class="action-btn delete" href="index.php?controller=gppoints&action=delete&id=<?= $pt->id ?>">
+                        <a class="action-btn delete" href="/gppoints/delete/<?= $pt->id ?>">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
