@@ -101,7 +101,7 @@ class PenaltiesController extends Controller {
                                 $classMsg = "msg-error";
                             }
                         } catch (\PDOException $e) {
-                            $message = "Erreur : données invalides";
+                            $message = "Erreur : données invalides ou pilote déjà pénalisé pour ce GP";
                             $classMsg = "msg-error";
                         }
                     }
@@ -240,7 +240,7 @@ class PenaltiesController extends Controller {
                             $classMsg = "msg-error";
                         }
                     } catch (\PDOException $e) {
-                        $message = "Erreur : données invalides";
+                        $message = "Erreur : données invalides ou pilote déjà pénalisé pour ce GP";
                         $classMsg = "msg-error";
                     }
                 }

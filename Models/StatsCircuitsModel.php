@@ -106,16 +106,38 @@ class StatsCircuitsModel extends DbConnect
     }
 
     // NOMBRE DE GP PAR CATÉGORIE par un ID de circuit
+    // public static function getGPCountByCategory($circuitId)
+    // {
+    //     $db = new DbConnect();
+    //     $sql = "
+    //         SELECT 
+    //             cat.name AS category,
+    //             COUNT(g.id) AS gp_count
+    //         FROM gp g
+    //         JOIN seasons s ON s.id = g.season_id
+    //         JOIN categories cat ON cat.id = s.category_id
+    //         WHERE g.circuit_id = :circuit_id
+    //         GROUP BY cat.id
+    //         ORDER BY cat.name ASC
+    //     ";
+
+    //     $stmt = $db->getConnection()->prepare($sql);
+    //     $stmt->execute(['circuit_id' => $circuitId]);
+    //     return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    // }
+
+    // NOMBRE DE COURSES DISPUTEES AVEC AU MOINS UN RESULTAT (1 ligne dans gp_points) PAR CATÉGORIE pour un ID de circuit
     public static function getGPCountByCategory($circuitId)
     {
         $db = new DbConnect();
         $sql = "
             SELECT 
                 cat.name AS category,
-                COUNT(g.id) AS gp_count
+                COUNT(DISTINCT g.id) AS gp_count
             FROM gp g
             JOIN seasons s ON s.id = g.season_id
             JOIN categories cat ON cat.id = s.category_id
+            JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
             WHERE g.circuit_id = :circuit_id
             GROUP BY cat.id
             ORDER BY cat.name ASC

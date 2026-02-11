@@ -14,7 +14,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'www.') === 0) {
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <base href="/">
-<title><?= htmlspecialchars($title ?? 'Team-eRacing | Championnat F1 25 en ligne sur PS5') ?></title>
+<title><?= htmlspecialchars($title ?? 'Team-eRacing | Championnat F1 25 en ligne sur PS5 & Xbox') ?></title>
 
 <!-- Favicon classiques onglet navigateur -->
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
@@ -28,7 +28,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'www.') === 0) {
 <!-- Couleur de thème navigateur mobile -->
 <meta name="theme-color" content="#000000">
 
-<meta name="description" content="Team-eRacing organise des championnats F1 25 en ligne sur PS5. Communauté F1 francophone, courses diffusées sur Twitch, replays YouTube et inscriptions sur Discord.">
+<meta name="description" content="Team-eRacing organise des championnats F1 25 en ligne sur PS5 & Xbox. Communauté F1 francophone, courses diffusées sur Twitch, replays YouTube et inscriptions sur Discord.">
 <meta name="robots" content="index, follow">
 <?php
 // Canonical dynamique
@@ -46,7 +46,7 @@ $canonical = $protocol . $host . ($uri === '' ? '/' : $uri);
 
 <!-- CSS personnel, pas de Framework -->
 <link rel="stylesheet" href="/stylev1.5.css" />
-<link rel="stylesheet" href="/style700px-mobilev1.1.css" media="screen and (max-width: 700px)" />
+<link rel="stylesheet" href="/style700px-mobilev1.6.css" media="screen and (max-width: 700px)" />
 <link rel="stylesheet" href="/style900px-tablettev1.0.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
 <link rel="stylesheet" href="/style1400px-desktopv1.0.css" media="screen and (min-width: 901px)" />
 

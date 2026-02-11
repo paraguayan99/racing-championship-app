@@ -72,7 +72,7 @@ class GpStatsController extends Controller {
                 $timePattern = '/^\d+:[0-5]\d\.\d{3}$/';
                 if (($pole_position_time && !preg_match($timePattern, $pole_position_time)) ||
                     ($fastest_lap_time && !preg_match($timePattern, $fastest_lap_time))) {
-                    $message = "Format du temps invalide : m:ss.mmm (ex: 1:12.562)";
+                    $message = "Format du temps invalide : m:ss.mmm (ex: 1:32.545)";
                     $classMsg = "msg-error";
                 } else {
                     // Vérifier saison active
@@ -134,11 +134,11 @@ class GpStatsController extends Controller {
             ->addLabel("pole_position_driver", "Pilote Pole :")
             ->addSelect("pole_position_driver", $poleDrivers, ["value" => null])
             ->addLabel("pole_position_time", "Temps Pole :")
-            ->addInput("text", "pole_position_time", ["placeholder" => "1:12.562"])
+            ->addInput("text", "pole_position_time", ["placeholder" => "Saisir 132545 pour 1:32.545"])
             ->addLabel("fastest_lap_driver", "Pilote Fastest Lap :")
             ->addSelect("fastest_lap_driver", $fastestLapDrivers, ["value" => null])
             ->addLabel("fastest_lap_time", "Temps Fastest Lap :")
-            ->addInput("text", "fastest_lap_time", ["placeholder" => "1:12.562"])
+            ->addInput("text", "fastest_lap_time", ["placeholder" => "Saisir 132545 pour 1:32.545"])
             ->addSubmit("Créer")
             ->endForm();
 
@@ -222,7 +222,7 @@ class GpStatsController extends Controller {
                 $timePattern = '/^\d+:[0-5]\d\.\d{3}$/';
                 if (($pole_position_time && !preg_match($timePattern, $pole_position_time)) ||
                     ($fastest_lap_time && !preg_match($timePattern, $fastest_lap_time))) {
-                    $message = "Format du temps invalide : m:ss.mmm (ex: 1:12.562)";
+                    $message = "Format du temps invalide : m:ss.mmm (ex: 1:32.545)";
                     $classMsg = "msg-error";
                 } else {
                     $db = new GpStatsModel();
@@ -285,11 +285,11 @@ class GpStatsController extends Controller {
             ->addLabel("pole_position_driver", "Pilote Pole :")
             ->addSelect("pole_position_driver", $poleDrivers, ["value" => $poleSelected])
             ->addLabel("pole_position_time", "Temps Pole :")
-            ->addInput("text", "pole_position_time", ["value" => $stats->pole_position_time, "placeholder" => "1:12.562"])
+            ->addInput("text", "pole_position_time", ["value" => $stats->pole_position_time, "placeholder" => "Saisir 132545 pour 1:32.545"])
             ->addLabel("fastest_lap_driver", "Pilote Fastest Lap :")
             ->addSelect("fastest_lap_driver", $fastestLapDrivers, ["value" => $fastestSelected])
             ->addLabel("fastest_lap_time", "Temps Fastest Lap :")
-            ->addInput("text", "fastest_lap_time", ["value" => $stats->fastest_lap_time, "placeholder" => "1:12.562"])
+            ->addInput("text", "fastest_lap_time", ["value" => $stats->fastest_lap_time, "placeholder" => "Saisir 132545 pour 1:32.545"])
             ->addSubmit("Mettre à jour")
             ->endForm();
 

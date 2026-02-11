@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (/^\d{1,2}$/.test(val)) {
                 val = val; // minutes seules, pas de modification
             } else if (/^\d{1,2}\d{2}$/.test(val)) {
-                // transformer "11234" => "1:12.34" (approximation)
-                val = val.replace(/^(\d+)(\d{2})(\d{0,3})$/, '$1:$2.$3');
-            } else if (/^\d+:\d{1,2}$/.test(val)) {
-                // ajouter un point à la fin si pas présent
-                val = val + '.000';
+                // transformer "1125" => "1:12.5"
+                val = val.replace(/^(\d+)(\d{2})(\d*)$/, '$1:$2.$3');
+            } else if (/^\d+:\d{2}$/.test(val)) {
+                // ajouter un point après les 2 secondes
+                val = val + '.';
             }
 
             field.value = val;

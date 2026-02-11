@@ -52,8 +52,8 @@
 .drivers-table thead th:nth-child(5)::after { content: "GP"; }
 .drivers-table thead th:nth-child(6)::after { content: "Vict"; }
 .drivers-table thead th:nth-child(7)::after { content: "Podi"; } */
-.drivers-table thead th:nth-child(8)::after { content: "PP"; }
-.drivers-table thead th:nth-child(9)::after { content: "FL"; }
+/* .drivers-table thead th:nth-child(8)::after { content: "PP"; }
+.drivers-table thead th:nth-child(9)::after { content: "FL"; } */
 
 /* .drivers-table thead th {
     font-size: 0;
@@ -77,6 +77,11 @@
     width: 15%;
 }
 
+/* Cache le nom des écuries */
+.drivers-table .team-name {
+    display: none;
+}
+
 /* Background image logo écurie */
 .team-cell {
     background-position: right -50px center;
@@ -91,7 +96,7 @@
 }
 
 /* Tableaux Résultats GP */
-.gp-season-table thead th:nth-child(6)::after { content: "Pole"; }
+/* .gp-season-table thead th:nth-child(6)::after { content: "Pole"; }
 .gp-season-table thead th:nth-child(7)::after { content: "FastestL"; }
 
 .gp-season-table thead th:nth-child(6),
@@ -102,12 +107,12 @@
 .gp-season-table thead th:nth-child(6)::after,
 .gp-season-table thead th:nth-child(7)::after {
     font-size: 1rem;
-}
+} */
 
-/* Page Palmarès */
+/* Page Palmarès et Circuits */
 
 table.sortable th {
-    padding-right: 5px;
+    padding-bottom: 15px;
 }
 
 table.sortable th::after {
@@ -120,30 +125,6 @@ table.sortable th.asc::after {
 
 table.sortable th.desc::after {
     font-size: 0.8rem;
-}
-
-/* Tailles des colonnes */
-
-/* 5 colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
-.palmares-drivers-table th:nth-child(3),
-.palmares-drivers-table td:nth-child(3),
-.palmares-drivers-table th:nth-child(4),
-.palmares-drivers-table td:nth-child(4),
-.palmares-drivers-table th:nth-child(5),
-.palmares-drivers-table td:nth-child(5),
-.palmares-drivers-table th:nth-child(6),
-.palmares-drivers-table td:nth-child(6),
-.palmares-drivers-table th:nth-child(7),
-.palmares-drivers-table td:nth-child(7) {
-    width: 8%;
-}
-
-/* 2 colonnes : GP + Pts */
-.palmares-drivers-table th:nth-child(8),
-.palmares-drivers-table td:nth-child(8),
-.palmares-drivers-table th:nth-child(9),
-.palmares-drivers-table td:nth-child(9) {
-    width: 9%;
 }
 
 /* DASHBOARD */
