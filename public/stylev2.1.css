@@ -610,6 +610,7 @@ footer {
     margin-top: 20px;
 }
 
+/* Paramètre de toutes les tables */
 .dashboard-table {
     width: 100%;
     position: relative;
@@ -1364,11 +1365,13 @@ input[type=number] {
     width: 20%;
 }
 
+.drivers-table .driver-name,
 .drivers-table .team-name,
+.teams-table .teams-table-team-name,
+.modal-gp-results-table .driver-name,
 .modal-gp-results-table .team-name {
     text-shadow:     
-        0 0 4px rgba(0,0,0,1),
-        0 0 10px rgba(0,0,0,.7);
+        0 0 2px rgba(0,0,0,0.7);
 }
 
 /* Colonne Points */

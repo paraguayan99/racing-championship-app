@@ -1,5 +1,13 @@
 /* Tablette */
 
+/* Animation voitures */
+/* Différentes lignes et vitesses */
+.hero-bg .hero-car:nth-child(1) { top: 15%; animation-duration: 3s; }
+.hero-bg .hero-car:nth-child(2) { top: 30%; animation-duration: 4.5s; }
+.hero-bg .hero-car:nth-child(3) { top: 45%; animation-duration: 3.5s; }
+.hero-bg .hero-car:nth-child(4) { top: 60%; animation-duration: 5.5s; }
+.hero-bg .hero-car:nth-child(5) { top: 75%; animation-duration: 5s; }
+
 .hero-section {
     flex-direction: column;
     margin: 25px;

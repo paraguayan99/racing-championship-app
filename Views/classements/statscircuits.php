@@ -20,7 +20,7 @@
                 <option value="0" <?= ($circuitId ?? 0) == 0 ? 'selected' : '' ?>>Choisir un circuit :</option>
                 <?php foreach ($circuits as $c): ?>
                     <option value="<?= $c->id ?>" <?= ($circuitId ?? 0) == $c->id ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($c->name) ?> (<?= htmlspecialchars($c->country) ?>)
+                        <?= htmlspecialchars($c->name) ?> - <?= htmlspecialchars($c->country_code) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -33,7 +33,7 @@
                 <img src="<?= htmlspecialchars($selectedCircuit->country_flag) ?>" alt="<?= htmlspecialchars($selectedCircuit->country) ?>" class="circuit-flag">
                 <span class="circuit-title">
                     <?= htmlspecialchars($selectedCircuit->name) ?>
-                    - <?= htmlspecialchars($selectedCircuit->country) ?>
+                    - <?= htmlspecialchars($selectedCircuit->country_name) ?>
                 </span>
             </div>
         <?php endif; ?>

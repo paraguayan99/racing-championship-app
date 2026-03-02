@@ -10,7 +10,7 @@ class StatsCircuitsModel extends DbConnect
     {
         $db = new DbConnect();
         $sql = "
-            SELECT c.id, c.name, co.name AS country, co.flag AS country_flag
+            SELECT c.id, c.name, co.name AS country_name, co.code AS country_code, co.flag AS country_flag
             FROM circuits c
             LEFT JOIN countries co ON co.id = c.country_id
             ORDER BY c.name ASC

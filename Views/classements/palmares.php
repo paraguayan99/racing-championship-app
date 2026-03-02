@@ -8,6 +8,24 @@
         <h1>Palmarès</h1>
     </div>
 
+    <!-- SÉLECTEUR DE CATÉGORIE -->
+    <form method="get" action="/palmares/index">
+        <input type="hidden" name="controller" value="palmares">
+        <input type="hidden" name="action" value="index">
+
+        <label for="category_filter" class="visually-hidden">Choisir une catégorie :</label>
+        <div class="form-group">
+            <select name="category_name" id="category_filter" onchange="this.form.submit()">
+                <option value="" <?= !$categoryFilter ? 'selected' : '' ?>>Choisir une catégorie :</option>
+                <?php foreach ($categories as $c): ?>
+                    <option value="<?= htmlspecialchars($c->name) ?>" <?= $categoryFilter === $c->name ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c->name) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </form>
+
 <?php
 // Fonction badges podium
 function podiumBadge($pos) {

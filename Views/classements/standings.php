@@ -74,7 +74,7 @@ function gpBadge($gpNumber) {
                             <?php foreach ($catSeasons as $season): ?>
                                 <?php if ($season->status === 'desactive'): ?>
                                     <option value="<?= $season->season_id ?>" <?= $seasonFilter == $season->season_id ? 'selected' : '' ?>>
-                                        Saison <?= htmlspecialchars($season->season_number) ?>
+                                        S<?= htmlspecialchars($season->season_number) ?>
                                         - <?= htmlspecialchars($season->videogame) ?>
                                         - <?= htmlspecialchars($season->platform) ?>
                                     </option>
@@ -125,7 +125,7 @@ function gpBadge($gpNumber) {
 
                 <!-- Classement Pilotes -->
                 <?php if (!empty($listByCategory[$categoryName])): ?>
-                    <h3 class="gp-title" style="margin-top:20px;">Classement Pilotes <?= htmlspecialchars($categoryName) ?></h3>
+                    <h3 class="gp-title" style="margin-top:20px;">Classement Pilotes</h3>
 
                     <div class="table-responsive">
                         <table class="dashboard-table fix table-th-responsive drivers-table">
@@ -223,7 +223,7 @@ function gpBadge($gpNumber) {
 
                 <!-- Classement Équipes -->
                 <?php if (!empty($teamsByCategory[$categoryName])): ?>
-                    <h3 style="margin-top:30px;">Classement Constructeurs <?= htmlspecialchars($categoryName) ?></h3>
+                    <h3 style="margin-top:30px;">Classement Constructeurs</h3>
 
                     <div class="table-responsive">
                         <table class="dashboard-table fix table-th-responsive teams-table">
@@ -265,7 +265,9 @@ function gpBadge($gpNumber) {
                                                         alt="flag">
                                                 <?php endif; ?>
 
-                                                <span><?= htmlspecialchars($team->team_name ?? '') ?></span>
+                                                <span class="teams-table-team-name">
+                                                    <?= htmlspecialchars($team->team_name ?? '') ?>
+                                                </span>
                                             </span>
                                         </td>
 
@@ -282,7 +284,7 @@ function gpBadge($gpNumber) {
                 <!-- Pénalités -->
                 <?php if (!empty($penaltiesByCategory[$categoryName])): ?>
                     <h3 style="margin-top:30px;">
-                        Pénalités <?= htmlspecialchars($categoryName) ?>
+                        Pénalités
                     </h3>
 
                     <div class="table-responsive">
@@ -363,7 +365,7 @@ function gpBadge($gpNumber) {
                 <!-- Résultats GP -->
                 <?php if (!empty($gpByCategory[$categoryName])): ?>
                     <h3 class="gp-title">
-                        Résultats GP <?= htmlspecialchars($categoryName) ?>
+                        Résultats GP
                     </h3>
                     
                     <p class="gp-subtitle">
@@ -723,7 +725,7 @@ window.addEventListener('click', e => {
                 el.textContent = full.substring(0, 12);
             }
             else {
-                el.textContent = full.substring(0, 18);
+                el.textContent = full.substring(0, 20);
             }
         });
 
