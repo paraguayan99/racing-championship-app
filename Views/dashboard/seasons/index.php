@@ -28,7 +28,13 @@
             <thead>
                 <tr>
                     <th class="width-numbers text-center">N°</th>
-                    <th class="down">Catégorie</th>
+                    <th class="down th-responsive">
+                        <span class="label-aria">Catégorie</span>
+                        <span aria-hidden="true" class="label-long">Catégorie</span>
+                        <span aria-hidden="true" class="label-medium">Catégorie</span>
+                        <span aria-hidden="true" class="label-short">Cat</span>
+                    </th>
+                    <th class="down">Nom</th>
                     <th class="text-center th-responsive">
                         <span class="label-aria">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-long">Jeu vidéo</span>
@@ -51,6 +57,7 @@
                 <tr>
                     <td class="width-numbers text-center"><?= htmlspecialchars($season->season_number) ?></td>
                     <td class="down"><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
+                    <td class="down"><?= htmlspecialchars($season->season_name ?? '') ?></td>
                     <td class="down text-center"><?= htmlspecialchars($season->videogame) ?></td>
                     <td class="down text-center"><?= htmlspecialchars($season->platform) ?></td>
                     <td class="status text-center down"><?= htmlspecialchars($season->status) ?></td>

@@ -121,6 +121,13 @@ function gpBadge($gpNumber) {
                             <?= implode(' - ', $extra) ?>
                         </span>
                     <?php endif; ?>
+
+                    <?php $seasonName = $drivers[0]->season_name ?? null; ?>
+                    <?php if (!empty($seasonName)): ?>
+                        <span class="season-title">
+                            <?= htmlspecialchars($seasonName) ?>
+                        </span>
+                    <?php endif; ?>
                 </h2>
 
                 <!-- Classement Pilotes -->

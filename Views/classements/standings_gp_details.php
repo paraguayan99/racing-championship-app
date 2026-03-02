@@ -33,7 +33,11 @@ function podiumBadge($pos) {
             GP <?= htmlspecialchars($gp->gp_ordre) ?>
             - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
             (<?= htmlspecialchars($gp->country_name ?? '') ?>)
-            / Saison <?= htmlspecialchars($gp->season_number) ?> - <?= htmlspecialchars($gp->category) ?>
+            / Saison <?= htmlspecialchars($gp->season_number) ?> 
+            - <?= htmlspecialchars($gp->category) ?>
+            <?php if (!empty($gp->season_name)): ?>
+            / <?= htmlspecialchars($gp->season_name) ?>
+            <?php endif; ?>
         </span>
         </h3>
 

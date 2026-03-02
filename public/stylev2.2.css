@@ -1233,6 +1233,12 @@ input[type=number] {
     font-weight: 900;
 }
 
+/* Pour réduire l'espace verticale si il y a un retour à la ligne */
+/* Présent aussi dans style900px */
+.category-title {
+    line-height: 0.8;
+}
+
 /* Saison */
 .category-title .season-title {
     font-size: 1.25rem;

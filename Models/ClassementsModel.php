@@ -65,6 +65,7 @@ class ClassementsModel extends DbConnect
                 -- Infos de la saison
                 s.videogame,
                 s.platform,
+                s.season_name,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -127,6 +128,7 @@ class ClassementsModel extends DbConnect
                 -- Infos saison
                 s.videogame,
                 s.platform,
+                s.season_name,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -287,7 +289,7 @@ class ClassementsModel extends DbConnect
     {
         $db = new DbConnect();
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.code AS country_code,
@@ -407,7 +409,7 @@ class ClassementsModel extends DbConnect
     {
         $db = new DbConnect();
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.code AS country_code,
@@ -478,7 +480,7 @@ class ClassementsModel extends DbConnect
 
         // Infos GP + stats + circuit + pays
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 c.color AS category_color,
                 cir.name AS circuit_name,
                 co.name AS country_name,

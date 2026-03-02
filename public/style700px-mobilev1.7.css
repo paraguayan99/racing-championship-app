@@ -297,9 +297,10 @@ footer nav {
 }
 
 /* Pour réduire l'espace verticale si il y a un retour à la ligne */
-.category-title {
+/* Ajouté finalement dans le CSS commun stylev2.2.css */
+/* .category-title {
     line-height: 0.8;
-}
+} */
 
 /* .season-title {
     line-height: 1.1;

@@ -18,7 +18,8 @@ class StatsCircuitsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // TOP 10 CHRONOS (POLE POSITION + FASTEST LAP) par un ID de circuit
+    // TOP 10 CHRONOS (POLE POSITION + FASTEST LAP) par un ID de circuit 
+    // driver id=1 (pilote inconnu) non comptabilisé dans ces stats
     public static function getCircuitTopChronos($circuitId)
     {
         $db = new DbConnect();
@@ -39,6 +40,7 @@ class StatsCircuitsModel extends DbConnect
         JOIN drivers d ON d.id = gs.pole_position_driver
         WHERE g.circuit_id = :circuit_id1
         AND gs.pole_position_time IS NOT NULL
+        AND gs.pole_position_driver != 1
 
         UNION ALL
 
@@ -58,6 +60,7 @@ class StatsCircuitsModel extends DbConnect
         JOIN drivers d ON d.id = gs.fastest_lap_driver
         WHERE g.circuit_id = :circuit_id2
         AND gs.fastest_lap_time IS NOT NULL
+        AND gs.fastest_lap_driver != 1
 
         ORDER BY chrono ASC
         LIMIT 10
@@ -73,6 +76,7 @@ class StatsCircuitsModel extends DbConnect
     }
 
     // CLASSEMENT DRIVERS SUR LE CIRCUIT par un ID de circuit
+    // driver id=1 (pilote inconnu) non comptabilisé dans ces stats
     public static function getDriversStatsByCircuit($circuitId)
     {
         $db = new DbConnect();
@@ -95,9 +99,10 @@ class StatsCircuitsModel extends DbConnect
             LEFT JOIN gp_stats gs ON gs.gp_id = gp.id
 
             WHERE gp.circuit_id = :circuit_id
+            AND d.id != 1
 
             GROUP BY d.id
-            ORDER BY wins DESC, gp_count DESC
+            ORDER BY wins DESC, podiums DESC, poles DESC, fastest_laps DESC, gp_count DESC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);

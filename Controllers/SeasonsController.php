@@ -41,6 +41,7 @@ class SeasonsController extends Controller {
 
                 $season_number = $_POST['season_number'];
                 $category_id = $_POST['category_id'];
+                $season_name = $_POST['season_name'] ?? null;
                 $videogame = $_POST['videogame'];
                 $platform = $_POST['platform'];
                 $status = $_POST['status'];
@@ -50,8 +51,8 @@ class SeasonsController extends Controller {
 
                 try {
                     // Requete préparée
-                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, category_id, videogame, platform, status) VALUES (?, ?, ?, ?, ?)");
-                    $stmt->execute([$season_number, $category_id, $videogame, $platform, $status]);
+                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, platform, status) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$season_number, $season_name, $category_id, $videogame, $platform, $status]);
                     $message = "Saison créée avec succès";
                     $classMsg = "msg-success";
                 } catch (\PDOException $e) {
@@ -89,6 +90,8 @@ class SeasonsController extends Controller {
             ->addInput("number", "season_number")
             ->addLabel("category_id", "Catégorie :")
             ->addSelect("category_id", $categoriesOptions)
+            ->addLabel("season_name", "Nom de saison (optionnel) :")
+            ->addInput("text", "season_name")
             ->addLabel("videogame", "Jeu vidéo :")
             ->addInput("text", "videogame")
             ->addLabel("platform", "Plateforme :")
@@ -140,8 +143,8 @@ class SeasonsController extends Controller {
             if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame', 'platform', 'status'])) {
                 try {
                     // Requete préparée
-                    $stmt = $pdo->prepare("UPDATE seasons SET season_number=?, category_id=?, videogame=?, platform=?, status=? WHERE id=?");
-                    if ($stmt->execute([$_POST['season_number'], $_POST['category_id'], $_POST['videogame'], $_POST['platform'], $_POST['status'], $id])) {
+                    $stmt = $pdo->prepare("UPDATE seasons SET season_number=?,  season_name=?, category_id=?, videogame=?, platform=?, status=? WHERE id=?");
+                    if ($stmt->execute([$_POST['season_number'], $_POST['season_name'] ?? null, $_POST['category_id'], $_POST['videogame'], $_POST['platform'], $_POST['status'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -183,6 +186,8 @@ class SeasonsController extends Controller {
             ->addInput("number", "season_number", ["value" => $season->season_number])
             ->addLabel("category_id", "Catégorie :")
             ->addSelect("category_id", $categoriesOptions, ["value" => $season->category_id])
+            ->addLabel("season_name", "Nom de saison (optionnel) :")
+            ->addInput("text", "season_name", ["value" => $season->season_name ?? ''])
             ->addLabel("videogame", "Jeu vidéo :")
             ->addInput("text", "videogame", ["value" => $season->videogame])
             ->addLabel("platform", "Plateforme :")
