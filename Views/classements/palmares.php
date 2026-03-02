@@ -9,13 +9,17 @@
     </div>
 
     <!-- SÉLECTEUR DE CATÉGORIE -->
-    <form method="get" action="/palmares/index">
-        <input type="hidden" name="controller" value="palmares">
-        <input type="hidden" name="action" value="index">
-
+    <form method="get" class="palmares-selector" action="/palmares/index/">
         <label for="category_filter" class="visually-hidden">Choisir une catégorie :</label>
         <div class="form-group">
-            <select name="category_name" id="category_filter" onchange="this.form.submit()">
+            <select name="category_name" id="category_filter" onchange="
+                var val = this.value;
+                if (val) {
+                    window.location.href = '/palmares/index/category_name/' + encodeURIComponent(val);
+                } else {
+                    window.location.href = '/palmares';
+                }
+            ">
                 <option value="" <?= !$categoryFilter ? 'selected' : '' ?>>Choisir une catégorie :</option>
                 <?php foreach ($categories as $c): ?>
                     <option value="<?= htmlspecialchars($c->name) ?>" <?= $categoryFilter === $c->name ? 'selected' : '' ?>>
@@ -141,7 +145,8 @@ function podiumBadge($pos) {
                 </thead>
                 <tbody>
                 <?php foreach ($drivers as $i => $d): ?>
-                    <tr>
+                    <!-- <tr> ciblé pour le Driver id=1 (Pilote inconnu) est conservé tout en bas du classement même après un tri JavaScript -->
+                    <tr <?= $d->driver_id == 1 ? 'data-fixed="bottom"' : '' ?>>
                         <td class="badge-width down" title="Position"><?= podiumBadge($i + 1) ?></td>
                         <td class="driver-name down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
                         <td class="text-center" title="Champions"><?= $d->titles ?></td>
@@ -194,7 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if(columnIndex === 0) return; // ignore colonne Position
 
-                const rows = Array.from(tbody.querySelectorAll('tr'));
+                // <tr> ciblé pour le Driver id=1 (Pilote inconnu) est conservé tout en bas du classement même après un tri JavaScript
+                const rows = Array.from(tbody.querySelectorAll('tr:not([data-fixed])'));
+                const fixedRows = Array.from(tbody.querySelectorAll('tr[data-fixed="bottom"]'));
 
                 rows.sort((a, b) => {
                     const cellA = a.children[columnIndex]?.innerText.trim() ?? '';
@@ -209,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 rows.forEach(row => tbody.appendChild(row));
+                fixedRows.forEach(row => tbody.appendChild(row));
 
                 // recalculer badges Position
                 rows.forEach((row, index) => {

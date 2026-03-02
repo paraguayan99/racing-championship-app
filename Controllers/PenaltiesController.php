@@ -96,6 +96,10 @@ class PenaltiesController extends Controller {
                                 $message = "Pénalité créée avec succès";
                                 $classMsg = "msg-success";
                                 UpdatesLogModel::logUpdate('penalties', null, $gp_id, $_SESSION['user_id'], 'create');
+
+                                // Ajout cache
+                                $cache = new \App\Core\PalmaresCache();
+                                $cache->rebuild($gp->season_id);
                             } else {
                                 $message = "Erreur lors de la création";
                                 $classMsg = "msg-error";
@@ -235,6 +239,11 @@ class PenaltiesController extends Controller {
                             $message = "Pénalité mise à jour";
                             $classMsg = "msg-success";
                             UpdatesLogModel::logUpdate('penalties', null, $gp_id, $_SESSION['user_id'], 'update');
+
+                            // Ajout cache
+                            $gp = GpModel::find($gp_id);
+                            $cache = new \App\Core\PalmaresCache();
+                            $cache->rebuild($gp->season_id);
                         } else {
                             $message = "Erreur lors de la mise à jour";
                             $classMsg = "msg-error";
@@ -355,6 +364,10 @@ class PenaltiesController extends Controller {
                     $message = "Pénalité supprimée avec succès.";
                     $classMsg = "msg-success";
                     UpdatesLogModel::logUpdate('penalties', null, $penalty->gp_id, $_SESSION['user_id'], 'delete');
+
+                    // Ajout cache — $gp est déjà récupéré plus haut dans la méthode
+                    $cache = new \App\Core\PalmaresCache();
+                    $cache->rebuild($gp->season_id);
                 } else {
                     $message = "Erreur lors de la suppression.";
                     $classMsg = "msg-error";

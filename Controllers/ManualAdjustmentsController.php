@@ -68,6 +68,10 @@ class ManualAdjustmentsController extends Controller {
                         // manual_adjustments affecte les saisons, pas les gp
                         $gp_id = null;
                         UpdatesLogModel::logUpdate('manual_adjustments', $season_id, $gp_id, $_SESSION['user_id'], 'create');
+
+                        // Ajout cache
+                        $cache = new \App\Core\PalmaresCache();
+                        $cache->rebuild($season_id);
                     } else {
                         $message = "Erreur lors de la création.";
                         $classMsg = "msg-error";
@@ -220,6 +224,10 @@ class ManualAdjustmentsController extends Controller {
                         // manual_adjustments affecte les saisons, pas les gp
                         $gp_id = null;
                         UpdatesLogModel::logUpdate('manual_adjustments', $_POST['season_id'], $gp_id, $_SESSION['user_id'], 'update');
+
+                        // Ajout cache
+                        $cache = new \App\Core\PalmaresCache();
+                        $cache->rebuild($_POST['season_id']);
                     } else {
                         $message = "Erreur lors de la mise à jour";
                         $classMsg = "msg-error";
@@ -369,6 +377,10 @@ class ManualAdjustmentsController extends Controller {
                     $gp_id = null;
                     $season_id = $manual->season_id;
                     UpdatesLogModel::logUpdate('manual_adjustments', $season_id, $gp_id, $_SESSION['user_id'], 'delete');
+
+                    // Ajout cache — $season_id est déjà défini juste au-dessus
+                    $cache = new \App\Core\PalmaresCache();
+                    $cache->rebuild($season_id);
                 } else {
                     $message = "Erreur lors de la suppression";
                     $classMsg = "msg-error";

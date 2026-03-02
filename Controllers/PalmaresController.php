@@ -83,7 +83,7 @@ class PalmaresController extends Controller
 
     public function index($category_name = null)
     {
-        $categoryFilter = $category_name ?? $_GET['category_name'] ?? null;
+        $categoryFilter = $category_name ?? $_GET['category_name_id'] ?? $_GET['category_name'] ?? null;
 
         $categories = PalmaresModel::getAllCategoriesForSelect();
         $selectedCategory = null;

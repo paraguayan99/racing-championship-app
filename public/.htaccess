@@ -83,6 +83,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^gpstats/(update|delete|view)/([0-9]+)/?$ index.php?controller=gpstats&action=$1&gp_id=$2 [L,QSA]
 
+# Palmarès avec category_name
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^palmares/([a-zA-Z0-9_-]+)/category_name/([a-zA-Z0-9_-]+)/?$ index.php?controller=palmares&action=$1&category_name=$2 [L,QSA]
+
+# Palmarès sans catégorie (valeur vide)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^palmares/([a-zA-Z0-9_-]+)/category_name/?$ index.php?controller=palmares&action=$1 [L,QSA]
+
 # URL CRUD simple avec id numérique : doit être **avant** la règle _id
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

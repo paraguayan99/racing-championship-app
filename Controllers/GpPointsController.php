@@ -119,6 +119,11 @@ class GpPointsController extends Controller {
                         $classMsg = "msg-success";
                         $isSuccess = true;
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'create');
+
+                        // Ajout cache
+                        $gp = GpModel::find($gp_id);
+                        $cache = new \App\Core\PalmaresCache();
+                        $cache->rebuild($gp->season_id);
                     } else {
                         $message = "Erreur lors de la création";
                         $classMsg = "msg-error";
@@ -310,6 +315,12 @@ class GpPointsController extends Controller {
                         $message = "Résultat mis à jour";
                         $classMsg = "msg-success";
                         UpdatesLogModel::logUpdate('gp_points', null, $gp_id, $_SESSION['user_id'], 'update');
+
+                        // Ajout cache
+                        $gp = GpModel::find($gp_id);
+                        $cache = new \App\Core\PalmaresCache();
+                        $cache->rebuild($gp->season_id);
+
                         // Retour à l'index seulement si succès
                         $this->render('dashboard/gp_points/index', [
                             'list' => GpPointsModel::allWithSeasonActive(),
@@ -495,6 +506,10 @@ class GpPointsController extends Controller {
 
                     // Log des modifications
                     UpdatesLogModel::logUpdate('gp_points', null, $point->gp_id, $_SESSION['user_id'], 'delete');
+
+                    // Ajout cache — $gp est déjà récupéré plus haut dans la méthode
+                    $cache = new \App\Core\PalmaresCache();
+                    $cache->rebuild($gp->season_id);
                 } else {
                     $message = "Erreur lors de la suppression.";
                     $classMsg = "msg-error";
