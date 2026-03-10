@@ -34,7 +34,12 @@ Depuis 2016, je participe activement à l’organisation. Jusqu’ici, les class
 
 Cette application web devient l’**outil central** pour gérer le championnat et valoriser la communauté. 
 
-Il a été réalisé en Novembre et Décembre 2025 dans le cadre de mon projet de fin de formation de DWWM.
+Elle a été réalisée en novembre et décembre 2025 dans le cadre de mon projet
+de fin de formation DWWM.
+
+Les documents présentés lors de l'examen de janvier 2026 sont disponibles
+dans le dossier `docs/` de ce dépôt :
+https://github.com/paraguayan99/racing-championship-app/tree/main/docs/
 
 ---
 
