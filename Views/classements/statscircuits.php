@@ -167,7 +167,7 @@
         <h3 class="gp-title">Classement Pilotes</h3>
 
         <p class="gp-subtitle">
-            Cliquez sur les colonnes pour trier
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
         </p>
 
         <div class="table-responsive">

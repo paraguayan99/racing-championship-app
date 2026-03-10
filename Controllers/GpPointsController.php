@@ -52,15 +52,15 @@ class GpPointsController extends Controller {
         // Préparer la liste des GP pour le select
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitData[$gp->circuit_id]['country'] ?? 'Pays inconnu';
-                    $circuitName = $circuitData[$gp->circuit_id]['name'] ?? 'Circuit inconnu';
+            foreach ($allGps as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitData[$gpItem->circuit_id]['country'] ?? 'Pays inconnu';
+                    $circuitName = $circuitData[$gpItem->circuit_id]['name'] ?? 'Circuit inconnu';
 
-                    $gps[$gp->id] =
-                        $gp->category
+                    $gps[$gpItem->id] =
+                        $gpItem->category
                         . " - Saison " . $s->season_number
-                        . " / GP " . $gp->gp_ordre
+                        . " / GP " . $gpItem->gp_ordre
                         . " - " . $circuitName
                         . " (" . $countryName . ")";
                 }
@@ -476,12 +476,12 @@ class GpPointsController extends Controller {
         // Construire le GP avec concaténation catégorie / saison / GP / pays
         $gpsMap = [];
         foreach ($seasons as $s) {
-            foreach (GpModel::all() as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gpsMap[$gp->id] = $gp->category 
+            foreach (GpModel::all() as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
+                    $gpsMap[$gpItem->id] = $gpItem->category 
                                         . " - Saison " . $s->season_number 
-                                        . " / GP " . $gp->gp_ordre 
+                                        . " / GP " . $gpItem->gp_ordre 
                                         . " - " . $countryName;
                 }
             }

@@ -42,7 +42,7 @@ class TeamsDriversModel extends DbConnect {
             JOIN seasons s ON td.season_id = s.id
             JOIN categories c ON s.category_id = c.id
 
-            ORDER BY s.season_number DESC, d.nickname ASC
+            ORDER BY c.name ASC, s.season_number DESC, t.name ASC, d.nickname ASC
         ")->fetchAll();
     }
 

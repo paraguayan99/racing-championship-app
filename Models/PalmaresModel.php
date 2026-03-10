@@ -142,7 +142,8 @@ class PalmaresModel extends DbConnect
             ORDER BY 
                 CASE WHEN p.driver_id = 1 THEN 1 ELSE 0 END ASC,
                 p.titles DESC, p.vice_titles DESC, p.third_places DESC,
-                p.wins DESC, p.podiums DESC, p.total_points DESC, p.total_gp DESC
+                p.wins DESC, p.podiums DESC, p.total_points DESC, p.total_gp DESC,
+                p.nickname ASC
         ");
 
         $stmt->execute($categoryName ? ['category' => $categoryName] : []);
@@ -162,7 +163,7 @@ class PalmaresModel extends DbConnect
             FROM cache_teams_palmares p
             JOIN categories c ON c.name = p.category
             $where
-            ORDER BY p.category, p.titles DESC, p.total_points DESC
+            ORDER BY p.category, p.titles DESC, p.total_points DESC, p.team_name ASC
         ");
 
         $stmt->execute($categoryName ? ['category' => $categoryName] : []);

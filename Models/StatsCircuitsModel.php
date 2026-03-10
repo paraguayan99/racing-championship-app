@@ -62,7 +62,7 @@ class StatsCircuitsModel extends DbConnect
         AND gs.fastest_lap_time IS NOT NULL
         AND gs.fastest_lap_driver != 1
 
-        ORDER BY chrono ASC
+        ORDER BY chrono ASC, nickname ASC
         LIMIT 10
     ";
 
@@ -102,7 +102,7 @@ class StatsCircuitsModel extends DbConnect
             AND d.id != 1
 
             GROUP BY d.id
-            ORDER BY wins DESC, podiums DESC, poles DESC, fastest_laps DESC, gp_count DESC
+            ORDER BY wins DESC, podiums DESC, poles DESC, fastest_laps DESC, gp_count DESC, d.nickname ASC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);

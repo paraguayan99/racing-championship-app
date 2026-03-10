@@ -46,12 +46,12 @@ class PenaltiesController extends Controller {
 
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
+            foreach ($allGps as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
+                    $gps[$gpItem->id] = $gpItem->category 
                                     . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
+                                    . " / GP " . $gpItem->gp_ordre 
                                     . " - " . $countryName;
                 }
             }
@@ -198,12 +198,12 @@ class PenaltiesController extends Controller {
 
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
+            foreach ($allGps as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
+                    $gps[$gpItem->id] = $gpItem->category 
                                     . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
+                                    . " / GP " . $gpItem->gp_ordre 
                                     . " - " . $countryName;
                 }
             }

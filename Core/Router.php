@@ -59,38 +59,74 @@ class Router
     }
 
 
-    // Route l'URL vers le bon controller / action
+    // // Route l'URL vers le bon controller / action
+    // public function routes()
+    // {
+    //     $rawController = $_GET['controller'] ?? 'Home';
+
+    //     // Vérifie la table de correspondance sinon utilise studlyCase
+    //     $controllerName = $this->controllerMap[strtolower($rawController)] ?? $this->studlyCase($rawController);
+
+    //     $controllerClass = '\\App\\Controllers\\' . $controllerName . 'Controller';
+
+    //     $action = $_GET['action'] ?? 'index';
+
+
+    //     // Contrôle TOKEN CSRF retiré car c'est le Controller qui s'en charge avec sa méthode authMiddleware
+
+    //     // // Vérification CSRF pour les requêtes POST
+    //     // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     //     \App\Core\Auth::start();
+    //     //     $token = $_POST['csrf_token'] ?? '';
+    //     //     if (!\App\Core\Auth::validateCSRF($token)) {
+    //     //         $this->render403();
+    //     //     }
+    //     // }
+
+    //     // Vérifie si la classe du contrôleur existe
+    //     if (class_exists($controllerClass)) {
+    //         $controller = new $controllerClass();
+
+    //         if (method_exists($controller, $action)) {
+    //             // call_user_func_array([$controller, $action], $_GET ?? []);
+    //             $params = $_GET ?? [];
+    //             unset($params['controller'], $params['action']);
+    //             call_user_func_array([$controller, $action], $params);
+    //         } else {
+    //             $this->render404();
+    //         }
+    //     } else {
+    //         $this->render404();
+    //     }
+    // }
+
+    // Test pour les redirections facebook qui étaient mal gérés
+    // fbclid, utm_source et tout autre paramètre inattendu sont silencieusement ignorés avant d'arriver à call_user_func_array, 
+    // quelle que soit la source (Facebook, Google, etc.).
     public function routes()
     {
         $rawController = $_GET['controller'] ?? 'Home';
 
-        // Vérifie la table de correspondance sinon utilise studlyCase
         $controllerName = $this->controllerMap[strtolower($rawController)] ?? $this->studlyCase($rawController);
-
         $controllerClass = '\\App\\Controllers\\' . $controllerName . 'Controller';
 
         $action = $_GET['action'] ?? 'index';
 
-
-        // Contrôle TOKEN CSRF retiré car c'est le Controller qui s'en charge avec sa méthode authMiddleware
-
-        // // Vérification CSRF pour les requêtes POST
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //     \App\Core\Auth::start();
-        //     $token = $_POST['csrf_token'] ?? '';
-        //     if (!\App\Core\Auth::validateCSRF($token)) {
-        //         $this->render403();
-        //     }
-        // }
-
-        // Vérifie si la classe du contrôleur existe
         if (class_exists($controllerClass)) {
             $controller = new $controllerClass();
 
             if (method_exists($controller, $action)) {
-                // call_user_func_array([$controller, $action], $_GET ?? []);
                 $params = $_GET ?? [];
                 unset($params['controller'], $params['action']);
+
+                // Ne garder que les paramètres attendus par la méthode
+                $reflection = new \ReflectionMethod($controller, $action);
+                $expectedParams = array_map(
+                    fn($p) => $p->getName(),
+                    $reflection->getParameters()
+                );
+                $params = array_intersect_key($params, array_flip($expectedParams));
+
                 call_user_func_array([$controller, $action], $params);
             } else {
                 $this->render404();

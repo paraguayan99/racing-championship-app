@@ -376,7 +376,7 @@ function gpBadge($gpNumber) {
                     </h3>
                     
                     <p class="gp-subtitle">
-                        Cliquez sur le GP pour voir les résultats complets
+                        <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le GP pour voir les résultats complets
                     </p>
 
                 <div class="table-responsive">

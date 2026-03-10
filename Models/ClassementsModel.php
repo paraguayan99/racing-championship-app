@@ -80,7 +80,31 @@ class ClassementsModel extends DbConnect
                 -- Statistiques
                 COUNT(DISTINCT gpp.gp_id) AS gp_count,
                 COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
-                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count,
+
+                -- Positions pour départager les égalités
+                COUNT(CASE WHEN gpp.position = 1 THEN 1 END) AS pos_1,
+                COUNT(CASE WHEN gpp.position = 2 THEN 1 END) AS pos_2,
+                COUNT(CASE WHEN gpp.position = 3 THEN 1 END) AS pos_3,
+                COUNT(CASE WHEN gpp.position = 4 THEN 1 END) AS pos_4,
+                COUNT(CASE WHEN gpp.position = 5 THEN 1 END) AS pos_5,
+                COUNT(CASE WHEN gpp.position = 6 THEN 1 END) AS pos_6,
+                COUNT(CASE WHEN gpp.position = 7 THEN 1 END) AS pos_7,
+                COUNT(CASE WHEN gpp.position = 8 THEN 1 END) AS pos_8,
+                COUNT(CASE WHEN gpp.position = 9 THEN 1 END) AS pos_9,
+                COUNT(CASE WHEN gpp.position = 10 THEN 1 END) AS pos_10,
+                COUNT(CASE WHEN gpp.position = 11 THEN 1 END) AS pos_11,
+                COUNT(CASE WHEN gpp.position = 12 THEN 1 END) AS pos_12,
+                COUNT(CASE WHEN gpp.position = 13 THEN 1 END) AS pos_13,
+                COUNT(CASE WHEN gpp.position = 14 THEN 1 END) AS pos_14,
+                COUNT(CASE WHEN gpp.position = 15 THEN 1 END) AS pos_15,
+                COUNT(CASE WHEN gpp.position = 16 THEN 1 END) AS pos_16,
+                COUNT(CASE WHEN gpp.position = 17 THEN 1 END) AS pos_17,
+                COUNT(CASE WHEN gpp.position = 18 THEN 1 END) AS pos_18,
+                COUNT(CASE WHEN gpp.position = 19 THEN 1 END) AS pos_19,
+                COUNT(CASE WHEN gpp.position = 20 THEN 1 END) AS pos_20,
+                COUNT(CASE WHEN gpp.position = 21 THEN 1 END) AS pos_21,
+                COUNT(CASE WHEN gpp.position = 22 THEN 1 END) AS pos_22
 
             FROM drivers_standings ds
 
@@ -112,7 +136,33 @@ class ClassementsModel extends DbConnect
             WHERE ds.season_status = 'active'
 
             GROUP BY ds.season_id, ds.driver_id
-            ORDER BY ds.category ASC, ds.total_points DESC
+            ORDER BY 
+                ds.category ASC, 
+                ds.total_points DESC,
+                pos_1 DESC,
+                pos_2 DESC,
+                pos_3 DESC,
+                pos_4 DESC,
+                pos_5 DESC,
+                pos_6 DESC,
+                pos_7 DESC,
+                pos_8 DESC,
+                pos_9 DESC,
+                pos_10 DESC,
+                pos_11 DESC,
+                pos_12 DESC,
+                pos_13 DESC,
+                pos_14 DESC,
+                pos_15 DESC,
+                pos_16 DESC,
+                pos_17 DESC,
+                pos_18 DESC,
+                pos_19 DESC,
+                pos_20 DESC,
+                pos_21 DESC,
+                pos_22 DESC,
+                gp_count DESC,
+                ds.nickname ASC
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
@@ -143,7 +193,31 @@ class ClassementsModel extends DbConnect
                 -- Statistiques
                 COUNT(DISTINCT gpp.gp_id) AS gp_count,
                 COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
-                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count,
+
+                -- Positions pour départager les égalités
+                COUNT(CASE WHEN gpp.position = 1 THEN 1 END) AS pos_1,
+                COUNT(CASE WHEN gpp.position = 2 THEN 1 END) AS pos_2,
+                COUNT(CASE WHEN gpp.position = 3 THEN 1 END) AS pos_3,
+                COUNT(CASE WHEN gpp.position = 4 THEN 1 END) AS pos_4,
+                COUNT(CASE WHEN gpp.position = 5 THEN 1 END) AS pos_5,
+                COUNT(CASE WHEN gpp.position = 6 THEN 1 END) AS pos_6,
+                COUNT(CASE WHEN gpp.position = 7 THEN 1 END) AS pos_7,
+                COUNT(CASE WHEN gpp.position = 8 THEN 1 END) AS pos_8,
+                COUNT(CASE WHEN gpp.position = 9 THEN 1 END) AS pos_9,
+                COUNT(CASE WHEN gpp.position = 10 THEN 1 END) AS pos_10,
+                COUNT(CASE WHEN gpp.position = 11 THEN 1 END) AS pos_11,
+                COUNT(CASE WHEN gpp.position = 12 THEN 1 END) AS pos_12,
+                COUNT(CASE WHEN gpp.position = 13 THEN 1 END) AS pos_13,
+                COUNT(CASE WHEN gpp.position = 14 THEN 1 END) AS pos_14,
+                COUNT(CASE WHEN gpp.position = 15 THEN 1 END) AS pos_15,
+                COUNT(CASE WHEN gpp.position = 16 THEN 1 END) AS pos_16,
+                COUNT(CASE WHEN gpp.position = 17 THEN 1 END) AS pos_17,
+                COUNT(CASE WHEN gpp.position = 18 THEN 1 END) AS pos_18,
+                COUNT(CASE WHEN gpp.position = 19 THEN 1 END) AS pos_19,
+                COUNT(CASE WHEN gpp.position = 20 THEN 1 END) AS pos_20,
+                COUNT(CASE WHEN gpp.position = 21 THEN 1 END) AS pos_21,
+                COUNT(CASE WHEN gpp.position = 22 THEN 1 END) AS pos_22
 
             FROM drivers_standings ds
 
@@ -176,7 +250,33 @@ class ClassementsModel extends DbConnect
             AND ds.season_status = 'desactive'
 
             GROUP BY ds.season_id, ds.driver_id
-            ORDER BY ds.category ASC, ds.total_points DESC
+            ORDER BY
+                ds.category ASC, 
+                ds.total_points DESC,
+                pos_1 DESC,
+                pos_2 DESC,
+                pos_3 DESC,
+                pos_4 DESC,
+                pos_5 DESC,
+                pos_6 DESC,
+                pos_7 DESC,
+                pos_8 DESC,
+                pos_9 DESC,
+                pos_10 DESC,
+                pos_11 DESC,
+                pos_12 DESC,
+                pos_13 DESC,
+                pos_14 DESC,
+                pos_15 DESC,
+                pos_16 DESC,
+                pos_17 DESC,
+                pos_18 DESC,
+                pos_19 DESC,
+                pos_20 DESC,
+                pos_21 DESC,
+                pos_22 DESC,
+                gp_count DESC,
+                ds.nickname ASC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);
