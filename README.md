@@ -1,6 +1,6 @@
 # Racing Championship App
 _Web MVC PHP platform — Gestion d’un championnat de courses en ligne_
-
+### 🌐 https://team-eracing.fr/
 ---
 
 ## 🎯 Objectif du projet
@@ -19,6 +19,7 @@ Le projet remplace les anciens classements issus d’**images Excel statiques** 
 ## 👤 Contexte & communauté
 
 Passionné d’informatique depuis l’enfance, j’ai évolué comme boulanger puis commercial avant de me reconvertir vers le développement web.
+### 🌐 https://achardcedric.fr/
 
 Depuis 2008, la communauté organise un championnat en ligne (PlayStation), aujourd’hui à sa **26ᵉ saison**, répartie en catégories **F1 / F2**.
 
@@ -72,12 +73,11 @@ Il a été réalisé en Novembre et Décembre 2025 dans le cadre de mon projet d
 - **Versioning** : Git + GitHub  
 - **IDE** : Visual Studio Code  
 
-> ⚙️ Configuration BDD : `Core/DbConnect.php`
-
 ---
 
 ## 🔒 Sécurité
 
+- CAPTCHA et limite de tentatives de connexion (attaques par force brute et robots)
 - Protection contre injections SQL & XSS  
 - Tokens CSRF sur formulaires POST  
 - Sessions sécurisées / prévention hijacking  
@@ -118,11 +118,17 @@ teams_drivers, gp, gp_points, gp_stats, penalties
 
 updates_log → permet d'afficher la date de dernière mise à jour
 
-## 🗄️ Base de données — 4 Vues
+## 🗄️ Base de données — 2 Vues
 
-drivers_standings, drivers_palmares, teams_standings, teams_palmares
+drivers_standings, teams_standings
+
+## 🗄️ Base de données — 4 tables de cache
+
+cache_drivers_palmares, cache_drivers_standings, cache_teams_palmares, cache_teams_standings
+> Mises à jour à chaque saisie de résultats pour optimiser les performances des vues complexes.
 
 ## 🧮 Règles de calcul
+``` > Les égalités dans tous les classements font l'objet d'un départage. ```
 
 ### Classement pilotes
 
@@ -148,20 +154,8 @@ Sur toutes les saisons et par catégorie :
 
 comptabilise le nombre de Titres et les Points.
 
----
+### Statistiques Circuits
 
-## 🚀 Plan de déploiement simplifié en local
+Sur toutes les saisons et par circuit : 
 
-1. Cloner le dépôt (ou télécharger le ZIP) :
-```bash
-git clone https://github.com/paraguayan99/racing-championship-app.git
-```
-2. Créer votre Virtual Host relié au dossier du dépôt cloné, par exemple avec Wampserver.
-3. Créer la base MySQL via phpMyAdmin et importer le script présent dans le fichier : ```racing_championship_db_install.sql```
-4. Configurer, si besoin, la connexion à la BDD dans le fichier : ```Core/DbConnect.php```
-5. Se connecter au Dashboard Administrateur de l'application web avec l'utilisateur par défaut :
-- identifiant : ```admin@racing-championship-app.fr```
-- mdp : ```admin12345```
-6. Accéder à la table Utilisateurs et créez votre propre utilisateur + mot de passe sécurisé avec le rôle Administrateur.
-7. Supprimer l'utilisateur par défaut :
-- ```admin@racing-championship-app.fr```
+Top 10 des chronos, Nombre de courses disputées sur ce circuit, et Classement des statistiques par pilote
