@@ -11,7 +11,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=dashboard">Retour Dashboard</a>
+        <a class="nav-btn-dashboard" href="/dashboard">Retour Dashboard</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin title-teams-drivers">
@@ -20,7 +20,7 @@
             <p class="dashboard-crud-subtitle">Insérer teams au classement pilotes sans impacter le constructeur</p>
         </div>
 
-        <a class="nav-btn-dashboard" href="index.php?controller=teamsdrivers&action=create">Ajouter association</a>
+        <a class="nav-btn-dashboard" href="/teamsdrivers/create">Ajouter association</a>
     </div>
 
     <div class="table-responsive">
@@ -42,10 +42,10 @@
                             <td class="down"><?= htmlspecialchars($td->driver) ?></td>
                             <td class="down"><?= htmlspecialchars($td->team) ?></td>
                             <td class="width-actions text-center">
-                                <a class="action-btn edit" href="index.php?controller=teamsdrivers&action=update&id=<?= $td->id ?>">
+                                <a class="action-btn edit" href="/teamsdrivers/update/<?= $td->id ?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
-                                <a class="action-btn delete" href="index.php?controller=teamsdrivers&action=delete&id=<?= $td->id ?>">
+                                <a class="action-btn delete" href="/teamsdrivers/delete/<?= $td->id ?>">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>

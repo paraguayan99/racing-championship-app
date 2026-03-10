@@ -10,7 +10,7 @@ class StatsCircuitsModel extends DbConnect
     {
         $db = new DbConnect();
         $sql = "
-            SELECT c.id, c.name, co.name AS country, co.flag AS country_flag
+            SELECT c.id, c.name, co.name AS country_name, co.code AS country_code, co.flag AS country_flag
             FROM circuits c
             LEFT JOIN countries co ON co.id = c.country_id
             ORDER BY c.name ASC
@@ -18,7 +18,8 @@ class StatsCircuitsModel extends DbConnect
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // TOP 10 CHRONOS (POLE POSITION + FASTEST LAP) par un ID de circuit
+    // TOP 10 CHRONOS (POLE POSITION + FASTEST LAP) par un ID de circuit 
+    // driver id=1 (pilote inconnu) non comptabilisé dans ces stats
     public static function getCircuitTopChronos($circuitId)
     {
         $db = new DbConnect();
@@ -39,6 +40,7 @@ class StatsCircuitsModel extends DbConnect
         JOIN drivers d ON d.id = gs.pole_position_driver
         WHERE g.circuit_id = :circuit_id1
         AND gs.pole_position_time IS NOT NULL
+        AND gs.pole_position_driver != 1
 
         UNION ALL
 
@@ -58,8 +60,9 @@ class StatsCircuitsModel extends DbConnect
         JOIN drivers d ON d.id = gs.fastest_lap_driver
         WHERE g.circuit_id = :circuit_id2
         AND gs.fastest_lap_time IS NOT NULL
+        AND gs.fastest_lap_driver != 1
 
-        ORDER BY chrono ASC
+        ORDER BY chrono ASC, nickname ASC
         LIMIT 10
     ";
 
@@ -73,6 +76,7 @@ class StatsCircuitsModel extends DbConnect
     }
 
     // CLASSEMENT DRIVERS SUR LE CIRCUIT par un ID de circuit
+    // driver id=1 (pilote inconnu) non comptabilisé dans ces stats
     public static function getDriversStatsByCircuit($circuitId)
     {
         $db = new DbConnect();
@@ -95,9 +99,10 @@ class StatsCircuitsModel extends DbConnect
             LEFT JOIN gp_stats gs ON gs.gp_id = gp.id
 
             WHERE gp.circuit_id = :circuit_id
+            AND d.id != 1
 
             GROUP BY d.id
-            ORDER BY wins DESC, gp_count DESC
+            ORDER BY wins DESC, podiums DESC, poles DESC, fastest_laps DESC, gp_count DESC, d.nickname ASC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);
@@ -106,16 +111,38 @@ class StatsCircuitsModel extends DbConnect
     }
 
     // NOMBRE DE GP PAR CATÉGORIE par un ID de circuit
+    // public static function getGPCountByCategory($circuitId)
+    // {
+    //     $db = new DbConnect();
+    //     $sql = "
+    //         SELECT 
+    //             cat.name AS category,
+    //             COUNT(g.id) AS gp_count
+    //         FROM gp g
+    //         JOIN seasons s ON s.id = g.season_id
+    //         JOIN categories cat ON cat.id = s.category_id
+    //         WHERE g.circuit_id = :circuit_id
+    //         GROUP BY cat.id
+    //         ORDER BY cat.name ASC
+    //     ";
+
+    //     $stmt = $db->getConnection()->prepare($sql);
+    //     $stmt->execute(['circuit_id' => $circuitId]);
+    //     return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    // }
+
+    // NOMBRE DE COURSES DISPUTEES AVEC AU MOINS UN RESULTAT (1 ligne dans gp_points) PAR CATÉGORIE pour un ID de circuit
     public static function getGPCountByCategory($circuitId)
     {
         $db = new DbConnect();
         $sql = "
             SELECT 
                 cat.name AS category,
-                COUNT(g.id) AS gp_count
+                COUNT(DISTINCT g.id) AS gp_count
             FROM gp g
             JOIN seasons s ON s.id = g.season_id
             JOIN categories cat ON cat.id = s.category_id
+            JOIN gp_points gp_pts ON gp_pts.gp_id = g.id
             WHERE g.circuit_id = :circuit_id
             GROUP BY cat.id
             ORDER BY cat.name ASC

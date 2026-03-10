@@ -1,26 +1,26 @@
-<?php $title = "Statistiques par circuit"; ?>
+<?php $title = "Team-eRacing - Circuits"; ?>
 
 <div class="section-dashboard">
 
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
-    <a class="nav-btn red" href="index.php?controller=palmares">Palmarès</a>
+    <a class="nav-btn" href="/classements/standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="/palmares">Palmarès</a>
 
     <div class="page-header">
         <h1>Circuits</h1>
     </div>
 
     <!-- SÉLECTEUR DE CIRCUIT -->
-    <form method="get" class="circuit-selector">
+    <form method="get" class="circuit-selector" action="/statscircuits/index">
         <input type="hidden" name="controller" value="statscircuits">
         <input type="hidden" name="action" value="index">
 
         <label for="circuit_id" class="visually-hidden">Choisir un circuit :</label>
         <div class="form-group">
             <select name="circuit_id" onchange="this.form.submit()">
-                <option value="">Choisir un circuit :</option>
+                <option value="0" <?= ($circuitId ?? 0) == 0 ? 'selected' : '' ?>>Choisir un circuit :</option>
                 <?php foreach ($circuits as $c): ?>
-                    <option value="<?= $c->id ?>" <?= ($circuitId ?? null) == $c->id ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($c->name) ?> (<?= htmlspecialchars($c->country) ?>)
+                    <option value="<?= $c->id ?>" <?= ($circuitId ?? 0) == $c->id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c->name) ?> - <?= htmlspecialchars($c->country_code) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -33,7 +33,7 @@
                 <img src="<?= htmlspecialchars($selectedCircuit->country_flag) ?>" alt="<?= htmlspecialchars($selectedCircuit->country) ?>" class="circuit-flag">
                 <span class="circuit-title">
                     <?= htmlspecialchars($selectedCircuit->name) ?>
-                    - <?= htmlspecialchars($selectedCircuit->country) ?>
+                    - <?= htmlspecialchars($selectedCircuit->country_name) ?>
                 </span>
             </div>
         <?php endif; ?>
@@ -42,91 +42,95 @@
     <?php if (!empty($circuitId)): ?>
 
     <?php
+        // Fonction badges podium développé en local avec PHP 8 et +
+        // function podiumBadge($pos) {
+        //     return match($pos) {
+        //         1 => '<span class="badge badge-gold">1</span>',
+        //         2 => '<span class="badge badge-silver">2</span>',
+        //         3 => '<span class="badge badge-bronze">3</span>',
+        //         default => '<span class="badge badge-normal">' . $pos . '</span>',
+        //     };
+        // }
+
+        // Fonction badges podium compatible OVH : PHP Version 7.4.33
         function podiumBadge($pos) {
-            return match($pos) {
-                1 => '<span class="badge badge-gold">1</span>',
-                2 => '<span class="badge badge-silver">2</span>',
-                3 => '<span class="badge badge-bronze">3</span>',
-                default => '<span class="badge badge-normal">' . $pos . '</span>',
-            };
+            switch ($pos) {
+                case 1:
+                    return '<span class="badge badge-gold">1</span>';
+                case 2:
+                    return '<span class="badge badge-silver">2</span>';
+                case 3:
+                    return '<span class="badge badge-bronze">3</span>';
+                default:
+                    return '<span class="badge badge-normal">' . $pos . '</span>';
+            }
         }
     ?>
 
+    
+
         <!--  TOP 10 CHRONOS  -->
         <?php if (!empty($topChronos)) : ?>
-        <h3 class="gp-title">Top Chronos</h3>
-
-        <p class="gp-subtitle">
-        <span class="label-long"></span>
-        <span class="label-medium">Cat = Catégorie / Sai = Saison / Cons = Console</span>
-        <span class="label-short">Cat = Catégorie / Sai = Saison / Cons = Console</span>
-        </p>
+        <h3 class="gp-title">Top 10</h3>
 
         <div class="table-responsive">
-        <table class="dashboard-table table-th-responsive circuits-top10-table">
+        <table class="dashboard-table fix table-th-responsive circuits-top10-table">
             <thead>
                 <tr>
-                    <th class="badge-width no-sort th-responsive">
+                    <th class="badge-width no-sort th-responsive" title="Position">
                         <span class="label-aria">Position</span>
                         <span aria-hidden="true" class="label-long"></span>
                         <span aria-hidden="true" class="label-medium"></span>
                         <span aria-hidden="true" class="label-short"></span>
                     </th>
-                    <th class="th-responsive">
+                    <th class="th-responsive" title="Pilote">
                         <span class="label-aria">Pilote</span>
                         <span aria-hidden="true" class="label-long">Pilote</span>
                         <span aria-hidden="true" class="label-medium">Pilote</span>
                         <span aria-hidden="true" class="label-short">Pilote</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Chrono">
                         <span class="label-aria">Chrono</span>
                         <span aria-hidden="true" class="label-long">Chrono</span>
                         <span aria-hidden="true" class="label-medium">Chrono</span>
                         <span aria-hidden="true" class="label-short">Chrono</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Type">
                         <span class="label-aria">Type</span>
                         <span aria-hidden="true" class="label-long">Type</span>
                         <span aria-hidden="true" class="label-medium">Type</span>
                         <span aria-hidden="true" class="label-short">Type</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Catégrorie">
                         <span class="label-aria">Catégorie</span>
                         <span aria-hidden="true" class="label-long">Catégorie</span>
                         <span aria-hidden="true" class="label-medium">Cat</span>
                         <span aria-hidden="true" class="label-short">Cat</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Saison">
                         <span class="label-aria">Saison</span>
                         <span aria-hidden="true" class="label-long">Saison</span>
                         <span aria-hidden="true" class="label-medium">Sai</span>
                         <span aria-hidden="true" class="label-short">Sai</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Jeu vidéo">
                         <span class="label-aria">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-long">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-medium">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-short">Jeu</span>
-                    </th>
-                    <th class="text-center th-responsive">
-                        <span class="label-aria">Console</span>
-                        <span aria-hidden="true" class="label-long">Console</span>
-                        <span aria-hidden="true" class="label-medium">Cons</span>
-                        <span aria-hidden="true" class="label-short">Cons</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($topChronos as $i => $chrono): ?>
                     <tr>
-                        <td class="badge-width"><?= podiumBadge($i + 1) ?></td>
-                        <td class="driver-name"><?= htmlspecialchars($chrono->nickname) ?></td>
-                        <td class="text-center"><span class="badge-purple"><?= htmlspecialchars($chrono->chrono) ?></span></td>
-                        <td class="text-center top10-type"><?= htmlspecialchars($chrono->chrono_type) ?></td>
-                        <td class="text-center top10-category-console"><?= htmlspecialchars($chrono->category) ?></td>
-                        <td class="text-center"><?= htmlspecialchars($chrono->season_number) ?></td>
-                        <td class="text-center top10-videogame"><?= htmlspecialchars($chrono->videogame) ?></td>
-                        <td class="text-center top10-category-console"><?= htmlspecialchars($chrono->platform) ?></td>
+                        <td class="badge-width" title="Position"><?= podiumBadge($i + 1) ?></td>
+                        <td class="down" title="Pilote"><?= htmlspecialchars($chrono->nickname) ?></td>
+                        <td class="text-center down " title="Chrono"><span class="badge-purple"><?= htmlspecialchars($chrono->chrono) ?></span></td>
+                        <td class="text-center down top10-type" title="Type"><?= htmlspecialchars($chrono->chrono_type) ?></td>
+                        <td class="text-center down" title="Catégorie"><?= htmlspecialchars($chrono->category) ?></td>
+                        <td class="text-center down" title="Saison"><?= htmlspecialchars($chrono->season_number) ?></td>
+                        <td class="text-center down" title="Jeu vidéo"><?= htmlspecialchars($chrono->videogame)?> - <?= htmlspecialchars($chrono->platform)?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -138,23 +142,23 @@
         <h3 class="gp-title">Courses disputées</h3>
 
         <div class="table-responsive">
-        <table class="dashboard-table">
+        <table class="dashboard-table fix table-th-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">Catégorie</th>
-                    <th class="text-center">Courses disputées</th>
+                    <th class="text-center" title="Catégorie">Catégorie</th>
+                    <th class="text-center" title="Courses disputées">Courses disputées</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($gpCountByCategory as $row): ?>
                     <tr>
-                        <td class="text-center"><?= htmlspecialchars($row->category) ?></td>
-                        <td class="text-center"><?= $row->gp_count ?></td>
+                        <td class="text-center down" title="Catégorie"><?= htmlspecialchars($row->category) ?></td>
+                        <td class="text-center" title="Courses disputées"><?= $row->gp_count ?></td>
                     </tr>
                 <?php endforeach; ?>
                 <tr class="total-row">
-                    <td class="text-center">Total</td>
-                    <td class="text-center"><?= $totalGP ?></td>
+                    <td class="text-center" title="Total">Total</td>
+                    <td class="text-center" title="Total courses disputées"><?= $totalGP ?></td>
                 </tr>
             </tbody>
         </table>
@@ -163,45 +167,43 @@
         <h3 class="gp-title">Classement Pilotes</h3>
 
         <p class="gp-subtitle">
-            <span class="label-long"></span>
-            <span class="label-medium">Vict = Victoires / Podi = Podiums / PoleP = Pole Position / FastL = Fastest Lap</span>
-            <span class="label-short">Vi = Victoires / Po = Podiums / PP = Pole Position / FL = Fastest Lap</span>
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
         </p>
 
         <div class="table-responsive">
-        <table class="dashboard-table sortable  table-th-responsive circuits-drivers-table">
+        <table class="dashboard-table sortable fix table-th-responsive circuits-drivers-table">
             <thead>
                 <tr>
-                    <th class="badge-width no-sort th-responsive">
+                    <th class="badge-width no-sort th-responsive" title="Position">
                         <span class="label-aria">Position</span>
                         <span aria-hidden="true" class="label-long"></span>
                         <span aria-hidden="true" class="label-medium"></span>
                         <span aria-hidden="true" class="label-short"></span>
                     </th>
-                    <th>Pilote</th>
-                    <th class="text-center">GP</th>
-                    <th class="text-center th-responsive">
+                    <th title="Pilote">Pilote</th>
+                    <th class="text-center" title="Grands Prix">GP</th>
+                    <th class="text-center th-responsive" title="Victoires">
                             <span class="label-aria">Victoires</span>
                             <span aria-hidden="true" class="label-long">Victoires</span>
-                            <span aria-hidden="true" class="label-medium">Vict</span>
-                            <span aria-hidden="true" class="label-short">Vi</span>
+                            <span aria-hidden="true" class="label-medium">Victoires</span>
+                            <span aria-hidden="true" class="label-short">Vic</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Podiums">
                             <span class="label-aria">Podiums</span>
                             <span aria-hidden="true" class="label-long">Podiums</span>
-                            <span aria-hidden="true" class="label-medium">Podi</span>
-                            <span aria-hidden="true" class="label-short">Po</span>
+                            <span aria-hidden="true" class="label-medium">Podiums</span>
+                            <span aria-hidden="true" class="label-short">Pod</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Pole Position">
                             <span class="label-aria">Pole Position</span>
-                            <span aria-hidden="true" class="label-long">Pole Pos</span>
-                            <span aria-hidden="true" class="label-medium">PoleP</span>
+                            <span aria-hidden="true" class="label-long">Pole Position</span>
+                            <span aria-hidden="true" class="label-medium">Pole Pos</span>
                             <span aria-hidden="true" class="label-short">PP</span>
                     </th>
-                    <th class="text-center th-responsive">
+                    <th class="text-center th-responsive" title="Fastest Lap">
                             <span class="label-aria">Fastest Lap</span>
                             <span aria-hidden="true" class="label-long">Fastest Lap</span>
-                            <span aria-hidden="true" class="label-medium">FastL</span>
+                            <span aria-hidden="true" class="label-medium">Fast Lap</span>
                             <span aria-hidden="true" class="label-short">FL</span>
                     </th>
                 </tr>
@@ -209,13 +211,13 @@
             <tbody>
             <?php foreach ($driversStats as $i => $d): ?>
                 <tr>
-                    <td class="badge-width"><?= podiumBadge($i + 1) ?></td>
-                    <td class="drivers-standings-name"><?= htmlspecialchars($d->nickname) ?></td>
-                    <td class="text-center"><?= $d->gp_count ?></td>
-                    <td class="text-center"><?= $d->wins ?></td>
-                    <td class="text-center"><?= $d->podiums ?></td>
-                    <td class="text-center"><?= $d->poles ?></td>
-                    <td class="text-center"><?= $d->fastest_laps ?></td>
+                    <td class="badge-width" title="Position"><?= podiumBadge($i + 1) ?></td>
+                    <td class="down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
+                    <td class="text-center" title="Grands Prix"><?= $d->gp_count ?></td>
+                    <td class="text-center" title="Victoires"><?= $d->wins ?></td>
+                    <td class="text-center" title="Podiums"><?= $d->podiums ?></td>
+                    <td class="text-center" title="Pole Position"><?= $d->poles ?></td>
+                    <td class="text-center" title="Fastest Lap"><?= $d->fastest_laps ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -306,39 +308,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const w = window.innerWidth;
 
         /*  CIRCUIT TITLE  */
-        document.querySelectorAll('.circuit-title').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
+        // document.querySelectorAll('.circuit-title').forEach(el => {
+        //     if (!el.dataset.fullname) {
+        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+        //     }
 
-            const full = el.dataset.fullname;
+        //     const full = el.dataset.fullname;
 
-            if (w <= 1400) {
-                el.textContent = full.substring(0, 32);
-            }
-        });
+        //     if (w <= 1400) {
+        //         el.textContent = full.substring(0, 32);
+        //     }
+        // });
 
         /*  PILOTES (Circuits TOP 10)  */
-        document.querySelectorAll('.driver-name').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
+        // document.querySelectorAll('.driver-name').forEach(el => {
+        //     if (!el.dataset.fullname) {
+        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+        //     }
 
-            const full = el.dataset.fullname;
+        //     const full = el.dataset.fullname;
 
-            if (w <= 500) {
-                el.textContent = full.substring(0, 8);
-            }
-            else if (w <= 700) {
-                el.textContent = full.substring(0, 12);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 16);
-            }
-            else {
-                el.textContent = full.substring(0, 20);
-            }
-        });
+        //     if (w <= 500) {
+        //         el.textContent = full.substring(0, 8);
+        //     }
+        //     else if (w <= 700) {
+        //         el.textContent = full.substring(0, 12);
+        //     }
+        //     else if (w <= 900) {
+        //         el.textContent = full.substring(0, 16);
+        //     }
+        //     else {
+        //         el.textContent = full.substring(0, 20);
+        //     }
+        // });
 
         /*  TYPE POLE POSITION OU FASTEST LAP (Circuits TOP 10)  */
         document.querySelectorAll('.top10-type').forEach(el => {
@@ -373,67 +375,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         /*  CATEGORIES ET CONSOLE (Circuits TOP 10)  */
-        document.querySelectorAll('.top10-category-console').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
+        // document.querySelectorAll('.top10-category-console').forEach(el => {
+        //     if (!el.dataset.fullname) {
+        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+        //     }
 
-            const full = el.dataset.fullname;
+        //     const full = el.dataset.fullname;
 
-            if (w <= 500) {
-                el.textContent = full.substring(0, 4);
-            }
-            else if (w <= 700) {
-                el.textContent = full.substring(0, 5);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 6);
-            }
-            else {
-                el.textContent = full.substring(0, 8);
-            }
-        });
+        //     if (w <= 500) {
+        //         el.textContent = full.substring(0, 4);
+        //     }
+        //     else if (w <= 700) {
+        //         el.textContent = full.substring(0, 5);
+        //     }
+        //     else if (w <= 900) {
+        //         el.textContent = full.substring(0, 6);
+        //     }
+        //     else {
+        //         el.textContent = full.substring(0, 8);
+        //     }
+        // });
 
         /*  JEU VIDEO (Circuits TOP 10)  */
-        document.querySelectorAll('.top10-videogame').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
+        // document.querySelectorAll('.top10-videogame').forEach(el => {
+        //     if (!el.dataset.fullname) {
+        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+        //     }
 
-            const full = el.dataset.fullname;
+        //     const full = el.dataset.fullname;
 
-            if (w <= 500) {
-                el.textContent = full.substring(0, 6);
-            }
-            else if (w <= 700) {
-                el.textContent = full.substring(0, 10);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 14);
-            }
-            else {
-                el.textContent = full.substring(0, 20);
-            }
-        });
+        //     if (w <= 500) {
+        //         el.textContent = full.substring(0, 6);
+        //     }
+        //     else if (w <= 700) {
+        //         el.textContent = full.substring(0, 10);
+        //     }
+        //     else if (w <= 900) {
+        //         el.textContent = full.substring(0, 14);
+        //     }
+        //     else {
+        //         el.textContent = full.substring(0, 20);
+        //     }
+        // });
 
         /*  PILOTES (Classement Pilotes)  */
-        document.querySelectorAll('.drivers-standings-name').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
+        // document.querySelectorAll('.drivers-standings-name').forEach(el => {
+        //     if (!el.dataset.fullname) {
+        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
+        //     }
 
-            const full = el.dataset.fullname;
+        //     const full = el.dataset.fullname;
 
-            if (w <= 500) {
-                el.textContent = full.substring(0, 18);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 22);
-            }
-            else {
-                el.textContent = full.substring(0, 30);
-            }
-        });
+        //     if (w <= 500) {
+        //         el.textContent = full.substring(0, 18);
+        //     }
+        //     else if (w <= 900) {
+        //         el.textContent = full.substring(0, 22);
+        //     }
+        //     else {
+        //         el.textContent = full.substring(0, 30);
+        //     }
+        // });
 
     }
     window.addEventListener('resize', updateResponsiveNames);

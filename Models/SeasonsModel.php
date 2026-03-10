@@ -7,6 +7,7 @@ class SeasonsModel extends DbConnect {
 
     public $id;
     public $season_number;
+    public $season_name;
     public $category_id;
     public $videogame;
     public $platform;
@@ -16,7 +17,7 @@ class SeasonsModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT seasons.id, season_number, categories.name as category, videogame, platform, seasons.status
+            SELECT seasons.id, season_number, season_name, categories.name as category, videogame, platform, seasons.status
             FROM seasons
             JOIN categories ON seasons.category_id = categories.id
         ")->fetchAll();
@@ -44,6 +45,7 @@ class SeasonsModel extends DbConnect {
             SELECT 
                 seasons.id,
                 seasons.season_number,
+                seasons.season_name,
                 categories.name AS category,
                 seasons.videogame,
                 seasons.platform,

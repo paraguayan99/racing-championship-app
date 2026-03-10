@@ -105,7 +105,7 @@ class UsersController extends Controller {
             $rolesOptions[$r->id] = $r->name;
         }
 
-        $form->startForm("index.php?controller=users&action=create", "POST")
+        $form->startForm("/users/create", "POST")
             ->addCSRF()
             ->addLabel("role_id", "Rôle :")
             ->addSelect("role_id", $rolesOptions)
@@ -205,7 +205,7 @@ class UsersController extends Controller {
             $rolesOptions[$r->id] = $r->name;
         }
 
-        $form->startForm("index.php?controller=users&action=update&id=" . $user->id, "POST")
+        $form->startForm("/users/update/" . $user->id, "POST")
             ->addCSRF()
             ->addLabel("role_id", "Rôle :")
             ->addSelect("role_id", $rolesOptions, ["value" => $user->role_id])

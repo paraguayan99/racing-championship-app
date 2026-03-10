@@ -96,7 +96,7 @@ class CategoriesController extends Controller {
         // GET => formulaire création
         $form = new Form();
 
-        $form->startForm("index.php?controller=categories&action=create", "POST")
+        $form->startForm("/categories/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de la catégorie :")
             ->addInput("text", "name")
@@ -205,7 +205,7 @@ class CategoriesController extends Controller {
         // GET => form update
         $form = new Form();
 
-        $form->startForm("index.php?controller=categories&action=update&id=" . $category->id, "POST")
+        $form->startForm("/categories/update/" . $category->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom de la catégorie :")
             ->addInput("text", "name", ["value" => $category->name])
@@ -267,10 +267,25 @@ class CategoriesController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_seasons_category' => 'Impossible de supprimer : La catégorie contient des saisons',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             $this->render('dashboard/categories/index', [
@@ -290,5 +305,4 @@ class CategoriesController extends Controller {
         ]);
     }
 }
-?>
 

@@ -17,7 +17,7 @@ if ($userId) {
 
 <div class="section-dashboard">
     <div class="btn-header-dashboard">
-        <a class="home-nav-btn-dashboard nav-btn-dashboard red" href="index.php?controller=auth&action=logout">Déconnexion</a>
+        <a class="home-nav-btn-dashboard nav-btn-dashboard red" href="/auth/logout">Déconnexion</a>
         <span>Connecté : <?= htmlspecialchars($email) ?> - <?= htmlspecialchars($role) ?></span>
     </div>
 

@@ -1,17 +1,22 @@
 <?php
-// Fonction pour les badges podium
+
+// Fonction badges podium
 function podiumBadge($pos) {
 
     if ($pos === null || $pos === 0) {
         return '<span class="badge badge-normal badge-empty">-</span>';
     }
 
-    return match($pos) {
-        1 => '<span class="badge badge-gold">1</span>',
-        2 => '<span class="badge badge-silver">2</span>',
-        3 => '<span class="badge badge-bronze">3</span>',
-        default => '<span class="badge badge-normal">' . $pos . '</span>',
-    };
+    switch ($pos) {
+        case 1:
+            return '<span class="badge badge-gold">1</span>';
+        case 2:
+            return '<span class="badge badge-silver">2</span>';
+        case 3:
+            return '<span class="badge badge-bronze">3</span>';
+        default:
+            return '<span class="badge badge-normal">' . $pos . '</span>';
+    }
 }
 ?>
 
@@ -28,7 +33,11 @@ function podiumBadge($pos) {
             GP <?= htmlspecialchars($gp->gp_ordre) ?>
             - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
             (<?= htmlspecialchars($gp->country_name ?? '') ?>)
-            / Saison <?= htmlspecialchars($gp->season_number) ?> - <?= htmlspecialchars($gp->category) ?>
+            / Saison <?= htmlspecialchars($gp->season_number) ?> 
+            - <?= htmlspecialchars($gp->category) ?>
+            <?php if (!empty($gp->season_name)): ?>
+            / <?= htmlspecialchars($gp->season_name) ?>
+            <?php endif; ?>
         </span>
         </h3>
 
@@ -51,15 +60,19 @@ function podiumBadge($pos) {
 
     <!-- Tableau des résultats du GP -->
     <div class="table-responsive">
-        <table class="dashboard-table modal-gp-results-table"
+        <table class="dashboard-table fix modal-gp-results-table"
                 style="--category-color: <?= htmlspecialchars($gp->category_color ?? '#E10600') ?>;">
             <thead>
                 <tr>
-                    <th class="badge-width">Position</th>
-                    <th>Pilote</th>
-                    <th>Équipe</th>
-                    <th class="text-center">Points</th>
-                    <th>Commentaire</th>
+                    <th class="badge-width" title="Position">
+                        <span class="label-aria">Position</span>
+                    </th>
+                    <th title="Pilote">Pilote</th>
+                    <th title="Équipe">Équipe</th>
+                    <th class="text-center" title="Points">Points</th>
+                    <th title="DNF/DNS/DSQ">
+                        <span class="label-aria">DNF/DNS/DSQ</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -68,12 +81,13 @@ function podiumBadge($pos) {
                     <tr>
 
                         <!-- Badge position -->
-                        <td class="badge-width"><?= podiumBadge($point->position) ?></td>
+                        <td class="badge-width" title="Position"><?= podiumBadge($point->position) ?></td>
 
                         <!-- Pilote (drapeau + dégradé équipe) -->
-                        <td class="driver-cell" 
+                        <td class="driver-cell down" 
                             style="--team-color: <?= htmlspecialchars($point->team_color ?? '') ?>
-                            ">
+                            "
+                            title="Pilote">
                             <div class="driver-gradient"></div>
 
                             <span class="driver-content">
@@ -87,16 +101,17 @@ function podiumBadge($pos) {
                         </td>
 
                         <!-- Équipe (logo + couleur) -->
-                        <td class="team-cell"
+                        <td class="team-cell down"
                             style="
                                 --team-color: <?= htmlspecialchars($point->team_color ?? '') ?>;
                                 --team-logo: url('<?= htmlspecialchars($point->team_logo ?? '') ?>');
-                            ">
+                            "
+                            title="Équipe">
                             <span class="team-name"><?= htmlspecialchars($point->team_name ?? '') ?></span>
                         </td>
 
                         <!-- Points numériques formatés -->
-                        <td class="text-center">
+                        <td class="text-center" title="Points">
                             <?= htmlspecialchars(
                                 isset($point->points_numeric)
                                     ? rtrim(rtrim(number_format($point->points_numeric, 1, '.', ''), '0'), '.')
@@ -105,7 +120,7 @@ function podiumBadge($pos) {
                         </td>
 
                         <!-- Points texte -->
-                        <td class="text-center"><?= htmlspecialchars($point->points_text ?? '') ?></td>
+                        <td class="text-center" title="DNF/DNS/DSQ"><?= htmlspecialchars($point->points_text ?? '') ?></td>
 
                     </tr>
                 <?php endforeach; ?>

@@ -9,7 +9,7 @@
 
     <div class="hero-content">
         <h1>
-            Championnat F1® 25 en ligne sur PS5
+            Championnat F1® 25 en ligne sur PS5 & Xbox
             <span class="community-tag">Communauté eRacing francophone</span>
         </h1>
 
@@ -26,7 +26,7 @@
 
         <div class="hero-cta">
             <a href="#presentation" class="nav-btn">Notre communauté</a>
-            <a href="#championnats" class="nav-btn">Nos championnats F1® 25 - PS5</a>
+            <a href="#championnats" class="nav-btn">Nos championnats F1® 25 - PS5 & Xbox</a>
             <a href="#lives-replays" class="nav-btn">Lives Twitch & Replay Youtube</a>
             <a href="#discord" class="nav-btn red">Nous rejoindre sur Discord</a>
         </div>
@@ -46,7 +46,7 @@
             Fondée à l’origine autour du jeu <strong>F1 Championship Edition sur PlayStation® 3</strong>, 
             la communauté n’a cessé d’évoluer au rythme des différentes éditions du jeu officiel de la Formule 1. 
             Elle a également organisé des compétitions sur <strong>Project CARS</strong> et <strong>Gran Turismo™ 7</strong>, avant de se consacrer aujourd’hui à 
-            <strong>F1® 25 sur PlayStation® 5</strong>, référence actuelle de la simulation de Formule 1.
+            <strong>F1® 25 sur PlayStation® 5 & Xbox®</strong>, référence actuelle de la simulation de Formule 1.
         </p>
         <p>
             Au fil des années, la communauté a également pris vie hors ligne à travers de nombreuses rencontres conviviales, notamment lors du Grand Prix de France 2018.
@@ -60,13 +60,13 @@
 
 <section class="hero-section" id="championnats">
     <img src="img/f1_f2.jpg"
-         alt="Course F1 eSport en ligne PS5"
+         alt="Course F1 eSport en ligne PS5 & Xbox"
          loading="lazy"
          class="img-object-position-bottom">
     <div class="hero-text-block">
-        <h2>Championnats F1 et F2 sur PS5 – F1® 25</h2>
+        <h2>Championnats F1 et F2 sur PS5 & Xbox – F1® 25</h2>
         <p>
-            Les compétitions actuelles se déroulent sur <strong>PS5</strong> avec le jeu
+            Les compétitions actuelles se déroulent sur <strong>PS5 & Xbox</strong> avec le jeu
             <strong>F1® 25</strong>.
         </p>
         <ul>
@@ -173,7 +173,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Championnat F1 25 PS5 Team-eRacing",
+  "name": "Championnat F1 25 PS5 Xbox Team-eRacing",
   "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
   "eventStatus": "https://schema.org/EventScheduled",
   "location": {

@@ -46,12 +46,12 @@ class PenaltiesController extends Controller {
 
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
+            foreach ($allGps as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
+                    $gps[$gpItem->id] = $gpItem->category 
                                     . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
+                                    . " / GP " . $gpItem->gp_ordre 
                                     . " - " . $countryName;
                 }
             }
@@ -96,12 +96,16 @@ class PenaltiesController extends Controller {
                                 $message = "Pénalité créée avec succès";
                                 $classMsg = "msg-success";
                                 UpdatesLogModel::logUpdate('penalties', null, $gp_id, $_SESSION['user_id'], 'create');
+
+                                // Ajout cache
+                                $cache = new \App\Core\PalmaresCache();
+                                $cache->rebuild($gp->season_id);
                             } else {
                                 $message = "Erreur lors de la création";
                                 $classMsg = "msg-error";
                             }
                         } catch (\PDOException $e) {
-                            $message = "Erreur : données invalides";
+                            $message = "Erreur : données invalides ou pilote déjà pénalisé pour ce GP";
                             $classMsg = "msg-error";
                         }
                     }
@@ -123,7 +127,7 @@ class PenaltiesController extends Controller {
 
         // Formulaire
         $form = new Form();
-        $form->startForm("index.php?controller=penalties&action=create", "POST")
+        $form->startForm("/penalties/create", "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps)
@@ -194,12 +198,12 @@ class PenaltiesController extends Controller {
 
         $gps = [];
         foreach ($seasons as $s) {
-            foreach ($allGps as $gp) {
-                if ($gp->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gp->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gp->id] = $gp->category 
+            foreach ($allGps as $gpItem) {
+                if ($gpItem->season_id == $s->id) {
+                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
+                    $gps[$gpItem->id] = $gpItem->category 
                                     . " - Saison " . $s->season_number 
-                                    . " / GP " . $gp->gp_ordre 
+                                    . " / GP " . $gpItem->gp_ordre 
                                     . " - " . $countryName;
                 }
             }
@@ -235,12 +239,17 @@ class PenaltiesController extends Controller {
                             $message = "Pénalité mise à jour";
                             $classMsg = "msg-success";
                             UpdatesLogModel::logUpdate('penalties', null, $gp_id, $_SESSION['user_id'], 'update');
+
+                            // Ajout cache
+                            $gp = GpModel::find($gp_id);
+                            $cache = new \App\Core\PalmaresCache();
+                            $cache->rebuild($gp->season_id);
                         } else {
                             $message = "Erreur lors de la mise à jour";
                             $classMsg = "msg-error";
                         }
                     } catch (\PDOException $e) {
-                        $message = "Erreur : données invalides";
+                        $message = "Erreur : données invalides ou pilote déjà pénalisé pour ce GP";
                         $classMsg = "msg-error";
                     }
                 }
@@ -259,7 +268,7 @@ class PenaltiesController extends Controller {
         $teamsSelect = ['' => 'Aucun'] + array_column($teams, 'name', 'id');
 
         $form = new Form();
-        $form->startForm("index.php?controller=penalties&action=update&id=".$id, "POST")
+        $form->startForm("/penalties/update/".$id, "POST")
             ->addCSRF()
             ->addLabel("gp_id", "GP :")
             ->addSelect("gp_id", $gps, ["value" => $penalty->gp_id])
@@ -355,6 +364,10 @@ class PenaltiesController extends Controller {
                     $message = "Pénalité supprimée avec succès.";
                     $classMsg = "msg-success";
                     UpdatesLogModel::logUpdate('penalties', null, $penalty->gp_id, $_SESSION['user_id'], 'delete');
+
+                    // Ajout cache — $gp est déjà récupéré plus haut dans la méthode
+                    $cache = new \App\Core\PalmaresCache();
+                    $cache->rebuild($gp->season_id);
                 } else {
                     $message = "Erreur lors de la suppression.";
                     $classMsg = "msg-error";

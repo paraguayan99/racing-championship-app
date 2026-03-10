@@ -39,9 +39,10 @@ class DriversModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT drivers.id, drivers.nickname, drivers.status, countries.name as country
+            SELECT drivers.id, drivers.nickname, drivers.status, countries.name AS country
             FROM drivers
             JOIN countries ON drivers.country_id = countries.id
+            ORDER BY drivers.nickname ASC
         ")->fetchAll();
     }
 

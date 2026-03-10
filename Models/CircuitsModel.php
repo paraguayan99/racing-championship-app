@@ -17,6 +17,7 @@ class CircuitsModel extends DbConnect {
             SELECT circuits.id, circuits.name, circuits.status, countries.name as country
             FROM circuits
             JOIN countries ON circuits.country_id = countries.id
+            ORDER BY circuits.name ASC
         ")->fetchAll();
     }
 

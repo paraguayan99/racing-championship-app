@@ -7,7 +7,21 @@ abstract class Controller
 {
     // Verification à chaque appel des Controllers : 
     // LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
-    protected function authMiddleware(string|array $requiredRoles = null)
+
+    // -----------------------------------------------------
+
+    // Fonctionne pour WAMPSERVER
+    // Syntaxe pour PHP8 et +
+    // protected function authMiddleware(string|array $requiredRoles = null)
+
+    // -----------------------------------------------------
+
+    // Fonctionne pour OVH
+    // Syntaxe compatible OVH : PHP Version 7.4.33
+    /**
+     * @param string|array|null $requiredRoles
+     */
+    protected function authMiddleware($requiredRoles = null)
     {
         Auth::start();
 
@@ -17,7 +31,7 @@ abstract class Controller
         header("Expires: 0");
 
         if (!Auth::check()) {
-            header('Location: index.php?controller=auth&action=login');
+            header('Location: /auth/login');
             exit;
         }
 
@@ -45,7 +59,7 @@ abstract class Controller
                 $content = "<div class='section-dashboard'>
                                 <h1>Accès refusé</h1>
                                 <p>Vous n'avez pas les autorisations nécessaires.</p>
-                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
                             </div>";
 
                 include dirname(__DIR__) . '/Views/base.php';
@@ -65,7 +79,7 @@ abstract class Controller
                 $content = "<div class='section-dashboard'>
                                 <h1>Token invalide !</h1>
                                 <p>Veuillez réessayer ou recharger la page.</p>
-                                <a class='nav-btn-dashboard' href='index.php'>Retour à l'accueil</a>
+                                <a class='nav-btn-dashboard' href='/'>Retour à l'accueil</a>
                             </div>";
 
                 include dirname(__DIR__) . '/Views/base.php';
@@ -76,6 +90,9 @@ abstract class Controller
     
     public function render(string $path, array $data = [])
     {
+        // Solution pour TOKEN avec OVH
+        \App\Core\Auth::start();
+
         // Permet d'extraire les données récupérées sous forme de variables
         extract($data);
 

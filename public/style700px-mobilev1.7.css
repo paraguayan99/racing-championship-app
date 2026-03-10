@@ -42,6 +42,15 @@ footer nav {
 }
 
 /* Page Accueil / Index */
+
+/* Animation voitures */
+/* Différentes lignes et vitesses */
+.hero-bg .hero-car:nth-child(1) { top: 15%; animation-duration: 2s; }
+.hero-bg .hero-car:nth-child(2) { top: 30%; animation-duration: 3s; }
+.hero-bg .hero-car:nth-child(3) { top: 45%; animation-duration: 2.5s; }
+.hero-bg .hero-car:nth-child(4) { top: 60%; animation-duration: 3.5s; }
+.hero-bg .hero-car:nth-child(5) { top: 75%; animation-duration: 3.25s; }
+
 .hero h1 {
     font-size: 1.5rem;
 }
@@ -288,9 +297,10 @@ footer nav {
 }
 
 /* Pour réduire l'espace verticale si il y a un retour à la ligne */
-.category-title {
+/* Ajouté finalement dans le CSS commun stylev2.2.css */
+/* .category-title {
     line-height: 0.8;
-}
+} */
 
 /* .season-title {
     line-height: 1.1;
@@ -307,14 +317,14 @@ footer nav {
 
 .dashboard-table th.badge-width,
 .dashboard-table td.badge-width {
-    width: 20px;
+    width: 30px;
 }
 
 /* Classements */
 /* Classement Pilotes uniquement */
-.drivers-table thead th:nth-child(1)::after { content: ""; }
+/* .drivers-table thead th:nth-child(1)::after { content: ""; }
 .drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: "Equ"; }
+.drivers-table thead th:nth-child(3)::after { content: ""; }
 .drivers-table thead th:nth-child(4)::after { content: "Pts"; }
 .drivers-table thead th:nth-child(5)::after { content: "GP"; }
 .drivers-table thead th:nth-child(6)::after { content: "Vi"; }
@@ -324,11 +334,16 @@ footer nav {
 
 .drivers-table thead th {
     font-size: 0;
-}
+} */
 
-.drivers-table thead th::after {
+/* .drivers-table thead th::after {
     font-size: 0.875rem;
-}
+} */
+
+
+/* .drivers-table thead th {
+    font-size: 0.875rem;
+} */
 
 /* Colonne Pilote */
 .drivers-table td.driver-cell,
@@ -356,14 +371,21 @@ footer nav {
 /* Background image logo écurie */
 .team-cell {
     background-position: right -40px center;
-    background-size: 110px auto;
+    background-size: 110px 100%;
+}
+
+
+/* Colonne : Points */
+.drivers-table td:nth-child(4),
+.drivers-table th:nth-child(4) {
+    width: 12%;
 }
 
 /* Classement Equipes uniquement */
 
-.teams-table thead th::after {
+/* .teams-table thead th {
     font-size: 0.875rem;
-}
+} */
 
 /* Colonne Équipe */
 .teams-table td.team-cell,
@@ -385,7 +407,7 @@ footer nav {
 
 /* Tableaux Pénalités uniquement */
 
-.penalties-table thead th:nth-child(4)::after { content: "Pén"; }
+/* .penalties-table thead th:nth-child(4)::after { content: "Pén"; }
 .penalties-table thead th:nth-child(5)::after { content: "Comm"; }
 
 .penalties-table thead th:nth-child(4),
@@ -396,7 +418,11 @@ footer nav {
 .penalties-table thead th:nth-child(4)::after,
 .penalties-table thead th:nth-child(5)::after {
     font-size: 0.875rem;
-}
+} */
+
+/* .penalties-table thead th {
+    font-size: 0.875rem;
+} */
 
 /* GP */
 .penalties-table th:nth-child(1),
@@ -429,18 +455,22 @@ footer nav {
 }
 
 /* Tableaux Résultats GP */
-.gp-season-table thead th:nth-child(6)::after { content: "PP"; }
+/* .gp-season-table thead th:nth-child(6)::after { content: "PP"; }
 .gp-season-table thead th:nth-child(7)::after { content: "FL"; }
 
 .gp-season-table thead th:nth-child(6),
 .gp-season-table thead th:nth-child(7) {
     font-size: 0;
-}
+} */
 
-.gp-season-table thead th:nth-child(6)::after,
+/* .gp-season-table thead th:nth-child(6)::after,
 .gp-season-table thead th:nth-child(7)::after {
     font-size: 1rem;
-}
+} */
+/* 
+.gp-season-table thead th {
+    font-size: 0.875rem;
+} */
 
 /* Colonne Circuit + Code PAYS et Badge purple PP + FL */
 @media screen and (max-width: 700px) {
@@ -450,7 +480,7 @@ footer nav {
     }
 
     .badge-purple {
-    padding: 2px 4px;
+    padding: 0px 4px;
 }
 }
 
@@ -461,7 +491,7 @@ footer nav {
     }
 
     .badge-purple {
-    padding: 1px 2px;
+    padding: 0px 2px;
 }
 }
 
@@ -480,14 +510,18 @@ footer nav {
     font-size: 0.875rem;
 }
 
+.modal-gp-results-table thead th {
+    font-size: 0.875rem;
+}
+
 .modal-gp-results-table thead th::after {
     font-size: 0.875rem;
 }
 
-/* Page Palmarès */
+/* Page Palmarès et Circuits */
 
 table.sortable th {
-    padding-right: 5px;
+    padding-bottom: 12px;
 }
 
 table.sortable th::after {
@@ -504,13 +538,17 @@ table.sortable th.desc::after {
 
 /* Tailles des colonnes */
 
-/* 5 colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
+/* 3 colonnes : Champions + Vice-Champions + Troisièmes */
 .palmares-drivers-table th:nth-child(3),
 .palmares-drivers-table td:nth-child(3),
 .palmares-drivers-table th:nth-child(4),
 .palmares-drivers-table td:nth-child(4),
 .palmares-drivers-table th:nth-child(5),
-.palmares-drivers-table td:nth-child(5),
+.palmares-drivers-table td:nth-child(5) {
+    width: 6%;
+}
+
+/* 2 colonnes : Victoires + Podiums */
 .palmares-drivers-table th:nth-child(6),
 .palmares-drivers-table td:nth-child(6),
 .palmares-drivers-table th:nth-child(7),
@@ -518,12 +556,16 @@ table.sortable th.desc::after {
     width: 8%;
 }
 
-/* 2 colonnes : GP + Pts */
+/* Colonne : GP */
 .palmares-drivers-table th:nth-child(8),
-.palmares-drivers-table td:nth-child(8),
+.palmares-drivers-table td:nth-child(8) {
+    width: 12%;
+}
+
+/* Colonne : Points */
 .palmares-drivers-table th:nth-child(9),
 .palmares-drivers-table td:nth-child(9) {
-    width: 9%;
+    width: 15%;
 }
 
 /* PAGE CIRCUITS */
@@ -531,6 +573,12 @@ table.sortable th.desc::after {
 
 .circuit-title {
     font-size: 1.2rem;
+}
+
+/* Colonne Jeu vidéo */
+.circuits-top10-table th:nth-child(7),
+.circuits-top10-table td:nth-child(7) {
+    padding: 0px 15px 0px 15px;
 }
 
 @media screen and (max-width: 500px) {
@@ -541,7 +589,7 @@ table.sortable th.desc::after {
     }
 }
 
-/* PAGE CIRCUITS CLASSEMENT PILOTES */
+/* CIRCUITS CLASSEMENT PILOTES */
 /* Tailles des colonnes */
 
 /* 5 colonnes : GP + Victoires + Podiums + PP + FL */
@@ -555,24 +603,9 @@ table.sortable th.desc::after {
 .circuits-drivers-table td:nth-child(6),
 .circuits-drivers-table th:nth-child(7),
 .circuits-drivers-table td:nth-child(7) {
-    width: 10%;
+    width: 11%;
 }
 
-@media screen and (max-width: 500px) {
-    /* 5 colonnes : GP + Victoires + Podiums + PP + FL */
-    .circuits-drivers-table th:nth-child(3),
-    .circuits-drivers-table td:nth-child(3),
-    .circuits-drivers-table th:nth-child(4),
-    .circuits-drivers-table td:nth-child(4),
-    .circuits-drivers-table th:nth-child(5),
-    .circuits-drivers-table td:nth-child(5),
-    .circuits-drivers-table th:nth-child(6),
-    .circuits-drivers-table td:nth-child(6),
-    .circuits-drivers-table th:nth-child(7),
-    .circuits-drivers-table td:nth-child(7) {
-        width: 9%;
-    }
-}
 
 /* DASHBOARD */
 

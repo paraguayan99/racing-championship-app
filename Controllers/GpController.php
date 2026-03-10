@@ -118,7 +118,7 @@ class GpController extends Controller {
         asort($seasonOptions);
         asort($circuitOptions);
 
-        $form->startForm("index.php?controller=gp&action=create", "POST")
+        $form->startForm("/gp/create", "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions)
@@ -259,7 +259,7 @@ class GpController extends Controller {
         asort($circuitOptions);
 
         $form = new Form();
-        $form->startForm("index.php?controller=gp&action=update&id=" . $row->id, "POST")
+        $form->startForm("/gp/update/" . $row->id, "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions, ["value" => $row->season_id])
@@ -349,10 +349,27 @@ class GpController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_gp_points_gp' => 'Impossible de supprimer : Le GP contient des résultats',
+                        'fk_gp_stats_gp' => 'Impossible de supprimer : Le GP contient une Pole Position et un Fastest Lap',
+                        'fk_penalties_gp' => 'Impossible de supprimer : Le GP contient des pénalités',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             // Retour liste avec message succès ou erreur

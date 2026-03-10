@@ -13,7 +13,7 @@ use App\Core\Auth;
         </div>
     <?php endif; ?>
 
-    <form action="index.php?controller=auth&action=login" method="POST" class="login-form">
+    <form action="/auth/login" method="POST" class="login-form">
         <input type="hidden" name="csrf_token" value="<?= Auth::csrfToken() ?>">
 
         <div class="form-group">
@@ -24,6 +24,11 @@ use App\Core\Auth;
         <div class="form-group">
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+        </div>
+
+        <div class="form-group">
+            <label><?= Auth::generateCaptcha(); ?></label>
+            <input type="number" name="captcha" required placeholder="Votre réponse">
         </div>
 
         <div class="form-group">

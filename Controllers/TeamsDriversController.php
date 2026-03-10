@@ -100,7 +100,7 @@ class TeamsDriversController extends Controller {
         $teamOptions = [];
         foreach ($teams as $t) $teamOptions[$t->id] = $t->name;
 
-        $form->startForm("index.php?controller=teamsdrivers&action=create", "POST")
+        $form->startForm("/teamsdrivers/create", "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions)
@@ -229,7 +229,7 @@ class TeamsDriversController extends Controller {
         $teamOptions = [];
         foreach ($teams as $t) $teamOptions[$t->id] = $t->name;
 
-        $form->startForm("index.php?controller=teamsdrivers&action=update&id=" . $row->id, "POST")
+        $form->startForm("/teamsdrivers/update/" . $row->id, "POST")
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions, ["value" => $row->season_id])

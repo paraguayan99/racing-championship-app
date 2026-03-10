@@ -1,158 +1,169 @@
-<?php $title = "Palmarès"; ?>
+<?php $title = "Team-eRacing - Palmarès"; ?>
 
 <div class="section-dashboard">
-    <a class="nav-btn" href="index.php?controller=classements&action=standings">Retour aux Classements</a>
-    <a class="nav-btn red" href="index.php?controller=statscircuits">Circuits</a>
+    <a class="nav-btn" href="/classements/standings">Retour aux Classements</a>
+    <a class="nav-btn red" href="/statscircuits">Circuits</a>
 
     <div class="page-header">
         <h1>Palmarès</h1>
     </div>
 
+    <!-- SÉLECTEUR DE CATÉGORIE -->
+    <form method="get" class="palmares-selector" action="/palmares/index/">
+        <label for="category_filter" class="visually-hidden">Choisir une catégorie :</label>
+        <div class="form-group">
+            <select name="category_name" id="category_filter" onchange="
+                var val = this.value;
+                if (val) {
+                    window.location.href = '/palmares/index/category_name/' + encodeURIComponent(val);
+                } else {
+                    window.location.href = '/palmares';
+                }
+            ">
+                <option value="" <?= !$categoryFilter ? 'selected' : '' ?>>Choisir une catégorie :</option>
+                <?php foreach ($categories as $c): ?>
+                    <option value="<?= htmlspecialchars($c->name) ?>" <?= $categoryFilter === $c->name ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c->name) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </form>
+
 <?php
-// Fonction PHP pour les badges de position
+// Fonction badges podium
 function podiumBadge($pos) {
-    return match($pos) {
-        1 => '<span class="badge badge-gold">1</span>',
-        2 => '<span class="badge badge-silver">2</span>',
-        3 => '<span class="badge badge-bronze">3</span>',
-        default => '<span class="badge badge-normal">' . $pos . '</span>',
-    };
+    switch ($pos) {
+        case 1:
+            return '<span class="badge badge-gold">1</span>';
+        case 2:
+            return '<span class="badge badge-silver">2</span>';
+        case 3:
+            return '<span class="badge badge-bronze">3</span>';
+        default:
+            return '<span class="badge badge-normal">' . $pos . '</span>';
+    }
 }
 ?>
 
 <?php foreach ($driversByCategory as $category => $drivers): ?>
-<div class="category-block"
-     style="--category-color: <?= htmlspecialchars($drivers[0]->category_color) ?>">
+    <div class="category-block"
+        style="--category-color: <?= htmlspecialchars($drivers[0]->category_color) ?>">
 
-    <h2 class="category-title has-content">
-        <span>
-            <?= htmlspecialchars($category) ?>
-        </span>
-    </h2>
+        <h2 class="category-title has-content">
+            <span>
+                <?= htmlspecialchars($category) ?>
+            </span>
+        </h2>
 
-    <!-- DRIVERS -->
-    <h3 class="gp-title">Palmarès Pilotes</h3>
-    
-    <p class="gp-subtitle">
-        <span class="label-long">Champ = Champions / ViceC = Vice-Champions / Trois = Troisièmes / Vict = Victoires / Podiu = Podiums</span>
-        <span class="label-medium">Cha = Champions / Vice = Vice-Champions / Troi = Troisièmes / Vict = Victoires / Podi = Podiums</span>
-        <span class="label-short">C = Champions / 2 = Vice-Champions / 3 = Troisièmes / Vi = Victoires / Po = Podiums</span>
-    </p>
+        <!-- TEAMS -->
+        <?php if (!empty($teamsByCategory[$category])): ?>
+            <h3 class="gp-title">Palmarès Constructeurs</h3>
 
-    <div class="table-responsive">
-    <table class="dashboard-table sortable table-th-responsive palmares-drivers-table">
-        <thead>
-            <tr>
-                <th class="badge-width no-sort th-responsive">
-                        <span class="label-aria">Position</span>
-                        <span aria-hidden="true" class="label-long"></span>
-                        <span aria-hidden="true" class="label-medium"></span>
-                        <span aria-hidden="true" class="label-short"></span>
-                </th>
-                <th>Pilote</th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Champions</span>
-                        <span aria-hidden="true" class="label-long">Champ</span>
-                        <span aria-hidden="true" class="label-medium">Cha</span>
-                        <span aria-hidden="true" class="label-short">C</span>
-                </th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Vice-Champions</span>
-                        <span aria-hidden="true" class="label-long">ViceC</span>
-                        <span aria-hidden="true" class="label-medium">Vice</span>
-                        <span aria-hidden="true" class="label-short">2</span>
-                </th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Troisièmes</span>
-                        <span aria-hidden="true" class="label-long">Trois</span>
-                        <span aria-hidden="true" class="label-medium">Troi</span>
-                        <span aria-hidden="true" class="label-short">3</span>
-                </th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Victoires</span>
-                        <span aria-hidden="true" class="label-long">Vict</span>
-                        <span aria-hidden="true" class="label-medium">Vict</span>
-                        <span aria-hidden="true" class="label-short">Vi</span>
-                </th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Podiums</span>
-                        <span aria-hidden="true" class="label-long">Podiu</span>
-                        <span aria-hidden="true" class="label-medium">Podi</span>
-                        <span aria-hidden="true" class="label-short">Po</span>
-                </th>
-                <th class="text-center">GP</th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Points</span>
-                        <span aria-hidden="true" class="label-long">Pts</span>
-                        <span aria-hidden="true" class="label-medium">Pts</span>
-                        <span aria-hidden="true" class="label-short">Pts</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($drivers as $i => $d): ?>
-            <tr>
-                <td class="badge-width"><?= podiumBadge($i + 1) ?></td>
-                <td class="driver-name"><?= htmlspecialchars($d->nickname) ?></td>
-                <td class="text-center"><?= $d->titles ?></td>
-                <td class="text-center"><?= $d->vice_titles ?></td>
-                <td class="text-center"><?= $d->third_places ?></td>
-                <td class="text-center"><?= $d->wins ?></td>
-                <td class="text-center"><?= $d->podiums ?></td>
-                <td class="text-center"><?= htmlspecialchars($d->total_gp ?? 0) ?></td>
-                <td class="text-center"><?= htmlspecialchars(rtrim(rtrim(number_format($d->total_points ?? 0, 1, '.', ''),'0'),'.')) ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+            <p class="gp-subtitle">
+                <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
+            </p>
+
+            <div class="table-responsive">
+                <table class="dashboard-table fix sortable table-th-responsive palmares-teams-table">
+                    <thead>
+                        <tr>
+                            <th class="badge-width no-sort th-responsive" title="Position">
+                                <span class="label-aria">Position</span>
+                            </th>
+                            <th title="Équipe">Équipe</th>
+                            <th class="text-center th-responsive" title="Champions">
+                                <span class="label-aria">Champions</span>
+                                <i class="fa-solid fa-medal icon-champion" aria-hidden="true"></i>
+                            </th>
+                            <th class="text-center th-responsive" title="Points">
+                                Points
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($teamsByCategory[$category] as $i => $t): ?>
+                        <tr>
+                            <td class="badge-width down" title="Position"><?= podiumBadge($i + 1) ?></td>
+                            <td class="team-name down" title="Équipe"><?= htmlspecialchars($t->team_name) ?></td>
+                            <td class="text-center" title="Champions"><?= $t->titles ?></td>
+                            <td class="text-center" title="Points"><?= htmlspecialchars(rtrim(rtrim(number_format($t->total_points ?? 0, 1, '.', ''),'0'),'.')) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+
+        <!-- DRIVERS -->
+        <h3 class="gp-title">Palmarès Pilotes</h3>
+        
+        <p class="gp-subtitle">
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
+        </p>
+
+        <div class="table-responsive">
+            <table class="dashboard-table fix sortable table-th-responsive palmares-drivers-table">
+                <thead>
+                    <tr>
+                        <th class="badge-width no-sort th-responsive" title="Position">
+                            <span class="label-aria">Position</span>
+                        </th>
+                        <th title="Pilote">Pilote</th>
+                        <th class="text-center th-responsive down" title="Champions">
+                            <span class="label-aria">Champions</span>
+                            <i class="fa-solid fa-medal icon-champion" aria-hidden="true"></i>
+                        </th>
+                        <th class="text-center th-responsive" title="Vice-Champions">
+                            <span class="label-aria">Vice-Champions</span>
+                            <i class="fa-solid fa-medal icon-second" aria-hidden="true"></i>
+                        </th>
+                        <th class="text-center th-responsive" title="Troisièmes">
+                            <span class="label-aria">Troisièmes</span>
+                            <i class="fa-solid fa-medal icon-third" aria-hidden="true"></i>
+                        </th>
+                        <th class="text-center th-responsive" title="Victoires">
+                            <span class="label-aria">Victoires</span>
+                            <span aria-hidden="true" class="label-long">Victoires</span>
+                            <span aria-hidden="true" class="label-medium">Vic</span>
+                            <span aria-hidden="true" class="label-short">Vic</span>
+                        </th>
+                        <th class="text-center th-responsive" title="Podiums">
+                            <span class="label-aria">Podiums</span>
+                            <span aria-hidden="true" class="label-long">Podiums</span>
+                            <span aria-hidden="true" class="label-medium">Pod</span>
+                            <span aria-hidden="true" class="label-short">Pod</span>
+                        </th>
+                        <th class="text-center" title="Grands Prix">GP</th>
+                        <th class="text-center th-responsive" title="Points">
+                            <span class="label-aria">Points</span>
+                            <span aria-hidden="true" class="label-long">Points</span>
+                            <span aria-hidden="true" class="label-medium">Pts</span>
+                            <span aria-hidden="true" class="label-short">Pts</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($drivers as $i => $d): ?>
+                    <!-- <tr> ciblé pour le Driver id=1 (Pilote inconnu) est conservé tout en bas du classement même après un tri JavaScript -->
+                    <tr <?= $d->driver_id == 1 ? 'data-fixed="bottom"' : '' ?>>
+                        <td class="badge-width down" title="Position"><?= podiumBadge($i + 1) ?></td>
+                        <td class="driver-name down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
+                        <td class="text-center" title="Champions"><?= $d->titles ?></td>
+                        <td class="text-center" title="Vice-Champions"><?= $d->vice_titles ?></td>
+                        <td class="text-center" title="Troisièmes"><?= $d->third_places ?></td>
+                        <td class="text-center" title="Victoires"><?= $d->wins ?></td>
+                        <td class="text-center" title="Podiums"><?= $d->podiums ?></td>
+                        <td class="text-center" title="Grands Prix"><?= htmlspecialchars($d->total_gp ?? 0) ?></td>
+                        <td class="text-center" title="Points"><?= htmlspecialchars(rtrim(rtrim(number_format($d->total_points ?? 0, 1, '.', ''),'0'),'.')) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
     </div>
-
-    <!-- TEAMS -->
-    <?php if (!empty($teamsByCategory[$category])): ?>
-    <h3>Palmarès Constructeurs</h3>
-    <div class="table-responsive">
-    <table class="dashboard-table sortable table-th-responsive palmares-teams-table">
-        <thead>
-            <tr>
-                <th class="badge-width no-sort th-responsive">
-                        <span class="label-aria">Position</span>
-                        <span aria-hidden="true" class="label-long"></span>
-                        <span aria-hidden="true" class="label-medium"></span>
-                        <span aria-hidden="true" class="label-short"></span>
-                </th>
-                <th>Équipe</th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Champions</span>
-                        <span aria-hidden="true" class="label-long">Champions</span>
-                        <span aria-hidden="true" class="label-medium">Champions</span>
-                        <span aria-hidden="true" class="label-short">Champi</span>
-                </th>
-                <th class="text-center th-responsive">
-                        <span class="label-aria">Points</span>
-                        <span aria-hidden="true" class="label-long">Points</span>
-                        <span aria-hidden="true" class="label-medium">Points</span>
-                        <span aria-hidden="true" class="label-short">Points</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($teamsByCategory[$category] as $i => $t): ?>
-            <tr>
-                <td class="badge-width"><?= podiumBadge($i + 1) ?></td>
-                <td class="team-name"><?= htmlspecialchars($t->team_name) ?></td>
-                <td class="text-center"><?= $t->titles ?></td>
-                <td class="text-center"><?= htmlspecialchars(rtrim(rtrim(number_format($t->total_points ?? 0, 1, '.', ''),'0'),'.')) ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-    </div>
-    <?php endif; ?>
-
-</div>
 <?php endforeach; ?>
-
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -188,7 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if(columnIndex === 0) return; // ignore colonne Position
 
-                const rows = Array.from(tbody.querySelectorAll('tr'));
+                // <tr> ciblé pour le Driver id=1 (Pilote inconnu) est conservé tout en bas du classement même après un tri JavaScript
+                const rows = Array.from(tbody.querySelectorAll('tr:not([data-fixed])'));
+                const fixedRows = Array.from(tbody.querySelectorAll('tr[data-fixed="bottom"]'));
 
                 rows.sort((a, b) => {
                     const cellA = a.children[columnIndex]?.innerText.trim() ?? '';
@@ -203,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 rows.forEach(row => tbody.appendChild(row));
+                fixedRows.forEach(row => tbody.appendChild(row));
 
                 // recalculer badges Position
                 rows.forEach((row, index) => {
@@ -251,55 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return value.toLowerCase();
     }
 
-    function updateResponsiveNames() {
-        const w = window.innerWidth;
-
-        /* Palmarès Pilotes */
-        document.querySelectorAll('.driver-name').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
-
-            const full = el.dataset.fullname;
-
-            if (w <= 500) {
-                el.textContent = full.substring(0, 10);
-            }
-            else if (w <= 700) {
-                el.textContent = full.substring(0, 16);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 20);
-            }
-            else {
-                el.textContent = full.substring(0, 22);
-            }
-        });
-
-        /* Palmarès Equipes */
-        document.querySelectorAll('.team-name').forEach(el => {
-            if (!el.dataset.fullname) {
-                el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-            }
-
-            const full = el.dataset.fullname;
-
-            if (w <= 500) {
-                el.textContent = full.substring(0, 18);
-            }
-            else if (w <= 700) {
-                el.textContent = full.substring(0, 28);
-            }
-            else if (w <= 900) {
-                el.textContent = full.substring(0, 40);
-            }
-            else {
-                el.textContent = full.substring(0, 50);
-            }
-        });
-    }
-    window.addEventListener('resize', updateResponsiveNames);
-    updateResponsiveNames();
 });
 </script>
 

@@ -3,7 +3,7 @@
 <div class="section-dashboard">
 
     <div class="section-header">
-        <a class="nav-btn-dashboard" href="index.php?controller=drivers">Retour</a>
+        <a class="nav-btn-dashboard" href="/drivers">Retour</a>
 
         <div class="category-title has-content section-title-crud">
             <h2 class="dashboard-crud-title no-margin">

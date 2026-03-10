@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\Form;
 use App\Models\DriversModel;
 use App\Models\CountriesModel;
+use App\Core\Auth;
 
 class DriversController extends Controller {
 
@@ -22,6 +23,71 @@ class DriversController extends Controller {
         $this->render('dashboard/drivers/index', [
             'list' => $drivers,
             'countries' => $countries
+        ]);
+    }
+
+    public function status()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /drivers');
+            exit;
+        }
+
+        if (
+            !isset($_POST['csrf_token']) ||
+            !Auth::validateCSRF($_POST['csrf_token'])
+        ) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Action refusée : token de sécurité invalide',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        if (empty($_POST['drivers']) || empty($_POST['status'])) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Aucun pilote sélectionné',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        // Sécurisation du status (enum)
+        if (!in_array($_POST['status'], ['active', 'desactive'], true)) {
+            $this->render('dashboard/drivers/index', [
+                'list' => DriversModel::all(),
+                'countries' => CountriesModel::all(),
+                'message' => 'Statut invalide',
+                'classMsg' => 'msg-error'
+            ]);
+            return;
+        }
+
+        $ids = array_map('intval', $_POST['drivers']);
+        $status = $_POST['status'];
+
+        $db = new DriversModel();
+        $pdo = $db->getConnection();
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        $stmt = $pdo->prepare("
+            UPDATE drivers 
+            SET status = ?
+            WHERE id IN ($placeholders)
+        ");
+
+        $stmt->execute(array_merge([$status], $ids));
+
+        $this->render('dashboard/drivers/index', [
+            'list' => DriversModel::all(),
+            'countries' => CountriesModel::all(),
+            'message' => 'Statut mis à jour pour ' . count($ids) . ' pilote(s)',
+            'classMsg' => 'msg-success'
         ]);
     }
 
@@ -94,7 +160,7 @@ class DriversController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=drivers&action=create", "POST")
+        $form->startForm("/drivers/create", "POST")
             ->addCSRF()
             ->addLabel("nickname", "Pseudo :")
             ->addInput("text", "nickname")
@@ -204,7 +270,7 @@ class DriversController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=drivers&action=update&id=" . $driver->id, "POST")
+        $form->startForm("/drivers/update/" . $driver->id, "POST")
             ->addCSRF()
             ->addLabel("nickname", "Pseudo :")
             ->addInput("text", "nickname", ["value" => $driver->nickname])
@@ -270,10 +336,30 @@ class DriversController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_teams_drivers_driver' => 'Impossible de supprimer : Le pilote est associé à un team dans une saison',
+                        'fk_gp_points_driver' => 'Impossible de supprimer : Le pilote est associé à un résultat de GP',
+                        'fk_gp_stats_pole_driver' => 'Impossible de supprimer : Le pilote est associé à une Pole Position',
+                        'fk_gp_stats_fastest_driver' => 'Impossible de supprimer : Le pilote est associé à un Fastest Lap',
+                        'fk_manual_adjustments_driver' => 'Impossible de supprimer : Le pilote a des ajustements manuels',
+                        'fk_penalties_driver' => 'Impossible de supprimer : Le pilote est associé à une pénalité',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             // Retour liste avec message succès ou erreur

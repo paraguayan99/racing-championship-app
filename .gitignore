@@ -2,12 +2,19 @@
 .env
 .env.*
 
-# WAMP
-/wamp64/
-/tmp/
+# Référencement
+robots.txt
+sitemap.xml
+
+#Backup BDD
+bdd_export_*.sql
 
 # Développement
 memos_dev.txt
+
+# WAMP
+/wamp64/
+/tmp/
 
 # Dépendances PHP (si jamais)
 vendor/

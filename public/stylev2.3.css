@@ -610,6 +610,7 @@ footer {
     margin-top: 20px;
 }
 
+/* Paramètre de toutes les tables */
 .dashboard-table {
     width: 100%;
     position: relative;
@@ -688,6 +689,42 @@ footer {
 .dashboard-table td.width-small-info {
     width: 90px;
 }
+
+/* Spécificités gestion des status active / desactive */
+
+.table-responsive.with-status-btn {
+    margin-top: 0px;
+}
+
+.dashboard-table th.width-checkbox,
+.dashboard-table td.width-checkbox {
+    width: 20px;
+}
+
+button.status-btn {
+    border: none;
+    font: inherit;
+    box-shadow: none;
+    -webkit-appearance: none;
+
+    text-align: center;
+    width: 100px;
+    margin: 20px 0px 5px;
+    padding: 2px;
+    border-radius: 5px;
+    background: #000000;
+    color: white;
+    text-decoration: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.status-btn:hover {
+    background-color: white;
+    color: #000000;
+}
+
 
 /* Tableau : Classes pour permettre aux éléments trop longs 
 de se cacher derrière ou passer au dessus de la cellule suivante */
@@ -787,7 +824,7 @@ td.upside {
 .badge-purple-dashboard {
     background: #8e44ad;
     color: white;
-    padding: 1px 2px;
+    padding: 0px 4px;
     border-radius: 12px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -919,6 +956,19 @@ td.upside {
     padding: 0;              /* Nettoyage */
 }
 
+/* Suppression des flèches natives haut/bas d'un select type number */
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 /* Pages DELETE */
 /* Forme des boutons Supprimer / Annuler */
 .h3-delete {
@@ -967,6 +1017,7 @@ td.upside {
 .btn.black {
     text-align: center;
 }
+
 .black {
     background: #000000;
 }
@@ -1182,6 +1233,12 @@ td.upside {
     font-weight: 900;
 }
 
+/* Pour réduire l'espace verticale si il y a un retour à la ligne */
+/* Présent aussi dans style900px */
+.category-title {
+    line-height: 0.8;
+}
+
 /* Saison */
 .category-title .season-title {
     font-size: 1.25rem;
@@ -1229,7 +1286,7 @@ td.upside {
 /* Podiums */
 .badge-gold { background: #ffd700; color: #000; }
 .badge-silver { background: #c0c0c0; color: #000; }
-.badge-bronze { background: #cd7f32; color: #d4d7dd;; }
+.badge-bronze { background: #cd7f32; color: #000;; }
 
 /* Positions 4+ */
 .badge-normal { background: #15151E; color: #d4d7dd;; }
@@ -1284,7 +1341,7 @@ td.upside {
 }
 
 /* Classement Pilotes uniquement */
-.drivers-table thead th:nth-child(1)::after { content: ""; }
+/* .drivers-table thead th:nth-child(1)::after { content: ""; }
 .drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
 .drivers-table thead th:nth-child(3)::after { content: "Équipe"; }
 .drivers-table thead th:nth-child(4)::after { content: "Pts"; }
@@ -1300,7 +1357,7 @@ td.upside {
 
 .drivers-table thead th::after {
     font-size: 1rem;
-}
+} */
 
 /* Colonne Pilote */
 .drivers-table td.driver-cell,
@@ -1314,11 +1371,13 @@ td.upside {
     width: 20%;
 }
 
+.drivers-table .driver-name,
 .drivers-table .team-name,
+.teams-table .teams-table-team-name,
+.modal-gp-results-table .driver-name,
 .modal-gp-results-table .team-name {
     text-shadow:     
-        0 0 4px rgba(0,0,0,1),
-        0 0 10px rgba(0,0,0,.7);
+        0 0 2px rgba(0,0,0,0.7);
 }
 
 /* Colonne Points */
@@ -1367,17 +1426,17 @@ td.upside {
 }
 
 
-.teams-table thead th:nth-child(1)::after { content: ""; }
+/* .teams-table thead th:nth-child(1)::after { content: ""; }
 .teams-table thead th:nth-child(2)::after { content: "Équipe"; }
 .teams-table thead th:nth-child(3)::after { content: "Points"; }
 
 .teams-table thead th {
     font-size: 0;
-}
+} */
 
-.teams-table thead th::after {
+/* .teams-table thead th {
     font-size: 1rem;
-}
+} */
 
 /* Colonne Équipe */
 .teams-table td.team-cell,
@@ -1442,11 +1501,11 @@ td.upside {
 /* Tableaux Résultats GP : Top 3 + PP + FL de la Saison uniquement */
 
 /* badge-width pour la colonne Badge */
-.gp-season-table thead th:nth-child(1)::after { content: ""; }
+/* .gp-season-table thead th:nth-child(1)::after { content: ""; }
 
 .gp-season-table thead th:nth-child(1) {
     font-size: 0;
-}
+} */
  
 /* Circuit */
 .gp-season-table th:nth-child(2),
@@ -1510,7 +1569,7 @@ td.upside {
 .gp-subtitle {
     font-size: 0.85rem;
     margin: 0;
-    color: #687080;
+    color: #b8bbc0;
 }
 
 
@@ -1646,24 +1705,24 @@ td.upside {
 
 /* Tableau des Résultats du GP */
 
-.modal-gp-results-table thead th:nth-child(1)::after { content: ""; }
+/* .modal-gp-results-table thead th:nth-child(1)::after { content: ""; }
 .modal-gp-results-table thead th:nth-child(2)::after { content: "Pilote"; }
 .modal-gp-results-table thead th:nth-child(3)::after { content: "Équipe"; }
 .modal-gp-results-table thead th:nth-child(4)::after { content: "Points"; }
-.modal-gp-results-table thead th:nth-child(5)::after { content: ""; }
+.modal-gp-results-table thead th:nth-child(5)::after { content: ""; } */
 
-.modal-gp-results-table thead th {
+/* .modal-gp-results-table thead th {
     font-size: 0;
 }
 
 .modal-gp-results-table thead th::after {
     font-size: 1rem;
-}
+} */
 
-.modal-gp-results-table tbody td:nth-child(4),
+/* .modal-gp-results-table tbody td:nth-child(4),
 .modal-gp-results-table tbody td:nth-child(5) { 
     font-weight: 700; 
-}
+} */
 
 /* Pilote */
 .modal-gp-results-table th:nth-child(2),
@@ -1680,18 +1739,12 @@ td.upside {
 
 
 
-
-
-
-
-
-
-/* Page Palmarès pour effectuer le tri par colonne en Javascript */
+/* Page Palmarès et Circuits pour effectuer le tri par colonne en Javascript */
 
 table.sortable th {
     cursor: pointer;
     position: relative;
-    padding-right: 10px;
+    padding-bottom: 20px;
 }
 
 /* Centrer verticalement contenu du thead */
@@ -1700,11 +1753,30 @@ table.sortable th span {
     align-items: center;
 }
 
+/* Créer une fausse deuxième ligne avec ::before */
+table.sortable th::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+/* Flèches à gauche pour la colonne "Pilote" (2ème colonne) */
+table.sortable th:nth-child(2)::after {
+    left: 15px;
+    transform: none;
+}
+
 table.sortable th::after {
     content: "⇅";
     position: absolute;
-    right: 6px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
     opacity: 0.4;
+    z-index: 1;
 }
 
 table.sortable th.asc::after {
@@ -1720,8 +1792,6 @@ table.sortable th.desc::after {
 /* no-sort : Supprime les flèches de tri et garde le curseur de la souris par défaut */
 table.sortable th.no-sort {
     cursor: default;
-    position: relative;
-    padding-right: 0px;
 }
 
 table.sortable th.no-sort::after {
@@ -1785,37 +1855,50 @@ table.sortable th.no-sort::after {
 /* Palmarès Pilotes */
 
 /* Tailles des colonnes */
-/* Colonnes : Champions + Vice-Champions + Troisièmes + Victoires + Podiums */
+
+/* 3 colonnes : Champions + Vice-Champions + Troisièmes */
 .palmares-drivers-table th:nth-child(3),
 .palmares-drivers-table td:nth-child(3),
 .palmares-drivers-table th:nth-child(4),
 .palmares-drivers-table td:nth-child(4),
 .palmares-drivers-table th:nth-child(5),
-.palmares-drivers-table td:nth-child(5),
+.palmares-drivers-table td:nth-child(5) {
+    width: 8%;
+}
+
+/* 2 colonnes : Victoires + Podiums */
 .palmares-drivers-table th:nth-child(6),
 .palmares-drivers-table td:nth-child(6),
 .palmares-drivers-table th:nth-child(7),
 .palmares-drivers-table td:nth-child(7) {
-    width: 8%;
+    width: 10%;
 }
 
-/* Colonnes : GP + Points */
+/* Colonne : GP */
 .palmares-drivers-table th:nth-child(8),
-.palmares-drivers-table td:nth-child(8),
+.palmares-drivers-table td:nth-child(8) {
+    width: 15%;
+}
+
+/* Colonne : Points */
 .palmares-drivers-table th:nth-child(9),
 .palmares-drivers-table td:nth-child(9) {
-    width: 9%;
+    width: 15%;
 }
 
-/* Palmarès Equipes */
+.icon-champion {
+    color: #ffd700;
+    /* margin-left: 10px; */
+}
 
-/* Tailles des colonnes */
-/* Colonnes : Champions + Points */
-.palmares-teams-table th:nth-child(3),
-.palmares-teams-table td:nth-child(3),
-.palmares-teams-table th:nth-child(4),
-.palmares-teams-table td:nth-child(4) {
-    width: 20%;
+.icon-second {
+    color: #c0c0c0;
+    /* margin-left: 10px; */
+}
+
+.icon-third {
+    color: #cd7f32;
+    /* margin-left: 10px; */
 }
 
 
@@ -1839,7 +1922,7 @@ table.sortable th.no-sort::after {
 .badge-purple {
     background: #8e44ad;
     color: white;
-    padding: 4px 8px;
+    padding: 0px 8px;
     border-radius: 12px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -1908,7 +1991,7 @@ table.sortable th.no-sort::after {
 .circuits-drivers-table td:nth-child(6),
 .circuits-drivers-table th:nth-child(7),
 .circuits-drivers-table td:nth-child(7) {
-    width: 11%;
+    width: 13%;
 }
 
 

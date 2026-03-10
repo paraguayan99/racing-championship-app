@@ -65,6 +65,7 @@ class ClassementsModel extends DbConnect
                 -- Infos de la saison
                 s.videogame,
                 s.platform,
+                s.season_name,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -79,7 +80,31 @@ class ClassementsModel extends DbConnect
                 -- Statistiques
                 COUNT(DISTINCT gpp.gp_id) AS gp_count,
                 COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
-                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count,
+
+                -- Positions pour départager les égalités
+                COUNT(CASE WHEN gpp.position = 1 THEN 1 END) AS pos_1,
+                COUNT(CASE WHEN gpp.position = 2 THEN 1 END) AS pos_2,
+                COUNT(CASE WHEN gpp.position = 3 THEN 1 END) AS pos_3,
+                COUNT(CASE WHEN gpp.position = 4 THEN 1 END) AS pos_4,
+                COUNT(CASE WHEN gpp.position = 5 THEN 1 END) AS pos_5,
+                COUNT(CASE WHEN gpp.position = 6 THEN 1 END) AS pos_6,
+                COUNT(CASE WHEN gpp.position = 7 THEN 1 END) AS pos_7,
+                COUNT(CASE WHEN gpp.position = 8 THEN 1 END) AS pos_8,
+                COUNT(CASE WHEN gpp.position = 9 THEN 1 END) AS pos_9,
+                COUNT(CASE WHEN gpp.position = 10 THEN 1 END) AS pos_10,
+                COUNT(CASE WHEN gpp.position = 11 THEN 1 END) AS pos_11,
+                COUNT(CASE WHEN gpp.position = 12 THEN 1 END) AS pos_12,
+                COUNT(CASE WHEN gpp.position = 13 THEN 1 END) AS pos_13,
+                COUNT(CASE WHEN gpp.position = 14 THEN 1 END) AS pos_14,
+                COUNT(CASE WHEN gpp.position = 15 THEN 1 END) AS pos_15,
+                COUNT(CASE WHEN gpp.position = 16 THEN 1 END) AS pos_16,
+                COUNT(CASE WHEN gpp.position = 17 THEN 1 END) AS pos_17,
+                COUNT(CASE WHEN gpp.position = 18 THEN 1 END) AS pos_18,
+                COUNT(CASE WHEN gpp.position = 19 THEN 1 END) AS pos_19,
+                COUNT(CASE WHEN gpp.position = 20 THEN 1 END) AS pos_20,
+                COUNT(CASE WHEN gpp.position = 21 THEN 1 END) AS pos_21,
+                COUNT(CASE WHEN gpp.position = 22 THEN 1 END) AS pos_22
 
             FROM drivers_standings ds
 
@@ -111,7 +136,33 @@ class ClassementsModel extends DbConnect
             WHERE ds.season_status = 'active'
 
             GROUP BY ds.season_id, ds.driver_id
-            ORDER BY ds.category ASC, ds.total_points DESC
+            ORDER BY 
+                ds.category ASC, 
+                ds.total_points DESC,
+                pos_1 DESC,
+                pos_2 DESC,
+                pos_3 DESC,
+                pos_4 DESC,
+                pos_5 DESC,
+                pos_6 DESC,
+                pos_7 DESC,
+                pos_8 DESC,
+                pos_9 DESC,
+                pos_10 DESC,
+                pos_11 DESC,
+                pos_12 DESC,
+                pos_13 DESC,
+                pos_14 DESC,
+                pos_15 DESC,
+                pos_16 DESC,
+                pos_17 DESC,
+                pos_18 DESC,
+                pos_19 DESC,
+                pos_20 DESC,
+                pos_21 DESC,
+                pos_22 DESC,
+                gp_count DESC,
+                ds.nickname ASC
         ";
         return $db->getConnection()->query($sql)->fetchAll();
     }
@@ -127,6 +178,7 @@ class ClassementsModel extends DbConnect
                 -- Infos saison
                 s.videogame,
                 s.platform,
+                s.season_name,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -141,7 +193,31 @@ class ClassementsModel extends DbConnect
                 -- Statistiques
                 COUNT(DISTINCT gpp.gp_id) AS gp_count,
                 COUNT(CASE WHEN gs.pole_position_driver = ds.driver_id THEN 1 END) AS pole_count,
-                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count
+                COUNT(CASE WHEN gs.fastest_lap_driver = ds.driver_id THEN 1 END) AS fastestlap_count,
+
+                -- Positions pour départager les égalités
+                COUNT(CASE WHEN gpp.position = 1 THEN 1 END) AS pos_1,
+                COUNT(CASE WHEN gpp.position = 2 THEN 1 END) AS pos_2,
+                COUNT(CASE WHEN gpp.position = 3 THEN 1 END) AS pos_3,
+                COUNT(CASE WHEN gpp.position = 4 THEN 1 END) AS pos_4,
+                COUNT(CASE WHEN gpp.position = 5 THEN 1 END) AS pos_5,
+                COUNT(CASE WHEN gpp.position = 6 THEN 1 END) AS pos_6,
+                COUNT(CASE WHEN gpp.position = 7 THEN 1 END) AS pos_7,
+                COUNT(CASE WHEN gpp.position = 8 THEN 1 END) AS pos_8,
+                COUNT(CASE WHEN gpp.position = 9 THEN 1 END) AS pos_9,
+                COUNT(CASE WHEN gpp.position = 10 THEN 1 END) AS pos_10,
+                COUNT(CASE WHEN gpp.position = 11 THEN 1 END) AS pos_11,
+                COUNT(CASE WHEN gpp.position = 12 THEN 1 END) AS pos_12,
+                COUNT(CASE WHEN gpp.position = 13 THEN 1 END) AS pos_13,
+                COUNT(CASE WHEN gpp.position = 14 THEN 1 END) AS pos_14,
+                COUNT(CASE WHEN gpp.position = 15 THEN 1 END) AS pos_15,
+                COUNT(CASE WHEN gpp.position = 16 THEN 1 END) AS pos_16,
+                COUNT(CASE WHEN gpp.position = 17 THEN 1 END) AS pos_17,
+                COUNT(CASE WHEN gpp.position = 18 THEN 1 END) AS pos_18,
+                COUNT(CASE WHEN gpp.position = 19 THEN 1 END) AS pos_19,
+                COUNT(CASE WHEN gpp.position = 20 THEN 1 END) AS pos_20,
+                COUNT(CASE WHEN gpp.position = 21 THEN 1 END) AS pos_21,
+                COUNT(CASE WHEN gpp.position = 22 THEN 1 END) AS pos_22
 
             FROM drivers_standings ds
 
@@ -174,7 +250,33 @@ class ClassementsModel extends DbConnect
             AND ds.season_status = 'desactive'
 
             GROUP BY ds.season_id, ds.driver_id
-            ORDER BY ds.category ASC, ds.total_points DESC
+            ORDER BY
+                ds.category ASC, 
+                ds.total_points DESC,
+                pos_1 DESC,
+                pos_2 DESC,
+                pos_3 DESC,
+                pos_4 DESC,
+                pos_5 DESC,
+                pos_6 DESC,
+                pos_7 DESC,
+                pos_8 DESC,
+                pos_9 DESC,
+                pos_10 DESC,
+                pos_11 DESC,
+                pos_12 DESC,
+                pos_13 DESC,
+                pos_14 DESC,
+                pos_15 DESC,
+                pos_16 DESC,
+                pos_17 DESC,
+                pos_18 DESC,
+                pos_19 DESC,
+                pos_20 DESC,
+                pos_21 DESC,
+                pos_22 DESC,
+                gp_count DESC,
+                ds.nickname ASC
         ";
 
         $stmt = $db->getConnection()->prepare($sql);
@@ -231,19 +333,84 @@ class ClassementsModel extends DbConnect
     }
 
 
+    // // Retourne les Résultats des GP des Saisons Actives
+    // public static function getSeasonGPResultsActive()
+    // {
+    //     $db = new DbConnect();
+    //     $sql = "
+    //         SELECT g.*, s.season_number, c.name AS category,
+    //             cir.name AS circuit_name,
+    //             co.name AS country_name,
+    //             co.code AS country_code,
+    //             co.flag AS country_flag,
+    //             (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
+    //             (
+    //                 SELECT JSON_ARRAYAGG(
+    //                     JSON_OBJECT(
+    //                         'position', sub.position,
+    //                         'driver_id', sub.driver_id,
+    //                         'nickname', sub.nickname,
+    //                         'driver_flag', sub.driver_flag,
+    //                         'team_name', sub.team_name,
+    //                         'team_logo', sub.team_logo,
+    //                         'team_color', sub.team_color,
+    //                         'team_flag', sub.team_flag
+    //                     )
+    //                 )
+    //                 FROM (
+    //                     SELECT gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
+    //                             t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
+    //                     FROM gp_points
+    //                     JOIN drivers d ON d.id = gp_points.driver_id
+    //                     LEFT JOIN countries dr_country ON dr_country.id = d.country_id
+    //                     LEFT JOIN teams t ON t.id = gp_points.team_id
+    //                     LEFT JOIN countries t_country ON t_country.id = t.country_id
+    //                     WHERE gp_points.gp_id = g.id
+    //                         AND gp_points.position IN (1,2,3)
+    //                     ORDER BY gp_points.position ASC
+    //                 ) AS sub
+    //             ) AS top3,
+    //             (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.pole_position_driver WHERE gs.gp_id = g.id) AS pole_driver,
+    //             (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver WHERE gs.gp_id = g.id) AS fastest_lap_driver
+    //         FROM gp g
+    //         JOIN seasons s ON s.id = g.season_id
+    //         JOIN categories c ON c.id = s.category_id
+    //         LEFT JOIN circuits cir ON cir.id = g.circuit_id
+    //         LEFT JOIN countries co ON co.id = cir.country_id
+    //         WHERE s.status = 'active'
+    //         ORDER BY c.name ASC, g.gp_ordre ASC
+    //     ";
+    //     return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
+    // }
+
+    // Pour o2switch (modifications des sous requêtes WHERE gp_points.gp_id = g.id)
     // Retourne les Résultats des GP des Saisons Actives
     public static function getSeasonGPResultsActive()
     {
         $db = new DbConnect();
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.code AS country_code,
                 co.flag AS country_flag,
-                (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
-                (
-                    SELECT JSON_ARRAYAGG(
+                season_gp_count.total_gp,
+                gp_top3.top3,
+                pole_stats.pole_driver,
+                fastest_stats.fastest_lap_driver
+            FROM gp g
+            JOIN seasons s ON s.id = g.season_id
+            JOIN categories c ON c.id = s.category_id
+            LEFT JOIN circuits cir ON cir.id = g.circuit_id
+            LEFT JOIN countries co ON co.id = cir.country_id
+            LEFT JOIN (
+                SELECT season_id, COUNT(*) AS total_gp 
+                FROM gp 
+                GROUP BY season_id
+            ) season_gp_count ON season_gp_count.season_id = g.season_id
+            LEFT JOIN (
+                SELECT gp_id,
+                    JSON_ARRAYAGG(
                         JSON_OBJECT(
                             'position', sub.position,
                             'driver_id', sub.driver_id,
@@ -254,46 +421,116 @@ class ClassementsModel extends DbConnect
                             'team_color', sub.team_color,
                             'team_flag', sub.team_flag
                         )
-                    )
-                    FROM (
-                        SELECT gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
-                                t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
-                        FROM gp_points
-                        JOIN drivers d ON d.id = gp_points.driver_id
-                        LEFT JOIN countries dr_country ON dr_country.id = d.country_id
-                        LEFT JOIN teams t ON t.id = gp_points.team_id
-                        LEFT JOIN countries t_country ON t_country.id = t.country_id
-                        WHERE gp_points.gp_id = g.id
-                            AND gp_points.position IN (1,2,3)
-                        ORDER BY gp_points.position ASC
-                    ) AS sub
-                ) AS top3,
-                (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.pole_position_driver WHERE gs.gp_id = g.id) AS pole_driver,
-                (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver WHERE gs.gp_id = g.id) AS fastest_lap_driver
-            FROM gp g
-            JOIN seasons s ON s.id = g.season_id
-            JOIN categories c ON c.id = s.category_id
-            LEFT JOIN circuits cir ON cir.id = g.circuit_id
-            LEFT JOIN countries co ON co.id = cir.country_id
+                    ) AS top3
+                FROM (
+                    SELECT gp_points.gp_id, gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
+                            t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
+                    FROM gp_points
+                    JOIN drivers d ON d.id = gp_points.driver_id
+                    LEFT JOIN countries dr_country ON dr_country.id = d.country_id
+                    LEFT JOIN teams t ON t.id = gp_points.team_id
+                    LEFT JOIN countries t_country ON t_country.id = t.country_id
+                    WHERE gp_points.position IN (1,2,3)
+                    ORDER BY gp_points.position ASC
+                ) AS sub
+                GROUP BY gp_id
+            ) gp_top3 ON gp_top3.gp_id = g.id
+            LEFT JOIN (
+                SELECT gs.gp_id, d.nickname AS pole_driver 
+                FROM gp_stats gs 
+                LEFT JOIN drivers d ON d.id = gs.pole_position_driver
+            ) pole_stats ON pole_stats.gp_id = g.id
+            LEFT JOIN (
+                SELECT gs.gp_id, d.nickname AS fastest_lap_driver 
+                FROM gp_stats gs 
+                LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver
+            ) fastest_stats ON fastest_stats.gp_id = g.id
             WHERE s.status = 'active'
             ORDER BY c.name ASC, g.gp_ordre ASC
         ";
         return $db->getConnection()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    // // Retourne les Résultats des GP pour une saison donnée
+    // public static function getSeasonGPResultsBySeason($seasonId)
+    // {
+    //     $db = new DbConnect();
+    //     $sql = "
+    //         SELECT g.*, s.season_number, c.name AS category,
+    //             cir.name AS circuit_name,
+    //             co.name AS country_name,
+    //             co.code AS country_code,
+    //             co.flag AS country_flag,
+    //             (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
+    //             (
+    //                 SELECT JSON_ARRAYAGG(
+    //                     JSON_OBJECT(
+    //                         'position', sub.position,
+    //                         'driver_id', sub.driver_id,
+    //                         'nickname', sub.nickname,
+    //                         'driver_flag', sub.driver_flag,
+    //                         'team_name', sub.team_name,
+    //                         'team_logo', sub.team_logo,
+    //                         'team_color', sub.team_color,
+    //                         'team_flag', sub.team_flag
+    //                     )
+    //                 )
+    //                 FROM (
+    //                     SELECT gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
+    //                             t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
+    //                     FROM gp_points
+    //                     JOIN drivers d ON d.id = gp_points.driver_id
+    //                     LEFT JOIN countries dr_country ON dr_country.id = d.country_id
+    //                     LEFT JOIN teams t ON t.id = gp_points.team_id
+    //                     LEFT JOIN countries t_country ON t_country.id = t.country_id
+    //                     WHERE gp_points.gp_id = g.id
+    //                         AND gp_points.position IN (1,2,3)
+    //                     ORDER BY gp_points.position ASC
+    //                 ) AS sub
+    //             ) AS top3,
+    //             (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.pole_position_driver WHERE gs.gp_id = g.id) AS pole_driver,
+    //             (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver WHERE gs.gp_id = g.id) AS fastest_lap_driver
+    //         FROM gp g
+    //         JOIN seasons s ON s.id = g.season_id
+    //         JOIN categories c ON c.id = s.category_id
+    //         LEFT JOIN circuits cir ON cir.id = g.circuit_id
+    //         LEFT JOIN countries co ON co.id = cir.country_id
+    //         WHERE g.season_id = :season_id
+    //         ORDER BY g.gp_ordre ASC
+    //     ";
+    //     $stmt = $db->getConnection()->prepare($sql);
+    //     $stmt->execute(['season_id' => $seasonId]);
+    //     return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    // }
+
+    // Pour o2switch (modifications des sous requêtes)
     // Retourne les Résultats des GP pour une saison donnée
     public static function getSeasonGPResultsBySeason($seasonId)
     {
         $db = new DbConnect();
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.code AS country_code,
                 co.flag AS country_flag,
-                (SELECT COUNT(*) FROM gp WHERE season_id = g.season_id) AS total_gp,
-                (
-                    SELECT JSON_ARRAYAGG(
+                season_gp_count.total_gp,
+                gp_top3.top3,
+                pole_stats.pole_driver,
+                fastest_stats.fastest_lap_driver
+            FROM gp g
+            JOIN seasons s ON s.id = g.season_id
+            JOIN categories c ON c.id = s.category_id
+            LEFT JOIN circuits cir ON cir.id = g.circuit_id
+            LEFT JOIN countries co ON co.id = cir.country_id
+            LEFT JOIN (
+                SELECT season_id, COUNT(*) AS total_gp 
+                FROM gp 
+                GROUP BY season_id
+            ) season_gp_count ON season_gp_count.season_id = g.season_id
+            LEFT JOIN (
+                SELECT gp_id,
+                    JSON_ARRAYAGG(
                         JSON_OBJECT(
                             'position', sub.position,
                             'driver_id', sub.driver_id,
@@ -304,27 +541,30 @@ class ClassementsModel extends DbConnect
                             'team_color', sub.team_color,
                             'team_flag', sub.team_flag
                         )
-                    )
-                    FROM (
-                        SELECT gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
-                                t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
-                        FROM gp_points
-                        JOIN drivers d ON d.id = gp_points.driver_id
-                        LEFT JOIN countries dr_country ON dr_country.id = d.country_id
-                        LEFT JOIN teams t ON t.id = gp_points.team_id
-                        LEFT JOIN countries t_country ON t_country.id = t.country_id
-                        WHERE gp_points.gp_id = g.id
-                            AND gp_points.position IN (1,2,3)
-                        ORDER BY gp_points.position ASC
-                    ) AS sub
-                ) AS top3,
-                (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.pole_position_driver WHERE gs.gp_id = g.id) AS pole_driver,
-                (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver WHERE gs.gp_id = g.id) AS fastest_lap_driver
-            FROM gp g
-            JOIN seasons s ON s.id = g.season_id
-            JOIN categories c ON c.id = s.category_id
-            LEFT JOIN circuits cir ON cir.id = g.circuit_id
-            LEFT JOIN countries co ON co.id = cir.country_id
+                    ) AS top3
+                FROM (
+                    SELECT gp_points.gp_id, gp_points.position, gp_points.driver_id, d.nickname, dr_country.flag AS driver_flag,
+                            t.name AS team_name, t.logo AS team_logo, t.color AS team_color, t_country.flag AS team_flag
+                    FROM gp_points
+                    JOIN drivers d ON d.id = gp_points.driver_id
+                    LEFT JOIN countries dr_country ON dr_country.id = d.country_id
+                    LEFT JOIN teams t ON t.id = gp_points.team_id
+                    LEFT JOIN countries t_country ON t_country.id = t.country_id
+                    WHERE gp_points.position IN (1,2,3)
+                    ORDER BY gp_points.position ASC
+                ) AS sub
+                GROUP BY gp_id
+            ) gp_top3 ON gp_top3.gp_id = g.id
+            LEFT JOIN (
+                SELECT gs.gp_id, d.nickname AS pole_driver 
+                FROM gp_stats gs 
+                LEFT JOIN drivers d ON d.id = gs.pole_position_driver
+            ) pole_stats ON pole_stats.gp_id = g.id
+            LEFT JOIN (
+                SELECT gs.gp_id, d.nickname AS fastest_lap_driver 
+                FROM gp_stats gs 
+                LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver
+            ) fastest_stats ON fastest_stats.gp_id = g.id
             WHERE g.season_id = :season_id
             ORDER BY g.gp_ordre ASC
         ";
@@ -340,7 +580,7 @@ class ClassementsModel extends DbConnect
 
         // Infos GP + stats + circuit + pays
         $sql = "
-            SELECT g.*, s.season_number, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, c.name AS category,
                 c.color AS category_color,
                 cir.name AS circuit_name,
                 co.name AS country_name,

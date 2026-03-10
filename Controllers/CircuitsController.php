@@ -93,7 +93,7 @@ class CircuitsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=circuits&action=create", "POST")
+        $form->startForm("/circuits/create", "POST")
             ->addCSRF()
             ->addLabel("name", "Nom du circuit :")
             ->addInput("text", "name")
@@ -196,7 +196,7 @@ class CircuitsController extends Controller {
             $countriesOptions[$c->id] = $c->name;
         }
 
-        $form->startForm("index.php?controller=circuits&action=update&id=" . $circuit->id, "POST")
+        $form->startForm("/circuits/update/" . $circuit->id, "POST")
             ->addCSRF()
             ->addLabel("name", "Nom :")
             ->addInput("text", "name", ["value" => $circuit->name])
@@ -261,10 +261,25 @@ class CircuitsController extends Controller {
                 }
 
             } catch (\PDOException $e) {
-                // Ici, $e->getMessage() contient exactement le MESSAGE_TEXT du trigger SQL (contraintes de suppression)
-                // $e->errorInfo[2] contient uniquement le MESSAGE_TEXT du trigger
-                $message = $e->errorInfo[2] ?? $e->getMessage();
                 $classMsg = "msg-error";
+
+                // Gestion des erreurs de contrainte foreign key
+                if (isset($e->errorInfo[1]) && $e->errorInfo[1] == 1451) {
+                    // On récupère le nom de la contrainte depuis le message MySQL
+                    preg_match('/CONSTRAINT `(.*?)`/', $e->errorInfo[2], $matches);
+                    $constraint = $matches[1] ?? '';
+
+                    // Messages personnalisés pour chaque contrainte
+                    $messages = [
+                        'fk_gp_circuit' => 'Impossible de supprimer : Le circuit est associé à un GP',
+                    ];
+
+                    // On choisit le message correspondant sinon un message générique
+                    $message = $messages[$constraint] ?? "Impossible de supprimer : des éléments liés existent";
+                } else {
+                    // Autre type d'erreur SQL
+                    $message = $e->errorInfo[2] ?? $e->getMessage();
+                }
             }
 
             // Retour liste avec message succès ou erreur

@@ -1,0 +1,126 @@
+# Désactiver le listing des dossiers
+Options -Indexes
+
+# Active la réécriture
+RewriteEngine On
+
+###############################################
+# Redirection directe de /public/index.php vers la racine
+###############################################
+RewriteCond %{THE_REQUEST} /public/index\.php [NC]
+RewriteRule ^index\.php$ https://team-eracing.fr/ [R=301,L]
+
+###############################################
+# 1) Forcer HTTPS + Redirection www → non-www
+###############################################
+# Redirection www vers non-www
+RewriteCond %{HTTP_HOST} ^www\.team-eracing\.fr$ [NC]
+RewriteRule ^(.*)$ https://team-eracing.fr/$1 [R=301,L]
+
+# Forcer HTTPS (seulement si pas déjà en HTTPS)
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirection de /index.php vers la racine
+RewriteCond %{THE_REQUEST} \ /index\.php [NC]
+RewriteRule ^index\.php$ https://team-eracing.fr/ [R=301,L]
+
+# Redirection de /public/index.php vers la racine
+RewriteCond %{THE_REQUEST} \ /public/index\.php [NC]
+RewriteRule ^public/index\.php$ https://team-eracing.fr/ [R=301,L]
+
+###############################################
+# 2) Redirections 301 : Anciennes URLs → Nouvelles URLs
+# Anciennes URLs : index.php?controller=categories&action=delete&id=1
+###############################################
+
+# EXCLUSION AJAX gpDetails (MODALS)
+RewriteCond %{REQUEST_URI} .*/index\.php$
+RewriteCond %{QUERY_STRING} (^|&)action=gpDetails(&|$)
+RewriteRule ^ - [L]
+
+# Anciennes URLs avec gp_id → URLs propres
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)&gp_id=([0-9]+)
+RewriteRule ^index\.php$ /%1/%2/%3? [R=301,L]
+
+# Anciennes URLs avec paramètre _id → URLs propres
+RewriteCond %{THE_REQUEST} ^GET\ /([^/\s]+)/([^/\s?]+)\?controller=[^&\s]+&action=[^&\s]+&([a-zA-Z0-9_]+)_id=([a-zA-Z0-9_-]+)
+RewriteRule ^([^/]+)/([^/]+)$ /%1/%2/%3/%4? [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^GET\ /([^/\s?]+)\?controller=[^&\s]+&action=([^&\s]+)&([a-zA-Z0-9_]+)_id=([a-zA-Z0-9_-]+)
+RewriteRule ^([^/]+)$ /%1/%2/%3/%4? [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)&([a-zA-Z0-9_]+)_id=([a-zA-Z0-9_-]+)
+RewriteRule ^index\.php$ /%1/%2/%3/%4? [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)&([a-zA-Z0-9_]+)_id=(&|$)
+RewriteRule ^index\.php$ /%1/%2/%3/? [R=301,L]
+
+# Anciennes URLs avec id simple → URLs propres
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)&id=([0-9]+)
+RewriteRule ^index\.php$ /%1/%2/%3? [R=301,L]
+
+# Sans paramètre
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)&action=([^&\s]+)
+RewriteRule ^index\.php$ /%1/%2? [R=301,L]
+
+# Controller seul
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php\?controller=([^&\s]+)
+RewriteRule ^index\.php$ /%1? [R=301,L]
+
+###############################################
+# 3) Rediriger la racine
+###############################################
+RewriteRule ^$ index.php?controller=home&action=index [L,QSA]
+
+###############################################
+# 4) URL Rewriting : URLs propres vers query string
+###############################################
+
+# URL spécifique pour gpstats avec gp_id
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^gpstats/(update|delete|view)/([0-9]+)/?$ index.php?controller=gpstats&action=$1&gp_id=$2 [L,QSA]
+
+# Palmarès avec category_name
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^palmares/([a-zA-Z0-9_-]+)/category_name/([a-zA-Z0-9_-]+)/?$ index.php?controller=palmares&action=$1&category_name=$2 [L,QSA]
+
+# Palmarès sans catégorie (valeur vide)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^palmares/([a-zA-Z0-9_-]+)/category_name/?$ index.php?controller=palmares&action=$1 [L,QSA]
+
+# URL CRUD simple avec id numérique : doit être **avant** la règle _id
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([0-9]+)/?$ index.php?controller=$1&action=$2&id=$3 [L,QSA]
+
+# URL avec paramètre nommé : /controller/action/param/value (id numérique ou mot)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=$2&$3_id=$4 [L,QSA]
+
+# URL avec paramètre nommé optionnel (vide)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=$2&$3_id= [L,QSA]
+
+# URL avec 2 segments : /controller/action
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=$2 [L,QSA]
+
+# URL avec 1 segment : /controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=index [L,QSA]
+
+###############################################
+# 5) Front controller (fallback)
+###############################################
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
