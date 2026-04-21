@@ -139,8 +139,8 @@ footer {
 .nav-btn {
     padding: 10px 22px;
     border-radius: 20px;
-    background: #000000;
-    color: white;
+    background: white;
+    color: #000000;
     text-decoration: none;
     margin-left: 10px;
     font-size: 0.875rem;
@@ -149,12 +149,12 @@ footer {
 }
 
 .nav-btn:hover {
-    background-color: white;
-    color: #000000;
+    background-color: #a0a0a0;
 }
 
 .nav-btn.red { 
-    background: #E10600; 
+    background: #E10600;
+    color: white; 
 }
 
 .nav-btn.red:hover {
@@ -230,7 +230,7 @@ footer {
 }
 
 .btn-subtitle {
-    color: #687080;
+    color: #757677;
     margin-left: auto;
 }
 
@@ -246,8 +246,8 @@ footer {
     margin: 3px 0px;
     padding: 10px 22px;
     border-radius: 20px;
-    background: #000000;
-    color: white;
+    background: white;
+    color: #000000;
     text-decoration: none;
     font-size: 0.875rem;
     cursor: pointer;
@@ -255,12 +255,12 @@ footer {
 }
 
 .nav-btn-dashboard:hover {
-    background-color: white;
-    color: #000000;
+    background-color: #a0a0a0;
 }
 
 .nav-btn-dashboard.red { 
-    background: #E10600; 
+    background: #E10600;
+    color: white;  
 }
 
 .nav-btn-dashboard.red:hover {
@@ -298,7 +298,7 @@ footer {
     font-size: 0.875rem;
     font-weight: normal;
     margin: 0;
-    color: #687080;
+    color: #b8bbc0;
 }
 
 
@@ -463,6 +463,7 @@ footer {
 .hero-streams .stream-buttons {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
     margin-top: 20px;
 }
@@ -471,7 +472,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 22px;
+    padding: 22px 22px;
     border-radius: 18px;
     font-size: 1rem;
     font-weight: 600;
@@ -919,7 +920,7 @@ td.upside {
 .form-group input,
 .form-group select {
     width: 100%;
-    /* padding: 12px; */
+    padding: 12px;
     border-radius: 10px;
     border: none;
     background: #1c1c26;
@@ -927,9 +928,14 @@ td.upside {
     font-size: 1rem;
 }
 
-.form-group select {
-    padding: 12px;
+.form-group select#season_filter,
+.form-group select#category_filter,
+.form-group select#circuit_filter
+ {
+    border-radius: 20px;
+    background: #E10600;
 }
+
 
 /* Checkbox pour supprimer la couleur dans la table Teams UPDATE */
 .form-group input[type="checkbox"] {
@@ -940,7 +946,8 @@ td.upside {
 
 .form-group input:focus,
 .form-group select:focus {
-    outline: 2px solid #E10600;
+    /* outline: 2px solid #E10600; */
+    outline: 2px solid white;
 }
 
 /* Pour cacher les label côté front mais ne pas enlever le contenu pour l'accessibilité */
@@ -1145,14 +1152,14 @@ input[type=number] {
 .page-header .last-update {
     margin: 0;
     margin-left: auto;
-    color: #687080;
+    color: #b8bbc0;
     font-size: 0.85rem;
 }
 
 .page-header-dashboard-subtitle-right {
     margin: 0;
     margin-left: auto;
-    color: #687080;
+    color: #b8bbc0;
     font-size: 0.85rem;
 }
 

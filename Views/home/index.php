@@ -27,7 +27,7 @@
         <div class="hero-cta">
             <a href="#presentation" class="nav-btn">Notre communauté</a>
             <a href="#championnats" class="nav-btn">Nos championnats F1® 25 - PS5 & Xbox</a>
-            <a href="#lives-replays" class="nav-btn">Lives Twitch & Replay Youtube</a>
+            <a href="#lives-replays" class="nav-btn">Live & Replay sur Youtube</a>
             <a href="#discord" class="nav-btn red">Nous rejoindre sur Discord</a>
         </div>
     </div>
@@ -86,8 +86,8 @@
 
         <p>
             Les championnats F1 en ligne de <strong>Team-eRacing</strong> sont
-            <strong>diffusés en direct sur Twitch</strong> et disponibles en
-            <strong>replay sur YouTube</strong>.
+            <strong>diffusés en direct sur Youtube</strong> et disponibles en
+            <strong>replay</strong>.
         </p>
 
         <p>
@@ -96,26 +96,26 @@
         </p>
 
         <div class="stream-buttons">
-            <a href="https://www.twitch.tv/teameracing"
+            <!-- <a href="https://www.twitch.tv/teameracing"
                target="_blank"
                rel="noopener nofollow"
                class="stream-btn twitch">
                 <i class="fa-brands fa-twitch"></i>
                 <span>Voir les lives sur Twitch</span>
-            </a>
+            </a> -->
 
             <a href="https://www.youtube.com/@Team-eRacing"
                target="_blank"
                rel="noopener nofollow"
                class="stream-btn youtube">
                 <i class="fa-brands fa-youtube"></i>
-                <span>Voir les replays sur YouTube</span>
+                <span>Voir les live & replay sur YouTube</span>
             </a>
         </div>
     </div>
 
-    <img src="img/twitch_youtube.jpg"
-         alt="Diffusion Twitch et YouTube des championnats F1 en ligne Team-eRacing"
+    <img src="img/youtube.jpg"
+         alt="Diffusion sur YouTube des championnats F1 en ligne Team-eRacing"
          loading="lazy"
          class="img-object-position-top">
 </section>

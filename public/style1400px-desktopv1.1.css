@@ -18,12 +18,12 @@ main {
 
 
 /* Styles pour écrans < 1060px */
-@media screen and (max-width: 1060px) {
+/* @media screen and (max-width: 1060px) {
     .stream-btn {
         display: flex;
         width: 70%;
     }
-}
+} */
 
 .login-container {
     max-width: 50%;

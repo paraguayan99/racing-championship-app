@@ -16,7 +16,7 @@
 
         <label for="circuit_id" class="visually-hidden">Choisir un circuit :</label>
         <div class="form-group">
-            <select name="circuit_id" onchange="this.form.submit()">
+            <select name="circuit_id" id="circuit_filter" onchange="this.form.submit()">
                 <option value="0" <?= ($circuitId ?? 0) == 0 ? 'selected' : '' ?>>Choisir un circuit :</option>
                 <?php foreach ($circuits as $c): ?>
                     <option value="<?= $c->id ?>" <?= ($circuitId ?? 0) == $c->id ? 'selected' : '' ?>>
