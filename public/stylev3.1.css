@@ -713,8 +713,8 @@ button.status-btn {
     margin: 20px 0px 5px;
     padding: 2px;
     border-radius: 5px;
-    background: #000000;
-    color: white;
+    background: white;
+    color: #000000;
     text-decoration: none;
     font-size: 0.875rem;
     cursor: pointer;
@@ -722,8 +722,7 @@ button.status-btn {
 }
 
 button.status-btn:hover {
-    background-color: white;
-    color: #000000;
+    background-color: #a0a0a0;
 }
 
 
@@ -765,8 +764,12 @@ td.upside {
 }
 
 .action-btn.edit {
-    background: #000000;
-    color: white;
+    background: white;
+    color: #000000;
+}
+
+.action-btn.edit:hover {
+    background-color: #a0a0a0;
 }
 
 .action-btn.delete {
@@ -774,14 +777,8 @@ td.upside {
     color: white;
 }
 
-.action-btn.edit:hover {
-    background: white;
-    color: #000000;
-}
-
 .action-btn.delete:hover {
-    background: white;
-    color: #E10600;
+    background-color: #fdbcba;
 }
 
 /* TABLE GP Résultats */
@@ -1085,8 +1082,8 @@ input[type=number] {
     padding: 2px;
     border-radius: 10px;
     border: none;
-    color: white;
-    background-color: #000000;
+    color: #000000;
+    background-color: white;
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
@@ -1094,13 +1091,16 @@ input[type=number] {
 }
 
 .btn-reveal-gp:hover {
-    background-color: white;
-    color: #000000;
+    background-color: #a0a0a0;
 }
 
 .btn-reveal-gp-open {
-    background-color: white;
-    color: #000000;
+    background-color: #E10600;
+    color: white;
+}
+
+.btn-reveal-gp-open:hover {
+    background-color: #fdbcba;
 }
 
 /* Page Classements ... */
@@ -2014,8 +2014,8 @@ table.sortable th.no-sort::after {
     height: 45px;
     border-radius: 50%;
     border: none;
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    background: white;
+    color: black;
     font-size: 1.125rem;
     cursor: pointer;
     display: flex;
@@ -2029,7 +2029,7 @@ table.sortable th.no-sort::after {
 
 /* Apparition */
 #scrollToTop.show {
-    opacity: 0.6;
+    opacity: 0.7;
     visibility: visible;
 }
 
