@@ -298,6 +298,7 @@ footer {
     font-size: 0.875rem;
     font-weight: normal;
     margin: 0;
+    padding-top: 0.5rem;
     color: #b8bbc0;
 }
 
@@ -590,7 +591,7 @@ footer {
 
 .btn:hover {
     background-color: #fdbcba;
-    color: #000000;
+    color: white;
 }
 
 .error-message {
@@ -1015,7 +1016,7 @@ input[type=number] {
 
 .btn.red:hover {
     background-color: #fdbcba;
-    color: #000000;
+    color : white;
 }
 
 .btn.black {
@@ -1023,11 +1024,12 @@ input[type=number] {
 }
 
 .black {
-    background: #000000;
+    background: white;
+    color: #000000;
 }
 
 .btn.black:hover {
-    background-color:white;
+    background-color: #a0a0a0;
     color: #000000;
 }
 

@@ -68,7 +68,7 @@ class GpStatsModel extends DbConnect {
             ORDER BY 
                 c.name ASC,
                 s.season_number ASC,
-                gp.gp_ordre DESC,
+                gp.gp_ordre ASC,
                 gp_stats.gp_id ASC
         ";
 

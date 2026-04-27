@@ -24,7 +24,7 @@ class CategoriesModel extends DbConnect {
         return $db->getConnection()->query("
             SELECT id, name, color, status
             FROM categories
-            ORDER BY id ASC
+            ORDER BY name ASC
         ")->fetchAll();
     }
 

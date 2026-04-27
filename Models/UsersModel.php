@@ -48,7 +48,7 @@ class UsersModel extends DbConnect {
             SELECT users.id, email, roles.name as role
             FROM users
             JOIN roles ON users.role_id = roles.id
-            ORDER BY roles.name ASC
+            ORDER BY roles.name ASC, users.email ASC
         ")->fetchAll();
     }
 }

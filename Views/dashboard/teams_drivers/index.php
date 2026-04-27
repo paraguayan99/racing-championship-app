@@ -28,8 +28,8 @@
             <thead>
                 <tr>
                     <th class="width-small-info text-center">Saison</th>
-                    <th>Pilote</th>
                     <th>Team</th>
+                    <th>Pilote</th>
                     <th class="width-actions text-center">Actions</th>
                 </tr>
             </thead>
@@ -39,8 +39,8 @@
                     <?php if (isset($td->season_status) && $td->season_status === 'active'): ?>
                         <tr>
                             <td class="width-small-info text-center down"><?= htmlspecialchars($td->category_name ?? '') ?> - S<?= htmlspecialchars($td->season_number ?? '') ?></td>
-                            <td class="down"><?= htmlspecialchars($td->driver) ?></td>
                             <td class="down"><?= htmlspecialchars($td->team) ?></td>
+                            <td class="down"><?= htmlspecialchars($td->driver) ?></td>
                             <td class="width-actions text-center">
                                 <a class="action-btn edit" href="/teamsdrivers/update/<?= $td->id ?>">
                                     <i class="fa-solid fa-pen"></i>

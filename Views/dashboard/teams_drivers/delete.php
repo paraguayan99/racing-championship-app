@@ -8,9 +8,9 @@
                 Supprimer association
             </h2>
             <p class="dashboard-crud-subtitle">
-                <?= htmlspecialchars($seasonName) ?> / 
-                <?= htmlspecialchars($driverName) ?>  
-                <?= htmlspecialchars($teamName) ?>
+                <?= htmlspecialchars($seasonName) ?> /   
+                <?= htmlspecialchars($teamName) ?> - 
+                <?= htmlspecialchars($driverName) ?>
             </p>
         </div>
     </div>

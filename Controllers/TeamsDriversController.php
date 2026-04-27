@@ -25,7 +25,7 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // Créer une association pilote - équipe
+    // Créer une association pilote - team
     public function create()
     {
         $message = '';
@@ -104,10 +104,10 @@ class TeamsDriversController extends Controller {
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions)
+            ->addLabel("team_id", "Team :")
+            ->addSelect("team_id", $teamOptions)
             ->addLabel("driver_id", "Pilote :")
             ->addSelect("driver_id", $driverOptions)
-            ->addLabel("team_id", "Équipe :")
-            ->addSelect("team_id", $teamOptions)
             ->addSubmit("Créer")
             ->endForm();
 
@@ -121,7 +121,7 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // Modifier une association pilote - équipe
+    // Modifier une association pilote - team
     public function update($id)
     {
         $message = '';
@@ -233,10 +233,10 @@ class TeamsDriversController extends Controller {
             ->addCSRF()
             ->addLabel("season_id", "Saison :")
             ->addSelect("season_id", $seasonOptions, ["value" => $row->season_id])
+            ->addLabel("team_id", "Team :")
+            ->addSelect("team_id", $teamOptions, ["value" => $row->team_id])
             ->addLabel("driver_id", "Pilote :")
             ->addSelect("driver_id", $driverOptions, ["value" => $row->driver_id])
-            ->addLabel("team_id", "Équipe :")
-            ->addSelect("team_id", $teamOptions, ["value" => $row->team_id])
             ->addSubmit("Mettre à jour")
             ->endForm();
 
@@ -250,7 +250,7 @@ class TeamsDriversController extends Controller {
         ]);
     }
 
-    // Supprimer une association pilote - équipe
+    // Supprimer une association pilote - team
     public function delete($id)
     {
         $message = '';
