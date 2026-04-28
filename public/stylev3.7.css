@@ -915,12 +915,12 @@ td.upside {
 
 /* Formulaires Create & Update, les Select pages Classements ... */
 
-.form-wrapper {
+/* .form-wrapper {
     background: #0f0f15;
     padding: 25px;
     border-radius: 15px;
     margin-top: 25px;
-}
+} */
 
 .form-group {
     margin-bottom: 20px;
@@ -933,13 +933,22 @@ td.upside {
     color: white;
 }
 
-.form-group input,
+.form-group input {
+    width: 100%;
+    /* padding: 12px; */
+    border-radius: 10px;
+    border: none;
+    background: #323245;
+    color: white;
+    font-size: 1rem;
+}
+
 .form-group select {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
     border: none;
-    background: #1c1c26;
+    background: #323245;
     color: white;
     font-size: 1rem;
 }

@@ -7,7 +7,10 @@
             <h2 class="dashboard-crud-title no-margin">
                 Supprimer GP 
             </h2>
-            <p class="dashboard-crud-subtitle"><?= htmlspecialchars($countryName) ?> - <?= htmlspecialchars($name) ?> / <?= htmlspecialchars($seasonName) ?></p>
+            <p class="dashboard-crud-subtitle">
+                <?= htmlspecialchars($seasonName) ?> / 
+                <?= htmlspecialchars($countryName) ?> - <?= htmlspecialchars($name) ?>
+            </p>
         </div>
     </div>
 

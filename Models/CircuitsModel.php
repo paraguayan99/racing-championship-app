@@ -14,7 +14,7 @@ class CircuitsModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT circuits.id, circuits.name, circuits.status, countries.name as country
+            SELECT circuits.id, circuits.name, circuits.status, countries.name as country, countries.code as country_code
             FROM circuits
             JOIN countries ON circuits.country_id = countries.id
             ORDER BY circuits.status ASC, circuits.name ASC

@@ -39,20 +39,24 @@ class PenaltiesController extends Controller {
         $circuits = CircuitsModel::all();
 
         // Récupérer les infos
-        $circuitCountries = [];
+        $circuitData = [];
         foreach ($circuits as $c) {
-            $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
+            $circuitData[$c->id] = [
+                'name'         => $c->name ?? 'Circuit inconnu',
+                'country'      => $c->country ?? 'Pays inconnu',
+                'country_code' => $c->country_code ?? 'Code inconnu'
+            ];
         }
 
         $gps = [];
         foreach ($seasons as $s) {
             foreach ($allGps as $gpItem) {
                 if ($gpItem->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gpItem->id] = $gpItem->category 
-                                    . " - Saison " . $s->season_number 
-                                    . " / GP " . $gpItem->gp_ordre 
-                                    . " - " . $countryName;
+                    $gps[$gpItem->id] = $gpItem->category
+                        . " S" . $s->season_number
+                        . " GP" . $gpItem->gp_ordre
+                        . " " . ($circuitData[$gpItem->circuit_id]['country_code'] ?? 'Code inconnu')
+                        . " " . ($circuitData[$gpItem->circuit_id]['name'] ?? 'Circuit inconnu');
                 }
             }
         }
@@ -191,20 +195,24 @@ class PenaltiesController extends Controller {
         $circuits = CircuitsModel::all();
 
         // Récupérer les infos
-        $circuitCountries = [];
+        $circuitData = [];
         foreach ($circuits as $c) {
-            $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
+            $circuitData[$c->id] = [
+                'name'         => $c->name ?? 'Circuit inconnu',
+                'country'      => $c->country ?? 'Pays inconnu',
+                'country_code' => $c->country_code ?? 'Code inconnu'
+            ];
         }
 
         $gps = [];
         foreach ($seasons as $s) {
             foreach ($allGps as $gpItem) {
                 if ($gpItem->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gpItem->id] = $gpItem->category 
-                                    . " - Saison " . $s->season_number 
-                                    . " / GP " . $gpItem->gp_ordre 
-                                    . " - " . $countryName;
+                    $gps[$gpItem->id] = $gpItem->category
+                        . " S" . $s->season_number
+                        . " GP" . $gpItem->gp_ordre
+                        . " " . ($circuitData[$gpItem->circuit_id]['country_code'] ?? 'Code inconnu')
+                        . " " . ($circuitData[$gpItem->circuit_id]['name'] ?? 'Circuit inconnu');
                 }
             }
         }
@@ -335,20 +343,24 @@ class PenaltiesController extends Controller {
         $circuits = CircuitsModel::all();
 
         // Récupérer les infos
-        $circuitCountries = [];
+        $circuitData = [];
         foreach ($circuits as $c) {
-            $circuitCountries[$c->id] = $c->country ?? 'Pays inconnu';
+            $circuitData[$c->id] = [
+                'name'         => $c->name ?? 'Circuit inconnu',
+                'country'      => $c->country ?? 'Pays inconnu',
+                'country_code' => $c->country_code ?? 'Code inconnu'
+            ];
         }
 
         $gps = [];
         foreach ($seasons as $s) {
             foreach ($allGps as $gpItem) {
                 if ($gpItem->season_id == $s->id) {
-                    $countryName = $circuitCountries[$gpItem->circuit_id] ?? 'Pays inconnu';
-                    $gps[$gpItem->id] = $gpItem->category 
-                                        . " - Saison " . $s->season_number 
-                                        . " / GP " . $gpItem->gp_ordre 
-                                        . " - " . $countryName;
+                    $gps[$gpItem->id] = $gpItem->category
+                        . " - S" . $s->season_number
+                        . " / GP " . $gpItem->gp_ordre
+                        . " " . ($circuitData[$gpItem->circuit_id]['country_code'] ?? 'Code inconnu')
+                        . " - " . ($circuitData[$gpItem->circuit_id]['name'] ?? 'Circuit inconnu');
                 }
             }
         }

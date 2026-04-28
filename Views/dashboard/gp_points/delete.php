@@ -9,8 +9,10 @@
             </h2>
             <p class="dashboard-crud-subtitle">
                 <?= htmlspecialchars($gpName) ?>
-                ( <?= htmlspecialchars($driverName) ?> -
-                <?= htmlspecialchars($teamName) ?> )
+            </p>
+            <p class="dashboard-crud-subtitle">
+                <?= htmlspecialchars($driverName) ?> -
+                <?= htmlspecialchars($teamName) ?>
             </p>
         </div>
     </div>

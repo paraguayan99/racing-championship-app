@@ -20,8 +20,6 @@
         </div>
     </div>
 
-    <div class="form-wrapper">
         <?= $form->getFormElements() ?>
-    </div>
 
 </div>
