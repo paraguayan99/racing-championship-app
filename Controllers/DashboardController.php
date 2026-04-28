@@ -12,7 +12,6 @@ class DashboardController extends Controller
     public function index()
     {
         // Redirection selon le rôle
-        // $role = $_SESSION['role'] ?? '';
         $role = \App\Core\Auth::role();
 
         switch ($role) {

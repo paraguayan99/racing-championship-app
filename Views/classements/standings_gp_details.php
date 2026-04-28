@@ -131,9 +131,3 @@ function podiumBadge($pos) {
 <?php else: ?>
     <p>GP non trouvé.</p>
 <?php endif; ?>
-
-
-
-
-
-

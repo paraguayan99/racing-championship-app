@@ -96,14 +96,6 @@
         </p>
 
         <div class="stream-buttons">
-            <!-- <a href="https://www.twitch.tv/teameracing"
-               target="_blank"
-               rel="noopener nofollow"
-               class="stream-btn twitch">
-                <i class="fa-brands fa-twitch"></i>
-                <span>Voir les lives sur Twitch</span>
-            </a> -->
-
             <a href="https://www.youtube.com/@Team-eRacing"
                target="_blank"
                rel="noopener nofollow"
@@ -161,7 +153,6 @@
   "name": "Team-eRacing",
   "url": "https://www.team-eracing.fr",
   "sameAs": [
-    "https://www.twitch.tv/teameracing",
     "https://www.youtube.com/@Team-eRacing",
     "https://discord.gg/Uy2du4paDW"
   ],

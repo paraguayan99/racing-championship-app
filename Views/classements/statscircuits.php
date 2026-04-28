@@ -42,17 +42,7 @@
     <?php if (!empty($circuitId)): ?>
 
     <?php
-        // Fonction badges podium développé en local avec PHP 8 et +
-        // function podiumBadge($pos) {
-        //     return match($pos) {
-        //         1 => '<span class="badge badge-gold">1</span>',
-        //         2 => '<span class="badge badge-silver">2</span>',
-        //         3 => '<span class="badge badge-bronze">3</span>',
-        //         default => '<span class="badge badge-normal">' . $pos . '</span>',
-        //     };
-        // }
-
-        // Fonction badges podium compatible OVH : PHP Version 7.4.33
+        // Fonction badges podium
         function podiumBadge($pos) {
             switch ($pos) {
                 case 1:
@@ -66,8 +56,6 @@
             }
         }
     ?>
-
-    
 
         <!--  TOP 10 CHRONOS  -->
         <?php if (!empty($topChronos)) : ?>
@@ -307,40 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateResponsiveNames() {
         const w = window.innerWidth;
 
-        /*  CIRCUIT TITLE  */
-        // document.querySelectorAll('.circuit-title').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 1400) {
-        //         el.textContent = full.substring(0, 32);
-        //     }
-        // });
-
-        /*  PILOTES (Circuits TOP 10)  */
-        // document.querySelectorAll('.driver-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 500) {
-        //         el.textContent = full.substring(0, 8);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 12);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 16);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 20);
-        //     }
-        // });
 
         /*  TYPE POLE POSITION OU FASTEST LAP (Circuits TOP 10)  */
         document.querySelectorAll('.top10-type').forEach(el => {
@@ -373,69 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.textContent = full.substring(0, 20);
             }
         });
-
-        /*  CATEGORIES ET CONSOLE (Circuits TOP 10)  */
-        // document.querySelectorAll('.top10-category-console').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 500) {
-        //         el.textContent = full.substring(0, 4);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 5);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 6);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 8);
-        //     }
-        // });
-
-        /*  JEU VIDEO (Circuits TOP 10)  */
-        // document.querySelectorAll('.top10-videogame').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 500) {
-        //         el.textContent = full.substring(0, 6);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 10);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 14);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 20);
-        //     }
-        // });
-
-        /*  PILOTES (Classement Pilotes)  */
-        // document.querySelectorAll('.drivers-standings-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 500) {
-        //         el.textContent = full.substring(0, 18);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 22);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 30);
-        //     }
-        // });
 
     }
     window.addEventListener('resize', updateResponsiveNames);

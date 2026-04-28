@@ -167,12 +167,6 @@ footer nav {
     padding: 20px;
 }
 
-/* .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-} */
-
 .dashboard-table th, .dashboard-table td {
     font-size: 0.875rem;
 }
@@ -294,20 +288,6 @@ footer nav {
     margin-left: 0px;
 }
 
-/* Pour réduire l'espace verticale si il y a un retour à la ligne */
-/* Ajouté finalement dans le CSS commun stylev2.2.css */
-/* .category-title {
-    line-height: 0.8;
-} */
-
-/* .season-title {
-    line-height: 1.1;
-}
-
-.category-extra {
-    line-height: 1.2;
-} */
-
 /* Badges 1 / 2 / 3 ... */
 .badge {
     padding: 0px;
@@ -317,31 +297,6 @@ footer nav {
 .dashboard-table td.badge-width {
     width: 30px;
 }
-
-/* Classements */
-/* Classement Pilotes uniquement */
-/* .drivers-table thead th:nth-child(1)::after { content: ""; }
-.drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: ""; }
-.drivers-table thead th:nth-child(4)::after { content: "Pts"; }
-.drivers-table thead th:nth-child(5)::after { content: "GP"; }
-.drivers-table thead th:nth-child(6)::after { content: "Vi"; }
-.drivers-table thead th:nth-child(7)::after { content: "Po"; }
-.drivers-table thead th:nth-child(8)::after { content: "PP"; }
-.drivers-table thead th:nth-child(9)::after { content: "FL"; }
-
-.drivers-table thead th {
-    font-size: 0;
-} */
-
-/* .drivers-table thead th::after {
-    font-size: 0.875rem;
-} */
-
-
-/* .drivers-table thead th {
-    font-size: 0.875rem;
-} */
 
 /* Colonne Pilote */
 .drivers-table td.driver-cell,
@@ -381,10 +336,6 @@ footer nav {
 
 /* Classement Equipes uniquement */
 
-/* .teams-table thead th {
-    font-size: 0.875rem;
-} */
-
 /* Colonne Équipe */
 .teams-table td.team-cell,
 .teams-table th:nth-child(2) {
@@ -403,25 +354,7 @@ footer nav {
     );
 }
 
-/* Tableaux Pénalités uniquement */
-
-/* .penalties-table thead th:nth-child(4)::after { content: "Pén"; }
-.penalties-table thead th:nth-child(5)::after { content: "Comm"; }
-
-.penalties-table thead th:nth-child(4),
-.penalties-table thead th:nth-child(5) {
-    font-size: 0;
-}
-
-.penalties-table thead th:nth-child(4)::after,
-.penalties-table thead th:nth-child(5)::after {
-    font-size: 0.875rem;
-} */
-
-/* .penalties-table thead th {
-    font-size: 0.875rem;
-} */
-
+/* Tableaux Pénalités */
 /* GP */
 .penalties-table th:nth-child(1),
 .penalties-table td:nth-child(1) {
@@ -453,23 +386,6 @@ footer nav {
 }
 
 /* Tableaux Résultats GP */
-/* .gp-season-table thead th:nth-child(6)::after { content: "PP"; }
-.gp-season-table thead th:nth-child(7)::after { content: "FL"; }
-
-.gp-season-table thead th:nth-child(6),
-.gp-season-table thead th:nth-child(7) {
-    font-size: 0;
-} */
-
-/* .gp-season-table thead th:nth-child(6)::after,
-.gp-season-table thead th:nth-child(7)::after {
-    font-size: 1rem;
-} */
-/* 
-.gp-season-table thead th {
-    font-size: 0.875rem;
-} */
-
 /* Colonne Circuit + Code PAYS et Badge purple PP + FL */
 @media screen and (max-width: 700px) {
     .gp-season-table th:nth-child(2),
@@ -494,7 +410,6 @@ footer nav {
 }
 
 /* Modal affiche Résultats complets du GP */
-
 .gp-modal {
     min-width: 400px;
 }
@@ -517,7 +432,6 @@ footer nav {
 }
 
 /* Page Palmarès et Circuits */
-
 table.sortable th {
     padding-bottom: 12px;
 }
@@ -535,7 +449,6 @@ table.sortable th.desc::after {
 }
 
 /* Tailles des colonnes */
-
 /* 3 colonnes : Champions + Vice-Champions + Troisièmes */
 .palmares-drivers-table th:nth-child(3),
 .palmares-drivers-table td:nth-child(3),
@@ -568,7 +481,6 @@ table.sortable th.desc::after {
 
 /* PAGE CIRCUITS */
 /* TOP 10 Tailles des colonnes*/
-
 .circuit-title {
     font-size: 1.2rem;
 }
@@ -589,7 +501,6 @@ table.sortable th.desc::after {
 
 /* CIRCUITS CLASSEMENT PILOTES */
 /* Tailles des colonnes */
-
 /* 5 colonnes : GP + Victoires + Podiums + PP + FL */
 .circuits-drivers-table th:nth-child(3),
 .circuits-drivers-table td:nth-child(3),
@@ -609,7 +520,6 @@ table.sortable th.desc::after {
 
 /* Tableaux du CRUD */
 /* Boutons actions Update Delete */
-
 .action-btn {
     padding: 2px 10px;
 }

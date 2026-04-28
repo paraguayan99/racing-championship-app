@@ -21,8 +21,7 @@ class Auth
             ]);
 
             session_start();
-
-            // Utilisé pendant le debug ... A NE PAS CONSERVER ? 
+ 
             // Force l'envoi du cookie
             if (session_id()) {
                 setcookie(

@@ -6,18 +6,8 @@ use App\Core\Auth;
 abstract class Controller 
 {
     // Verification à chaque appel des Controllers : 
-    // LOGIN + SESSION + TIMEACTIVITY 5 MIN + ROLES + FAILLES CSRF TOKEN
+    // LOGIN + SESSION + TIMEACTIVITY + ROLES + FAILLES CSRF TOKEN
 
-    // -----------------------------------------------------
-
-    // Fonctionne pour WAMPSERVER
-    // Syntaxe pour PHP8 et +
-    // protected function authMiddleware(string|array $requiredRoles = null)
-
-    // -----------------------------------------------------
-
-    // Fonctionne pour OVH
-    // Syntaxe compatible OVH : PHP Version 7.4.33
     /**
      * @param string|array|null $requiredRoles
      */

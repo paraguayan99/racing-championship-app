@@ -308,12 +308,6 @@ footer {
     color: #b8bbc0;
 }
 
-
-
-
-
-
-
 /* Page Accueil / Index */
 /* Section en haut de page avec l'animation des voitures en background */
 .hero-content {
@@ -582,19 +576,6 @@ footer {
     text-indent: 20px;
 }
 
-/* .btn {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    width: 100%;
-    padding: 10px;
-    background-color: #E10600;
-    color: white;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-} */
-
 .btn:hover {
     background-color: #fdbcba;
     color: white;
@@ -639,16 +620,13 @@ footer {
 
 .dashboard-table th {
     background: var(--category-color, #E10600);
-    /* padding: 6px 8px; */
     text-align: left;
     color: white;
     font-weight: 600;
 }
 
 .dashboard-table td {
-    /* padding: 4px 8px; */
     border-bottom: 1px solid #15151E;
-    /* text-align: right; */
 }
 
 .dashboard-table th.text-right,
@@ -714,7 +692,6 @@ button.status-btn {
     font: inherit;
     box-shadow: none;
     -webkit-appearance: none;
-
     text-align: center;
     width: 100px;
     margin: 20px 0px 5px;
@@ -915,13 +892,6 @@ td.upside {
 
 /* Formulaires Create & Update, les Select pages Classements ... */
 
-/* .form-wrapper {
-    background: #0f0f15;
-    padding: 25px;
-    border-radius: 15px;
-    margin-top: 25px;
-} */
-
 .form-group {
     margin-bottom: 20px;
 }
@@ -971,7 +941,6 @@ td.upside {
 
 .form-group input:focus,
 .form-group select:focus {
-    /* outline: 2px solid #E10600; */
     outline: 2px solid white;
 }
 
@@ -1037,10 +1006,6 @@ input[type=number] {
     width: 40%;
 }
 
-/* .red {
-    background: #E10600;
-} */
-
 .btn.red:hover {
     background-color: #fdbcba;
     color : white;
@@ -1059,51 +1024,6 @@ input[type=number] {
     background-color: #a0a0a0;
     color: #000000;
 }
-
-
-/* .btn:hover {
-    background: #fdbcba;
-    color: #000;
-}
-
-.btn.danger {
-    background: #c00000;
-}
-
-.delete-actions {
-    width: 100%;
-}
-
-.delete-actions form {
-    margin: 0;
-}
-
-.btn-danger,
-.btn-light {
-    width: 100%;
-    display: block;
-}
-
-.btn-light {
-    width: 100%;
-    padding: 12px 0px 12px 0px;
-    border-radius: 10px;
-    border: none;
-    background: #ffffff;
-    color: #000000;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    display: block; 
-    margin-top: 15px;
-    text-decoration: none; 
-}
-
-.btn-light:hover {
-    background: #919090;
-} */
-
-/*  */
 
 .btn-reveal-gp {
     width: 60px;
@@ -1141,7 +1061,6 @@ input[type=number] {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-
     background: #000000;
     padding: 12px 16px;
     margin: 40px 0px 10px;
@@ -1287,7 +1206,6 @@ input[type=number] {
 .category-title .category-extra {
     display: inline-block;
     margin-left: 40px;
-
     font-size: 1rem;
     font-weight: 400;
     opacity: 0.6;
@@ -1376,25 +1294,6 @@ input[type=number] {
     z-index: 1;
 }
 
-/* Classement Pilotes uniquement */
-/* .drivers-table thead th:nth-child(1)::after { content: ""; }
-.drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: "Équipe"; }
-.drivers-table thead th:nth-child(4)::after { content: "Pts"; }
-.drivers-table thead th:nth-child(5)::after { content: "GP"; }
-.drivers-table thead th:nth-child(6)::after { content: "Vict"; }
-.drivers-table thead th:nth-child(7)::after { content: "Podi"; }
-.drivers-table thead th:nth-child(8)::after { content: "Pole"; }
-.drivers-table thead th:nth-child(9)::after { content: "FastestL"; }
-
-.drivers-table thead th {
-    font-size: 0;
-}
-
-.drivers-table thead th::after {
-    font-size: 1rem;
-} */
-
 /* Colonne Pilote */
 .drivers-table td.driver-cell,
 .drivers-table th:nth-child(2) {
@@ -1461,19 +1360,6 @@ input[type=number] {
     padding-left: 4px;
 }
 
-
-/* .teams-table thead th:nth-child(1)::after { content: ""; }
-.teams-table thead th:nth-child(2)::after { content: "Équipe"; }
-.teams-table thead th:nth-child(3)::after { content: "Points"; }
-
-.teams-table thead th {
-    font-size: 0;
-} */
-
-/* .teams-table thead th {
-    font-size: 1rem;
-} */
-
 /* Colonne Équipe */
 .teams-table td.team-cell,
 .teams-table th:nth-child(2) {
@@ -1535,13 +1421,6 @@ input[type=number] {
 
 
 /* Tableaux Résultats GP : Top 3 + PP + FL de la Saison uniquement */
-
-/* badge-width pour la colonne Badge */
-/* .gp-season-table thead th:nth-child(1)::after { content: ""; }
-
-.gp-season-table thead th:nth-child(1) {
-    font-size: 0;
-} */
  
 /* Circuit */
 .gp-season-table th:nth-child(2),
@@ -1563,40 +1442,9 @@ input[type=number] {
     background: rgba(255,255,255,0.05);
 }
 
-/* Logo GP : plus petit et inline */
-/* .team-logo-gp {
-    position: static;
-    height: 20px;
-    width: auto;
-    object-fit: contain;
-    margin-left: 6px;
-    vertical-align: middle;
-} */
 
-/* Afficher / Cacher Liste des GP */
+/* Liste des GP */
 
-.gp-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, margin 0.4s ease;
-    margin-bottom: 0; /* au départ pas de marge */
-}
-
-.gp-toggle-btn-category {
-    background-color: var(--category-color);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 8px 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.gp-toggle-btn-category:hover {
-    background-color: color-mix(in srgb, var(--category-color) 30%, white);
-    color: #000;
-}
 
 .gp-title {
     margin-bottom: 0;
@@ -1721,18 +1569,6 @@ input[type=number] {
     z-index: 1;
 }
 
-/* .modal-gp-title .category-name {
-    font-size: 1.85rem;
-    font-weight: 900;
-}
-
-.modal-gp-title .season-title {
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin-left: 40px;
-    opacity: 0.85;
-} */
-
 /* Réduire l'espace vertical des lignes Pole Position et Fastest Lap */
 .modal-pp-fl {
     margin: 0;
@@ -1740,25 +1576,6 @@ input[type=number] {
 }
 
 /* Tableau des Résultats du GP */
-
-/* .modal-gp-results-table thead th:nth-child(1)::after { content: ""; }
-.modal-gp-results-table thead th:nth-child(2)::after { content: "Pilote"; }
-.modal-gp-results-table thead th:nth-child(3)::after { content: "Équipe"; }
-.modal-gp-results-table thead th:nth-child(4)::after { content: "Points"; }
-.modal-gp-results-table thead th:nth-child(5)::after { content: ""; } */
-
-/* .modal-gp-results-table thead th {
-    font-size: 0;
-}
-
-.modal-gp-results-table thead th::after {
-    font-size: 1rem;
-} */
-
-/* .modal-gp-results-table tbody td:nth-child(4),
-.modal-gp-results-table tbody td:nth-child(5) { 
-    font-weight: 700; 
-} */
 
 /* Pilote */
 .modal-gp-results-table th:nth-child(2),
@@ -1771,9 +1588,6 @@ input[type=number] {
 .modal-gp-results-table td:nth-child(3) {
     width: 35%;
 }
-
-
-
 
 /* Page Palmarès et Circuits pour effectuer le tri par colonne en Javascript */
 
@@ -1838,7 +1652,6 @@ table.sortable th.no-sort::after {
 .highlight-column {
     font-weight: 700;
 }
-
 
 /* Palmarès Pilotes + Equipes - subtitle et thead responsive */
 .label-aria {
@@ -1924,20 +1737,15 @@ table.sortable th.no-sort::after {
 
 .icon-champion {
     color: #ffd700;
-    /* margin-left: 10px; */
 }
 
 .icon-second {
     color: #c0c0c0;
-    /* margin-left: 10px; */
 }
 
 .icon-third {
     color: #cd7f32;
-    /* margin-left: 10px; */
 }
-
-
 
 /* Page Circuits */
 
@@ -2031,9 +1839,6 @@ table.sortable th.no-sort::after {
 }
 
 
-
-
-
 /* Bouton retour en haut */
 #scrollToTop {
     position: fixed;
@@ -2067,18 +1872,3 @@ table.sortable th.no-sort::after {
     opacity: 0.9;
     transform: translateY(-3px);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -52,27 +52,7 @@
 
 /* Classements */
 
-/* Classement Pilotes uniquement */
-/* .drivers-table thead th:nth-child(1)::after { content: ""; }
-.drivers-table thead th:nth-child(2)::after { content: "Pilote"; }
-.drivers-table thead th:nth-child(3)::after { content: ""; }
-.drivers-table thead th:nth-child(4)::after { content: "Pts"; }
-.drivers-table thead th:nth-child(5)::after { content: "GP"; }
-.drivers-table thead th:nth-child(6)::after { content: "Vict"; }
-.drivers-table thead th:nth-child(7)::after { content: "Podi"; } */
-/* .drivers-table thead th:nth-child(8)::after { content: "PP"; }
-.drivers-table thead th:nth-child(9)::after { content: "FL"; } */
-
-/* .drivers-table thead th {
-    font-size: 0;
-} */
-
-/* .drivers-table thead th::after {
-    font-size: 1rem;
-    font-weight: 600;
-    display: block;
-} */
-
+/* Classement Pilotes */
 /* Colonne Pilote */
 .drivers-table td.driver-cell,
 .drivers-table th:nth-child(2) {
@@ -95,7 +75,7 @@
     background-position: right -50px center;
 }
 
-/* Classement Equipes uniquement */
+/* Classement Equipes */
 
 /* Colonne Équipe */
 .teams-table td.team-cell,
@@ -103,22 +83,7 @@
     width: 56%;
 }
 
-/* Tableaux Résultats GP */
-/* .gp-season-table thead th:nth-child(6)::after { content: "Pole"; }
-.gp-season-table thead th:nth-child(7)::after { content: "FastestL"; }
-
-.gp-season-table thead th:nth-child(6),
-.gp-season-table thead th:nth-child(7) {
-    font-size: 0;
-}
-
-.gp-season-table thead th:nth-child(6)::after,
-.gp-season-table thead th:nth-child(7)::after {
-    font-size: 1rem;
-} */
-
 /* Page Palmarès et Circuits */
-
 table.sortable th {
     padding-bottom: 15px;
 }

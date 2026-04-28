@@ -509,25 +509,6 @@ function gpBadge($gpNumber) {
 </script>
 
 <script>
-//  Toggle GP pour la catégorie 
-// document.querySelectorAll('.gp-toggle-btn-category').forEach(btn => {
-//     btn.addEventListener('click', () => {
-//         const category = btn.dataset.category;
-//         const contents = document.querySelectorAll('.gp-category-' + category);
-//         const isOpen = Array.from(contents).some(c => c.style.maxHeight && c.style.maxHeight !== '0px');
-
-//         contents.forEach(c => {
-//             if (isOpen) {
-//                 c.style.maxHeight = '0';
-//                 c.style.marginBottom = '0';
-//             } else {
-//                 c.style.maxHeight = c.scrollHeight + 'px';
-//                 c.style.marginBottom = '20px';
-//             }
-//         });
-//         btn.textContent = isOpen ? 'Afficher tous les GP' : 'Masquer tous les GP';
-//     });
-// });
 
 // Ouvre le modal Résultats du GP en cliquant sur une ligne GP
 document.addEventListener('click', function (e) {
@@ -563,150 +544,6 @@ window.addEventListener('click', e => {
 <script>
     function updateResponsiveNames() {
         const w = window.innerWidth;
-
-        /* PILOTES (Classement Pilotes) */
-        // document.querySelectorAll('.driver-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 500) {
-        //         el.textContent = full.substring(0, 8);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 12);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 16);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 20);
-        //     }
-        // });
-
-        /*  ÉCURIES  (Classement Pilotes) */
-        // document.querySelectorAll('.drivers-table .team-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 900) {
-        //         el.textContent = full.substring(0, 10);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 20);
-        //     }
-        // });
-
-        /*  ÉCURIES (Classement Constructeurs)  */
-        // document.querySelectorAll('.teams-table .team-content span').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 700) {
-        //         el.textContent = full.substring(0, 20);
-        //     } else {
-        //         el.textContent = full.substring(0, 30);
-        //     }
-        // });
-
-        /*  PENALITES  */
-        // document.querySelectorAll('.penalties-table .gp-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 600) {
-        //         el.textContent = full.substring(0, 5);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 10);
-        //     }
-        //     else if (w <= 900) {
-        //         el.textContent = full.substring(0, 12);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 20);
-        //     }
-        // });
-
-        /*  PILOTES  (Tableau Pénalités) */
-        // document.querySelectorAll('.penalties-table .driver-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 600) {
-        //         el.textContent = full.substring(0, 8);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 16);
-        //     }
-        //     else if (w <= 1200) {
-        //         el.textContent = full.substring(0, 24);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 30);
-        //     }
-        // });
-
-        // /*  TEAMS  (Tableau Pénalités) */
-        // document.querySelectorAll('.penalties-table .team-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 600) {
-        //         el.textContent = full.substring(0, 8);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 16);
-        //     }
-        //     else if (w <= 1200) {
-        //         el.textContent = full.substring(0, 24);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 30);
-        //     }
-        // });
-
-        // /*  COMMENTAIRES  (Tableau Pénalités) */
-        // document.querySelectorAll('.penalties-table .penalty-comment').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.replace(/\s+/g, ' ').trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     if (w <= 600) {
-        //         el.textContent = full.substring(0, 5);
-        //     }
-        //     else if (w <= 700) {
-        //         el.textContent = full.substring(0, 10);
-        //     }
-        //     else if (w <= 1000) {
-        //         el.textContent = full.substring(0, 18);
-        //     }
-        //     else if (w <= 1200) {
-        //         el.textContent = full.substring(0, 30);
-        //     }
-        //     else {
-        //         el.textContent = full.substring(0, 35);
-        //     }
-        // });
 
         /*  CIRCUIT  (Tableau Liste des GP) */
         document.querySelectorAll('.gp-season-table .circuit-name').forEach(el => {
@@ -758,41 +595,7 @@ window.addEventListener('click', e => {
             }
         });
 
-        /*  PILOTES  (Modal AJAX) */
-        // document.querySelectorAll('.modal-gp-results-table .driver-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     el.textContent =
-        //         w <= 500 ? full.substring(0, 12) :
-        //         w <= 700 ? full.substring(0, 18) :
-        //         w <= 900 ? full.substring(0, 22) :
-        //                    full.substring(0, 30);
-        // });
-
-        /*  TEAMS  (Modal AJAX) */
-        // document.querySelectorAll('.modal-gp-results-table .team-name').forEach(el => {
-        //     if (!el.dataset.fullname) {
-        //         el.dataset.fullname = el.textContent.trim();
-        //     }
-
-        //     const full = el.dataset.fullname;
-
-        //     el.textContent =
-        //         w <= 500 ? full.substring(0, 12) :
-        //         w <= 700 ? full.substring(0, 18) :
-        //         w <= 900 ? full.substring(0, 22) :
-        //                    full.substring(0, 30);
-        // });
     }
     window.addEventListener('resize', updateResponsiveNames);
     updateResponsiveNames();
 </script>
-
-
-
-
-
