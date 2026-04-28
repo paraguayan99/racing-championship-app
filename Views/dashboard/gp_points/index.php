@@ -75,12 +75,14 @@
                 ?>
                 <tr data-gp="<?= $gpKey ?>">
                     <td class="width-reveal-gp text-center"><button class="btn-reveal-gp"><i class="fa-solid fa-arrow-down"></i></button></td>
-                    <td colspan="7">
+                    <td class="down" colspan="7">
                         <?= htmlspecialchars($pt->category_name ?? '') ?> 
-                        - Saison <?= htmlspecialchars($pt->season_number ?? '') ?> 
-                        / GP <?= htmlspecialchars($pt->gp_ordre ?? '') ?> 
-                        - <?= htmlspecialchars($pt->circuit_name ?? '') ?>
-                        (<?= htmlspecialchars($pt->country_name ?? '') ?>)
+                        - S<?= htmlspecialchars($pt->season_number ?? '') ?> 
+                        / GP <?= htmlspecialchars($pt->gp_ordre ?? '') ?>
+                        <span class="country-code">
+                            <?= htmlspecialchars($pt->country_code ?? '') ?>
+                            - <?= htmlspecialchars($pt->circuit_name ?? '') ?>
+                        </span> 
                     </td>
                 </tr>
                 <?php endif; ?>
@@ -91,7 +93,7 @@
                     <td class="width-gp-results-main text-long-responsive down"><?= htmlspecialchars($pt->team_name ?? '') ?></td>
                     <td class="width-numbers text-center"><?= $pt->position === null ? '' : $pt->position ?></td>
                     <td class="width-numbers text-center td-bold"><?= htmlspecialchars(rtrim(rtrim(number_format($pt->points_numeric, 1, '.', ''), '0'), '.')) ?></td>
-                    <td class="width-3-letters text-center"><?= htmlspecialchars($pt->points_text ?? '') ?></td>
+                    <td class="width-3-letters text-center text-long-responsive"><?= htmlspecialchars($pt->points_text ?? '') ?></td>
                     <td class="width-actions text-center">
                         <a class="action-btn edit" href="/gppoints/update/<?= $pt->id ?>">
                             <i class="fa-solid fa-pen"></i>

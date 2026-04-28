@@ -47,7 +47,7 @@
 
                 <tbody>
                     <?php foreach ($list as $driver): ?>
-                    <tr>
+                    <tr class="<?= $driver->status === 'desactive' ? 'row-desactive' : '' ?>">
                         <td class="width-checkbox">
                             <input type="checkbox" name="drivers[]" value="<?= $driver->id ?>">
                         </td>

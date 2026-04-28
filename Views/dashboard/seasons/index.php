@@ -54,7 +54,7 @@
 
             <tbody>
                 <?php foreach ($list as $season): ?>
-                <tr>
+                <tr class="<?= $season->status === 'desactive' ? 'row-desactive' : '' ?>">
                     <td class="width-numbers text-center"><?= htmlspecialchars($season->season_number) ?></td>
                     <td class="down"><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
                     <td class="down"><?= htmlspecialchars($season->season_name ?? '') ?></td>

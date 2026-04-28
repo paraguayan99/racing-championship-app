@@ -36,7 +36,7 @@
 
             <tbody>
                 <?php foreach ($list as $circuit): ?>
-                <tr>
+                <tr class="<?= $circuit->status === 'desactive' ? 'row-desactive' : '' ?>">
                     <td class="down"><?= htmlspecialchars($circuit->name) ?></td>
                     <td class="down"><?= htmlspecialchars($circuit->country) ?></td>
                     <td class="status text-center down"><?= htmlspecialchars($circuit->status) ?></td>

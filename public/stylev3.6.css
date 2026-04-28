@@ -234,6 +234,12 @@ footer {
     margin-left: auto;
 }
 
+@media (max-width: 780px) {
+    .btn-subtitle {
+        display: none;
+    }
+}
+
 .home-nav-btn-dashboard {
     display: flex;
     flex-wrap: wrap;
@@ -782,6 +788,11 @@ td.upside {
     background-color: #fdbcba;
 }
 
+/* DASHBOARD Mettre en fond différent les éléments désactivés dans les INDEX des tables */
+.row-desactive {
+    background-color: rgba(255, 0, 0, 0.219)
+}
+
 /* TABLE GP Résultats */
 /* colonne du nom du GP */
 .dashboard-table th.width-gp-hidden,
@@ -799,6 +810,13 @@ td.upside {
 .dashboard-table th.width-3-letters,
 .dashboard-table td.width-3-letters {
     width: 40px;
+}
+
+@media screen and (max-width: 700px) {
+    .dashboard-table th.width-3-letters,
+    .dashboard-table td.width-3-letters {
+        width: 30px;
+    }
 }
 
 /* Colonne noms des pilotes et teams */

@@ -20,7 +20,7 @@ class SeasonsModel extends DbConnect {
             SELECT seasons.id, season_number, season_name, categories.name as category, videogame, platform, seasons.status
             FROM seasons
             JOIN categories ON seasons.category_id = categories.id
-            ORDER BY categories.name ASC, seasons.season_number DESC
+            ORDER BY seasons.status ASC, categories.name ASC, seasons.season_number DESC
         ")->fetchAll();
     }
 

@@ -45,7 +45,7 @@ class TeamsModel extends DbConnect {
                 countries.name AS country
             FROM teams
             JOIN countries ON teams.country_id = countries.id
-            ORDER BY teams.name ASC
+            ORDER BY teams.status ASC, teams.name ASC
         ")->fetchAll();
     }
 

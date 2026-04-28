@@ -38,7 +38,7 @@
 
             <tbody>
                 <?php foreach ($list as $team): ?>
-                <tr>
+                <tr class="<?= $team->status === 'desactive' ? 'row-desactive' : '' ?>">
                     <td class="teams-logo text-center down">
                         <?php if (!empty($team->logo ?? '')): ?>
                             <img 

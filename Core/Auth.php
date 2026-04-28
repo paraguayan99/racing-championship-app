@@ -45,8 +45,8 @@ class Auth
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
-        // Timeout activité → seulement si user connecté
-        $lifetime = 300;
+        // Timeout activité → seulement si user connecté (1800s == 30min)
+        $lifetime = 1800;
         if (isset($_SESSION['user_id']) && isset($_SESSION['time_activity']) 
             && (time() - $_SESSION['time_activity'] > $lifetime)) {
             
