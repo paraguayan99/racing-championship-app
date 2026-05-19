@@ -134,7 +134,7 @@
     </div>
 
     <div class="hero-discord-cta">
-        <a href="https://discord.gg/Uy2du4paDW"
+        <a href="https://discord.gg/7ZzkHXJekw"
            target="_blank"
            rel="noopener noreferrer nofollow"
            class="discord-btn"
@@ -154,7 +154,7 @@
   "url": "https://www.team-eracing.fr",
   "sameAs": [
     "https://www.youtube.com/@Team-eRacing",
-    "https://discord.gg/Uy2du4paDW"
+    "https://discord.gg/7ZzkHXJekw"
   ],
   "sport": "Formula 1 Esport"
 }

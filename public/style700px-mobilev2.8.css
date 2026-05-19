@@ -317,7 +317,8 @@ footer nav {
 }
 
 /* Cache le nom des écuries */
-.drivers-table .team-name {
+.drivers-table .team-name,
+.statsdrivers-table .team-name {
     display: none;
 }
 
@@ -481,7 +482,8 @@ table.sortable th.desc::after {
 
 /* PAGE CIRCUITS */
 /* TOP 10 Tailles des colonnes*/
-.circuit-title {
+.circuit-title,
+.statsdrivers-title {
     font-size: 1.2rem;
 }
 
@@ -661,4 +663,64 @@ table.sortable th.desc::after {
         vertical-align: middle;
     }
 }
+
+
+/* Page Stats Pilotes */
+
+@media screen and (max-width: 450px) {
+    .section-dashboard .nav-btn.statsdrivers {
+        margin-left: 2px;
+    }
+}
+
+/* Colonne Saison */
+.statsdrivers-table td:nth-child(1),
+.statsdrivers-table th:nth-child(1) {
+    width: 40px;
+}
+
+/* Colonne Jeu */
+.statsdrivers-table td:nth-child(2),
+.statsdrivers-table th:nth-child(2) {
+    width: 60px;
+}
+
+/* Colonne Équipe */
+.statsdrivers-table td.team-cell,
+.statsdrivers-table th:nth-child(3) {
+    width: 10%;
+}
+
+/* Colonne Position */
+.statsdrivers-table td:nth-child(4),
+.statsdrivers-table th:nth-child(4) {
+    width: 25px;
+}
+
+/* Colonne Points */
+.statsdrivers-table td:nth-child(5),
+.statsdrivers-table th:nth-child(5) {
+    width: 12%;
+}
+
+/* Colonne GP */
+.statsdrivers-table td:nth-child(6),
+.statsdrivers-table th:nth-child(6) {
+    width: 10%;
+}
+
+@media screen and (max-width: 500px) {
+    /* Réduction taille du texte des totaux dans le tfoot */
+    .dashboard-table tfoot td.tfoot-very-small-text {
+        font-size: 0.75rem;
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 600px) {
+    /* Réduction taille du texte des totaux dans le tfoot */
+    .dashboard-table tfoot td.tfoot-very-small-text {
+        font-size: 0.81rem;
+    }
+}
+
 

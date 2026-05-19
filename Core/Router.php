@@ -8,6 +8,7 @@ class Router
     //  Valeur = nom exact de la classe Controller
     private $controllerMap = [
         'statscircuits' => 'StatsCircuits',
+        'statsdrivers'   => 'StatsDrivers',
         'teamsdrivers' => 'TeamsDrivers',
         'gppoints' => 'GpPoints',
         'gpstats' => 'GpStats',

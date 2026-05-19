@@ -134,6 +134,10 @@ function gpBadge($gpNumber) {
                 <?php if (!empty($listByCategory[$categoryName])): ?>
                     <h3 class="gp-title" style="margin-top:20px;">Classement Pilotes</h3>
 
+                    <p class="gp-subtitle">
+                        <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le nom du Pilote pour voir son historique
+                    </p>
+
                     <div class="table-responsive">
                         <table class="dashboard-table fix table-th-responsive drivers-table">
                             <thead>
@@ -188,7 +192,7 @@ function gpBadge($gpNumber) {
                                         <td class="badge-width" title="Position"><?= podiumBadge($position++) ?></td>
 
                                         <!-- Pilote -->
-                                        <td class="driver-cell down" 
+                                        <td class="driver-cell standings-page down" 
                                             style="--team-color: <?= htmlspecialchars($row->team_color ?? '') ?>
                                             "
                                             title="Pilote">
@@ -198,9 +202,11 @@ function gpBadge($gpNumber) {
                                                 <?php if (!empty($row->driver_flag ?? null)): ?>
                                                     <img src="<?= htmlspecialchars($row->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
                                                 <?php endif; ?>
-                                                <span class="driver-name">
+                                            <span class="driver-name">
+                                                <a href="/statsdrivers/index/driver/<?= $row->driver_id ?>" class="driver-cell-link">
                                                     <?= htmlspecialchars($row->nickname) ?>
-                                                </span>
+                                                </a>
+                                            </span>
                                             </span>
                                         </td>
 

@@ -625,6 +625,10 @@ footer {
     font-weight: 600;
 }
 
+.dashboard-table th {
+    border-bottom: 1px solid #15151E;
+}
+
 .dashboard-table td {
     border-bottom: 1px solid #15151E;
 }
@@ -1749,14 +1753,16 @@ table.sortable th.no-sort::after {
 
 /* Page Circuits */
 
-.selected-circuit {
+.selected-circuit,
+.selected-statsdrivers {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.selected-circuit img.circuit-flag {
+.selected-circuit img.circuit-flag,
+.selected-statsdrivers img.statsdrivers-flag {
     width: 32px;
     border-radius: 4px;
     height: auto;
@@ -1773,7 +1779,8 @@ table.sortable th.no-sort::after {
     display: inline-block;
 }
 
-.circuit-title {
+.circuit-title,
+.statsdrivers-title {
     font-size: 1.5rem;
 }
 
@@ -1871,4 +1878,134 @@ table.sortable th.no-sort::after {
 #scrollToTop:hover {
     opacity: 0.9;
     transform: translateY(-3px);
+}
+
+/* Tableaux des Stats Pilotes */
+
+/* Header avec Nom du pilote */
+
+.page-header.has-content.header-statsdrivers {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 0; 
+}
+
+/* Nom de la catégorie */
+.category-title.has-content.category-title-statsdrivers {
+    margin: 20px 0px 0px 0px;
+}
+
+/* Forme des tableaux */
+.table-responsive.statsdrivers-table table {
+    margin-bottom : 20px;
+    }
+
+/* Colonne Saison */
+.statsdrivers-table td:nth-child(1),
+.statsdrivers-table th:nth-child(1) {
+    width: 80px;
+}
+
+/* Colonne Jeu */
+.statsdrivers-table td:nth-child(2),
+.statsdrivers-table th:nth-child(2) {
+    width: 100px;
+}
+
+/* Colonne Équipe */
+.statsdrivers-table td.team-cell,
+.statsdrivers-table th:nth-child(3) {
+    width: 20%;
+}
+
+/* Colonne Position */
+.statsdrivers-table td:nth-child(4),
+.statsdrivers-table th:nth-child(4) {
+    width: 60px;
+}
+
+/* Colonne Points */
+.statsdrivers-table td:nth-child(5),
+.statsdrivers-table th:nth-child(5) {
+    width: 10%;
+}
+
+/* Colonne GP */
+.statsdrivers-table td:nth-child(6),
+.statsdrivers-table th:nth-child(6) {
+    width: 8%;
+}
+
+
+/* Dégradé : couleur définie via la variable CSS de la table teams.color */
+.team-cell-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--team-color) 100%, transparent) 0%,
+        color-mix(in srgb, var(--team-color) 0%, transparent) 70%
+    );
+    z-index: 1;
+}
+
+.statsdrivers-table .team-name {
+    text-shadow:     
+        0 0 2px rgba(0,0,0,0.7);
+}
+
+@media screen and (min-width: 701px) and (max-width: 900px) {
+    /* Réduction taille du texte des totaux dans le tfoot */
+    .dashboard-table tfoot td.tfoot-very-small-text {
+        font-size: 0.875rem;
+    }
+}
+
+/* .driver-name a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+}
+
+.driver-name a:hover {
+    background-color: color-mix(in srgb, var(--category-color, #E10600) 60%, transparent);;
+    border-radius: 10px;
+} */
+
+/* 1. La cellule devient entièrement cliquable partout */
+.driver-cell.standings-page {
+    position: relative;
+    cursor: pointer;
+}
+
+/* 2. Le lien occupe tout l'espace de la case de manière invisible pour le clic */
+.driver-cell.standings-page .driver-cell-link {
+    color: inherit;
+    text-decoration: none;
+}
+.driver-cell.standings-page .driver-cell-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2; /* S'assure que le clic couvre aussi le drapeau et le fond */
+}
+
+/* 3. Style de base du nom */
+.driver-cell.standings-page .driver-name a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+    padding: 0px 4px;
+}
+
+/* 4. LA MAGIE : Quand on survole la CELLULE (td), on applique le fond sur le LIEN (a) */
+.driver-cell.standings-page:hover .driver-name a {
+    background-color: color-mix(in srgb, var(--category-color, #E10600) 60%, transparent);
+    border-radius: 10px;
 }
