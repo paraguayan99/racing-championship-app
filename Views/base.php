@@ -45,10 +45,10 @@ $canonical = $protocol . $host . ($uri === '' ? '/' : $uri);
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <!-- CSS personnel, pas de Framework -->
-<link rel="stylesheet" href="/stylev4.9.css" />
-<link rel="stylesheet" href="/style700px-mobilev2.8.css" media="screen and (max-width: 700px)" />
-<link rel="stylesheet" href="/style900px-tablettev1.5.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
-<link rel="stylesheet" href="/style1400px-desktopv1.3.css" media="screen and (min-width: 901px)" />
+<link rel="stylesheet" href="/stylev5.0.css" />
+<link rel="stylesheet" href="/style700px-mobilev2.9.css" media="screen and (max-width: 700px)" />
+<link rel="stylesheet" href="/style900px-tablettev1.6.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
+<link rel="stylesheet" href="/style1400px-desktopv1.4.css" media="screen and (min-width: 901px)" />
 
 <!-- Icones Vectorielles avec FontAwesome -->
 <script src="https://kit.fontawesome.com/ff03dfd379.js" crossorigin="anonymous"></script>

@@ -29,6 +29,7 @@
                 <tr>
                     <th>Nom</th>
                     <th class="categories-color text-center">Couleur</th>
+                    <th class="text-center">Type</th>
                     <th class="status text-center">Status</th>
                     <th class="width-actions text-center">Actions</th>
                 </tr>
@@ -43,6 +44,7 @@
                                 style="--preview-color: <?= htmlspecialchars($cat->color) ?>;">
                         </span>
                     </td>
+                    <td class="text-center down"><?= htmlspecialchars($cat->type ?? '') ?></td>
                     <td class="status text-center down"><?= htmlspecialchars($cat->status) ?></td>
                     <td class="width-actions text-center">
                         <a class="action-btn edit" href="/categories/update/<?= $cat->id ?>">

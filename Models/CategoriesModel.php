@@ -22,7 +22,7 @@ class CategoriesModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT id, name, color, status
+            SELECT id, name, color, status, type
             FROM categories
             ORDER BY name ASC
         ")->fetchAll();

@@ -1,5 +1,7 @@
 <?php $title = "Team-eRacing - Classements";
 
+use App\Helpers\CompetitionHelper;
+
 // Fonction badges podium
 function podiumBadge($pos) {
     switch ($pos) {
@@ -37,16 +39,18 @@ function gpBadge($gpNumber) {
                     <span class="lu-sep"> / </span>
                     <span class="lu-category"><?= htmlspecialchars($lastGPUpdate->category_name) ?></span>
                     <span class="lu-sep"> - </span>
-                    <span class="lu-season">Saison <?= htmlspecialchars($lastGPUpdate->season_number) ?></span>
+                    <span class="lu-season">S<?= htmlspecialchars($lastGPUpdate->season_number) ?></span>
                     <span class="lu-sep"> - </span>
-                    <span class="lu-gp">GP <?= htmlspecialchars($lastGPUpdate->gp_ordre) ?></span>
+                    <span class="lu-gp">
+                        <?= CompetitionHelper::labelVeryShort($lastGPUpdate->season_type ?? 'grands_prix') ?><?= htmlspecialchars($lastGPUpdate->gp_ordre) ?>
+                    </span>
                 </span>
 
                 <span class="lu-desktop">
                     <span class="lu-sep"> - </span>
                     <span class="lu-circuit">
                         <?= htmlspecialchars($lastGPUpdate->circuit_name) ?>
-                        (<?= htmlspecialchars($lastGPUpdate->country_name) ?>)
+                        - <?= htmlspecialchars($lastGPUpdate->country_code) ?>
                     </span>
                 </span>
             </p>
@@ -90,7 +94,11 @@ function gpBadge($gpNumber) {
     <!-- Tableaux par catégorie -->
     <?php if (!empty($listByCategory)): ?>
         <?php foreach ($listByCategory as $categoryName => $drivers): 
-                $seasonNumber = $drivers[0]->season_number ?? null; 
+                $seasonNumber = $drivers[0]->season_number ?? null;
+                $competitionType = CompetitionHelper::resolveType(
+                    $drivers[0]->season_type ?? null,
+                    null
+                );
             ?>
             <div class="category-block"
                     style="--category-color: <?= htmlspecialchars($categoryColors[$categoryName] ?? '#E10600') ?>">
@@ -158,7 +166,13 @@ function gpBadge($gpNumber) {
                                             <span aria-hidden="true" class="label-medium">Pts</span>
                                             <span aria-hidden="true" class="label-short">Pts</span>
                                     </th>
-                                    <th class="text-center th-responsive" title="Grands Prix">GP</th>
+                                    <th class="text-center th-responsive" 
+                                        title="<?= CompetitionHelper::label($competitionType) ?>">
+                                            <span class="label-aria"><?= CompetitionHelper::labelLong($competitionType) ?></span>
+                                            <span aria-hidden="true" class="label-long"><?= CompetitionHelper::labelLong($competitionType) ?></span>
+                                            <span aria-hidden="true" class="label-medium"><?= CompetitionHelper::labelMedium($competitionType) ?></span>
+                                            <span aria-hidden="true" class="label-short"><?= CompetitionHelper::labelShort($competitionType) ?></span>
+                                    </th>
                                     <th class="text-center th-responsive" title="Victoires">
                                             <span class="label-aria">Victoires</span>
                                             <span aria-hidden="true" class="label-long">Victoires</span>
@@ -222,7 +236,7 @@ function gpBadge($gpNumber) {
 
 
                                         <td class="text-center down" title="Points"><?= htmlspecialchars(rtrim(rtrim(number_format($row->total_points ?? 0, 1, '.', ''), '0'), '.')) ?></td>
-                                        <td class="text-center" title="Grands Prix"><?= htmlspecialchars($row->gp_count ?? 0) ?></td>
+                                        <td class="text-center" title="<?= CompetitionHelper::label($competitionType) ?>"><?= htmlspecialchars($row->gp_count ?? 0) ?></td>
                                         <td class="text-center" title="Victoires"><?= htmlspecialchars($row->wins ?? 0) ?></td>
                                         <td class="text-center" title="Podiums"><?= htmlspecialchars($row->podiums ?? 0) ?></td>
                                         <td class="text-center" title="Pole Position"><?= htmlspecialchars($row->pole_count ?? 0) ?></td>
@@ -304,7 +318,10 @@ function gpBadge($gpNumber) {
                         <table class="dashboard-table fix table-th-responsive penalties-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center" title="Grand Prix">GP</th>
+                                    <th class="text-center" 
+                                        title="<?= CompetitionHelper::labelSingular($competitionType) ?>">
+                                            <?= CompetitionHelper::labelSingular($competitionType) ?>
+                                    </th>
                                     <th class="text-center" title="Pilote">Pilote</th>
                                     <th class="text-center" title="Équipe">Équipe</th>
                                     <th class="text-center th-responsive" title="Pénalité">
@@ -327,7 +344,7 @@ function gpBadge($gpNumber) {
                                     <tr>
                                         <!-- GP -->
                                         <td class="gp-cell th-responsive down"
-                                            title="Grand Prix">
+                                            title="<?= CompetitionHelper::labelSingular($competitionType) ?>">
                                             <?php if (!empty($p->country_flag)): ?>
                                                 <img
                                                     src="<?= htmlspecialchars($p->country_flag) ?>"
@@ -336,7 +353,8 @@ function gpBadge($gpNumber) {
                                             <?php endif; ?>
 
                                             <span class="gp-name">
-                                                GP <?= htmlspecialchars($p->gp_ordre ?? '') ?>
+                                                <?= CompetitionHelper::labelVeryShort($competitionType) ?>
+                                                <?= htmlspecialchars($p->gp_ordre ?? '') ?>
                                                 - <?= htmlspecialchars($p->circuit_name ?? '') ?>
                                             </span>
                                         </td>
@@ -378,19 +396,24 @@ function gpBadge($gpNumber) {
                 <!-- Résultats GP -->
                 <?php if (!empty($gpByCategory[$categoryName])): ?>
                     <h3 class="gp-title">
-                        Résultats GP
+                        Résultats <?= CompetitionHelper::label($competitionType) ?>
                     </h3>
                     
                     <p class="gp-subtitle">
-                        <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le GP pour voir les résultats complets
+                        <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur <?= CompetitionHelper::labelSubtitle($competitionType) ?> pour voir les résultats complets
                     </p>
 
                 <div class="table-responsive">
                 <table class="dashboard-table fix table-th-responsive gp-season-table">
                     <thead>
                         <tr>
-                            <th class="badge-width" title="Grand Prix">GP</th>
-                            <th title="Circuit">Circuit</th>
+                            <th class="badge-width" 
+                                title="<?= CompetitionHelper::labelSingular($competitionType) ?>">
+                            </th>
+                            <th class="down" 
+                                title="<?= CompetitionHelper::labelSingular($competitionType) ?>">
+                                <?= CompetitionHelper::labelSingular($competitionType) ?>
+                            </th>
                             <th class="text-center" title="Vainqueur">1er</th>
                             <th class="text-center" title="Second">2e</th>
                             <th class="text-center" title="Troisième">3e</th>
@@ -416,9 +439,9 @@ function gpBadge($gpNumber) {
                         ?>
                         <tr class="gp-row" data-gp-id="<?= (int)$gp->id ?>">
 
-                            <!-- GP N° -->
+                            <!-- GP -->
                             <td class="badge-width"
-                                title="GP <?= htmlspecialchars($gp->gp_ordre) ?>">
+                                title="<?= CompetitionHelper::labelSingular($competitionType) ?>">
                                 <?= gpBadge($gp->gp_ordre) ?>
                             </td>
                            

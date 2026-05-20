@@ -31,12 +31,13 @@ class CategoriesController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if (Form::validatePost($_POST, ['name', 'color', 'status'])) {
+            if (Form::validatePost($_POST, ['name', 'color', 'status', 'type'])) {
 
                 // Supprime les espaces au début et à la fin de la chaine de texte pour comparer si doublon (laisse des espaces entre les mots intacts)
                 $name = trim($_POST['name']);
                 $color = $_POST['color'];
                 $status = $_POST['status'];
+                $type = $_POST['type'];
 
                 // Connexion DB
                 $db = new CategoriesModel();
@@ -59,8 +60,8 @@ class CategoriesController extends Controller {
                     }
 
                     // INSERT
-                    $stmt = $pdo->prepare("INSERT INTO categories (name, color, status) VALUES (?,?,?)");
-                    if ($stmt->execute([$name, $color, $status])) {
+                    $stmt = $pdo->prepare("INSERT INTO categories (name, color, status, type) VALUES (?,?,?)");
+                    if ($stmt->execute([$name, $color, $status, $type])) {
                         $message = "Catégorie créée avec succès";
                         $classMsg = "msg-success";
                     } else {
@@ -102,6 +103,8 @@ class CategoriesController extends Controller {
             ->addInput("text", "name")
             ->addLabel("color", "Couleur :")
             ->addInput("color", "color")
+            ->addLabel("type", "Type de compétition :")
+            ->addSelect("type", ['grands_prix' => 'Grands Prix', 'courses' => 'Courses'])
             ->addLabel("status", "Statut :")
             ->addSelect("status", [
                 "active" => "Active",
@@ -146,7 +149,7 @@ class CategoriesController extends Controller {
         // Si données reçues en POST, traitement de la requete préparée
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if (Form::validatePost($_POST, ['name', 'color', 'status'])) {
+            if (Form::validatePost($_POST, ['name', 'color', 'status', 'type'])) {
 
                 try {
                     // Supprime les espaces au début et à la fin de la chaine de texte 
@@ -173,9 +176,9 @@ class CategoriesController extends Controller {
                     // pour comparer si doublon (laisse des espaces entre les mots intacts)
                     $name = trim($_POST['name']);
 
-                    $stmt = $pdo->prepare("UPDATE categories SET name=?, color=?, status=? WHERE id=?");
+                    $stmt = $pdo->prepare("UPDATE categories SET name=?, color=?, status=?, type=? WHERE id=?");
 
-                    if ($stmt->execute([$name, $_POST['color'], $_POST['status'], $id])) {
+                    if ($stmt->execute([$name, $_POST['color'], $_POST['status'], $_POST['type'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -211,6 +214,8 @@ class CategoriesController extends Controller {
             ->addInput("text", "name", ["value" => $category->name])
             ->addLabel("color", "Couleur :")
             ->addInput("color", "color", ["value" => $category->color])
+            ->addLabel("type", "Type de compétition :")
+            ->addSelect("type", ['grands_prix' => 'Grands Prix', 'courses' => 'Courses'], ["value" => $category->type ?? 'grands_prix'])
             ->addLabel("status", "Statut :")
             ->addSelect("status", [
                 "active" => "Active",

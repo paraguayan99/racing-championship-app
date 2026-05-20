@@ -10,14 +10,16 @@ class SeasonsModel extends DbConnect {
     public $season_name;
     public $category_id;
     public $videogame;
+    public $videogame_short;
     public $platform;
     public $status;
+    public $type;
 
     // Récupère toutes les saisons avec le nom de la catégorie
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT seasons.id, season_number, season_name, categories.name as category, videogame, platform, seasons.status
+            SELECT seasons.id, season_number, season_name, categories.name as category, videogame, videogame_short, platform, type, seasons.status
             FROM seasons
             JOIN categories ON seasons.category_id = categories.id
             ORDER BY seasons.status ASC, categories.name ASC, seasons.season_number DESC

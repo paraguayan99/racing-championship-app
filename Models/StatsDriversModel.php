@@ -40,11 +40,14 @@ class StatsDriversModel
 
                 -- Infos saison
                 s.videogame,
+                s.videogame_short,
                 s.platform,
                 s.season_name,
+                s.type AS season_type,
 
                 -- Catégorie
                 cat.color AS category_color,
+                cat.type AS category_type,
 
                 -- Équipe
                 t.name  AS team_name,
@@ -87,8 +90,11 @@ class StatsDriversModel
                 ds.wins,
                 ds.podiums,
                 s.videogame,
+                s.videogame_short,
                 s.platform,
                 s.season_name,
+                s.type,
+                cat.type,
                 cat.color,
                 t.name,
                 t.logo,

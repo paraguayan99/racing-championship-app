@@ -1,5 +1,7 @@
 <?php $title = "Team-eRacing - Palmarès"; ?>
 
+<?php use App\Helpers\CompetitionHelper; ?>
+
 <div class="section-dashboard">
     <a class="nav-btn" href="/classements/standings">Retour aux Classements</a>
     <a class="nav-btn red" href="/statscircuits">Circuits</a>
@@ -46,7 +48,12 @@ function podiumBadge($pos) {
 }
 ?>
 
-<?php foreach ($driversByCategory as $category => $drivers): ?>
+<?php foreach ($driversByCategory as $category => $drivers): 
+    $competitionType = \App\Helpers\CompetitionHelper::resolveType(
+        null,
+        $drivers[0]->category_type ?? null
+    );
+?>
     <div class="category-block"
         style="--category-color: <?= htmlspecialchars($drivers[0]->category_color) ?>">
 
@@ -125,20 +132,25 @@ function podiumBadge($pos) {
                         <th class="text-center th-responsive" title="Victoires">
                             <span class="label-aria">Victoires</span>
                             <span aria-hidden="true" class="label-long">Victoires</span>
-                            <span aria-hidden="true" class="label-medium">Vic</span>
+                            <span aria-hidden="true" class="label-medium">Vict</span>
                             <span aria-hidden="true" class="label-short">Vic</span>
                         </th>
                         <th class="text-center th-responsive" title="Podiums">
                             <span class="label-aria">Podiums</span>
                             <span aria-hidden="true" class="label-long">Podiums</span>
-                            <span aria-hidden="true" class="label-medium">Pod</span>
+                            <span aria-hidden="true" class="label-medium">Podiums</span>
                             <span aria-hidden="true" class="label-short">Pod</span>
                         </th>
-                        <th class="text-center" title="Grands Prix">GP</th>
+                        <th class="text-center th-responsive" title="<?= CompetitionHelper::label($competitionType) ?>">
+                            <span class="label-aria"><?= CompetitionHelper::label($competitionType) ?></span>
+                            <span aria-hidden="true" class="label-long"><?= CompetitionHelper::labelLong($competitionType) ?></span>
+                            <span aria-hidden="true" class="label-medium"><?= CompetitionHelper::labelLong($competitionType) ?></span>
+                            <span aria-hidden="true" class="label-short"><?= CompetitionHelper::labelMedium($competitionType) ?></span>
+                        </th>
                         <th class="text-center th-responsive" title="Points">
                             <span class="label-aria">Points</span>
                             <span aria-hidden="true" class="label-long">Points</span>
-                            <span aria-hidden="true" class="label-medium">Pts</span>
+                            <span aria-hidden="true" class="label-medium">Points</span>
                             <span aria-hidden="true" class="label-short">Pts</span>
                         </th>
                     </tr>
@@ -154,7 +166,7 @@ function podiumBadge($pos) {
                         <td class="text-center" title="Troisièmes"><?= $d->third_places ?></td>
                         <td class="text-center" title="Victoires"><?= $d->wins ?></td>
                         <td class="text-center" title="Podiums"><?= $d->podiums ?></td>
-                        <td class="text-center" title="Grands Prix"><?= htmlspecialchars($d->total_gp ?? 0) ?></td>
+                        <td class="text-center" title="<?= CompetitionHelper::label($competitionType) ?>"><?= htmlspecialchars($d->total_gp ?? 0) ?></td>
                         <td class="text-center" title="Points"><?= htmlspecialchars(rtrim(rtrim(number_format($d->total_points ?? 0, 1, '.', ''),'0'),'.')) ?></td>
                     </tr>
                 <?php endforeach; ?>

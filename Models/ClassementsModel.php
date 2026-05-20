@@ -11,7 +11,7 @@ class ClassementsModel extends DbConnect
     {
         $db = new DbConnect();
         $sql = "
-            SELECT s.id AS season_id, s.season_number, c.name AS category, s.videogame, s.platform, s.status
+            SELECT s.id AS season_id, s.season_number, c.name AS category, s.videogame, s.videogame_short, s.platform, s.status
             FROM seasons s
             JOIN categories c ON c.id = s.category_id
             ORDER BY s.status DESC, c.name ASC, s.season_number DESC
@@ -27,8 +27,10 @@ class ClassementsModel extends DbConnect
         $sql = "
             SELECT ul.updated_at, ul.gp_id,
                 g.gp_ordre,
+                s.type AS season_type,
                 cir.name AS circuit_name,
                 co.name AS country_name,
+                co.code AS country_code,
                 cat.name AS category_name,
                 s.season_number
             FROM updates_log ul
@@ -66,6 +68,7 @@ class ClassementsModel extends DbConnect
                 s.videogame,
                 s.platform,
                 s.season_name,
+                s.type AS season_type,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -179,6 +182,7 @@ class ClassementsModel extends DbConnect
                 s.videogame,
                 s.platform,
                 s.season_name,
+                s.type AS season_type,
 
                 -- Couleur de la catégorie
                 cat.color AS category_color,
@@ -475,11 +479,12 @@ class ClassementsModel extends DbConnect
 
         // Infos GP + stats + circuit + pays
         $sql = "
-            SELECT g.*, s.season_number, s.season_name, c.name AS category,
+            SELECT g.*, s.season_number, s.season_name, s.type AS season_type, c.name AS category,
                 c.color AS category_color,
                 cir.name AS circuit_name,
                 co.name AS country_name,
                 co.flag AS country_flag,
+                co.code AS country_code,
                 (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.pole_position_driver WHERE gs.gp_id = g.id) AS pole_driver,
                 (SELECT gs.pole_position_time FROM gp_stats gs WHERE gs.gp_id = g.id) AS pole_time,
                 (SELECT d.nickname FROM gp_stats gs LEFT JOIN drivers d ON d.id = gs.fastest_lap_driver WHERE gs.gp_id = g.id) AS fastest_lap_driver,

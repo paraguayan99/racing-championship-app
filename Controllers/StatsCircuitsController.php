@@ -20,6 +20,13 @@ class StatsCircuitsController extends Controller
 
         if ($circuitId) {
             $topChronos = StatsCircuitsModel::getCircuitTopChronos($circuitId);
+
+            // Si une abréviation existe, on l'utilise, sinon on garde le nom complet du Jeu vidéo
+            foreach ($topChronos as $chrono) {
+                if (!empty($chrono->videogame_short)) {
+                    $chrono->videogame = $chrono->videogame_short;
+                }
+            }
             $driversStats = StatsCircuitsModel::getDriversStatsByCircuit($circuitId);
             $gpCountByCategory = StatsCircuitsModel::getGPCountByCategory($circuitId);
 

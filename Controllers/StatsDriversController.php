@@ -19,6 +19,13 @@ class StatsDriversController extends Controller
             if ($driver) {
                 $history = StatsDriversModel::getDriverHistory($driver_id);
 
+                // Si une abréviation existe, on l'utilise, sinon on garde le nom complet du Jeu vidéo
+                foreach ($history as $row) {
+                    if (!empty($row->videogame_short)) {
+                        $row->videogame = $row->videogame_short;
+                    }
+                }
+
                 foreach ($history as $row) {
                     $historyByCategory[$row->category][] = $row;
                 }

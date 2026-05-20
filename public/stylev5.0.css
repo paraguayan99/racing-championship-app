@@ -1571,6 +1571,14 @@ input[type=number] {
 .gp-title-text-modal {
     position: relative;
     z-index: 1;
+    line-height: 1.6;
+}
+
+.gp-title-text-modal img,
+.gp-title-text-modal i {
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
 }
 
 /* Réduire l'espace vertical des lignes Pole Position et Fastest Lap */
@@ -1762,7 +1770,8 @@ table.sortable th.no-sort::after {
 }
 
 .selected-circuit img.circuit-flag,
-.selected-statsdrivers img.statsdrivers-flag {
+.selected-statsdrivers img.statsdrivers-flag,
+.gp-title-text-modal img.circuit-flag {
     width: 32px;
     border-radius: 4px;
     height: auto;

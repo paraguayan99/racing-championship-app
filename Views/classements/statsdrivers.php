@@ -1,5 +1,7 @@
 <?php $title = "Team-eRacing - Pilotes"; ?>
 
+<?php use App\Helpers\CompetitionHelper; ?>
+
 <?php
 function sdPodiumBadge(int $pos): string {
     switch ($pos) {
@@ -66,6 +68,11 @@ function sdRankBadge($rank): string {
                 $rows     = $historyByCategory[$category];
                 $catColor = $rows[0]->category_color ?? '#e10600';
 
+                $competitionType = \App\Helpers\CompetitionHelper::resolveType(
+                    null,
+                    $rows[0]->category_type ?? null
+                );
+
                 $totalPts  = array_sum(array_map(fn($r) => (float)$r->total_points,     $rows));
                 $totalGp   = array_sum(array_map(fn($r) => (int)  $r->gp_count,         $rows));
                 $totalWins = array_sum(array_map(fn($r) => (int)  $r->wins,             $rows));
@@ -108,11 +115,16 @@ function sdRankBadge($rank): string {
                                     <span aria-hidden="true" class="label-medium">Pts</span>
                                     <span aria-hidden="true" class="label-short">Pts</span>
                                 </th>
-                                <th class="text-center th-responsive down" title="Grands Prix">GP</th>
+                                <th class="text-center th-responsive" title="<?= CompetitionHelper::label($competitionType) ?>">
+                                    <span class="label-aria"><?= CompetitionHelper::label($competitionType) ?></span>
+                                    <span aria-hidden="true" class="label-long"><?= CompetitionHelper::labelLong($competitionType) ?></span>
+                                    <span aria-hidden="true" class="label-medium"><?= CompetitionHelper::labelMedium($competitionType) ?></span>
+                                    <span aria-hidden="true" class="label-short"><?= CompetitionHelper::labelShort($competitionType) ?></span>
+                                </th>
                                 <th class="text-center th-responsive down" title="Victoires">
                                     <span class="label-aria">Victoires</span>
                                     <span aria-hidden="true" class="label-long">Victoires</span>
-                                    <span aria-hidden="true" class="label-medium">Vic</span>
+                                    <span aria-hidden="true" class="label-medium">Vict</span>
                                     <span aria-hidden="true" class="label-short">Vi</span>
                                 </th>
                                 <th class="text-center th-responsive down" title="Podiums">
@@ -124,13 +136,13 @@ function sdRankBadge($rank): string {
                                 <th class="text-center th-responsive down" title="Pole Position">
                                     <span class="label-aria">Pole Position</span>
                                     <span aria-hidden="true" class="label-long">Pole Pos</span>
-                                    <span aria-hidden="true" class="label-medium">PoleP</span>
+                                    <span aria-hidden="true" class="label-medium">PP</span>
                                     <span aria-hidden="true" class="label-short">PP</span>
                                 </th>
                                 <th class="text-center th-responsive down" title="Fastest Lap">
                                     <span class="label-aria">Fastest Lap</span>
                                     <span aria-hidden="true" class="label-long">Fast Lap</span>
-                                    <span aria-hidden="true" class="label-medium">FastL</span>
+                                    <span aria-hidden="true" class="label-medium">FL</span>
                                     <span aria-hidden="true" class="label-short">FL</span>
                                 </th>
                             </tr>
@@ -174,8 +186,8 @@ function sdRankBadge($rank): string {
                                     <?= htmlspecialchars(rtrim(rtrim(number_format((float)($row->total_points ?? 0), 1, '.', ''), '0'), '.')) ?>
                                 </td>
 
-                                <!-- GP -->
-                                <td class="text-center" title="Grands Prix">
+                                <!-- GP / Courses -->
+                                <td class="text-center" title="<?= \App\Helpers\CompetitionHelper::label($competitionType) ?>">
                                     <?= (int)($row->gp_count ?? 0) ?>
                                 </td>
 

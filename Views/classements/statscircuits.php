@@ -169,7 +169,12 @@
                         <span aria-hidden="true" class="label-short"></span>
                     </th>
                     <th title="Pilote">Pilote</th>
-                    <th class="text-center" title="Grands Prix">GP</th>
+                    <th class="text-center th-responsive" title="Courses">
+                            <span class="label-aria">Courses</span>
+                            <span aria-hidden="true" class="label-long">Courses</span>
+                            <span aria-hidden="true" class="label-medium">Courses</span>
+                            <span aria-hidden="true" class="label-short">Cou</span>
+                    </th>
                     <th class="text-center th-responsive" title="Victoires">
                             <span class="label-aria">Victoires</span>
                             <span aria-hidden="true" class="label-long">Victoires</span>
@@ -201,7 +206,7 @@
                 <tr>
                     <td class="badge-width" title="Position"><?= podiumBadge($i + 1) ?></td>
                     <td class="down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
-                    <td class="text-center" title="Grands Prix"><?= $d->gp_count ?></td>
+                    <td class="text-center" title="Courses"><?= $d->gp_count ?></td>
                     <td class="text-center" title="Victoires"><?= $d->wins ?></td>
                     <td class="text-center" title="Podiums"><?= $d->podiums ?></td>
                     <td class="text-center" title="Pole Position"><?= $d->poles ?></td>

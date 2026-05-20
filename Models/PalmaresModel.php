@@ -11,7 +11,7 @@ class PalmaresModel extends DbConnect
         $db = new DbConnect();
         return $db->getConnection()
             ->query("
-                SELECT id, name, color
+                SELECT id, name, color, type
                 FROM categories
                 ORDER BY name ASC
             ")
@@ -27,7 +27,7 @@ class PalmaresModel extends DbConnect
         $where = $categoryName ? "WHERE p.category = :category" : "";
 
         $stmt = $db->getConnection()->prepare("
-            SELECT p.*, c.color AS category_color
+            SELECT p.*, c.color AS category_color, c.type AS category_type
             FROM cache_drivers_palmares p
             JOIN categories c ON c.name = p.category
             $where

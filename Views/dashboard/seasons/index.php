@@ -41,11 +41,23 @@
                         <span aria-hidden="true" class="label-medium">Jeu vidéo</span>
                         <span aria-hidden="true" class="label-short">Jeu</span>
                     </th>
+                    <th class="text-center th-responsive">
+                        <span class="label-aria">Abréviation</span>
+                        <span aria-hidden="true" class="label-long">Abréviation</span>
+                        <span aria-hidden="true" class="label-medium">Abr</span>
+                        <span aria-hidden="true" class="label-short">Abr</span>
+                    </th>
                     <th class="text-center th-responsive text-center">
                         <span class="label-aria">Console</span>
                         <span aria-hidden="true" class="label-long">Console</span>
                         <span aria-hidden="true" class="label-medium">Cons</span>
                         <span aria-hidden="true" class="label-short">Cons</span>
+                    </th>
+                    <th class="text-center th-responsive">
+                        <span class="label-aria">Type</span>
+                        <span aria-hidden="true" class="label-long">Type</span>
+                        <span aria-hidden="true" class="label-medium">Type</span>
+                        <span aria-hidden="true" class="label-short">Type</span>
                     </th>
                     <th class="status text-center">Status</th>
                     <th class="width-actions text-center">Actions</th>
@@ -59,7 +71,9 @@
                     <td class="down"><?= htmlspecialchars($season->category ?? $season->category_id) ?></td>
                     <td class="down"><?= htmlspecialchars($season->season_name ?? '') ?></td>
                     <td class="down text-center"><?= htmlspecialchars($season->videogame) ?></td>
+                    <td class="down text-center"><?= htmlspecialchars($season->videogame_short ?? '') ?></td>
                     <td class="down text-center"><?= htmlspecialchars($season->platform) ?></td>
+                    <td class="down text-center"><?= htmlspecialchars($season->type ?? '') ?></td>
                     <td class="status text-center down"><?= htmlspecialchars($season->status) ?></td>
                     <td class="width-actions text-center">
                         <a class="action-btn edit" href="/seasons/update/<?= $season->id ?>">

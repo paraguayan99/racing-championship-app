@@ -59,19 +59,15 @@ class ClassementsController extends Controller
         // Toutes les saisons pour le SELECT
         $seasons = ClassementsModel::getAllSeasonsForSelect();
 
-        // Alias de jeux vidéos si le nom est trop long (Uniquement pour le SELECT)
-        $videogameAliases = [
-            'F1 Championship Edition' => 'F1 CE',
-        ];
-
         foreach ($seasons as $season) {
-            // Permet aux saisons de 1 à 9 d'être affichée 01 ... 09
-            $season->season_number = str_pad($season->season_number, 2, '0', STR_PAD_LEFT);
+        // Permet aux saisons de 1 à 9 d'être affichée 01 ... 09
+        $season->season_number = str_pad($season->season_number, 2, '0', STR_PAD_LEFT);
 
-            if (isset($videogameAliases[$season->videogame])) {
-                $season->videogame = $videogameAliases[$season->videogame];
-            }
+        // Si une abréviation existe, on l'utilise, sinon on garde le nom complet du Jeu vidéo
+        if (!empty($season->videogame_short)) {
+            $season->videogame = $season->videogame_short;
         }
+    }
 
         // Récupérer la dernière mise à jour GP (sans filtrer par saison)
         $lastGPUpdate = ClassementsModel::getLastGPUpdate();

@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\CompetitionHelper;
+
 // Fonction badges podium
 function podiumBadge($pos) {
 
@@ -27,19 +29,18 @@ function podiumBadge($pos) {
         <span class="gp-title-text-modal">
             <!-- Ajout du drapeau du pays du GP -->
             <?php if (!empty($gp->country_flag)): ?>
-                <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="drivers-teams-flag" alt="flag">
+                <img src="<?= htmlspecialchars($gp->country_flag) ?>" class="circuit-flag" alt="flag">
             <?php endif; ?>
-
-            GP <?= htmlspecialchars($gp->gp_ordre) ?>
-            - <?= htmlspecialchars($gp->circuit_name ?? '') ?>
-            (<?= htmlspecialchars($gp->country_name ?? '') ?>)
-            / Saison <?= htmlspecialchars($gp->season_number) ?> 
-            - <?= htmlspecialchars($gp->category) ?>
+            <?= htmlspecialchars($gp->country_code ?? '') ?>
+            <i class="fa-solid fa-angles-right"></i> <?= CompetitionHelper::labelModalGpDetails($gp->season_type ?? 'grands_prix') ?> <?= htmlspecialchars($gp->gp_ordre) ?>
+            <i class="fa-solid fa-diamond" style="font-size: 0.4em;"></i> <?= htmlspecialchars($gp->circuit_name ?? '') ?>
+            <i class="fa-solid fa-angle-right"></i> <?= htmlspecialchars($gp->category) ?> 
+            <i class="fa-solid fa-diamond" style="font-size: 0.4em;"></i> S<?= htmlspecialchars($gp->season_number) ?> 
             <?php if (!empty($gp->season_name)): ?>
-            / <?= htmlspecialchars($gp->season_name) ?>
+            <i class="fa-solid fa-diamond" style="font-size: 0.4em;"></i> <?= htmlspecialchars($gp->season_name) ?>
             <?php endif; ?>
         </span>
-        </h3>
+    </h3>
 
     <!-- Affichage de Pole Position et/ou Fastest Lap si les données sont présentes -->
     <?php if (!empty($gp->pole_driver) || !empty($gp->pole_time)) : ?>
@@ -129,5 +130,5 @@ function podiumBadge($pos) {
     </div>
 
 <?php else: ?>
-    <p>GP non trouvé.</p>
+    <p>Course non trouvée.</p>
 <?php endif; ?>

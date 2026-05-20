@@ -37,22 +37,24 @@ class SeasonsController extends Controller {
         // SI POST : traiter le formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame','platform', 'status'])) {
+            if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame','platform', 'status', 'type'])) {
 
                 $season_number = $_POST['season_number'];
                 $category_id = $_POST['category_id'];
                 $season_name = $_POST['season_name'] ?? null;
                 $videogame = $_POST['videogame'];
+                $videogame_short = $_POST['videogame_short'] ?? null;
                 $platform = $_POST['platform'];
                 $status = $_POST['status'];
+                $type = $_POST['type'];
 
                 $db = new SeasonsModel();
                 $pdo = $db->getConnection();
 
                 try {
                     // Requete préparée
-                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, platform, status) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$season_number, $season_name, $category_id, $videogame, $platform, $status]);
+                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, videogame_short, platform, status, type) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$season_number, $season_name, $category_id, $videogame, $videogame_short, $platform, $status, $type]);
                     $message = "Saison créée avec succès";
                     $classMsg = "msg-success";
                 } catch (\PDOException $e) {
@@ -64,7 +66,7 @@ class SeasonsController extends Controller {
                     $classMsg = "msg-error";
                 }
             } else {
-                $message = "Création échouée : tous les champs sont obligatoires.";
+                $message = "Création échouée : Vérifiez tous les champs obligatoires.";
                 $classMsg = "msg-error";
             }
 
@@ -94,8 +96,12 @@ class SeasonsController extends Controller {
             ->addInput("text", "season_name")
             ->addLabel("videogame", "Jeu vidéo :")
             ->addInput("text", "videogame")
+            ->addLabel("videogame_short", "Abréviation Jeu vidéo (optionnel - 8 caractères) :")
+            ->addInput("text", "videogame_short", ["maxlength" => "8"])
             ->addLabel("platform", "Plateforme :")
             ->addInput("text", "platform")
+            ->addLabel("type", "Type de compétition :")
+            ->addSelect("type", ['grands_prix' => 'Grands Prix', 'courses' => 'Courses'])
             ->addLabel("status", "Statut :")
             ->addSelect("status", ['active' => 'Active', 'desactive' => 'Désactivée'])
             ->addSubmit("Créer")
@@ -140,11 +146,11 @@ class SeasonsController extends Controller {
         $categories = SeasonsModel::allCategories();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame', 'platform', 'status'])) {
+            if (Form::validatePost($_POST, ['season_number', 'category_id', 'videogame', 'platform', 'status', 'type'])) {
                 try {
                     // Requete préparée
-                    $stmt = $pdo->prepare("UPDATE seasons SET season_number=?,  season_name=?, category_id=?, videogame=?, platform=?, status=? WHERE id=?");
-                    if ($stmt->execute([$_POST['season_number'], $_POST['season_name'] ?? null, $_POST['category_id'], $_POST['videogame'], $_POST['platform'], $_POST['status'], $id])) {
+                    $stmt = $pdo->prepare("UPDATE seasons SET season_number=?,  season_name=?, category_id=?, videogame=?, videogame_short=?, platform=?, status=?, type=? WHERE id=?");
+                    if ($stmt->execute([$_POST['season_number'], $_POST['season_name'] ?? null, $_POST['category_id'], $_POST['videogame'], $_POST['videogame_short'] ?? null, $_POST['platform'], $_POST['status'], $_POST['type'], $id])) {
                         $message = "Mise à jour réussie";
                         $classMsg = "msg-success";
                     } else {
@@ -160,7 +166,7 @@ class SeasonsController extends Controller {
                     $classMsg = "msg-error";
                 }
             } else {
-                $message = "Mise à jour échouée : tous les champs sont obligatoires";
+                $message = "Mise à jour échouée : Vérifiez tous les champs obligatoires.";
                 $classMsg = "msg-error";
             }
 
@@ -190,8 +196,12 @@ class SeasonsController extends Controller {
             ->addInput("text", "season_name", ["value" => $season->season_name ?? ''])
             ->addLabel("videogame", "Jeu vidéo :")
             ->addInput("text", "videogame", ["value" => $season->videogame])
+            ->addLabel("videogame_short", "Abréviation Jeu vidéo (optionnel - 8 caractères) :")
+            ->addInput("text", "videogame_short", ["value" => $season->videogame_short ?? '', "maxlength" => "8"])
             ->addLabel("platform", "Plateforme :")
             ->addInput("text", "platform", ["value" => $season->platform])
+            ->addLabel("type", "Type de compétition :")
+            ->addSelect("type", ['grands_prix' => 'Grands Prix', 'courses' => 'Courses'], ["value" => $season->type ?? 'grands_prix'])
             ->addLabel("status", "Statut :")
             ->addSelect("status", ['active' => 'Active', 'desactive' => 'Désactivée'], ["value" => $season->status])
             ->addSubmit("Mettre à jour")
