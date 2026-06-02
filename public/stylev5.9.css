@@ -33,6 +33,8 @@ html, body {
     font-family: 'Titillium Web', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     color: #d4d7dd;
     font-size: 16px;
+    /* Pour aller progressivement jusqu'aux ancres # */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -1242,12 +1244,12 @@ input[type=number] {
 }
 
 /* Podiums */
-.badge-gold { background: #ffd700; color: #000; }
-.badge-silver { background: #c0c0c0; color: #000; }
-.badge-bronze { background: #cd7f32; color: #000;; }
+.badge-gold { background: #ffd700; color: #403600; }
+.badge-silver { background: #c0c0c0; color: #363636; }
+.badge-bronze { background: #cd7f32; color: #482D11;; }
 
 /* Positions 4+ */
-.badge-normal { background: #15151E; color: #d4d7dd;; }
+.badge-normal { background: #525274; color: #d4d7dd;; }
 
 /* Colonne Pilote */
 .driver-cell {
@@ -1799,13 +1801,13 @@ table.sortable th.no-sort::after {
 /* Pilote */
 .circuits-top10-table th:nth-child(2),
 .circuits-top10-table td:nth-child(2) {
-    width: 20%;
+    /* width: 25%; */
 }
 
 /* Chrono */
 .circuits-top10-table th:nth-child(3),
 .circuits-top10-table td:nth-child(3) {
-    width: 15%;
+    width: 20%;
 }
 
 /* Type */
@@ -1823,13 +1825,13 @@ table.sortable th.no-sort::after {
 /* Saison */
 .circuits-top10-table th:nth-child(6),
 .circuits-top10-table td:nth-child(6) {
-    width: 5%;
+    width: 10%;
 }
 
 /* Console */
-.circuits-top10-table th:nth-child(8),
-.circuits-top10-table td:nth-child(8) {
-    width: 10%;
+.circuits-top10-table th:nth-child(7),
+.circuits-top10-table td:nth-child(7) {
+    /* width: 20%; */
 }
 
 /* COURSES DISPUTEES */
@@ -1909,40 +1911,45 @@ table.sortable th.no-sort::after {
     margin-bottom : 20px;
     }
 
-/* Colonne Saison */
+/* Colonne Saison & Jeu vidéo */
 .statsdrivers-table td:nth-child(1),
 .statsdrivers-table th:nth-child(1) {
-    width: 80px;
+    width: 140px;
+    padding-left: 10px;
 }
 
 /* Colonne Jeu */
-.statsdrivers-table td:nth-child(2),
+/* .statsdrivers-table td:nth-child(2),
 .statsdrivers-table th:nth-child(2) {
     width: 100px;
-}
+} */
 
 /* Colonne Équipe */
 .statsdrivers-table td.team-cell,
-.statsdrivers-table th:nth-child(3) {
+.statsdrivers-table th:nth-child(2) {
     width: 20%;
 }
 
 /* Colonne Position */
-.statsdrivers-table td:nth-child(4),
-.statsdrivers-table th:nth-child(4) {
+.statsdrivers-table td:nth-child(3),
+.statsdrivers-table th:nth-child(3) {
     width: 60px;
 }
 
 /* Colonne Points */
-.statsdrivers-table td:nth-child(5),
-.statsdrivers-table th:nth-child(5) {
+.statsdrivers-table td:nth-child(4),
+.statsdrivers-table th:nth-child(4) {
     width: 10%;
 }
 
 /* Colonne GP */
-.statsdrivers-table td:nth-child(6),
-.statsdrivers-table th:nth-child(6) {
+.statsdrivers-table td:nth-child(5),
+.statsdrivers-table th:nth-child(5) {
     width: 8%;
+}
+
+.season-cell .statsdrivers-videogame {
+    font-size: 0.85rem;
 }
 
 
@@ -1983,17 +1990,23 @@ table.sortable th.no-sort::after {
 } */
 
 /* 1. La cellule devient entièrement cliquable partout */
-.driver-cell.standings-page {
+.driver-cell.standings-page,
+.driver-cell.palmares-page,
+.season-cell.statsdrivers-page {
     position: relative;
     cursor: pointer;
 }
 
 /* 2. Le lien occupe tout l'espace de la case de manière invisible pour le clic */
-.driver-cell.standings-page .driver-cell-link {
+.driver-cell.standings-page .driver-cell-link,
+.driver-cell.palmares-page .driver-cell-link,
+.season-cell.statsdrivers-page .season-cell-link {
     color: inherit;
     text-decoration: none;
 }
-.driver-cell.standings-page .driver-cell-link::after {
+.driver-cell.standings-page .driver-cell-link::after,
+.driver-cell.palmares-page .driver-cell-link::after,
+.season-cell.statsdrivers-page .season-cell-link::after {
     content: "";
     position: absolute;
     top: 0;
@@ -2004,7 +2017,9 @@ table.sortable th.no-sort::after {
 }
 
 /* 3. Style de base du nom */
-.driver-cell.standings-page .driver-name a {
+.driver-cell.standings-page .driver-name a,
+.driver-cell.palmares-page.driver-name a,
+.season-cell.statsdrivers-page a {
     display: inline-block;
     color: inherit;
     text-decoration: none;
@@ -2013,8 +2028,15 @@ table.sortable th.no-sort::after {
     padding: 0px 4px;
 }
 
-/* 4. LA MAGIE : Quand on survole la CELLULE (td), on applique le fond sur le LIEN (a) */
-.driver-cell.standings-page:hover .driver-name a {
+/* 4. Au survol de la CELLULE (td), on applique le fond sur le LIEN (a) */
+.driver-cell.standings-page:hover .driver-name a,
+.driver-cell.palmares-page:hover.driver-name a,
+.season-cell.statsdrivers-page:hover a {
     background-color: color-mix(in srgb, var(--category-color, #E10600) 60%, transparent);
     border-radius: 10px;
+}
+
+/* Pour que les ancres des liens fassent apparaitre la page avec un leger décalage vertical */
+[id] {
+    scroll-margin-top: 10px;
 }

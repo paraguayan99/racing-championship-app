@@ -45,8 +45,8 @@ $canonical = $protocol . $host . ($uri === '' ? '/' : $uri);
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <!-- CSS personnel, pas de Framework -->
-<link rel="stylesheet" href="/stylev5.0.css" />
-<link rel="stylesheet" href="/style700px-mobilev2.9.css" media="screen and (max-width: 700px)" />
+<link rel="stylesheet" href="/stylev5.9.css" />
+<link rel="stylesheet" href="/style700px-mobilev3.3.css" media="screen and (max-width: 700px)" />
 <link rel="stylesheet" href="/style900px-tablettev1.6.css" media="screen and (min-width: 701px) and (max-width: 900px)" />
 <link rel="stylesheet" href="/style1400px-desktopv1.4.css" media="screen and (min-width: 901px)" />
 

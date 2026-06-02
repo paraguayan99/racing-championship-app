@@ -19,7 +19,7 @@ class SeasonsModel extends DbConnect {
     public static function all(){
         $db = new DbConnect();
         return $db->getConnection()->query("
-            SELECT seasons.id, season_number, season_name, categories.name as category, videogame, videogame_short, platform, type, seasons.status
+            SELECT seasons.id, season_number, season_name, categories.name as category, videogame, videogame_short, platform, seasons.type, seasons.status
             FROM seasons
             JOIN categories ON seasons.category_id = categories.id
             ORDER BY seasons.status ASC, categories.name ASC, seasons.season_number DESC

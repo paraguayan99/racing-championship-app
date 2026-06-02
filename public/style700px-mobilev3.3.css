@@ -481,7 +481,7 @@ table.sortable th.desc::after {
 }
 
 /* PAGE CIRCUITS */
-/* TOP 10 Tailles des colonnes*/
+/* TOP 10 */
 .circuit-title,
 .statsdrivers-title {
     font-size: 1.2rem;
@@ -490,7 +490,7 @@ table.sortable th.desc::after {
 /* Colonne Jeu vidéo */
 .circuits-top10-table th:nth-child(7),
 .circuits-top10-table td:nth-child(7) {
-    padding: 0px 15px 0px 15px;
+    padding: 0px 0px 0px 7px;
 }
 
 @media screen and (max-width: 500px) {
@@ -498,6 +498,17 @@ table.sortable th.desc::after {
     .circuits-top10-table th:nth-child(3),
     .circuits-top10-table td:nth-child(3) {
         width: 18%;
+    }
+
+    /* Console */
+    .circuits-top10-table th:nth-child(7),
+    .circuits-top10-table td:nth-child(7) {
+        width: 20%;
+    }
+
+    /* Console */
+    .circuits-top10-table td:nth-child(7) {
+        font-size: 0.75rem;
     }
 }
 
@@ -673,40 +684,39 @@ table.sortable th.desc::after {
     }
 }
 
-/* Colonne Saison */
+/* Colonne Saison & Jeu vidéo */
 .statsdrivers-table td:nth-child(1),
 .statsdrivers-table th:nth-child(1) {
-    width: 40px;
-}
-
-/* Colonne Jeu */
-.statsdrivers-table td:nth-child(2),
-.statsdrivers-table th:nth-child(2) {
-    width: 60px;
+    width: 95px;
+    padding-left: 5px;
 }
 
 /* Colonne Équipe */
 .statsdrivers-table td.team-cell,
-.statsdrivers-table th:nth-child(3) {
+.statsdrivers-table th:nth-child(2) {
     width: 10%;
 }
 
 /* Colonne Position */
-.statsdrivers-table td:nth-child(4),
-.statsdrivers-table th:nth-child(4) {
+.statsdrivers-table td:nth-child(3),
+.statsdrivers-table th:nth-child(3) {
     width: 25px;
 }
 
 /* Colonne Points */
-.statsdrivers-table td:nth-child(5),
-.statsdrivers-table th:nth-child(5) {
+.statsdrivers-table td:nth-child(4),
+.statsdrivers-table th:nth-child(4) {
     width: 12%;
 }
 
 /* Colonne GP */
-.statsdrivers-table td:nth-child(6),
-.statsdrivers-table th:nth-child(6) {
+.statsdrivers-table td:nth-child(5),
+.statsdrivers-table th:nth-child(5) {
     width: 10%;
+}
+
+.season-cell .statsdrivers-videogame {
+    font-size: 0.75rem;
 }
 
 @media screen and (max-width: 500px) {

@@ -100,7 +100,7 @@ function gpBadge($gpNumber) {
                     null
                 );
             ?>
-            <div class="category-block"
+            <div id="classement" class="category-block"
                     style="--category-color: <?= htmlspecialchars($categoryColors[$categoryName] ?? '#E10600') ?>">
 
                 <h2 class="category-title has-content">
@@ -217,7 +217,7 @@ function gpBadge($gpNumber) {
                                                     <img src="<?= htmlspecialchars($row->driver_flag) ?>" class="drivers-teams-flag" alt="flag">
                                                 <?php endif; ?>
                                             <span class="driver-name">
-                                                <a href="/statsdrivers/index/driver/<?= $row->driver_id ?>" class="driver-cell-link">
+                                                <a href="/statsdrivers/index/driver/<?= $row->driver_id ?>#pilote" class="driver-cell-link">
                                                     <?= htmlspecialchars($row->nickname) ?>
                                                 </a>
                                             </span>

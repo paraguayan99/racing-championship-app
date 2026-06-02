@@ -34,7 +34,7 @@ function sdRankBadge($rank): string {
     <?php else: ?>
 
         <!-- EN-TÊTE PILOTE -->
-        <h1 class="page-header has-content header-statsdrivers">
+        <h1 id="pilote" class="page-header has-content header-statsdrivers">
             <div class="selected-statsdrivers">
                 <?php if (!empty($driver->country_flag)): ?>
                     <img
@@ -50,6 +50,10 @@ function sdRankBadge($rank): string {
                 </span>
             </div>
         </h1>
+
+        <p class="gp-subtitle">
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur la Saison pour voir les résultats détaillés
+        </p>
 
         <?php if (empty($historyByCategory)): ?>
             <p style="text-align:center;">Aucun historique disponible pour ce pilote.</p>
@@ -93,12 +97,8 @@ function sdRankBadge($rank): string {
                         <thead>
                             <tr>
                                 <th class="text-center th-responsive down" title="Saison">
-                                    <span class="label-aria">Saison</span>
-                                    <span aria-hidden="true" class="label-long">Saison</span>
-                                    <span aria-hidden="true" class="label-medium">Saison</span>
-                                    <span aria-hidden="true" class="label-short">Sai</span>
+                                    Saison
                                 </th>
-                                <th title="Jeu vidéo">Jeu</th>
                                 <th class="th-responsive" title="Équipe">
                                     <span class="label-aria">Équipe</span>
                                     <span aria-hidden="true" class="label-long">Équipe</span>
@@ -153,17 +153,22 @@ function sdRankBadge($rank): string {
                                 $rank      = $ranksBySeason[$row->season_id] ?? null;
                             ?>
                             <tr>
-                                <!-- Saison -->
-                                <td class="text-center down" title="Saison">
-                                    S<?= htmlspecialchars($seasonNum) ?>
-                                </td>
+                                <!-- Saison & Jeu vidéo -->
+                                <td class="season-cell statsdrivers-page team-cell-gradient down" 
+                                    title="Saison"
+                                    style="--team-color: <?= htmlspecialchars($row->team_color ?? '') ?>">
 
-                                <!-- Jeu vidéo -->
-                                <td class="team-cell-gradient down" 
-                                    style="--team-color: <?= htmlspecialchars($row->team_color ?? '') ?>
-                                    "
-                                    title="Jeu vidéo">
-                                    <?= htmlspecialchars($row->videogame) ?>
+                                    <?php 
+                                    // Si la saison est active (en cours), on pointe vers l'URL générique.
+                                    // Sinon (archivée, terminée...), on pointe vers l'URL spécifique avec l'ID.
+                                    $seasonUrl = ($row->season_status === 'active') 
+                                        ? '/classements/standings' 
+                                        : '/classements/standings/season/' . (int)$row->season_id;
+                                    ?>
+                                    <a href="<?= $seasonUrl ?>#classement" class="season-cell-link">
+                                        S<?= htmlspecialchars($seasonNum) ?> 
+                                        <span class="statsdrivers-videogame">- <?= htmlspecialchars($row->videogame) ?></span>
+                                    </a>
                                 </td>
 
                                 <!-- Équipe -->
@@ -217,7 +222,7 @@ function sdRankBadge($rank): string {
                         <tfoot>
                             <tr style="background-color: var(--category-color); color: #FFFFFF">
                                 <td class="text-center tfoot-very-small-text down"><strong><?= count($rows) ?></strong></td>
-                                <td colspan="3"></td>
+                                <td colspan="2"></td>
                                 <td class="text-center tfoot-very-small-text down">
                                     <strong><?= htmlspecialchars(rtrim(rtrim(number_format($totalPts, 1, '.', ''), '0'), '.')) ?></strong>
                                 </td>

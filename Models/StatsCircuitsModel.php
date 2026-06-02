@@ -31,6 +31,7 @@ class StatsCircuitsModel extends DbConnect
             s.videogame,
             s.videogame_short,
             s.platform,
+            d.id AS driver_id,
             d.nickname,
             gs.pole_position_time AS chrono,
             'Pole Position' AS chrono_type
@@ -52,6 +53,7 @@ class StatsCircuitsModel extends DbConnect
             s.videogame,
             s.videogame_short,
             s.platform,
+            d.id AS driver_id,
             d.nickname,
             gs.fastest_lap_time,
             'Fastest Lap'
@@ -84,7 +86,7 @@ class StatsCircuitsModel extends DbConnect
         $db = new DbConnect();
         $sql = "
             SELECT 
-                d.id,
+                d.id AS driver_id,
                 d.nickname,
 
                 COUNT(DISTINCT gp.id) AS gp_count,

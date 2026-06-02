@@ -61,6 +61,10 @@
         <?php if (!empty($topChronos)) : ?>
         <h3 class="gp-title">Top 10</h3>
 
+        <p class="gp-subtitle">
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le nom du Pilote pour voir son historique
+        </p>
+
         <div class="table-responsive">
         <table class="dashboard-table fix table-th-responsive circuits-top10-table">
             <thead>
@@ -113,12 +117,16 @@
                 <?php foreach ($topChronos as $i => $chrono): ?>
                     <tr>
                         <td class="badge-width" title="Position"><?= podiumBadge($i + 1) ?></td>
-                        <td class="down" title="Pilote"><?= htmlspecialchars($chrono->nickname) ?></td>
+                        <td class="driver-cell palmares-page driver-name down" title="Pilote">
+                            <a href="/statsdrivers/index/driver/<?= (int)$chrono->driver_id ?>#pilote" class="driver-cell-link">
+                                <?= htmlspecialchars($chrono->nickname) ?>
+                            </a>
+                        </td>
                         <td class="text-center down " title="Chrono"><span class="badge-purple"><?= htmlspecialchars($chrono->chrono) ?></span></td>
                         <td class="text-center down top10-type" title="Type"><?= htmlspecialchars($chrono->chrono_type) ?></td>
                         <td class="text-center down" title="Catégorie"><?= htmlspecialchars($chrono->category) ?></td>
-                        <td class="text-center down" title="Saison"><?= htmlspecialchars($chrono->season_number) ?></td>
-                        <td class="text-center down" title="Jeu vidéo"><?= htmlspecialchars($chrono->videogame)?> - <?= htmlspecialchars($chrono->platform)?></td>
+                        <td class="text-center down" title="Saison">S<?= htmlspecialchars($chrono->season_number) ?></td>
+                        <td class="text-center down" title="Jeu vidéo"><?= htmlspecialchars($chrono->videogame)?> <?= htmlspecialchars($chrono->platform)?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -156,6 +164,9 @@
 
         <p class="gp-subtitle">
             <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
+        </p>
+        <p class="gp-subtitle">
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le nom du Pilote pour voir son historique
         </p>
 
         <div class="table-responsive">
@@ -205,7 +216,11 @@
             <?php foreach ($driversStats as $i => $d): ?>
                 <tr>
                     <td class="badge-width" title="Position"><?= podiumBadge($i + 1) ?></td>
-                    <td class="down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
+                    <td class="driver-cell palmares-page driver-name down" title="Pilote">
+                        <a href="/statsdrivers/index/driver/<?= (int)$d->driver_id ?>#pilote" class="driver-cell-link">
+                            <?= htmlspecialchars($d->nickname) ?>
+                        </a>
+                    </td>
                     <td class="text-center" title="Courses"><?= $d->gp_count ?></td>
                     <td class="text-center" title="Victoires"><?= $d->wins ?></td>
                     <td class="text-center" title="Podiums"><?= $d->podiums ?></td>

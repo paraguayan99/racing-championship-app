@@ -108,6 +108,9 @@ function podiumBadge($pos) {
         <p class="gp-subtitle">
             <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur les colonnes pour trier
         </p>
+        <p class="gp-subtitle">
+            <i class="fa-solid fa-circle-chevron-right"></i> Cliquez sur le nom du Pilote pour voir son historique
+        </p>
 
         <div class="table-responsive">
             <table class="dashboard-table fix sortable table-th-responsive palmares-drivers-table">
@@ -160,7 +163,16 @@ function podiumBadge($pos) {
                     <!-- <tr> ciblé pour le Driver id=1 (Pilote inconnu) est conservé tout en bas du classement même après un tri JavaScript -->
                     <tr <?= $d->driver_id == 1 ? 'data-fixed="bottom"' : '' ?>>
                         <td class="badge-width down" title="Position"><?= podiumBadge($i + 1) ?></td>
-                        <td class="driver-name down" title="Pilote"><?= htmlspecialchars($d->nickname) ?></td>
+                        <!-- Colonne pilote avec lien vers sa fiche détaillée sauf pour le driver id = 1 (pilote fictif) -->
+                        <td class="driver-cell palmares-page driver-name down" title="Pilote">
+                            <?php if ((int)$d->driver_id !== 1): ?>
+                                <a href="/statsdrivers/index/driver/<?= (int)$d->driver_id ?>#pilote" class="driver-cell-link">
+                                    <?= htmlspecialchars($d->nickname) ?>
+                                </a>
+                            <?php else: ?>
+                                <?= htmlspecialchars($d->nickname) ?>
+                            <?php endif; ?>
+                        </td>
                         <td class="text-center" title="Champions"><?= $d->titles ?></td>
                         <td class="text-center" title="Vice-Champions"><?= $d->vice_titles ?></td>
                         <td class="text-center" title="Troisièmes"><?= $d->third_places ?></td>
