@@ -23,6 +23,36 @@ px	rem
 32px	2rem
 */
 
+/* POLICES LOCALES */
+
+/* f1_regular.otf -> Police "f1" en style normal (400) */
+@font-face {
+  font-family: 'f1_regular';
+  src: url('fonts/f1_regular.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* f1_bold.otf -> Police "f1" en style gras (700) */
+@font-face {
+  font-family: 'f1_bold';
+  src: url('fonts/f1_bold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* futura_bold_oblique.otf -> Police "FuturaCustom" en gras/italique */
+@font-face {
+  font-family: 'futura';
+  src: url('fonts/futura_bold_oblique.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+
 /* CSS commun */
 
 html, body {
@@ -51,7 +81,7 @@ footer {
 }
 
 h1, h2, h3 {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 h1 {
@@ -70,7 +100,7 @@ h1 {
 
 .name_header {
     display: block;
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     color: white;
     padding-left: 5%;
     font-weight: bold;
@@ -289,7 +319,7 @@ footer {
 }
 
 .text-block h2 {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     color: white;
     margin-bottom: 12px;
 }
@@ -321,7 +351,7 @@ footer {
 }
 
 .hero h1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'f1_bold', 'Poppins', sans-serif;
     font-size: 2rem;
     margin: 10px 0px;
     color: white;
@@ -345,7 +375,7 @@ footer {
     align-items: center;
     gap: 10px;
     margin: 15px 0px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'f1_bold', 'Poppins', sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: white;
@@ -449,7 +479,7 @@ footer {
 }
 
 .hero-text-block h2 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'f1_bold', 'Poppins', sans-serif;
     color: white;
     margin-bottom: 12px;
 }
@@ -553,7 +583,7 @@ footer {
 }
 
 .login-container h1 {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     text-align: center;
     margin-top : 0;
     margin-bottom: 20px;
@@ -569,7 +599,7 @@ footer {
 }
 
 .form-group input {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     padding: 10px 0px 10px 0px;
     border:0;
@@ -984,7 +1014,7 @@ input[type=number] {
 }
 
  .btn, button {
-    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'f1_bold', 'Poppins', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     font-size: 1rem;
     padding: 10px;
