@@ -53,10 +53,21 @@ class SeasonsController extends Controller {
 
                 try {
                     // Requete préparée
-                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, videogame_short, platform, status, type) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, videogame_short, platform, status, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                     $stmt->execute([$season_number, $season_name, $category_id, $videogame, $videogame_short, $platform, $status, $type]);
+                    
+                    $newSeasonId = $pdo->lastInsertId();
+                    (new \App\Core\PalmaresCache())->rebuild((int) $newSeasonId);
+                    
                     $message = "Saison créée avec succès";
                     $classMsg = "msg-success";
+
+                    // Ancienne requete sans le rebuild dans PalmaresCache
+                    // $stmt = $pdo->prepare("INSERT INTO seasons (season_number, season_name, category_id, videogame, videogame_short, platform, status, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    // $stmt->execute([$season_number, $season_name, $category_id, $videogame, $videogame_short, $platform, $status, $type]);
+                    // $message = "Saison créée avec succès";
+                    // $classMsg = "msg-success";
+
                 } catch (\PDOException $e) {
                     if ($e->getCode() == 23000) {
                         $message = "Cette combinaison de numéro de saison et catégorie existe déjà !";
@@ -151,8 +162,14 @@ class SeasonsController extends Controller {
                     // Requete préparée
                     $stmt = $pdo->prepare("UPDATE seasons SET season_number=?,  season_name=?, category_id=?, videogame=?, videogame_short=?, platform=?, status=?, type=? WHERE id=?");
                     if ($stmt->execute([$_POST['season_number'], $_POST['season_name'] ?? null, $_POST['category_id'], $_POST['videogame'], $_POST['videogame_short'] ?? null, $_POST['platform'], $_POST['status'], $_POST['type'], $id])) {
-                        $message = "Mise à jour réussie";
-                        $classMsg = "msg-success";
+                    (new \App\Core\PalmaresCache())->rebuild((int) $id);
+                    $message = "Mise à jour réussie";
+                    $classMsg = "msg-success";
+                    
+                    // Ancienne requete sans le rebuild dans PalmaresCache
+                    // if ($stmt->execute([$_POST['season_number'], $_POST['season_name'] ?? null, $_POST['category_id'], $_POST['videogame'], $_POST['videogame_short'] ?? null, $_POST['platform'], $_POST['status'], $_POST['type'], $id])) {
+                    //     $message = "Mise à jour réussie";
+                    //     $classMsg = "msg-success";
                     } else {
                         $message = "Erreur lors de la mise à jour";
                         $classMsg = "msg-error";
@@ -253,8 +270,14 @@ class SeasonsController extends Controller {
             try {
                 $stmt = $pdo->prepare("DELETE FROM seasons WHERE id=?");
                 if ($stmt->execute([$id])) {
-                    $message = "Saison supprimée avec succès";
-                    $classMsg = "msg-success";
+                (new \App\Core\PalmaresCache())->rebuild((int) $id);
+                $message = "Saison supprimée avec succès";
+                $classMsg = "msg-success";
+
+                // Ancienne requete sans le rebuild dans PalmaresCache
+                // if ($stmt->execute([$id])) {
+                //     $message = "Saison supprimée avec succès";
+                //     $classMsg = "msg-success";
                 } else {
                     $message = "Erreur lors de la suppression";
                     $classMsg = "msg-error";

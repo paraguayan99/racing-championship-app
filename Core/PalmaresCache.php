@@ -125,14 +125,15 @@ class PalmaresCache extends DbConnect
                 d.id,
                 ds.category,
                 d.nickname,
-                COALESCE(SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = max_pts.max_pts THEN 1 ELSE 0 END), 0),
-                COALESCE(SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = vice_pts.vice_pts THEN 1 ELSE 0 END), 0),
-                COALESCE(SUM(CASE WHEN ds.season_status = 'desactive' AND ds.total_points = third_pts.third_pts THEN 1 ELSE 0 END), 0),
+                COALESCE(SUM(CASE WHEN s.status = 'desactive' AND ds.total_points = max_pts.max_pts THEN 1 ELSE 0 END), 0),
+                COALESCE(SUM(CASE WHEN s.status = 'desactive' AND ds.total_points = vice_pts.vice_pts THEN 1 ELSE 0 END), 0),
+                COALESCE(SUM(CASE WHEN s.status = 'desactive' AND ds.total_points = third_pts.third_pts THEN 1 ELSE 0 END), 0),
                 COALESCE(SUM(ds.total_points), 0),
                 COALESCE(SUM(ds.wins), 0),
                 COALESCE(SUM(ds.podiums), 0),
                 COALESCE(gp_count.total_gp, 0)
             FROM cache_drivers_standings ds
+            JOIN seasons s ON s.id = ds.season_id
             JOIN drivers d ON d.id = ds.driver_id
             LEFT JOIN (
                 SELECT season_id, category, MAX(total_points) AS max_pts
